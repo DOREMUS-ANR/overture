@@ -1,0 +1,226 @@
+
+#top_nav {
+	position: fixed;
+	top: 0;
+	height: 60px;
+	left: 0;
+	width: 100%;
+	background-color: white;
+	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+	/* overflow: hidden; */
+}
+
+#top_nav .logo-icon {
+	background-image: url("../img/icons/Logotype-Doremus-VA-Couleurs.png");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: 50%;
+	height: 60px;
+	margin: 0 10px;
+	width: 60px;
+}
+
+#top_nav .logo {
+	font-size: 12px;
+	float: left;
+	display: inline-block;
+}
+#top_nav .hamburger{
+	float: left;
+	height: 60px;
+	width: 45px;
+	position: relative;
+	cursor: pointer;
+	border-right: 1px solid rgba(81, 142, 128, 0.43);
+}
+#top_nav .hamburger:before{
+	content: '\e870';
+	font-size: 21px;
+	text-shadow: none;
+	line-height: 33px;
+	font-family: 'Lato';
+	color: #75ccb7;
+	position: absolute;
+	left: 12px;
+	width: 32px;
+	height: 32px;
+	top: 12px;
+	/* background-color: white; */
+	cursor: pointer;
+	border-radius: 0 5px 5px 0;
+}
+.menu-active #top_nav .hamburger:before{
+	color: #283339;
+}
+#top_nav .logo>a, #top_nav .partner-icon {
+	display: inline-block;
+}
+
+#top_nav .partner-icon {
+	background-image: url("../img/icons/Logotype-Doremus-VA-Couleurs.png");
+	background-position: 50%;
+	background-repeat: no-repeat;
+	background-size: contain;
+	height: 32px;
+	margin: 0 auto;
+	width: 80px;
+	margin: 14px 0;
+	border-left: 1px solid #ddd;
+}
+
+#top_nav>ul {
+	float: right;
+	position: relative;
+	height: 60px;
+}
+
+#top_nav>ul>li {
+	top: auto;
+	display: inline-block;
+	right: auto;
+	min-height: 60px !important;
+	height: 60px;
+	cursor: pointer;
+	left: auto;
+	float: right;
+	color: #777;
+	vertical-align: top;
+	padding: 0 !important;
+	position: relative;
+	border-color: #eee;
+	border-left: 1px solid #eee;
+	margin: 0;
+}
+
+#top_nav li#loggedIn.menu-profile {
+	max-width: 100px;
+}
+
+#top_nav li#global_search {
+	width: 310px;
+}
+
+#top_nav li#login {
+
+}
+
+#top_nav .menu-icon {
+	display: block;
+	font-size: 18px;
+	color: #009A90;
+	text-align: center;
+	padding: 18px 0 0px;
+	background-image: none;
+}
+
+#top_nav #logout .menu-icon {
+
+}
+
+#top_nav #loggedIn img {
+	height: 100%;
+	padding: 8px;
+	margin: 0px auto 0px;
+	display: block;
+}
+
+#top_nav .menu-item-text, #top_nav .user-profile {
+	padding: 6px 10px 12px;
+	text-align: center;
+	color: #777;
+	display: none;
+	height: 32px;
+	line-height: 14px;
+}
+
+#top_nav .menu-item-text.multiple-line {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+#top_nav p.user-profile {
+	display: none;
+}
+
+#top_nav li.menu-item {
+	width: auto;
+	cursor: pointer;
+	min-width: 40px;
+}
+
+#top_nav li#social_media .share-buttons {
+	height: 0px;
+	overflow: hidden;
+	position: absolute;
+	width: 100%;
+	top: 60px;
+	border-radius: 0 0 5px 5px;
+	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+#top_nav li#social_media:hover  .share-buttons {
+	height: auto;
+}
+
+#top_nav li#social_media .share-buttons li {
+	display: block;
+	text-align: center;
+	padding: 10px 0 5px;
+	background-color: white;
+	border-top: 1px solid #ddd;
+}
+#top_nav li#social_media .share-buttons li img{
+	width:24px;
+}
+#top_nav li:hover, #top_nav li#social_media .share-buttons li:hover {
+	background-color: #f3f3f3;
+}
+
+#top_nav li#global_search:hover {
+	background-color: transparent;
+}
+
+.skiptranslate>iframe.goog-te-banner-frame {
+	display: none;
+	top: 61px;
+	-moz-box-shadow: 0 0 8px 1px #999999;
+	-webkit-box-shadow: 0 0 8px 1px #999999;
+	box-shadow: 0px 0px 1px 0px #999999;
+	width: 860px;
+	left: auto;
+	right: 0;
+}
+
+.skiptranslate {
+	top: auto;
+	z-index: 1;
+}
+
+#top_nav #global_search .gobutton {
+	color: transparent !important;
+	background-color: transparent;
+	padding: 22px 26px 48px 0px;
+	width: 0;
+	margin: 0;
+}
+
+#top_nav #global_search .gobutton:before {
+	color: #777;
+	font-size: 14px;
+}
+
+#top_nav #global_search input {
+	padding-right: 40px;
+}
+
+
+#top_nav #google_translate_wrapper img {
+	display: none;
+}
+
+#top_nav #google_translate_wrapper span {
+	border: none !important;
+	color: #777;
+	margin-right: 4px;
+	color: #009A90;
+}

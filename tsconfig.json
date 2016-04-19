@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es5",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "noImplicitAny": false
+    },
+    "exclude": [
+        "node_modules",
+        "typings"
+    ],
+    "filesGlob": [
+        "**/*.ts",
+        "typings/main.d.ts",
+        "node_modules/angular2/typings/browser.d.ts"
+    ],
+    "files": [
+        "client/dev/doremus/components/app.component.ts",
+        "client/dev/doremus/components/main.ts",
+        "client/dev/doremus/components/top-nav.component.ts",
+        "client/dev/index.ts",
+        "client/dev/todo/components/todo-cmp.ts",
+        "client/dev/todo/services/todo-service.ts",
+        "tests/client/todo/components/todo-cmp_test.ts",
+        "tests/client/todo/services/todo-service_test.ts"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
+}
