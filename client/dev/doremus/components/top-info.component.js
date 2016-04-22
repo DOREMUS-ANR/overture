@@ -15,7 +15,7 @@ var TopInfoComponent = (function () {
     TopInfoComponent = __decorate([
         core_1.Component({
             selector: 'top-info',
-            template: "\n  <div class='square-box'>\n    <div class='square-content'>\n\n    </div>\n  </div>\n  "
+            template: "\n  <div class='square-box'>\n    <div class='square-content'>\n    </div>\n  </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], TopInfoComponent);

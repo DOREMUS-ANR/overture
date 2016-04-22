@@ -1,4 +1,4 @@
-import Todo from '../../../server/api/todo/dao/todo-dao';
+import Doremus from '../../../server/api/doremus/dao/doremus-dao';
 import dbJson from './db.json';
 
 exports.setupMongoose = (mongoose) => {
@@ -7,12 +7,8 @@ exports.setupMongoose = (mongoose) => {
   mongoose.connection.on('error', () => {});
 }
 
-exports.createTodos = () => {
+exports.createDoremus = () => {
     let _array = [];
 
-    for (let i = 0; i < 10; i++) {
-        _array.push({_id: '507c7f79bcf86cd7994f6c'+ (i + 10), todoMessage: 'aaaaaaa'+i});
-    }
-
-    return Todo.createTodo(_array);
+    return Doremus.createDoremus(_array);
 }

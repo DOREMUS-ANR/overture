@@ -1,9 +1,9 @@
-import TodoRoutes from '../api/todo/routes/todo-routes';
+import DoremusRoutes from '../api/doremus/routes/doremus-routes';
 import StaticDispatcher from '../commons/static/index';
 
 export default class Routes {
    static init(app, router) {
-     TodoRoutes.init(router);
+     DoremusRoutes.init(router);
 
      router
        .route('*')

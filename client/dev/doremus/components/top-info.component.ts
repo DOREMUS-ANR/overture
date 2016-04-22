@@ -5,7 +5,6 @@ import {Component} from 'angular2/core';
   template: `
   <div class='square-box'>
     <div class='square-content'>
-
     </div>
   </div>
   `
