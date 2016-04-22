@@ -9,21 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
-var top_nav_component_1 = require('./top-nav.component');
-var left_menu_component_1 = require('./left-menu.component');
-var top_info_component_1 = require('./top-info.component');
-var AppComponent = (function () {
-    function AppComponent() {
+var TopInfoComponent = (function () {
+    function TopInfoComponent() {
     }
-    AppComponent = __decorate([
+    TopInfoComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            template: "\n        <top-nav></top-nav>\n        <left-menu></left-menu>\n        <top-info></top-info>\n        <!--<h1 style=\"margin-bottom: 0;\">DOREMUS</h1>\n        <p class=\"dor-sub\">DOing REusable MUSical data</p>\n        <h2>The new DOREMUS Web App</h2>-->\n    ",
-            directives: [top_nav_component_1.TopNavComponent, left_menu_component_1.LeftMenuComponent, top_info_component_1.TopInfoComponent]
+            selector: 'top-info',
+            template: "\n  <div class='square-box'>\n    <div class='square-content'>\n\n    </div>\n  </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
-    ], AppComponent);
-    return AppComponent;
+    ], TopInfoComponent);
+    return TopInfoComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.TopInfoComponent = TopInfoComponent;
+//# sourceMappingURL=top-info.component.js.map

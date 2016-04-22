@@ -6,7 +6,7 @@
 	left: 0;
 	width: 100%;
 	background-color: white;
-	box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 0px 2px rgba(51, 102, 153, 0.5);
 	/* overflow: hidden; */
 }
 
@@ -14,10 +14,69 @@
 	background-image: url("../img/icons/Logotype-Doremus-VA-Couleurs.png");
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-position: 50%;
+	background-position: 40%;
 	height: 60px;
 	margin: 0 10px;
 	width: 60px;
+}
+
+#top_nav .main-browse{
+	height: 60px;
+	width: auto;
+	position: relative;
+	float: left;
+	margin: 0px;
+	padding: 0px;
+}
+
+#top_nav .browse-img{
+	display: inline-block;
+	position: relative;
+	background-image: url("../img/icons/browse.png");
+	background-repeat: no-repeat;
+	background-size: 40px;
+	background-position: 50%;
+	height: 60px;
+	width: 60px;
+	cursor: pointer;
+	margin: 0px;
+	z-index: 1;
+}
+
+#top_nav .browse-img#work{
+	width: 0px;
+	visibility: hidden;
+	background-image: url("../img/icons/work.png");
+}
+
+#top_nav .browse-img#performance{
+	width: 0px;
+	visibility: hidden;
+	background-image: url("../img/icons/performance.png");
+}
+
+#top_nav .browse-img#score{
+	width: 0px;
+	visibility: hidden;
+	background-image: url("../img/icons/score.jpg");
+}
+
+#top_nav .browse-img#recording{
+	width: 0px;
+	visibility: hidden;
+	background-image: url("../img/icons/recording.png");
+}
+
+#top_nav #browse:hover .browse-img{
+	width: 60px;
+	visibility: visible;
+	margin:  0px 0px 0px 0px;
+	padding:  0px 0px 0px 0px;
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+#top_nav  #browse:hover .browse-img:hover {
+	background-color: #f3f3f3;
 }
 
 #top_nav .logo {
@@ -31,15 +90,15 @@
 	width: 45px;
 	position: relative;
 	cursor: pointer;
-	border-right: 1px solid rgba(81, 142, 128, 0.43);
+	border-right: 1px solid rgba(51, 102, 153, 0.5);
 }
 #top_nav .hamburger:before{
 	content: '\e870';
 	font-size: 21px;
 	text-shadow: none;
 	line-height: 33px;
-	font-family: 'Lato';
-	color: #75ccb7;
+	font-family: "fontello";
+	color: #336699;
 	position: absolute;
 	left: 12px;
 	width: 32px;
@@ -69,9 +128,11 @@
 }
 
 #top_nav>ul {
+	margin-top: 0px;
 	float: right;
 	position: relative;
 	height: 60px;
+	vertical-align: top;
 }
 
 #top_nav>ul>li {
@@ -82,7 +143,7 @@
 	height: 60px;
 	cursor: pointer;
 	left: auto;
-	float: right;
+	float: left;
 	color: #777;
 	vertical-align: top;
 	padding: 0 !important;
@@ -107,7 +168,7 @@
 #top_nav .menu-icon {
 	display: block;
 	font-size: 18px;
-	color: #009A90;
+	color: #7093B7;
 	text-align: center;
 	padding: 18px 0 0px;
 	background-image: none;
@@ -156,21 +217,23 @@
 	top: 60px;
 	border-radius: 0 0 5px 5px;
 	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+	background-color: rgba(250, 254, 251, 0.75);
 }
 
-#top_nav li#social_media:hover  .share-buttons {
+#top_nav li#social_media:hover .share-buttons {
 	height: auto;
+	padding:  0px 0px 0px 0px;
+	box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
 }
 
 #top_nav li#social_media .share-buttons li {
 	display: block;
-	text-align: center;
-	padding: 10px 0 5px;
-	background-color: white;
+	padding: auto;
 	border-top: 1px solid #ddd;
 }
-#top_nav li#social_media .share-buttons li img{
-	width:24px;
+#top_nav li#social_media .share-buttons li a span{
+	align-content: center;
+	padding-bottom: 15px;
 }
 #top_nav li:hover, #top_nav li#social_media .share-buttons li:hover {
 	background-color: #f3f3f3;
@@ -222,5 +285,55 @@
 	border: none !important;
 	color: #777;
 	margin-right: 4px;
-	color: #009A90;
+	color: #7093B7;
+}
+
+#top_nav #topPart {
+	top: auto;
+	right: auto;
+	left: auto;
+	display: inline-block;
+	min-height: 60px !important;
+	height: 60px;
+	cursor: pointer;
+	color: #777;
+	vertical-align: top;
+	padding: 0 !important;
+	position: relative;
+	border-color: #eee;
+	border-left: 1px solid #eee;
+	margin: 0;
+}
+
+#top_nav>div#centerPart {
+	margin-top: 0px;
+	float: right;
+	position: relative;
+	height: 60px;
+	width: 50%;
+}
+
+#top_nav>div#centerPart div{
+	min-height: 60px !important;
+	height: 60px;
+	color: #777;
+	margin: auto;
+	display: inline-block;
+	position: relative;
+	border-color: #eee;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	width: 20%;
+}
+
+/* Media Queries*/
+@media screen and (max-width: 600px) {
+	#top_nav .main-browse{
+		height: 0;
+		width: 0;
+	}
+	#top_nav .browse-img{
+			background-color: rgba(250, 254, 251, 0.75);
+			display: block;
+	}
 }
