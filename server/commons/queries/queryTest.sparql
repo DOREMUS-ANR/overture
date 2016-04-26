@@ -1,0 +1,4 @@
+SELECT ?Concept from <http://data.doremus.org/vocabulary/key>
+WHERE {
+    ?Concept a <http://www.w3.org/2004/02/skos/core#Concept>
+} LIMIT 5

@@ -2,7 +2,7 @@
     "compilerOptions": {
         "module": "commonjs",
         "moduleResolution": "node",
-        "target": "es5",
+        "target": "es6",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -20,8 +20,10 @@
     "files": [
         "client/dev/doremus/components/app.component.ts",
         "client/dev/doremus/components/left-menu.component.ts",
+        "client/dev/doremus/components/queries-test.component.ts",
         "client/dev/doremus/components/top-info.component.ts",
         "client/dev/doremus/components/top-nav.component.ts",
+        "client/dev/doremus/services/queries-test.service.ts",
         "client/dev/index.ts"
     ],
     "atom": {

@@ -7,7 +7,7 @@ export default class Routes {
 
      router
        .route('*')
-       .get(StaticDispatcher.sendIndex);
+       .get(StaticDispatcher.loadPage);
 
      app.use('/', router);
    }
