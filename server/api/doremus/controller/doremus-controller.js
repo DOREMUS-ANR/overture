@@ -47,7 +47,7 @@ function askQuery (query, endpoint) {
       }
       else {
         //process.stdout.write(results + "\n");
-        process.stdout.write(util.inspect(results, null, 20, true) + "\n");
+        //process.stdout.write(util.inspect(results, null, 20, true) + "\n");
         resolve(results);
       }
     })
