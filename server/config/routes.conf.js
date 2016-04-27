@@ -14,5 +14,9 @@ export default class RouteConfig {
         application.use(morgan('dev'));
         application.use(contentLength.validateMax({max: 999}));
         application.use(helmet());
+
+        application.use(bodyParser.json());
+        application.use(bodyParser.urlencoded({extended: true}));
+
     }
 }

@@ -1,7 +1,8 @@
 "use strict";
-var browser_1 = require('angular2/platform/browser');
-var http_1 = require('angular2/http');
-var app_component_1 = require('./doremus/components/app.component');
-browser_1.bootstrap(app_component_1.AppComponent, [http_1.HTTP_PROVIDERS]);
-console.log("i'm eva");
+const browser_1 = require('angular2/platform/browser');
+const app_component_1 = require('./doremus/components/app.component');
+const router_1 = require("angular2/router");
+const http_1 = require('angular2/http');
+browser_1.bootstrap(app_component_1.AppComponent, [router_1.ROUTER_PROVIDERS, http_1.HTTP_BINDINGS])
+    .catch(console.error);
 //# sourceMappingURL=index.js.map
