@@ -16,8 +16,12 @@ The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][
 
 ### Dependencies:
 
+- [Node.JS](https://nodejs.org/en/)
+- [Gulp](http://gulpjs.com/)
+      npm install -g gulp gulp-cli
+
 ### RDF Store:
-Virtuoso 7.2.1 (http://www.openlinksw.com)
+[Virtuoso 7.2.1](http://www.openlinksw.com)
 
 [1]: https://drive.google.com/file/d/0B_nxZpGQv9GKZmpKRGl2dmRENGc/view
 [2]: https://www.w3.org/TR/sparql11-query/
