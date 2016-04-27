@@ -32,7 +32,7 @@ var SparqlClient = module.exports = function (endpoint, options) {
                 callback.apply(scope, args);
             });
             return scope;
-        }
+        };
     };
 
     var responseHandler = function responseHandler(error, response, responseBody, callback) {
