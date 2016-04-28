@@ -1,4 +1,4 @@
-SELECT ?Concept from <http://data.doremus.org/vocabulary/key>
+SELECT ?Concept from <http://www.w3.org/2002/07/owl#>
 WHERE {
-    ?Concept a <http://www.w3.org/2004/02/skos/core#Concept>
+    ?Concept a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property>
 } LIMIT 5
