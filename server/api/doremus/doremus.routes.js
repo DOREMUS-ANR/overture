@@ -1,4 +1,4 @@
-import DoremusController from '../controller/doremus-controller';
+import DoremusController from './controller/doremus-controller';
 
 export default class DoremusRoutes {
   static init(router) {
@@ -6,6 +6,5 @@ export default class DoremusRoutes {
    router
       .route('/query')
       .get(DoremusController.sendQuery);
-
   }
 }

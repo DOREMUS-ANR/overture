@@ -4,8 +4,8 @@ import os from 'os';
 import express from 'express';
 import http from 'http';
 import nomo from 'node-monkey';
-import RoutesConfig from './config/routes.conf';
-import Routes from './routes/index';
+import RoutesConfig from './routes/routes.conf';
+import Routes from './routes/routes';
 
 const app = express();
 nomo.start({
@@ -18,6 +18,7 @@ Routes.init(app, express.Router());
 
 http.createServer(app)
   .listen(PORT, () => {
+    /* jshint strict:false */
     console.info(`up and running @: ${os.hostname()} on port: ${PORT}`);
     console.info(`enviroment: ${process.env.NODE_ENV}`);
   });

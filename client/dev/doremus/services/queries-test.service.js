@@ -8,24 +8,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-const core_1 = require('angular2/core');
-const http_1 = require('angular2/http');
+var core_1 = require('angular2/core');
+var http_1 = require('angular2/http');
 require('rxjs/add/operator/map');
-let QueriesService = class QueriesService {
-    constructor(http) {
+var QueriesService = (function () {
+    function QueriesService(http) {
         this.http = http;
     }
-    load(id) {
+    QueriesService.prototype.load = function (id) {
         var options = new http_1.RequestOptions({
             search: 'id=' + id
         });
-        return this.http.get("http://localhost:3333/query", options)
-            .map(res => res.json());
-    }
-};
-QueriesService = __decorate([
-    core_1.Injectable(), 
-    __metadata('design:paramtypes', [http_1.Http])
-], QueriesService);
+        return this.http.get("http://localhost:3333/api/query", options)
+            .map(function (res) { return res.json(); });
+    };
+    QueriesService = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [http_1.Http])
+    ], QueriesService);
+    return QueriesService;
+}());
 exports.QueriesService = QueriesService;
 //# sourceMappingURL=queries-test.service.js.map
