@@ -8,6 +8,7 @@ export default class Routes {
     router.use('/api', ApiRouter);
 
     // angular entry point
+    // TODO production
     router.get('/', (req, res) =>
       res.sendFile(path.join(process.cwd(), 'client/dev/index.html'))
     );
