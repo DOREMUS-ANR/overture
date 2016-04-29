@@ -1,8 +1,8 @@
 import fs from 'fs';
 import SparqlClient from 'sparql-client';
-import {sparqlEndpoint} from '../../../config/constants.json';
+import {appPath} from '../../../config/constants';
 
-const endpoint = sparqlEndpoint;
+const endpoint = appPath.sparqlEndpoint;
 
 export default class DoremusController {
 
