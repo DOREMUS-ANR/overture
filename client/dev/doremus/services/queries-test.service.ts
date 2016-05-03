@@ -15,7 +15,7 @@ export class QueriesService {
       search: 'id=' + id
     });
     // FIXME relative URL
-    return this.http.get("http://localhost:3333/api/query", options)
+    return this.http.get("/api/query", options)
       .map(res => res.json());
   }
 }

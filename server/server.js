@@ -20,5 +20,5 @@ http.createServer(app)
   .listen(PORT, () => {
     /* jshint strict:false */
     console.info(`up and running @: ${os.hostname()} on port: ${PORT}`);
-    console.info(`enviroment: ${process.env.NODE_ENV}`);
+    console.info(`environment: ${process.env.NODE_ENV}`);
   });

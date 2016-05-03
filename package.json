@@ -4,11 +4,11 @@
   "main": "src/doremus-app.js",
   "scripts": {
     "start": "node index",
-    "build-dev": "nodemon index && gulp client.watch",
+    "build-dev": "gulp server:dev",
     "build-dist": "gulp client.build:dist"
   },
   "dependencies": {
-    "angular2": "^2.0.0-beta.15",
+    "angular2": "^2.0.0-beta.17",
     "bluebird": "^3.3.4",
     "body-parser": "^1.5.0",
     "es6-promise": "^3.0.2",
@@ -19,7 +19,7 @@
     "lodash": "^4.6.1",
     "morgan": "^1.7.0",
     "reflect-metadata": "^0.1.3",
-    "rxjs": "5.0.0-beta.2",
+    "rxjs": "^5.0.0-beta.2",
     "sparql-client": "^0.2.0",
     "systemjs": "^0.19.26",
     "typescript": "^1.8.9",
@@ -40,6 +40,7 @@
     "gulp-concat": "^2.4.3",
     "gulp-htmlmin": "^1.3.0",
     "gulp-imagemin": "^2.4.0",
+    "gulp-nodemon": "^2.0.6",
     "gulp-rename": "^1.2.0",
     "gulp-rev-append": "^0.1.6",
     "gulp-typescript": "^2.9.2",

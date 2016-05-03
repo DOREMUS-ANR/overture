@@ -19,7 +19,8 @@ var QueriesService = (function () {
         var options = new http_1.RequestOptions({
             search: 'id=' + id
         });
-        return this.http.get("http://localhost:3333/api/query", options)
+        // FIXME relative URL
+        return this.http.get("/api/query", options)
             .map(function (res) { return res.json(); });
     };
     QueriesService = __decorate([
@@ -29,4 +30,3 @@ var QueriesService = (function () {
     return QueriesService;
 }());
 exports.QueriesService = QueriesService;
-//# sourceMappingURL=queries-test.service.js.map

@@ -25,4 +25,3 @@ var TopNavComponent = (function () {
     return TopNavComponent;
 }());
 exports.TopNavComponent = TopNavComponent;
-//# sourceMappingURL=top-nav.component.js.map

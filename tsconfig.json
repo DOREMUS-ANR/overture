@@ -13,8 +13,8 @@
         "typings"
     ],
     "filesGlob": [
-        "**/*.ts",
-        "typings/main.d.ts",
+        "client/dev/**/*.ts",
+        "typings/browser.d.ts",
         "node_modules/angular2/typings/browser.d.ts"
     ],
     "files": [

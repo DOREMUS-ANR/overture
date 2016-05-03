@@ -2,8 +2,9 @@ export const path = {
   ROOT: './',
   DEV: './client/dev/',
   DIST: './client/dist/',
-  TEST: './tests/'
-}
+  TEST: './tests/',
+  SERVER: './server/'
+};
 
 export const tasks = {
   CLIENT_BUILD_DEV: 'client.build:dev',
@@ -25,5 +26,7 @@ export const tasks = {
   CLIENT_WATCH: 'client.watch',
 
   CLIENT_BUILD_TS_DEV: 'client.build_ts:dev',
-  CLIENT_BUILD_TS_DIST: 'client.build_ts:dist'
-}
+  CLIENT_BUILD_TS_DIST: 'client.build_ts:dist',
+
+  SERVER_DEV: 'server:dev'
+};
