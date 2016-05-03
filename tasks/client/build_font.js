@@ -1,9 +1,29 @@
 import gulp from 'gulp';
-import {path, tasks} from './const';
+import {
+  path,
+  tasks
+} from './const';
 
-const FONTS = path.DEV + 'fonts/**/*';
+const FONTS = path.SRC + 'font/**/*';
 
+function copyFonts({
+  dist = false
+} = {}) {
+  'use strict';
+
+  let dest = dist ? path.DIST : path.DEV;
+
+  //just copy
+  return gulp.src(FONTS, {
+      base: path.SRC
+    })
+    .pipe(gulp.dest(dest));
+}
+
+gulp.task(tasks.CLIENT_FONT_DEV, copyFonts);
 gulp.task(tasks.CLIENT_FONT_DIST, () => {
-  return gulp.src(FONTS, {base: path.DEV})
-             .pipe(gulp.dest(path.DIST));
+  'use strict';
+  return copyFonts({
+    dist: true
+  });
 });

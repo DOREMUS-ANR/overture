@@ -1,0 +1,264 @@
+#top_nav
+	position fixed
+	top 0
+	height 60px
+	left 0
+	width 100%
+	background-color white
+	box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
+	z-index 9999
+	.logo-icon
+		background url("../img/logos/doremus.logo.png") center center no-repeat
+		background-size contain
+		height 60px
+		margin 0 10px
+		width 60px
+	.main-browse
+		height 60px
+		width auto
+		position relative
+		float left
+		margin 0
+		padding 0
+	.browse-img
+		display inline-block
+		position relative
+		background-image url("../img/icons/browse.png")
+		background-repeat no-repeat
+		background-size 40px
+		background-position 50%
+		height 60px
+		width 60px
+		cursor pointer
+		margin 0
+		z-index 1
+	.browse-img#work
+		width 0px
+		visibility hidden
+		background-image url("../img/icons/work.png")
+	.browse-img#performance
+		width 0
+		visibility hidden
+		background-image url("../img/icons/performance.png")
+	.browse-img#score
+		width 0
+		visibility hidden
+		background-image url("../img/icons/score.jpg")
+	.browse-img#recording
+		width 0
+		visibility hidden
+		background-image url("../img/icons/recording.png")
+	#browse
+		&:hover
+			.browse-img
+				width 60px
+				visibility visible
+				margin 0
+				padding 0
+				box-shadow 1px 1px 1px 1px rgba(0, 0, 0, 0.2)
+				&:hover
+					background-color #f3f3f3
+	.logo
+		font-size 12px
+		float left
+		display inline-block
+	.hamburger
+		float left
+		height 60px
+		width 45px
+		position relative
+		cursor pointer
+		border-right 1px solid rgba(51, 102, 153, 0.5)
+		&:before
+			content '\e870'
+			font-size 21px
+			text-shadow none
+			line-height 33px
+			font-family "fontello"
+			color #336699
+			position absolute
+			left 12px
+			width 32px
+			height 32px
+			top 12px
+			cursor pointer
+			border-radius 0 5px 5px 0
+	.partner-icon
+		background-image url("../img/logos/doremus.logo.png")
+		background-position 50%
+		background-repeat no-repeat
+		background-size contain
+		height 32px
+		margin 0 auto
+		width 80px
+		margin 14px 0
+		border-left 1px solid #ddd
+	& > ul
+		margin-top 0
+		float right
+		position relative
+		height 60px
+		vertical-align top
+		& > li
+			top auto
+			display inline-block
+			right auto
+			min-height 60px !important
+			height 60px
+			cursor pointer
+			left auto
+			float left
+			color #777
+			vertical-align top
+			padding 0 !important
+			position relative
+			border-color #eee
+			border-left 1px solid #eee
+			margin 0
+	li#loggedIn
+		&.menu-profile
+			max-width 100px
+	li#global_search
+		width 310px
+		&:hover
+			background-color transparent
+	li#login
+	.menu-icon
+		display block
+		font-size 18px
+		color #7093B7
+		text-align center
+		padding 18px 0 0
+		background-image none
+	#loggedIn
+		img
+			height 100%
+			padding 8px
+			margin 0 auto
+			display block
+	.menu-item-text
+		&.multiple-line
+			padding-top 0
+			padding-bottom 0
+	p
+		&.user-profile
+			display none
+	li
+		&.menu-item
+			width auto
+			cursor pointer
+			min-width 40px
+	li#social_media
+		.share-buttons
+			height 0
+			overflow hidden
+			position absolute
+			width 100%
+			top 60px
+			border-radius 0 0 5px 5px
+			box-shadow 1px 1px 1px rgba(0, 0, 0, 0.2)
+			background-color rgba(250, 254, 251, 0.75)
+			li
+				display block
+				padding auto
+				border-top 1px solid #ddd
+				a
+					span
+						align-content center
+						padding-bottom 15px
+		&:hover
+			.share-buttons
+				height auto
+				padding 0
+				box-shadow 1px 1px 1px 1px rgba(0, 0, 0, 0.2)
+	#global_search
+		.gobutton
+			color transparent !important
+			background-color transparent
+			padding 22px 26px 48px 0px
+			width 0
+			margin 0
+			&:before
+				color #777
+				font-size 14px
+		input
+			padding-right 40px
+	#google_translate_wrapper
+		img
+			display none
+		span
+			border none !important
+			color #777
+			margin-right 4px
+			color #7093B7
+	#topPart
+		top auto
+		right auto
+		left auto
+		display inline-block
+		min-height 60px !important
+		height 60px
+		cursor pointer
+		color #777
+		vertical-align top
+		padding 0 !important
+		position relative
+		border-color #eee
+		border-left 1px solid #eee
+		margin 0
+	& > div#centerPart
+		margin-top 0
+		float right
+		position relative
+		height 60px
+		width 50%
+		div
+			min-height 60px !important
+			height 60px
+			color #777
+			margin auto
+			display inline-block
+			position relative
+			border-color #eee
+			border-left 1px solid #eee
+			border-right 1px solid #eee
+			width 20%
+	.logo>a, .partner-icon
+		display inline-block
+	.menu-item-text, .user-profile
+		padding 6px 10px 12px
+		text-align center
+		color #777
+		display none
+		height 32px
+		line-height 14px
+	li:hover, li#social_media .share-buttons li:hover
+		background-color #f3f3f3
+
+.menu-active
+	#top_nav
+		.hamburger
+			&:before
+				color #283339
+
+
+.skiptranslate
+	top auto
+	z-index 1
+	& > iframe
+		&.goog-te-banner-frame
+			display none
+			top 61px
+			box-shadow 0px 0px 1px 0px #999999
+			width 860px
+			left auto
+			right 0
+
+@media screen and (max-width: 600px)
+	#top_nav
+		.main-browse
+			height 0
+			width 0
+		.browse-img
+			background-color rgba(250, 254, 251, 0.75)
+			display block

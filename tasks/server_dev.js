@@ -6,7 +6,7 @@ import {
 } from './client/const';
 
 
-gulp.task(tasks.SERVER_DEV, () => {
+gulp.task(tasks.SERVER_DEV, [tasks.CLIENT_BUILD_DEV], () => {
   'use strict';
   return nodemon({
       script: path.ROOT + 'index.js',

@@ -6,15 +6,18 @@ import {
 } from './const';
 
 const TS = path.SRC + '**/*.ts';
-const CSS = path.DEV + '**/*.css';
-const HTML = path.DEV + '**/*.html';
+const STYL = path.SRC + '**/*.styl';
+const HTML = path.SRC + '**/*.html';
+const IMG = path.SRC + 'img/**/*';
+const FONT = path.SRC + 'font/**/*';
 
 gulp.task(tasks.CLIENT_RELOAD, () => {
   'use strict';
   return browserSync.reload();
 });
 
-gulp.task(tasks.CLIENT_WATCH, [tasks.CLIENT_BUILD_TS_DEV, tasks.CLIENT_RELOAD], () => {
+
+gulp.task(tasks.CLIENT_WATCH, () => {
   'use strict';
 
   browserSync({
@@ -22,11 +25,14 @@ gulp.task(tasks.CLIENT_WATCH, [tasks.CLIENT_BUILD_TS_DEV, tasks.CLIENT_RELOAD], 
     reloadDelay: 1000
   });
 
-  let _watchable = [];
-
-  _watchable.push(TS);
-  _watchable.push(CSS);
-  _watchable.push(HTML);
-
-  return gulp.watch(_watchable, [tasks.CLIENT_BUILD_TS_DEV, tasks.CLIENT_RELOAD]);
+  gulp.watch(STYL, [tasks.CLIENT_BUILD_STYL_DEV, () => {
+    return gulp.src(path.DEV + 'styles/**/*.css')
+      .pipe(browserSync.stream({
+        match: '**/*.css'
+      }));
+  }]);
+  gulp.watch(TS, [tasks.CLIENT_BUILD_TS_DEV]).on('change', browserSync.reload);
+  gulp.watch(HTML, [tasks.CLIENT_VIEWS_DEV]).on('change', browserSync.reload);
+  gulp.watch(IMG, [tasks.CLIENT_IMAGE_DEV]).on('change', browserSync.reload);
+  gulp.watch(FONT, [tasks.CLIENT_FONT_DEV]).on('change', browserSync.reload);
 });

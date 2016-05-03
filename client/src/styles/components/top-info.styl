@@ -1,0 +1,81 @@
+.square-box
+  position relative
+  width auto
+  margin auto
+  overflow hidden
+  background #4679BD
+  top 60px
+  height 240px
+  word-wrap break-word
+  border-radius 10px
+  background-color #404040
+  box-shadow 0 0.0625em 0.1875em 0 rgba(0, 0, 0, 0.1), 0 0.5em 0 -0.25em #3c3c3c, 0 0.5em 0.1875em -0.25em rgba(0, 0, 0, 0.1), 0 1em 0 -0.5em #393939, 0 1em 0.1875em -0.5em rgba(0, 0, 0, 0.1)
+  &:before
+    content ""
+    display block
+    padding 0px
+
+.square-content
+  position absolute
+  top 0
+  left 0
+  bottom 0
+  right 0
+
+.main-video
+  position absolute
+  top 0
+  left 0
+  bottom 0
+  right 0
+  display inline-block
+  margin 10px
+  width 40%
+  height 90%
+  #video1
+    width 100%
+    height 100%
+    border-radius 12px
+    box-shadow 4px 4px 14px #000
+
+.main-text
+  margin 10px
+  position absolute
+  top 0
+  left 45%
+  bottom 0
+  right 0
+  display inline-block
+  width 53%
+  height 90%
+  & > h2
+    font-family 'Lato', sans-serif
+    font-size 100%
+    font-weight bold
+  & > p
+    color rgba(#ffffff, 0.95)
+    font-family 'Lato', sans-serif
+    font-size 80%
+  & > h2#title0
+    color #396
+  & > h2#title1
+    color #9e009e
+  & > h2#title2
+    color #963
+
+#but
+  z-index 1
+
+@media screen and (max-width: 1120px)
+  .square-box
+    height 300px
+
+@media screen and (max-width: 950px)
+  .square-box
+    height 400px
+
+@media screen and (max-width: 600px)
+  .main-text
+    & > p
+      height 0
+      visibility hidden
