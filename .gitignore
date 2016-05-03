@@ -5,3 +5,5 @@ unit_coverage
 bower_components
 typings
 *.log
+
+client\dev
