@@ -47,7 +47,7 @@ var QueriesTestComponent = (function () {
     QueriesTestComponent = __decorate([
         core_1.Component({
             selector: 'queries-test',
-            template: "\n  <br>\n  <br>\n  <div class='square-box' [style.background]=\"'rgb(155, 186, 114)'\" [style.color]=\"'black'\">\n    <div class='square-content' style=\"margin:100px;\">\n      <button (click)=\"loadQuery(1);\">Make query 1</button>\n      <button (click)=\"loadQuery(2);\">Make query 2</button>\n      <p id='query'>Query: {{query}}</p>\n      <p>Result</p>\n      <ul [style.background]=\"'white'\">\n        <li *ngFor=\"#result of queryResult\">\n          <span>Value: {{result.value}}</span>\n          <span>Type: {{result.type}}</span>\n        </li>\n      </ul>\n    </div>\n  </div>\n  ",
+            template: "\n  <br>\n  <br>\n  <div class='square-box' [style.background]=\"'rgb(155, 186, 114)'\" [style.color]=\"'black'\">\n    <div class='square-content' style=\"margin:100px;\">\n      <button (click)=\"loadQuery(1);\">Make query 1</button>\n      <button (click)=\"loadQuery(2);\">Make query 2</button>\n      <p id='query'>Query: {{query}}</p>\n      <p>Result</p>\n      <ul [style.background]=\"'white'\">\n        <li *ngFor=\"let result of queryResult\">\n          <span>Value: {{result.value}}</span>\n          <span>Type: {{result.type}}</span>\n        </li>\n      </ul>\n    </div>\n  </div>\n  ",
             providers: [queries_test_service_1.QueriesService]
         }), 
         __metadata('design:paramtypes', [queries_test_service_1.QueriesService])
@@ -55,3 +55,5 @@ var QueriesTestComponent = (function () {
     return QueriesTestComponent;
 }());
 exports.QueriesTestComponent = QueriesTestComponent;
+
+//# sourceMappingURL=queries-test.component.js.map

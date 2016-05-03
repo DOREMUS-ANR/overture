@@ -30,3 +30,5 @@ var QueriesService = (function () {
     return QueriesService;
 }());
 exports.QueriesService = QueriesService;
+
+//# sourceMappingURL=queries-test.service.js.map

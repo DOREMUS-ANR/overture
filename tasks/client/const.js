@@ -1,5 +1,6 @@
 export const path = {
   ROOT: './',
+  SRC: './client/src',
   DEV: './client/dev/',
   DIST: './client/dist/',
   TEST: './tests/',

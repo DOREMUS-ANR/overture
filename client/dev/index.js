@@ -7,3 +7,5 @@ var router_1 = require("angular2/router");
 var http_1 = require('angular2/http');
 browser_1.bootstrap(app_component_1.AppComponent, [router_1.ROUTER_PROVIDERS, http_1.HTTP_BINDINGS])
     .catch(console.error);
+
+//# sourceMappingURL=index.js.map

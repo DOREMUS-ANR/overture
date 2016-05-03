@@ -23,7 +23,7 @@ export class resultQ{
       <p id='query'>Query: {{query}}</p>
       <p>Result</p>
       <ul [style.background]="'white'">
-        <li *ngFor="#result of queryResult">
+        <li *ngFor="let result of queryResult">
           <span>Value: {{result.value}}</span>
           <span>Type: {{result.type}}</span>
         </li>

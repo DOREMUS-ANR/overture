@@ -5,7 +5,7 @@ import {
   tasks
 } from './const';
 
-const TS = path.DEV + '**/*.ts';
+const TS = path.SRC + '**/*.ts';
 const CSS = path.DEV + '**/*.css';
 const HTML = path.DEV + '**/*.html';
 

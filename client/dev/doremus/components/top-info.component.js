@@ -22,3 +22,5 @@ var TopInfoComponent = (function () {
     return TopInfoComponent;
 }());
 exports.TopInfoComponent = TopInfoComponent;
+
+//# sourceMappingURL=top-info.component.js.map
