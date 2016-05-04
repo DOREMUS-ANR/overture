@@ -10,12 +10,14 @@ export class QueriesService {
     this.http = http;
   }
 
-  load(id){
+  load(id, prop, val){
     var options = new RequestOptions({
-      search: 'id=' + id
+      search: 'id=' + id + '&' +
+      'prop=' + prop + '&' +
+      'val=' + val
     });
     // FIXME relative URL
-    return this.http.get("/api/query", options)
+    return this.http.get("../api/query", options)
       .map(res => res.json());
   }
 }

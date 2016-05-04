@@ -1,4 +1,4 @@
-SELECT ?Concept from <http://www.w3.org/2002/07/owl#>
+SELECT ?Concept from <http://data.doremus.org/vocabulary/data_20160503_1_50>
 WHERE {
-    ?Concept a <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property>
+    ?Concept $$prop$$ "$$val$$" .
 } LIMIT 5

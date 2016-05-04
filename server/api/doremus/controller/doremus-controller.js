@@ -12,9 +12,10 @@ export default class DoremusController {
     console.log('Query to ' + endpoint);
     let _q = 'server/commons/queries/' + query.id + '.sparql';
     console.log('Q' + _q);
-
+    console.log('prop' + query.prop);
+    console.log('val' + query.val);
     readFile(_q)
-      .then(content => askQuery(content, endpoint))
+      .then(content => askQuery(content.replace("$$prop$$", query.prop).replace("$$val$$", query.val), endpoint))
       .then(results => res.json(results))
       .catch(err => console.error('error ' + err.message));
   }
@@ -33,6 +34,7 @@ function readFile(name) {
 }
 
 function askQuery(query, endpoint) {
+  console.log('askquery: ' + query);
   var client = new SparqlClient(endpoint);
   return new Promise(function(resolve, reject) {
     client.query(query, function(err, results) {

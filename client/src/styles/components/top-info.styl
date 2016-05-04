@@ -1,11 +1,11 @@
 .square-box
   position relative
   width auto
+  height auto
   margin auto
   overflow hidden
   background #4679BD
   top 60px
-  height 240px
   word-wrap break-word
   border-radius 10px
   background-color #404040
@@ -16,22 +16,16 @@
     padding 0px
 
 .square-content
-  position absolute
+  height auto
   top 0
   left 0
   bottom 0
   right 0
 
 .main-video
-  position absolute
-  top 0
-  left 0
-  bottom 0
-  right 0
   display inline-block
   margin 10px
   width 40%
-  height 90%
   #video1
     width 100%
     height 100%
@@ -40,7 +34,6 @@
 
 .main-text
   margin 10px
-  position absolute
   top 0
   left 45%
   bottom 0
@@ -67,14 +60,6 @@
   z-index 1
 
 @media screen and (max-width: 1120px)
-  .square-box
-    height 300px
-
-@media screen and (max-width: 950px)
-  .square-box
-    height 400px
-
-@media screen and (max-width: 600px)
   .main-text
     & > p
       height 0
