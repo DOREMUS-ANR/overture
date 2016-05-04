@@ -20,7 +20,7 @@ gulp.task(tasks.CLIENT_VIEWS_DEV, () => {
 gulp.task(tasks.CLIENT_VIEWS_DIST, () => {
   'use strict';
   return gulp.src(VIEWS, {
-      base: path.DEV
+      base: path.SRC
     })
     .pipe(rev()).pipe(htmlmin({
       collapseWhitespace: true
