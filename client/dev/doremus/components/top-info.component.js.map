@@ -1,1 +1,0 @@
-{"version":3,"sources":["doremus/components/top-info.component.ts"],"names":[],"mappings":";;;;;;;;;;AAAA,qBAAwB,eAAe,CAAC,CAAA;AAuBxC;IAAA;IACA,CAAC;IAtBD;QAAC,gBAAS,CAAC;YACT,QAAQ,EAAE,UAAU;YACpB,QAAQ,EAAE,snCAgBT;SACF,CAAC;;wBAAA;IAGF,uBAAC;AAAD,CADA,AACC,IAAA;AADY,wBAAgB,mBAC5B,CAAA","file":"top-info.component.js","sourceRoot":"../../client/src/"}
