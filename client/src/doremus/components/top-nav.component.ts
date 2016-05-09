@@ -6,7 +6,7 @@ import {Component} from 'angular2/core';
     <div id="top_nav">
         <!--<div class="hamburger active"></div>-->
         <div class="logo">
-          <a href="../">
+          <a href="./">
               <div class="logo-icon" title="Return to the DOREMUS web homepage."></div>
           </a>
         </div>

@@ -11,7 +11,6 @@ import {QueriesTestComponent} from './queries-test.component';
     template: `
         <top-nav></top-nav>
         <left-menu></left-menu>
-
         <router-outlet></router-outlet>
     `,
     directives: [

@@ -30,19 +30,19 @@ export class Vocabulary {
       <p id='query'>Query: {{query}}</p>
       <select #sel [style.backgorund]="'yellow'" name="singleSelect" (change)="loadQuery(sel.value)">
             <option value="noSel">Select ...</option>
-            <option value="{{item.name}}" *ngFor="#item of items">{{item.name}}</option>
+            <option value="{{item.name}}" *ngFor="let item of items">{{item.name}}</option>
       </select><br>
       <p>Result</p>
       <ul [style.background]="'white'">
-        <li *ngFor="#result of queryResult">
+        <li *ngFor="let result of queryResult">
           <form>
             <div class="form-group">
               <p>Value:</p>
-              <input type="text" value={{result.value}}>
+              <input type="text" [(ngModel)]="result.value" style="width:80%;">
             </div>
             <div class="form-group">
               <p>Type:</p>
-              <input type="text" value={{result.type}}>
+              <input type="text" [(ngModel)]="result.type">
             </div>
           </form>
         </li>

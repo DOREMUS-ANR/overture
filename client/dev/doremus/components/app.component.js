@@ -20,7 +20,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n        <top-nav></top-nav>\n        <left-menu></left-menu>\n\n        <router-outlet></router-outlet>\n    ",
+            template: "\n        <top-nav></top-nav>\n        <left-menu></left-menu>\n        <router-outlet></router-outlet>\n    ",
             directives: [
                 top_nav_component_1.TopNavComponent,
                 left_menu_component_1.LeftMenuComponent,
