@@ -6,4 +6,4 @@ bower_components
 typings
 *.log
 
-client\dev
+client/dev
