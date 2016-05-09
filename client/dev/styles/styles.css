@@ -1979,6 +1979,17 @@ button {
   color: #888;
   font-family: 'Lato', sans-serif;
 }
+.btn-primary {
+  background-color: #e7892b;
+  border-color: #d47c24;
+}
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #d47c24 !important;
+  border-color: #d47c24 !important;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
 /* component-specific styles */
 /* TODO consider about load it on needed */
 #left_menu ul#navigation {
@@ -2023,8 +2034,7 @@ button {
 .square-box {
   position: relative;
   width: auto;
-  height: auto;
-  margin: auto;
+  height: 250px;
   overflow: hidden;
   background: #4679bd;
   top: 60px;
@@ -2032,16 +2042,13 @@ button {
   -webkit-border-radius: 10px;
   border-radius: 10px;
   background-color: #404040;
-  -webkit-box-shadow: 0 0.0625em 0.1875em 0 rgba(0,0,0,0.1), 0 0.5em 0 -0.25em #3c3c3c, 0 0.5em 0.1875em -0.25em rgba(0,0,0,0.1), 0 1em 0 -0.5em #393939, 0 1em 0.1875em -0.5em rgba(0,0,0,0.1);
-  box-shadow: 0 0.0625em 0.1875em 0 rgba(0,0,0,0.1), 0 0.5em 0 -0.25em #3c3c3c, 0 0.5em 0.1875em -0.25em rgba(0,0,0,0.1), 0 1em 0 -0.5em #393939, 0 1em 0.1875em -0.5em rgba(0,0,0,0.1);
 }
 .square-box:before {
   content: "";
   display: block;
-  padding: 0px;
 }
 .square-content {
-  height: auto;
+  height: 250px;
   top: 0;
   left: 0;
   bottom: 0;
@@ -2049,26 +2056,23 @@ button {
 }
 .main-video {
   display: inline-block;
-  margin: 10px;
-  width: 40%;
+  float: left;
+  width: 30%;
+  height: 230px;
+  padding: 10px;
 }
 .main-video #video1 {
+  height: 230px;
   width: 100%;
-  height: 100%;
-  -webkit-border-radius: 12px;
-  border-radius: 12px;
-  -webkit-box-shadow: 4px 4px 14px #000;
-  box-shadow: 4px 4px 14px #000;
 }
 .main-text {
-  margin: 10px;
-  top: 0;
-  left: 45%;
-  bottom: 0;
-  right: 0;
+  padding-left: 15px;
+  overflow: hidden;
+  float: left;
+  padding: 10px;
   display: inline-block;
-  width: 53%;
-  height: 90%;
+  width: 63%;
+  height: 230px;
 }
 .main-text > h2 {
   font-family: 'Lato', sans-serif;
@@ -2092,10 +2096,26 @@ button {
 #but {
   z-index: 1;
 }
-@media screen and (max-width: 1120px) {
+@media screen and (max-width: 950px) {
   .main-text > p {
     height: 0;
     visibility: hidden;
+  }
+}
+@media screen and (max-width: 650px) {
+  .square-box {
+    height: 500px;
+  }
+  .square-content {
+    height: 500px;
+  }
+  .main-text {
+    display: inline;
+    width: 90%;
+  }
+  .main-video {
+    display: inline;
+    width: 90%;
   }
 }
 #top_nav {

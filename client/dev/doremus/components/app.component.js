@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('angular2/core');
+var router_1 = require('angular2/router');
 var top_nav_component_1 = require('./top-nav.component');
 var left_menu_component_1 = require('./left-menu.component');
 var top_info_component_1 = require('./top-info.component');
@@ -19,14 +20,31 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n        <top-nav></top-nav>\n        <left-menu></left-menu>\n        <top-info></top-info>\n        <queries-test></queries-test>\n    ",
+            template: "\n        <top-nav></top-nav>\n        <left-menu></left-menu>\n\n        <router-outlet></router-outlet>\n    ",
             directives: [
                 top_nav_component_1.TopNavComponent,
                 left_menu_component_1.LeftMenuComponent,
                 top_info_component_1.TopInfoComponent,
-                queries_test_component_1.QueriesTestComponent
+                queries_test_component_1.QueriesTestComponent,
+                router_1.ROUTER_DIRECTIVES
+            ],
+            providers: [
+                router_1.ROUTER_PROVIDERS,
             ]
-        }), 
+        }),
+        router_1.RouteConfig([
+            {
+                path: '/main',
+                name: 'Main',
+                component: top_info_component_1.TopInfoComponent,
+                useAsDefault: true
+            },
+            {
+                path: '/search',
+                name: 'Search',
+                component: queries_test_component_1.QueriesTestComponent
+            }
+        ]), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
     return AppComponent;

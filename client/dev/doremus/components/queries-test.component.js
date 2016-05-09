@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('angular2/core');
 var queries_test_service_1 = require("../services/queries-test.service");
+var router_1 = require('angular2/router');
 var resultQ = (function () {
     function resultQ(value, type) {
         this.value = value;
@@ -27,8 +28,9 @@ var Vocabulary = (function () {
 }());
 exports.Vocabulary = Vocabulary;
 var QueriesTestComponent = (function () {
-    function QueriesTestComponent(_queriesService) {
+    function QueriesTestComponent(_queriesService, router) {
         var _this = this;
+        this.router = router;
         this.queriesService = _queriesService;
         this.query = 0;
         var result1 = new resultQ('prueba1', 'tipo1');
@@ -66,13 +68,17 @@ var QueriesTestComponent = (function () {
         }
         return results;
     };
+    QueriesTestComponent.prototype.goToMain = function () {
+        var link = ['Main'];
+        this.router.navigate(link);
+    };
     QueriesTestComponent = __decorate([
         core_1.Component({
             selector: 'queries-test',
-            template: "\n  <br>\n  <br>\n  <div class='square-box' [style.background]=\"'rgb(155, 186, 114)'\" [style.color]=\"'black'\">\n    <div class='square-content' style=\"margin:100px;\">\n      <p id='query'>Query: {{query}}</p>\n      <select #sel [style.backgorund]=\"'yellow'\" name=\"singleSelect\" (change)=\"loadQuery(sel.value)\">\n            <option value=\"noSel\">Select ...</option>\n            <option value=\"{{item.name}}\" *ngFor=\"#item of items\">{{item.name}}</option>\n      </select><br>\n    <p>Result</p>\n      <ul [style.background]=\"'white'\">\n        <li *ngFor=\"#result of queryResult\">\n          <span>Value: {{result.value}}</span>\n          <span>Type: {{result.type}}</span>\n        </li>\n      </ul>\n    </div>\n  </div>\n  ",
+            template: "\n  <div class='square-box' [style.background]=\"'rgb(155, 186, 114)'\" [style.color]=\"'black'\" style=\"height:auto;\">\n    <div class='square-content' style=\"margin:50px; height:auto;\">\n      <p id='query'>Query: {{query}}</p>\n      <select #sel [style.backgorund]=\"'yellow'\" name=\"singleSelect\" (change)=\"loadQuery(sel.value)\">\n            <option value=\"noSel\">Select ...</option>\n            <option value=\"{{item.name}}\" *ngFor=\"#item of items\">{{item.name}}</option>\n      </select><br>\n      <p>Result</p>\n      <ul [style.background]=\"'white'\">\n        <li *ngFor=\"#result of queryResult\">\n          <form>\n            <div class=\"form-group\">\n              <p>Value:</p>\n              <input type=\"text\" value={{result.value}}>\n            </div>\n            <div class=\"form-group\">\n              <p>Type:</p>\n              <input type=\"text\" value={{result.type}}>\n            </div>\n          </form>\n        </li>\n      </ul>\n    </div>\n  </div>\n  <br>\n  <div style=\"width: 10%; margin: 0 auto; position:relative; top: 60px;\">\n    <a  (click)=\"goToMain()\" class=\"btn btn-primary\">Go Back!</a>\n  </div>\n  ",
             providers: [queries_test_service_1.QueriesService]
         }), 
-        __metadata('design:paramtypes', [queries_test_service_1.QueriesService])
+        __metadata('design:paramtypes', [queries_test_service_1.QueriesService, router_1.Router])
     ], QueriesTestComponent);
     return QueriesTestComponent;
 }());

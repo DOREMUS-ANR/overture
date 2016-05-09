@@ -1,5 +1,6 @@
 import {Component} from 'angular2/core';
 import {QueriesService} from "../services/queries-test.service";
+import {Router} from 'angular2/router';
 
 export class resultQ {
   value: string;
@@ -24,23 +25,33 @@ export class Vocabulary {
 @Component({
   selector: 'queries-test',
   template: `
-  <br>
-  <br>
-  <div class='square-box' [style.background]="'rgb(155, 186, 114)'" [style.color]="'black'">
-    <div class='square-content' style="margin:100px;">
+  <div class='square-box' [style.background]="'rgb(155, 186, 114)'" [style.color]="'black'" style="height:auto;">
+    <div class='square-content' style="margin:50px; height:auto;">
       <p id='query'>Query: {{query}}</p>
       <select #sel [style.backgorund]="'yellow'" name="singleSelect" (change)="loadQuery(sel.value)">
             <option value="noSel">Select ...</option>
             <option value="{{item.name}}" *ngFor="#item of items">{{item.name}}</option>
       </select><br>
-    <p>Result</p>
+      <p>Result</p>
       <ul [style.background]="'white'">
         <li *ngFor="#result of queryResult">
-          <span>Value: {{result.value}}</span>
-          <span>Type: {{result.type}}</span>
+          <form>
+            <div class="form-group">
+              <p>Value:</p>
+              <input type="text" value={{result.value}}>
+            </div>
+            <div class="form-group">
+              <p>Type:</p>
+              <input type="text" value={{result.type}}>
+            </div>
+          </form>
         </li>
       </ul>
     </div>
+  </div>
+  <br>
+  <div style="width: 10%; margin: 0 auto; position:relative; top: 60px;">
+    <a  (click)="goToMain()" class="btn btn-primary">Go Back!</a>
   </div>
   `,
   providers: [QueriesService]
@@ -52,7 +63,7 @@ export class QueriesTestComponent {
    queriesService: QueriesService;
    items: Vocabulary[];
 
-   constructor(_queriesService: QueriesService) {
+   constructor(_queriesService: QueriesService, private router:Router) {
     this.queriesService= _queriesService;
     this.query = 0;
     var result1 = new resultQ('prueba1','tipo1');
@@ -101,4 +112,10 @@ export class QueriesTestComponent {
       }
       return results;
     }
+
+    goToMain() {
+      let link = ['Main'];
+      this.router.navigate(link);
+    }
+
 }
