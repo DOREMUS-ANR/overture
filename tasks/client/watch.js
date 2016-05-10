@@ -6,6 +6,7 @@ import {
 } from './const';
 
 const TS = path.SRC + '**/*.ts';
+const JS = path.SRC + '**/*.js';
 const STYL = path.SRC + '**/*.styl';
 const HTML = path.SRC + '**/*.html';
 const IMG = path.SRC + 'img/**/*';
@@ -33,6 +34,7 @@ gulp.task(tasks.CLIENT_WATCH, () => {
   }]);
   gulp.watch(TS, [tasks.CLIENT_BUILD_TS_DEV]).on('change', browserSync.reload);
   gulp.watch(HTML, [tasks.CLIENT_VIEWS_DEV]).on('change', browserSync.reload);
+  gulp.watch(JS, [tasks.CLIENT_JS_DEV]).on('change', browserSync.reload);
   gulp.watch(IMG, [tasks.CLIENT_IMAGE_DEV]).on('change', browserSync.reload);
   gulp.watch(FONT, [tasks.CLIENT_FONT_DEV]).on('change', browserSync.reload);
 });

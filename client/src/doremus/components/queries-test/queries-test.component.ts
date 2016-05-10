@@ -1,6 +1,8 @@
-import {Component} from 'angular2/core';
-import {QueriesService} from "../services/queries-test.service";
-import {Router} from 'angular2/router';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
+import {QueriesService} from "../../services/queries-test.service";
+
+declare var __moduleName: string;
 
 export class resultQ {
   value: string;
@@ -23,37 +25,9 @@ export class Vocabulary {
 }
 
 @Component({
+  moduleId: __moduleName,
   selector: 'queries-test',
-  template: `
-  <div class='square-box' [style.background]="'rgb(155, 186, 114)'" [style.color]="'black'" style="height:auto;">
-    <div class='square-content' style="margin:50px; height:auto;">
-      <p id='query'>Query: {{query}}</p>
-      <select #sel [style.backgorund]="'yellow'" name="singleSelect" (change)="loadQuery(sel.value)">
-            <option value="noSel">Select ...</option>
-            <option value="{{item.name}}" *ngFor="let item of items">{{item.name}}</option>
-      </select><br>
-      <p>Result</p>
-      <ul [style.background]="'white'">
-        <li *ngFor="let result of queryResult">
-          <form>
-            <div class="form-group">
-              <p>Value:</p>
-              <input type="text" [(ngModel)]="result.value" style="width:80%;">
-            </div>
-            <div class="form-group">
-              <p>Type:</p>
-              <input type="text" [(ngModel)]="result.type">
-            </div>
-          </form>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <br>
-  <div style="width: 10%; margin: 0 auto; position:relative; top: 60px;">
-    <a  (click)="goToMain()" class="btn btn-primary">Go Back!</a>
-  </div>
-  `,
+  templateUrl: 'queries-test.template.html',
   providers: [QueriesService]
 })
 
@@ -114,8 +88,7 @@ export class QueriesTestComponent {
     }
 
     goToMain() {
-      let link = ['Main'];
-      this.router.navigate(link);
+      this.router.navigate(['/']);
     }
 
 }

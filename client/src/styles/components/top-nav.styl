@@ -59,55 +59,27 @@
 				&:hover
 					background-color #f3f3f3
 	.logo
+		width 25%
 		font-size 12px
 		float left
 		display inline-block
-	.hamburger
-		float left
-		height 60px
-		width 45px
-		position relative
-		cursor pointer
-		border-right 1px solid rgba(51, 102, 153, 0.5)
-		&:before
-			content '\e870'
-			font-size 21px
-			text-shadow none
-			line-height 33px
-			font-family "fontello"
-			color #336699
-			position absolute
-			left 12px
-			width 32px
-			height 32px
-			top 12px
-			cursor pointer
-			border-radius 0 5px 5px 0
-	.partner-icon
-		background-image url("../img/logos/doremus.logo.png")
-		background-position 50%
-		background-repeat no-repeat
-		background-size contain
-		height 32px
-		margin 0 auto
-		width 80px
-		margin 14px 0
-		border-left 1px solid #ddd
 	& > ul
+		padding-left 0
+		margin-right 0
+		margin-left auto
 		margin-top 0
-		float right
+		width 25%
 		position relative
 		height 60px
 		vertical-align top
+		float left
 		& > li
 			top auto
 			display inline-block
-			right auto
 			min-height 60px !important
 			height 60px
 			cursor pointer
-			left auto
-			float left
+			float right
 			color #777
 			vertical-align top
 			padding 0 !important
@@ -115,13 +87,6 @@
 			border-color #eee
 			border-left 1px solid #eee
 			margin 0
-	li#loggedIn
-		&.menu-profile
-			max-width 100px
-	li#global_search
-		width 310px
-		&:hover
-			background-color transparent
 	li#login
 	.menu-icon
 		display block
@@ -130,12 +95,6 @@
 		text-align center
 		padding 18px 0 0
 		background-image none
-	#loggedIn
-		img
-			height 100%
-			padding 8px
-			margin 0 auto
-			display block
 	.menu-item-text
 		&.multiple-line
 			padding-top 0
@@ -145,7 +104,6 @@
 			display none
 	li
 		&.menu-item
-			width auto
 			cursor pointer
 			min-width 40px
 	li#social_media
@@ -171,61 +129,7 @@
 				height auto
 				padding 0
 				box-shadow 1px 1px 1px 1px rgba(0, 0, 0, 0.2)
-	#global_search
-		.gobutton
-			color transparent !important
-			background-color transparent
-			padding 22px 26px 48px 0px
-			width 0
-			margin 0
-			&:before
-				color #777
-				font-size 14px
-		input
-			padding-right 40px
-	#google_translate_wrapper
-		img
-			display none
-		span
-			border none !important
-			color #777
-			margin-right 4px
-			color #7093B7
-	#topPart
-		top auto
-		right auto
-		left auto
-		display inline-block
-		min-height 60px !important
-		height 60px
-		cursor pointer
-		color #777
-		vertical-align top
-		padding 0 !important
-		position relative
-		border-color #eee
-		border-left 1px solid #eee
-		margin 0
-	& > div#centerPart
-		margin-top 0
-		float right
-		position relative
-		height 60px
-		width 50%
-		div
-			min-height 60px !important
-			height 60px
-			color #777
-			margin auto
-			display inline-block
-			position relative
-			border-color #eee
-			border-left 1px solid #eee
-			border-right 1px solid #eee
-			width 20%
-	.logo>a, .partner-icon
-		display inline-block
-	.menu-item-text, .user-profile
+	.menu-item-text
 		padding 6px 10px 12px
 		text-align center
 		color #777
@@ -234,26 +138,18 @@
 		line-height 14px
 	li:hover, li#social_media .share-buttons li:hover
 		background-color #f3f3f3
-
-.menu-active
-	#top_nav
-		.hamburger
-			&:before
-				color #283339
-
-
-.skiptranslate
-	top auto
-	z-index 1
-	& > iframe
-		&.goog-te-banner-frame
-			display none
-			top 61px
-			box-shadow 0px 0px 1px 0px #999999
-			width 860px
-			left auto
-			right 0
-
+	.sections-part
+		width 50%
+		height 60px
+		line-height 60px
+		float left
+		text-align center
+		a
+			cursor pointer
+			padding-right 3px
+			border-right 1px solid #ddd
+		a#persons
+			border-right none
 @media screen and (max-width: 600px)
 	#top_nav
 		.main-browse
