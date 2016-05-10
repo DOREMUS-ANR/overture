@@ -22,10 +22,14 @@
   "files": [
     "client/src/doremus/components/app.component.ts",
     "client/src/doremus/components/left-menu/left-menu.component.ts",
+    "client/src/doremus/components/performance-tab/performance-tab.component.ts",
+    "client/src/doremus/components/person-tab/person-tab.component.ts",
     "client/src/doremus/components/queries-test/queries-test.component.ts",
+    "client/src/doremus/components/recording-tab/recording-tab.component.ts",
+    "client/src/doremus/components/score-tab/score-tab.component.ts",
     "client/src/doremus/components/top-info/top-info.component.ts",
-    "client/src/doremus/components/top-nav.component.ts",
     "client/src/doremus/components/top-nav/top-nav.component.ts",
+    "client/src/doremus/components/work-tab/work-tab.component.ts",
     "client/src/doremus/services/queries-test.service.ts",
     "client/src/index.ts",
     "typings/browser.d.ts"

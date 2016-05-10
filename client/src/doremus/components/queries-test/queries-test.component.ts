@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 import {QueriesService} from "../../services/queries-test.service";
 
 declare var __moduleName: string;
@@ -28,7 +28,8 @@ export class Vocabulary {
   moduleId: __moduleName,
   selector: 'queries-test',
   templateUrl: 'queries-test.template.html',
-  providers: [QueriesService]
+  providers: [QueriesService],
+  directives: [ROUTER_DIRECTIVES]
 })
 
 export class QueriesTestComponent {
@@ -37,7 +38,7 @@ export class QueriesTestComponent {
    queriesService: QueriesService;
    items: Vocabulary[];
 
-   constructor(_queriesService: QueriesService, private router:Router) {
+   constructor(_queriesService: QueriesService) {
     this.queriesService= _queriesService;
     this.query = 0;
     var result1 = new resultQ('prueba1','tipo1');
@@ -86,9 +87,4 @@ export class QueriesTestComponent {
       }
       return results;
     }
-
-    goToMain() {
-      this.router.navigate(['/']);
-    }
-
 }
