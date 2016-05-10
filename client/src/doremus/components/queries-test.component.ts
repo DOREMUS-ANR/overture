@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {QueriesService} from "../services/queries-test.service";
 
 export class resultQ {
@@ -31,11 +31,11 @@ export class Vocabulary {
       <p id='query'>Query: {{query}}</p>
       <select #sel [style.backgorund]="'yellow'" name="singleSelect" (change)="loadQuery(sel.value)">
             <option value="noSel">Select ...</option>
-            <option value="{{item.name}}" *ngFor="#item of items">{{item.name}}</option>
+            <option value="{{item.name}}" *ngFor="let item of items">{{item.name}}</option>
       </select><br>
     <p>Result</p>
       <ul [style.background]="'white'">
-        <li *ngFor="#result of queryResult">
+        <li *ngFor="let result of queryResult">
           <span>Value: {{result.value}}</span>
           <span>Type: {{result.type}}</span>
         </li>

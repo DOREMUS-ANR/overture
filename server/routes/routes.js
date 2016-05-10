@@ -1,6 +1,8 @@
 import ApiRouter from '../routes/api.router';
 import path from 'path';
-import {APP_PATH} from '../config/constants';
+import {
+  APP_PATH
+} from '../config/constants';
 
 export default class Routes {
   static init(app, router) {
@@ -14,9 +16,7 @@ export default class Routes {
     );
 
     // TODO 404 page
-    router.get('*', (req, res) =>
-      res.sendFile(path.join(process.cwd(), 'client/dev/index.html'))
-    );
+    router.get('*', (req, res) => res.status(404).send('404 not found'));
 
     app.use('/', router);
   }

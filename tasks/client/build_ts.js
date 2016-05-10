@@ -5,17 +5,18 @@ import {
   path,
   tasks
 } from './const';
+import tsconfigSrc from '../../tsconfig.json';
 
-const TS_CONFIG = path.ROOT + 'tsconfig.json';
+let filesGlob = tsconfigSrc.filesGlob;
 
 gulp.task(tasks.CLIENT_BUILD_TS_DEV, () => {
-  let tsconfigSrc = tsc.createProject(TS_CONFIG);
+  'use strict';
 
-  return tsconfigSrc.src()
+  return gulp.src(filesGlob)
     .pipe(sourcemaps.init())
-    .pipe(tsc(tsconfigSrc))
+    .pipe(tsc(tsconfigSrc.compilerOptions))
     .js
-    .pipe(sourcemaps.write('.',{
+    .pipe(sourcemaps.write('.', {
       includeContent: false,
       sourceRoot: path.SRC
     }))
@@ -23,12 +24,11 @@ gulp.task(tasks.CLIENT_BUILD_TS_DEV, () => {
 });
 
 gulp.task(tasks.CLIENT_BUILD_TS_DIST, () => {
-  let tsconfigSrc = tsc.createProject(TS_CONFIG);
+  'use strict';
 
-  return tsconfigSrc.src({
-      base: path.DEV
-    })
-    .pipe(tsc(tsconfigSrc))
-    .js
+  return gulp.src(filesGlob)
+    .pipe(tsc(tsconfigSrc.compilerOptions))
+
+  .js
     .pipe(gulp.dest(path.DIST));
 });

@@ -1,5 +1,5 @@
-import {Component} from 'angular2/core';
-import {TopNavComponent} from './top-nav.component';
+import {Component} from '@angular/core';
+import {TopNavComponent} from './top-nav/top-nav.component';
 import {LeftMenuComponent} from './left-menu.component';
 import {TopInfoComponent} from './top-info.component';
 import {QueriesTestComponent} from './queries-test.component';

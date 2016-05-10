@@ -21,7 +21,7 @@ The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][
 ### Run (dev mode)
 - Install some global packages
 
-        npm install -g gulp gulp-cli nodemon
+        npm install -g gulp gulp-cli nodemon typings
 
 - In application folder
 

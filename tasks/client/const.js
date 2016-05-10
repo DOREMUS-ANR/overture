@@ -15,6 +15,8 @@ export const tasks = {
   CLIENT_FONT_DIST: 'client.fonts:dist',
   CLIENT_VIEWS_DEV: 'client.views:dev',
   CLIENT_VIEWS_DIST: 'client.views:dist',
+  CLIENT_JS_DEV: 'client.js:dev',
+  CLIENT_JS_DIST: 'client.js:dist',
   CLIENT_IMAGE_DEV: 'client.imgs:dev',
   CLIENT_IMAGE_DIST: 'client.imgs:dist',
   CLIENT_DEL_DEV: 'client.del:dev',

@@ -6,7 +6,7 @@ import {
 } from './client/const';
 
 
-gulp.task(tasks.SERVER_DEV, [tasks.CLIENT_BUILD_DEV], () => {
+gulp.task(tasks.SERVER_DEV, [tasks.CLIENT_BUILD_DEV, tasks.CLIENT_WATCH], () => {
   'use strict';
   return nodemon({
       script: path.ROOT + 'index.js',
@@ -14,6 +14,5 @@ gulp.task(tasks.SERVER_DEV, [tasks.CLIENT_BUILD_DEV], () => {
       env: {
         'NODE_ENV': 'development'
       }
-    })
-    .on('start', tasks.CLIENT_WATCH);
+    });
 });
