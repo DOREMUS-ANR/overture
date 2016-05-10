@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'top-info',
@@ -15,11 +16,22 @@ import {Component} from '@angular/core';
         <p>We publish musical metadata coming form BnF, Radio France and Philharmonie de Paris on the web of data, and align datasets together with the major hubs of the Linked Open Data cloud.</p>
         <h2 id="title2">Conect sources, multiply usage, enrich user experience</h2>
         <p>We develop a musical recommendation system based on the enriched data model and the interconnection of musical catalogs, in order to offer innovative services.</p>
+      </div>
     </div>
-    </div>
+    <br>
   </div>
-  `
+  <br>
+  <div style="width: 10%; margin: 0 auto; position:relative; top: 60px;">
+    <a  (click)="goToSearch()" class="btn btn-primary">Start Discovering!</a>
+  </div>
+  `,
 })
 
 export class TopInfoComponent {
+  constructor(private router: Router) {
+  }
+
+  goToSearch() {
+    this.router.navigate(['/search']);
+  }
 }

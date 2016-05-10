@@ -16,7 +16,11 @@ export default class Routes {
     );
 
     // TODO 404 page
-    router.get('*', (req, res) => res.status(404).send('404 not found'));
+    router.get('*', (req, res) => {
+      res.sendFile(path.join(process.cwd(), APP_PATH.CLIENT_FILES, 'index.html'));
+
+      // res.status(404).send('404 not found');
+    });
 
     app.use('/', router);
   }
