@@ -1,111 +1,52 @@
 #top_nav
-	position fixed
-	top 0
-	height 60px
-	left 0
-	width 100%
-	background-color white
-	box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
-	z-index 9999
+	display flex
+	flex-flow row wrap
+	& > .logo
+		height 60px
+		flex-grow 1
+
 	.logo-icon
-		background url("../img/logos/doremus.logo.png") center center no-repeat
-		background-size contain
-		height 60px
-		margin 0 10px
-		width 60px
-	.main-browse
-		height 60px
-		width auto
-		position relative
-		float left
-		margin 0
-		padding 0
-	.browse-img
-		display inline-block
-		position relative
-		background-image url("../img/icons/browse.png")
-		background-repeat no-repeat
-		background-size 40px
-		background-position 50%
-		height 60px
-		width 60px
-		cursor pointer
-		margin 0
-		z-index 1
-	.browse-img#work
-		width 0px
-		visibility hidden
-		background-image url("../img/icons/work.png")
-	.browse-img#performance
-		width 0
-		visibility hidden
-		background-image url("../img/icons/performance.png")
-	.browse-img#score
-		width 0
-		visibility hidden
-		background-image url("../img/icons/score.jpg")
-	.browse-img#recording
-		width 0
-		visibility hidden
-		background-image url("../img/icons/recording.png")
-	#browse
-		&:hover
-			.browse-img
-				width 60px
-				visibility visible
-				margin 0
-				padding 0
-				box-shadow 1px 1px 1px 1px rgba(0, 0, 0, 0.2)
-				&:hover
-					background-color #f3f3f3
-	.logo
-		width 25%
-		font-size 12px
-		float left
-		display inline-block
+			height 60px
+			width 60px
+			background url("../img/logos/doremus.logo.png") center center no-repeat
+			background-size contain
+
+	& > .sections-part
+		flex-grow 4
+		line-height 20px
+		text-align center
+		display flex
+		justify-content space-around
+		align-items center
+		a
+			flex-grow 1
+			cursor pointer
+			padding auto
+			border-right 1px solid #ddd
+		a#person
+			border-right none
 	& > ul
-		padding-left 0
-		margin-right 0
-		margin-left auto
-		margin-top 0
-		width 25%
-		position relative
 		height 60px
-		vertical-align top
-		float left
+		flex-grow 1
+		margin-left 0
+		padding-left 0
+		padding-right 5px
+		display flex
+		justify-content flex-end
 		& > li
+			font-size 0
+			min-width 40px
 			top auto
-			display inline-block
 			min-height 60px !important
 			height 60px
 			cursor pointer
-			float right
 			color #777
-			vertical-align top
 			padding 0 !important
 			position relative
 			border-color #eee
 			border-left 1px solid #eee
-			margin 0
-	li#login
-	.menu-icon
-		display block
-		font-size 18px
-		color #7093B7
-		text-align center
-		padding 18px 0 0
-		background-image none
-	.menu-item-text
-		&.multiple-line
-			padding-top 0
-			padding-bottom 0
-	p
-		&.user-profile
-			display none
-	li
-		&.menu-item
-			cursor pointer
-			min-width 40px
+
+
 	li#social_media
 		.share-buttons
 			height 0
@@ -124,11 +65,22 @@
 					span
 						align-content center
 						padding-bottom 15px
-		&:hover
-			.share-buttons
-				height auto
-				padding 0
-				box-shadow 1px 1px 1px 1px rgba(0, 0, 0, 0.2)
+		  &:hover
+				.share-buttons
+					height auto
+					padding 0
+					box-shadow 1px 1px 1px 1px rgba(0, 0, 0, 0.2)
+
+	.menu-item
+		cursor pointer
+		min-width 40px
+	.menu-icon
+		display block
+		font-size 18px
+		color #7093B7
+		text-align center
+		padding 18px 0 0
+		background-image none
 	.menu-item-text
 		padding 6px 10px 12px
 		text-align center
@@ -137,19 +89,54 @@
 		height 32px
 		line-height 14px
 	li:hover, li#social_media .share-buttons li:hover
-		background-color #f3f3f3
-	.sections-part
-		width 50%
-		height 60px
-		line-height 60px
-		float left
-		text-align center
-		a
-			cursor pointer
-			padding-right 3px
-			border-right 1px solid #ddd
-		a#person
-			border-right none
+		background-color #c3e9f1
+
+// .main-browse
+// 	height 60px
+// 	width auto
+// 	position relative
+// 	float left
+// 	margin 0
+// 	padding 0
+// .browse-img
+// 	display inline-block
+// 	position relative
+// 	background-image url("../img/icons/browse.png")
+// 	background-repeat no-repeat
+// 	background-size 40px
+// 	background-position 50%
+// 	height 60px
+// 	width 60px
+// 	cursor pointer
+// 	margin 0
+// 	z-index 1
+// .browse-img#work
+// 	width 0px
+// 	visibility hidden
+// 	background-image url("../img/icons/work.png")
+// .browse-img#performance
+// 	width 0
+// 	visibility hidden
+// 	background-image url("../img/icons/performance.png")
+// .browse-img#score
+// 	width 0
+// 	visibility hidden
+// 	background-image url("../img/icons/score.jpg")
+// .browse-img#recording
+// 	width 0
+// 	visibility hidden
+// 	background-image url("../img/icons/recording.png")
+// #browse
+// 	&:hover
+// 		.browse-img
+// 			width 60px
+// 			visibility visible
+// 			margin 0
+// 			padding 0
+// 			box-shadow 1px 1px 1px 1px rgba(0, 0, 0, 0.2)
+// 			&:hover
+// 				background-color #f3f3f3
+
 @media screen and (max-width: 600px)
 	#top_nav
 		.main-browse
@@ -158,3 +145,12 @@
 		.browse-img
 			background-color rgba(250, 254, 251, 0.75)
 			display block
+
+@media screen and (max-width: 410px)
+	.header
+		height 100px
+	#top_nav
+		&>ul
+			order 2
+	  &>.sections-part
+		 order 3

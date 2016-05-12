@@ -11,4 +11,5 @@ declare var __moduleName: string;
 })
 
 export class PerformanceTabComponent {
+  
 }

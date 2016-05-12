@@ -13,9 +13,10 @@ import {ScoreTabComponent} from './score-tab/score-tab.component';
 @Component({
     selector: 'my-app',
     template: `
-        <top-nav></top-nav>
-        <left-menu></left-menu>
-        <router-outlet>see me</router-outlet>
+        <header class="header"><top-nav></top-nav></header>
+        <aside class="aside"><left-menu></left-menu></aside>
+        <article class="main"><router-outlet></router-outlet></article>
+        <footer class="footer"></footer>
     `,
     directives: [
       TopNavComponent,

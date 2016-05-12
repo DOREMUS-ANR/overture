@@ -16,13 +16,35 @@ h3
   color #963
   font-family 'Lato', sans-serif
   font-weight lighter
-
 body
-  margin 2em
+  margin 0
+  background-image url("../img/back.jpeg")
+  background-size auto
+  background-repeat no-repeat
+
+body .fullPage
+  display flex
+  flex-flow row wrap
 
 body, input[text], button
   color #888
   font-family 'Lato', sans-serif
+
+.header, .footer
+  flex 1 100%
+  height 60px
+  width 100%
+  background-color white
+  box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
+
+.aside
+  flex 1 auto
+
+.main
+  margin 10px
+  flex 1 100%
+  display flex
+  flex-flow column wrap
 
 .btn-primary
   background-color #e7892b
@@ -37,3 +59,4 @@ body, input[text], button
 @import 'components/left-menu'
 @import 'components/top-info'
 @import 'components/top-nav'
+@import 'components/performance-tab'

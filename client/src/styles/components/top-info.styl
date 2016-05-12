@@ -1,42 +1,30 @@
-.square-box
-  position relative
+.top_info
+  order 1
+  background-color rgba(#404040, 0.5)
+  height auto
   width auto
-  height 250px
-  overflow hidden
-  background #4679BD
-  top 60px
-  word-wrap break-word
-  border-radius 10px
-  background-color #404040
-  &:before
-    content ""
-    display block
+  display flex
+  justify-content space-around
+  flex-flow row wrap
+  font-size 0
 
-.square-content
-  height 250px
-  top 0
-  left 0
-  bottom 0
-  right 0
-
-.main-video
-  display inline-block
-  float left
-  width 30%
-  height 230px
+.main-img
+  align-self center
+  flex-grow 1
+  height 100%
+  width 35%
   padding 10px
   #video1
-    height 230px
+    height 100%
     width 100%
 
 .main-text
-  padding-left 15px
-  overflow hidden
-  float left
+  align-self center
+  width 65%
+  font-size 15px
+  flex-grow 2
   padding 10px
-  display inline-block
-  width 63%
-  height 230px
+  height 100%
   & > h2
     font-family 'Lato', sans-serif
     font-size 100%
@@ -46,30 +34,20 @@
     font-family 'Lato', sans-serif
     font-size 80%
   & > h2#title0
-    color #396
+    color #298356
   & > h2#title1
     color #9e009e
   & > h2#title2
     color #963
 
-#but
-  z-index 1
-
-@media screen and (max-width: 950px)
-  .main-text
-    & > p
-      height 0
-      visibility hidden
-
 @media screen and (max-width: 650px)
-  .square-box
-    height 500px
-  .square-content
-    height 500px
-  .main-text
-    display inline
-    width 90%
-
-  .main-video
-    display inline
-    width 90%
+  .top_info
+    flex-flow row wrap
+    & .main-text > p
+      font-size 0
+    & .main-text > h2
+      margin 0
+@media screen and (max-width: 400px)
+  .top_info
+    & .main-text > h2
+      font-size 12px
