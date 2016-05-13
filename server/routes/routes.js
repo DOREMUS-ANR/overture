@@ -7,6 +7,11 @@ import {
 export default class Routes {
   static init(app, router) {
 
+    // not resolved static & modules
+    router.use('/static', (req, res) => {res.status(404).send();});
+    router.use('/lib', (req, res) => {res.status(404).send();});
+
+
     // api
     router.use('/api', ApiRouter);
 
@@ -17,9 +22,13 @@ export default class Routes {
 
     // TODO 404 page
     router.get('*', (req, res) => {
-      res.sendFile(path.join(process.cwd(), APP_PATH.CLIENT_FILES, 'index.html'));
-
-      // res.status(404).send('404 not found');
+      let accept = req.headers.accept;
+      if (accept && accept.includes('text/html')) {
+        // client responsability
+        res.sendFile(path.join(process.cwd(), APP_PATH.CLIENT_FILES, 'index.html'));
+      } else {
+        res.status(404).send('404 not found');
+      }
     });
 
     app.use('/', router);

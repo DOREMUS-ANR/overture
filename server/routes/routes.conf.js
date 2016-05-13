@@ -5,21 +5,21 @@ import helmet from 'helmet';
 import {APP_PATH} from '../config/constants';
 
 export default class RouteConfig {
-  static init(application, exp) {
+  static init(app, express) {
     let _root = process.cwd();
 
-    application.use('/static', exp.static(_root + APP_PATH.CLIENT_FILES));
-    application.use('/lib', exp.static(_root + '/node_modules'));
+    app.use('/static', express.static(_root + APP_PATH.CLIENT_FILES));
+    app.use('/lib', express.static(_root + '/node_modules'));
 
-    application.use(bodyParser.json());
-    application.use(morgan('dev'));
-    application.use(contentLength.validateMax({
+    app.use(bodyParser.json());
+    app.use(morgan('dev'));
+    app.use(contentLength.validateMax({
       max: 999
     }));
-    application.use(helmet());
+    app.use(helmet());
 
-    application.use(bodyParser.json());
-    application.use(bodyParser.urlencoded({
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({
       extended: true
     }));
   }

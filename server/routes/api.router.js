@@ -15,6 +15,13 @@ fs.readdirSync(apiFolder).forEach((file) => {
   }
 });
 
+router.get('*', (req, res) => {
+  'use strict';
+  res.status(404).json({
+    error: 'Not Found'
+  });
+});
+
 export {
   router as
   default
