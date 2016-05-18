@@ -1,15 +1,19 @@
+top-info
+  display flex
+  flex-flow row wrap
+  justify-content center
+
 .top_info
-  order 1
   background-color rgba(#404040, 0.5)
-  height auto
-  width auto
+  height 100%
+  width 100%
   display flex
   justify-content space-around
   flex-flow row wrap
   font-size 0
+  align-items center
 
 .main-img
-  align-self center
   flex-grow 1
   height 100%
   width 35%
@@ -19,7 +23,6 @@
     width 100%
 
 .main-text
-  align-self center
   width 65%
   font-size 15px
   flex-grow 2
@@ -39,6 +42,11 @@
     color #9e009e
   & > h2#title2
     color #963
+
+.butI
+  margin-top 5px
+  height 100%
+  width 140px
 
 @media screen and (max-width: 650px)
   .top_info

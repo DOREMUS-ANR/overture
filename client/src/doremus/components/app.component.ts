@@ -16,7 +16,7 @@ import {ScoreTabComponent} from './score-tab/score-tab.component';
         <header class="header"><top-nav></top-nav></header>
         <aside class="aside"><left-menu></left-menu></aside>
         <article class="main"><router-outlet></router-outlet></article>
-        <footer class="footer"></footer>
+        <footer class="footer">Footer</footer>
     `,
     directives: [
       TopNavComponent,

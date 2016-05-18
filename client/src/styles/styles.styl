@@ -17,17 +17,16 @@ h3
   font-family 'Lato', sans-serif
   font-weight lighter
 
+body
+  display block
 
 my-app
   margin 0
   background-image url("../img/back.jpeg")
   background-size auto
   background-repeat no-repeat
-  height 100vh
-  min-height 100vh
   display flex
-  flex-flow column wrap
-  height 100vh
+  flex-flow column nowrap
   min-height 100vh
   color #888
   font-family 'Lato', sans-serif
@@ -39,15 +38,23 @@ my-app
   box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
   padding 0
   margin 0
+  z-index 9998
+
+.footer
+  height 30px
+  align-self flex-end
 
 .aside
-  flex 0
+  z-index 9999
 
 .main
-  margin 10px
+  align-self flex-start
+  margin 20px
   flex 1 0 auto
+  width auto
+  height auto
   display flex
-  flex-flow row wrap
+  flex-flow column wrap
 
 .btn-primary
   background-color #e7892b
