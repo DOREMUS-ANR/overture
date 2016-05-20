@@ -22,8 +22,9 @@ body
 
 my-app
   margin 0
-  background-image url("../img/back.jpeg")
-  background-size auto
+  background-image url("../img/back2.jpg")
+  background-size 100% 100%
+  background-position bottom
   background-repeat no-repeat
   display flex
   flex-flow column nowrap
@@ -43,15 +44,18 @@ my-app
 .footer
   height 30px
   align-self flex-end
+  & > p
+    line-height 30px
+    text-align center
 
 .aside
   z-index 9999
 
 .main
   align-self flex-start
-  margin 20px
+  margin 20px auto
   flex 1 0 auto
-  width auto
+  width 95%
   height auto
   display flex
   flex-flow column wrap
@@ -64,9 +68,73 @@ my-app
     border-color #d47c24 !important
     box-shadow none
 
+.selected {
+  background-color #CFD8DC !important
+  color white
+}
+
+.workSubDetail {
+  margin 0 0 2em 0
+  list-style-type none
+  padding 0
+  width 100%
+  display flex
+  flex-flow row wrap
+}
+.workSubDetail li {
+  flex 1
+  width auto
+  cursor pointer
+  left 0
+  background-color #EEE
+  margin .5em
+  padding .3em 0
+  height 1.6em
+  border-radius 4px
+}
+.workSubDetail li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+.workSubDetail li.selected:hover {
+  background-color: #BBD8DC !important;
+  color: white;
+}
+.workSubDetail .badge {
+  display inline-block
+  font-size small
+  color white
+  padding 0.8em 0.7em 0 0.7em
+  background-color #607D8B
+  line-height 1em
+  position relative
+  left -1px
+  top -4px
+  height 1.8em
+  margin-right .8em
+  border-radius 4px 0 0 4px
+  width auto
+}
+button {
+  font-family: Arial;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: hand;
+}
+button:hover {
+  background-color: #cfd8dc;
+}
+
+
 /* component-specific styles */
 /* TODO consider about load it on needed */
 @import 'components/left-menu'
 @import 'components/top-info'
 @import 'components/top-nav'
 @import 'components/performance-tab'
+@import 'components/work-tab'
+@import 'tabs'

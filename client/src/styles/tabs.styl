@@ -1,0 +1,57 @@
+.content
+  height 100%
+  width 100%
+  display flex
+  justify-content flex-start
+  flex-flow row wrap
+  font-size 0
+  align-items left
+
+.tab-container
+  width 150px
+  flex 0 0 auto
+  height 100%
+  padding 10px
+	margin 50px 0 0 0
+
+.tab-container ul
+	list-style none
+	text-align center
+
+.tab-container ul li
+	border-top 1px solid #666
+	border-right 1px solid #666
+	border-bottom 1px solid #666
+	border-left 8px solid #666
+	background-color #ddd
+	margin 8px 0
+
+.tab-container ul li label,
+.tab-container ul li label:visited
+  font-size 16px
+	text-decoration none
+	color #666
+	display block
+	padding 15px 5px
+  line-height 40px
+
+.tab-container ul li:hover
+	border-left 8px solid #666
+
+.tab-container ul li label:hover
+ 	color #000
+  cursor pointer
+  
+.tab-container ul li.selected
+	border-right none
+	background-color #fff
+	border-left 8px solid #006699
+
+.main-container
+  width auto
+  font-size 15px
+  flex 2 0 auto
+  padding 10px
+  height 100%
+	background-color #fff
+	border 1px solid #888

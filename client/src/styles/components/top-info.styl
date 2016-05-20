@@ -1,10 +1,11 @@
-top-info
+top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab
   display flex
   flex-flow row wrap
   justify-content center
+  width 100%
 
 .top_info
-  background-color rgba(#404040, 0.5)
+  //background-color rgba(#404040, 0.5)
   height 100%
   width 100%
   display flex
@@ -14,7 +15,7 @@ top-info
   align-items center
 
 .main-img
-  flex-grow 1
+  flex 1 0 auto
   height 100%
   width 35%
   padding 10px
@@ -25,7 +26,7 @@ top-info
 .main-text
   width 65%
   font-size 15px
-  flex-grow 2
+  flex 2 0 auto
   padding 10px
   height 100%
   & > h2
@@ -42,11 +43,21 @@ top-info
     color #9e009e
   & > h2#title2
     color #963
+  & > div > span
+    color white
+    font-size 80%
+    font-family 'Lato', sans-serif
+    & > a
+      color rgb(18, 69, 200)
+      font-family 'Lato', sans-serif
+      cursor pointer
+      font-size 90%
 
 .butI
   margin-top 5px
   height 100%
   width 140px
+
 
 @media screen and (max-width: 650px)
   .top_info
