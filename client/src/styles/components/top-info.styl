@@ -19,16 +19,26 @@ top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab
   height 100%
   width 35%
   padding 10px
-  #video1
-    height 100%
+  .video
+    position relative
     width 100%
+    height 0
+    padding-bottom 56%
+  .video iframe
+    position absolute
+    left 0
+    top 0
+    width 100%
+    height 100%
 
 .main-text
-  width 65%
-  font-size 15px
+  width 50%
+  font-size 1.5vw
+  font-weight lighter
   flex 2 0 auto
   padding 10px
   height 100%
+  background-color rgba(0,0,0,0.5)
   & > h2
     font-family 'Lato', sans-serif
     font-size 100%
@@ -37,6 +47,8 @@ top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab
     color rgba(#ffffff, 0.95)
     font-family 'Lato', sans-serif
     font-size 80%
+  & > h2
+    color #e78fe7
   & > h2#title0
     color #298356
   & > h2#title1
@@ -48,7 +60,7 @@ top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab
     font-size 80%
     font-family 'Lato', sans-serif
     & > a
-      color rgb(18, 69, 200)
+      color rgb(178, 194, 242)
       font-family 'Lato', sans-serif
       cursor pointer
       font-size 90%
