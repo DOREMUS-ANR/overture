@@ -1,5 +1,4 @@
-<h1>DETAILS</h1>
-<div class="main-container" *ngIf="subDetail">
+<div class="main-container" *ngIf="subDetail"  [ngStyle]="{'display': display}">
   <h3>"{{subDetail.name}}"</h3>
   <div>
     <label>Id: </label>{{subDetail.id}}

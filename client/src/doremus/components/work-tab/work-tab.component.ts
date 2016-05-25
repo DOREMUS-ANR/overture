@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {NgStyle, NgClass} from '@angular/common'
 import { Router, RouteSegment, OnActivate, RouteTree, Routes, ROUTER_DIRECTIVES} from '@angular/router';
 import {MdToolbar} from '@angular2-material/toolbar/toolbar';
 import {WorkSubDetailComponent} from './workSubDetail.component';
@@ -10,7 +11,7 @@ declare var __moduleName: string;
   moduleId: __moduleName,
   selector: 'work-tab',
   templateUrl: 'work-tab.template.html',
-  directives: [MdToolbar, ROUTER_DIRECTIVES]
+  directives: [MdToolbar, ROUTER_DIRECTIVES, NgStyle, NgClass]
 })
 
 @Routes([
@@ -22,9 +23,10 @@ declare var __moduleName: string;
 
 export class WorkTabComponent implements OnActivate {
   subDetails: WorkSubDetail[];
-
+  display = 'none';
+  class = 'menu-icon icon-plus';
   private selectedId: number;
-
+  compossed = 'Compossed Of...';
   constructor(
     private service: WorkSubDetailService,
     private router: Router) {  }
@@ -38,5 +40,14 @@ export class WorkTabComponent implements OnActivate {
 
   onSelect(subDetail: WorkSubDetail) {
     this.router.navigate(['/work/detail', subDetail.id]);
+  }
+
+  showDetails()  {
+    this.display = this.display.match('none') ? 'inline' : 'none' ;
+    this.class = this.display.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus' ;
+    this.compossed = this.display.match('none') ? 'Compossed Of...' : 'Compossed Of' ;
+    if(this.display.match('none')) {
+      this.router.navigate(['/work']);
+    }
   }
 }

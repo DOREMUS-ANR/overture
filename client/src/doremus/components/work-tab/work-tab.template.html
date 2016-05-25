@@ -24,7 +24,11 @@
   </div>
 </div>
 <div class="content">
-  <div class="tab-container">
+  <h1 style="font-size: 20px; padding: 0 10px; align-self: left;">{{compossed}}</h1>
+  <span [ngClass]="class" (click)="showDetails();"></span>
+</div>
+<div class="content">
+  <div class="tab-container" [ngStyle]="{'display': display}">
     <ul>
       <li *ngFor="let subDetail of subDetails"
         [class.selected]="isSelected(subDetail)"

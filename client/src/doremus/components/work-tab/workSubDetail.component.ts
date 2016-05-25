@@ -27,12 +27,4 @@ export class WorkSubDetailComponent implements OnActivate  {
     let id = +curr.getParam('id');
     this.service.getSubDetail(id).then(subDetail => this.subDetail = subDetail);
   }
-
-  gotoHeroes() {
-    let subDetailId = this.subDetail ? this.subDetail.id : null;
-    // Pass along the hero id if available
-    // so that the HeroList component can select that hero.
-    // Add a totally useless `foo` parameter for kicks.
-    this.router.navigate([`/work`, {id: subDetailId}]);
-  }
 }
