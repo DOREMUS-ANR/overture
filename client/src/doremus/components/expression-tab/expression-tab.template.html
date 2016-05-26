@@ -1,0 +1,43 @@
+<div class='square-box'>
+  <div class='square-content'>
+    <p>Expression Tab</p>
+  </div>
+  <br>
+</div>
+<div class="top_info">
+  <div class="main-img">
+    <div class="video">
+      <iframe id="video1" src="https://www.youtube.com/embed/sdE3bGV0qYI" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+  <div class='main-text'>
+    <h2 style="font-size: 150%;">Egmont</h2>
+    <p>Musique de scène pour la tragédie de Johann Wolfgang von Goethe. Comprend : Ouverture ; Lied (Die Trommel gerühret) ; Zwischenakt I ; Zwischenakt II ; Lied (Freudvoll und leidvoll) ; Zwischenakt III ; Zwischenakt IV ; Musik, Clärchens Tod bezeichnend ; Melodram ; Siegessymphonie</p>
+    <div>
+      <span>Key: </span>
+      <span><a>La mineur</a></span>
+    </div>
+    <div>
+      <span>Catalogue: </span>
+      <span><a>BWV 1080</a></span>
+    </div>
+    <div>
+      <span>Genre: </span>
+      <span><a>Sonate</a></span>
+    </div>
+    <div>
+      <span>Opus: </span>
+      <span><a>Op. 27 - 2</a></span>
+    </div>
+    <div style="display: flex; flex-flow: row wrap;">
+      <span>Casting: </span>
+      &nbsp;
+      <span style="width: auto; align-self: left;">pour violon et piano</span>
+      <span (click)="openInstruments();" [ngClass]="class" style="width: 16px; height: 16px; padding: 0"></span>
+    </div>
+    <ul [ngStyle]="{'display': display}">
+      <li>Piano<li>
+      <li>Violon<li>
+    </ul>
+  </div>
+</div>

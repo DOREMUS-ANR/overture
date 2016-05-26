@@ -10,6 +10,7 @@ import {RecordingTabComponent} from './recording-tab/recording-tab.component';
 import {PersonTabComponent} from './person-tab/person-tab.component';
 import {ScoreTabComponent} from './score-tab/score-tab.component';
 import {WorkSubDetailComponent} from './work-tab/workSubDetail.component';
+import {ExpressionTabComponent} from './expression-tab/expression-tab.component';
 import {WorkSubDetailService} from '../services/workSubDetail.service';
 
 @Component({
@@ -59,6 +60,10 @@ import {WorkSubDetailService} from '../services/workSubDetail.service';
   {
     path: '/score',
     component: ScoreTabComponent
+  },
+  {
+    path: '/expression',
+    component: ExpressionTabComponent
   }
 ])
 

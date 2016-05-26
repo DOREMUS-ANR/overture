@@ -21,6 +21,7 @@
   ],
   "files": [
     "client/src/doremus/components/app.component.ts",
+    "client/src/doremus/components/expression-tab/expression-tab.component.ts",
     "client/src/doremus/components/left-menu/left-menu.component.ts",
     "client/src/doremus/components/performance-tab/performance-tab.component.ts",
     "client/src/doremus/components/person-tab/person-tab.component.ts",
