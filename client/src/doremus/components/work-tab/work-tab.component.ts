@@ -26,7 +26,7 @@ export class WorkTabComponent implements OnActivate {
   display = 'none';
   class = 'menu-icon icon-plus';
   private selectedId: number;
-  compossed = 'Compossed Of...';
+  composed = 'Composed Of...';
   constructor(
     private service: WorkSubDetailService,
     private router: Router) {  }
@@ -45,7 +45,7 @@ export class WorkTabComponent implements OnActivate {
   showDetails()  {
     this.display = this.display.match('none') ? 'inline' : 'none' ;
     this.class = this.display.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus' ;
-    this.compossed = this.display.match('none') ? 'Compossed Of...' : 'Compossed Of' ;
+    this.composed = this.display.match('none') ? 'Composed Of...' : 'Composed Of' ;
     if(this.display.match('none')) {
       this.router.navigate(['/work']);
     }
