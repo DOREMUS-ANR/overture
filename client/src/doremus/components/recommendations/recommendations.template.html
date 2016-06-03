@@ -1,0 +1,14 @@
+<div class="card-container" *ngFor="let card of items">
+  <md-card>
+    <md-card-header>
+      <img md-card-avatar src="static/img/defPicExpr.png">
+      <md-card-title>{{card.name}}</md-card-title>
+      <md-card-subtitle>{{card.composer}}</md-card-subtitle>
+    </md-card-header>
+    <img md-card-image alt="Main image" src="static/img/defPicExpr.png" style="width: 210px; height: auto;">
+    <md-card-content>
+      <md-card-title>{{card.name}}</md-card-title>
+      <p>{{card.composer}}</p>
+    </md-card-content>
+  </md-card>
+</div>

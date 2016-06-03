@@ -7,7 +7,8 @@
     'angular2-in-memory-web-api': 'lib/angular2-in-memory-web-api',
     '@angular': 'lib/@angular',
     '@angular2-material': 'lib/@angular2-material',
-    'symbol-observable': 'lib/symbol-observable'
+    'symbol-observable': 'lib/symbol-observable',
+    'angular2-infinite-scroll': 'lib/angular2-infinite-scroll'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension

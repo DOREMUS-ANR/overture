@@ -17,7 +17,7 @@ export class WorkSubDetailService {
 
   getSubDetail(id: number) {
     return Promise.resolve(DETAILS).then(
-      heroes => heroes.filter(hero => hero.id === id)[0]
+      details => details.filter(detail => detail.id === id)[0]
     );
   }
 }

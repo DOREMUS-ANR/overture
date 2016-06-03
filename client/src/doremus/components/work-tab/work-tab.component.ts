@@ -11,7 +11,8 @@ declare var __moduleName: string;
   moduleId: __moduleName,
   selector: 'work-tab',
   templateUrl: 'work-tab.template.html',
-  directives: [MdToolbar, ROUTER_DIRECTIVES, NgStyle, NgClass]
+  directives: [MdToolbar, ROUTER_DIRECTIVES, NgStyle, NgClass],
+  providers:[WorkSubDetailService],
 })
 
 @Routes([

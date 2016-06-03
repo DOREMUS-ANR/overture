@@ -20,6 +20,7 @@
     "@angular2-material/toolbar": "^2.0.0-alpha.4",
     "angular2": "^2.0.0-beta.17",
     "angular2-in-memory-web-api": "0.0.7",
+    "angular2-infinite-scroll": "0.0.9",
     "bluebird": "^3.3.4",
     "body-parser": "^1.5.0",
     "es6-promise": "^3.0.2",

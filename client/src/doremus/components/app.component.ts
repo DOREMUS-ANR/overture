@@ -12,6 +12,7 @@ import {ScoreTabComponent} from './score-tab/score-tab.component';
 import {WorkSubDetailComponent} from './work-tab/workSubDetail.component';
 import {ExpressionTabComponent} from './expression-tab/expression-tab.component';
 import {WorkSubDetailService} from '../services/workSubDetail.service';
+import {RecommendationService} from '../services/recommendations.service';
 
 @Component({
     selector: 'my-app',
@@ -26,7 +27,7 @@ import {WorkSubDetailService} from '../services/workSubDetail.service';
       LeftMenuComponent,
       ROUTER_DIRECTIVES
     ],
-    providers:[WorkSubDetailService]
+    providers:[WorkSubDetailService, RecommendationService]
 })
 
 @Routes([
