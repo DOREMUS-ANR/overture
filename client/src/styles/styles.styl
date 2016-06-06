@@ -18,14 +18,16 @@ h3
   font-weight lighter
 
 body
+  max-width 1280px
+  margin auto
   display block
-
-my-app
-  margin 0
   background-image url("../img/back2.jpg")
   background-size 100% 100%
   background-position bottom
   background-repeat no-repeat
+
+my-app
+  margin-top 60px
   display flex
   flex-flow column nowrap
   min-height 100vh
@@ -34,6 +36,8 @@ my-app
 
 .header, .footer
   height 60px
+  padding auto
+  max-width 1280px
   width 100%
   background-color white
   box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
@@ -41,7 +45,12 @@ my-app
   margin 0
   z-index 9998
 
+.header
+  position fixed
+  top 0
 .footer
+  position fixed
+  bottom 0
   height 30px
   align-self flex-end
   & > p
@@ -56,7 +65,6 @@ my-app
   align-self flex-start
   margin 20px auto
   flex 1 0 auto
-  width 95%
   height auto
   display flex
   flex-flow column wrap

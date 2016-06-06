@@ -5,14 +5,13 @@
   width: 100%
   flex-wrap: wrap
   justify-content: space-around
-
 md-card
-  margin: 0 16px 16px 0
-  width: 210px
+  margin: 16px 16px 16px 16px
+  width: 240px
 .card-container
   display: flex
   flex: column
-  width: 210px
+  width: 240px
   height: 300px
 
 rem($multiplier)
@@ -60,8 +59,7 @@ md-card-actions
   [md-button], [md-raised-button], button
     margin: 0 rem(0.4)
 img[md-card-image]
-  width: calc(100% + 48px)
-  margin: 0 rem(-2.4) rem(1.6) rem(-2.4)
+  width: 100%
 img[md-card-xl-image]
   width: rem(24)
   height: rem(24)
@@ -95,17 +93,12 @@ md-card-title-group
   margin: 0 rem(-0.8)
 /* MEDIA QUERIES */
 @media (max-width: $md-mobile-screen)
-  md-card
-    padding: $md-card-mobile-padding
-  img[md-card-image]
-    width: calc(100% + 32px)
-    margin: rem(1.6) rem(-1.6)
   md-card-title-group
     margin: 0
 /* FIRST/LAST CHILD ADJUSTMENTS */
 md-card-title:not(:first-child), md-card-subtitle:not(:first-child)
   margin-top: rem(-0.4)
-img[md-card-image]:first-child
+div[md-card-image-container]:first-child
   margin-top: rem(-2.4)
 md-card-content:first-child
   margin: 0
@@ -124,4 +117,10 @@ md-card-content > *:first-child
 
 img[md-card-image]:hover
   cursor: pointer
-  transform: scale(0.9)
+  transform: scale(1.1)
+
+div[md-card-image-container]
+  width: calc(100% + 2*rem(1.6))
+  height: 110px
+  margin: 0 rem(-2.4) rem(1.6) rem(-2.4)
+  overflow: hidden
