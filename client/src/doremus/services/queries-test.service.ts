@@ -10,7 +10,7 @@ export class QueriesService {
     this.http = http;
   }
 
-  load(id, prop, val){
+  loadVocabulary(id, prop, val){
     var options = new RequestOptions({
       search: 'id=' + id + '&' +
       'prop=' + prop + '&' +

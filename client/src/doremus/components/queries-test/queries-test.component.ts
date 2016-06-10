@@ -45,7 +45,7 @@ export class QueriesTestComponent {
     var result2 = new resultQ('prueba2','tipo2');
     this.queryResult = [result1, result2];
 
-    this.queriesService.load('queryVoc', '', '')
+    this.queriesService.loadVocabulary('queryVoc', '', '')
       .subscribe(
         queryVoc => this.items = this.queryBindVoc(queryVoc),
         error => console.error('Error: ' + error),
@@ -56,7 +56,7 @@ export class QueriesTestComponent {
     loadQuery(id) {
       this.query = id;
       //alert(this.query);
-      this.queriesService.load('queryTest', '<http://data.doremus.org/ontology/U11_has_key>',this.query)
+      this.queriesService.loadVocabulary('queryTest', '<http://data.doremus.org/ontology/U11_has_key>',this.query)
       .subscribe(
         query => this.queryResult = this.queryBind(query),
         error => console.error('Error: ' + error),

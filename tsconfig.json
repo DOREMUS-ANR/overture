@@ -28,6 +28,7 @@
     "client/src/doremus/components/person-tab/person-tab.component.ts",
     "client/src/doremus/components/queries-test/queries-test.component.ts",
     "client/src/doremus/components/recommendations/card.ts",
+    "client/src/doremus/components/recommendations/cardInfo.ts",
     "client/src/doremus/components/recommendations/recommendations.component.ts",
     "client/src/doremus/components/recording-tab/recording-tab.component.ts",
     "client/src/doremus/components/score-tab/score-tab.component.ts",

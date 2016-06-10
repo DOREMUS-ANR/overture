@@ -1,19 +1,37 @@
 import { INFORMATION } from '../components/auxExpressions';
 import { Injectable } from '@angular/core';
 import { SummaryInfo } from '../components/summaryInfo';
+import {Http, RequestOptions, Request} from '@angular/http';
 
 @Injectable()
 export class RecommendationService {
+  public query;
+  http: Http;
   end: number;
-  constructor(){this.end = 20;}
-
-  getInformations() {
-      return Promise.resolve(INFORMATION.slice(1,20));
+  constructor(http:Http){
+    this.end = 20;
+    this.http = http;
   }
 
-  getMoreInformation(){
+  getInformations(id) {
+    var options = new RequestOptions({
+      search: 'id=' + id + '&' +
+      'lim=' + this.end + '&'
+    });
+    // FIXME relative URL
+    return this.http.get("../api/query", options)
+      .map(res => res.json());
+  }
+
+  getMoreInformation(id){
       this.end += 10;
-      return Promise.resolve(INFORMATION.slice(1,this.end));
+      var options = new RequestOptions({
+        search: 'id=' + id + '&' +
+        'lim=' + this.end
+      });
+      // FIXME relative URL
+      return this.http.get("../api/query", options)
+        .map(res => res.json());
   }
   // See the "Take it slow" appendix
   getInformationsSlowly() {
@@ -22,9 +40,14 @@ export class RecommendationService {
     );
   }
 
-  getInformation(id: number) {
-    return Promise.resolve(INFORMATION).then(
-      infos => infos.filter(info => info.id === id)[0]
-    );
+  getInformation(id, uri) {
+    var options = new RequestOptions({
+      search: 'id=' + id + '&' +
+      'uri=' + uri
+    });
+    // FIXME relative URL
+    return this.http.get("../api/query", options)
+      .map(res => res.json());
   }
+
 }

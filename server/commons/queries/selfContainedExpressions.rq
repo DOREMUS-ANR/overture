@@ -1,0 +1,9 @@
+PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
+SELECT DISTINCT * from <http://data.doremus.org/data>
+WHERE {
+    ?expressions a <http://data.doremus.org/ontology/Self_Contained_Expression> ;
+                 cidoc:P102_has_title ?title .
+FILTER (str(?title) != "")
+}
+ORDER BY (?expressions)
+LIMIT $$lim$$

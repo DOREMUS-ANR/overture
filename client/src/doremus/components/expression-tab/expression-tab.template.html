@@ -1,15 +1,15 @@
-<div class="top_info">
+<div *ngIf="expression" class="top_info">
   <div class="main-img">
     <div class="video">
       <iframe id="video1" src="https://www.youtube.com/embed/sdE3bGV0qYI" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
   <div class='main-text'>
-    <h2 style="font-size: 150%;">Egmont</h2>
-    <p>Musique de scène pour la tragédie de Johann Wolfgang von Goethe. Comprend : Ouverture ; Lied (Die Trommel gerühret) ; Zwischenakt I ; Zwischenakt II ; Lied (Freudvoll und leidvoll) ; Zwischenakt III ; Zwischenakt IV ; Musik, Clärchens Tod bezeichnend ; Melodram ; Siegessymphonie</p>
-    <div>
+    <h2 style="font-size: 150%;">{{expression.title}}</h2>
+    <p>{{expression.note}}</p>
+   <div>
       <span>Key: </span>
-      <span><a>La mineur</a></span>
+      <span><a href={{expression.keyURI}}>{{expression.key}}</a></span>
     </div>
     <div>
       <span>Catalogue: </span>
