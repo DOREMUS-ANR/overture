@@ -4,7 +4,7 @@ PREFIX frbroo: <http://erlangen-crm.org/efrbroo/>
 
 SELECT * from <http://data.doremus.org/data>
 WHERE {
-    $$expr$$ a mus:Self_Contained_Expression ;
+    $$expr$$ a frbroo:F22_Self-Contained_Expression ;
              cidoc:P102_has_title ?title .
     OPTIONAL{$$expr$$ frbroo:R45i_was_assigned_by ?assigned .}
 	  OPTIONAL{$$expr$$ cidoc:P3_has_note ?note .}
@@ -39,4 +39,10 @@ WHERE {
 	  }
     OPTIONAL{$$expr$$ cidoc:P165i_is_incorporated_in ?incorporated .}
     OPTIONAL{$$expr$$ cidoc:P1_is_identified_by ?identified .}
+    OPTIONAL{?complexWork frbroo:R40_has_representative_expression $$expr$$ .}
+    OPTIONAL{?individualWork frbroo:R9_is_realised_in $$expr$$ .}
+    OPTIONAL{?expCreation frbroo:R17_created $$expr$$ ;
+             cidoc:P9_consists_of ?activity .
+             ?activity cidoc:P14_carried_out_by ?person .
+             ?person cidoc:P131_is_identified_by ?composer .}
 }

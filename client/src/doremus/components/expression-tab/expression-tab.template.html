@@ -1,27 +1,36 @@
 <div *ngIf="expression" class="top_info">
   <div class="main-img">
     <div class="video">
-      <iframe id="video1" src="https://www.youtube.com/embed/sdE3bGV0qYI" frameborder="0" allowfullscreen></iframe>
+      <img src='static/img/defPicExpr.png'>
+      <!-- <iframe id="video1" src="https://www.youtube.com/embed/sdE3bGV0qYI" frameborder="0" allowfullscreen></iframe> -->
     </div>
   </div>
   <div class='main-text'>
-    <h2 style="font-size: 150%;">{{expression.title}}</h2>
-    <p>{{expression.note}}</p>
-   <div>
+    <h2 style="font-size: 150%;" *ngIf="expression.title">{{expression.title}}</h2>
+    <p *ngIf="expression.note">{{expression.note}}</p>
+   <div *ngIf="expression.key">
       <span>Key: </span>
       <span><a href={{expression.keyURI}}>{{expression.key}}</a></span>
     </div>
-    <div>
+    <div *ngIf="expression.key">
       <span>Catalogue: </span>
       <span><a>BWV 1080</a></span>
     </div>
-    <div>
+    <div *ngIf="expression.genre">
       <span>Genre: </span>
-      <span><a>Sonate</a></span>
+      <span><a>{{expression.genre}}</a></span>
     </div>
-    <div>
+    <div *ngIf="expression.opus">
       <span>Opus: </span>
-      <span><a>Op. 27 - 2</a></span>
+      <span><a>{{expression.opus}}</a></span>
+    </div>
+    <div *ngIf="expression.catalogue">
+      <span>Catalogue: </span>
+      <span><a>{{expression.catalogue}}</a></span>
+    </div>
+    <div *ngIf="expression.composer">
+      <span>Composer: </span>
+      <span><a>{{expression.composer}}</a></span>
     </div>
     <div style="display: flex; flex-flow: row wrap;">
       <span>Casting: </span>
@@ -33,6 +42,16 @@
       <li class="instr icon-right-dir">Piano</li>
       <li class="instr icon-right-dir">Violon</li>
     </ul>
+    <div style="display: flex; flex-flow: row wrap;">
+      <span>Discover: </span>
+      &nbsp;
+      <span (click)="openDiscover();" [ngClass]="class" style="width: 16px; height: 16px; padding: 0"></span>
+    </div>
+    <ul [ngStyle]="{'display': displayDiscover}" style="list-style-type: none; margin: 0; padding: 0;">
+      <li *ngIf="expression.complexWork" class="instr icon-right-dir"><a href={{expression.complexWork}}>Complex Work</a></li>
+      <li *ngIf="expression.individualWork" class="instr icon-right-dir"><a href={{expression.individualWork}}>Individual Work</a></li>
+      <li *ngIf="expression.expCreation" class="instr icon-right-dir"><a href={{expression.expCreation}}>Expression Creation</a></li>
+    </ul>
   </div>
 </div>
 <div class="forever-scroll"
@@ -41,6 +60,6 @@
     [infiniteScrollThrottle]="100"
     (scrolled)="onScroll();">
     <section class="expressions-list">
-    	<infinite-list class="infinite-list" [items]="items"></infinite-list>
+    	<infinite-list (change)="myIdChange($event);" class="infinite-list" [items]="items"></infinite-list>
     </section>
 </div>

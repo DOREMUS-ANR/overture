@@ -33,12 +33,6 @@ export class RecommendationService {
       return this.http.get("../api/query", options)
         .map(res => res.json());
   }
-  // See the "Take it slow" appendix
-  getInformationsSlowly() {
-    return new Promise<SummaryInfo[]>(resolve =>
-      setTimeout(()=>resolve(INFORMATION), 2000) // 2 seconds
-    );
-  }
 
   getInformation(id, uri) {
     var options = new RequestOptions({

@@ -1,9 +1,15 @@
 PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
+PREFIX frbroo: <http://erlangen-crm.org/efrbroo/>
 SELECT DISTINCT * from <http://data.doremus.org/data>
 WHERE {
-    ?expressions a <http://data.doremus.org/ontology/Self_Contained_Expression> ;
-                 cidoc:P102_has_title ?title .
-FILTER (str(?title) != "")
+    ?expressions a  frbroo:F22_Self-Contained_Expression ;
+             cidoc:P102_has_title ?title .
+    OPTIONAL{?expCreation frbroo:R17_created ?expressions ;
+            cidoc:P9_consists_of ?activity .
+            ?activity cidoc:P14_carried_out_by ?person .
+            ?person cidoc:P131_is_identified_by ?composer .
+     }
+    FILTER (str(?title) != "")
 }
 ORDER BY (?expressions)
 LIMIT $$lim$$

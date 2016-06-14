@@ -28,6 +28,7 @@ declare var __moduleName: string;
 export class RecommendationsComponent implements OnInit{
 	@Input() items: RecommendationCardInfo[];
   option: String;
+  @Output() change= new EventEmitter();
 
   constructor (
     private service: RecommendationService) {}
@@ -37,6 +38,9 @@ export class RecommendationsComponent implements OnInit{
   }
 
   goToExpression(item){
+    this.change.emit({
+      value: item.id
+    })
     console.log('Click ' + item.id);
   }
 }
