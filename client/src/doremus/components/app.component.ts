@@ -16,12 +16,7 @@ import {RecommendationService} from '../services/recommendations.service';
 
 @Component({
     selector: 'my-app',
-    template: `
-        <header class="header"><top-nav></top-nav></header>
-        <aside class="aside"><left-menu></left-menu></aside>
-        <article class="main"><router-outlet></router-outlet></article>
-        <footer class="footer"><p>DOREMUS 2016</p></footer>
-    `,
+    templateUrl: '../static/doremus/components/app.template.html',
     directives: [
       TopNavComponent,
       LeftMenuComponent,
