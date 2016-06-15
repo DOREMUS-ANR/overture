@@ -1,21 +1,25 @@
-PREFIX mus: <http://data.doremus.org/ontology/>
+PREFIX mus: <http://data.doremus.org/ontology#>
 PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
 PREFIX frbroo: <http://erlangen-crm.org/efrbroo/>
 
-SELECT * from <http://data.doremus.org/data>
+SELECT DISTINCT * from <http://data.doremus.org/data>
 WHERE {
     $$expr$$ a frbroo:F22_Self-Contained_Expression ;
              cidoc:P102_has_title ?title .
+    FILTER(str(?title)!="")
     OPTIONAL{$$expr$$ frbroo:R45i_was_assigned_by ?assigned .}
 	  OPTIONAL{$$expr$$ cidoc:P3_has_note ?note .}
-    OPTIONAL{$$expr$$ mus:U13_has_casting ?casting .
-			OPTIONAL{?casting cidoc:P3_has_note ?castingNote .}
-	  }
+    OPTIONAL{$$expr$$ mus:U13_has_intended_casting ?casting .
+        FILTER(!regex(?casting, "node"))
+    }
+    OPTIONAL{$$expr$$ mus:U13_has_intended_casting ?castingN .
+             ?castingN cidoc:P3_has_note ?castingNote .}
     OPTIONAL{$$expr$$ frbroo:R17i_was_created_by ?created .}
-    OPTIONAL{
-			$$expr$$ mus:U12_has_genre ?genre .
-			OPTIONAL{?genre cidoc:P1_is_identified_by ?genreID .}
-	  }
+    OPTIONAL{$$expr$$ mus:U12_has_genre ?genre .
+            FILTER isURI(?genre)
+    }
+    OPTIONAL{$$expr$$ mus:U12_has_genre ?genreN .
+             ?genreN cidoc:P1_is_identified_by ?genreID .}
     OPTIONAL{$$expr$$ frbroo:R40i_is_representative_expression_of ?repExp .}
     OPTIONAL{
 			$$expr$$ mus:U17_has_opus_statement ?opus .
@@ -24,10 +28,11 @@ WHERE {
       FILTER(bound(?opusComp) || bound(?opusNote))
 	  }
     OPTIONAL{$$expr$$ mus:U10_has_order_number ?order .}
-    OPTIONAL{
-			$$expr$$ mus:U11_has_key ?key .
-			OPTIONAL{?key cidoc:P1_is_identified_by ?keyID .}
-	  }
+    OPTIONAL{$$expr$$ mus:U11_has_key ?key .
+            FILTER isURI(?key)
+    }
+    OPTIONAL{$$expr$$ mus:U11_has_key ?keyN .
+             ?keyN cidoc:P1_is_identified_by ?keyID .}
     OPTIONAL{
 			$$expr$$ cidoc:P67_refers_to ?refers .
 			OPTIONAL{?refers cidoc:P3_has_note ?refersNote .}

@@ -1,4 +1,0 @@
-SELECT ?Concept from <http://data.doremus.org/vocabulary/data_20160503_1_50>
-WHERE {
-    ?Concept $$prop$$ "$$val$$" .
-} LIMIT 5

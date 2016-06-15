@@ -12,13 +12,9 @@
       <span>Key: </span>
       <span><a href={{expression.keyURI}}>{{expression.key}}</a></span>
     </div>
-    <div *ngIf="expression.key">
-      <span>Catalogue: </span>
-      <span><a>BWV 1080</a></span>
-    </div>
     <div *ngIf="expression.genre">
       <span>Genre: </span>
-      <span><a>{{expression.genre}}</a></span>
+      <span><a href={{expression.genreURI}}>{{expression.genre}}</a></span>
     </div>
     <div *ngIf="expression.opus">
       <span>Opus: </span>
@@ -32,20 +28,19 @@
       <span>Composer: </span>
       <span><a>{{expression.composer}}</a></span>
     </div>
-    <div style="display: flex; flex-flow: row wrap;">
+    <div style="display: flex; flex-flow: row wrap;" *ngIf="expression.casting || expression.castingNotes.length > 0">
       <span>Casting: </span>
       &nbsp;
-      <span style="width: auto; align-self: left;">pour violon et piano</span>
-      <span (click)="openInstruments();" [ngClass]="class" style="width: 16px; height: 16px; padding: 0"></span>
+      <span style="width: auto; align-self: left;">{{expression.casting}}</span>
+      <span *ngIf="expression.castingNotes.length > 0" (click)="openInstruments();" [ngClass]="class" style="width: 16px; height: 16px; padding: 0"></span>
     </div>
-    <ul [ngStyle]="{'display': display}" style="list-style-type: none; margin: 0; padding: 0;">
-      <li class="instr icon-right-dir">Piano</li>
-      <li class="instr icon-right-dir">Violon</li>
+    <ul [ngStyle]="{'display': display}" style="list-style-type: none; margin: 0; padding: 0;" *ngIf="expression.castingNotes">
+      <li *ngFor="let note of expression.castingNotes" class="instr icon-right-dir">{{note}}</li>
     </ul>
     <div style="display: flex; flex-flow: row wrap;">
       <span>Discover: </span>
       &nbsp;
-      <span (click)="openDiscover();" [ngClass]="class" style="width: 16px; height: 16px; padding: 0"></span>
+      <span (click)="openDiscover();" [ngClass]="classDiscover" style="width: 16px; height: 16px; padding: 0"></span>
     </div>
     <ul [ngStyle]="{'display': displayDiscover}" style="list-style-type: none; margin: 0; padding: 0;">
       <li *ngIf="expression.complexWork" class="instr icon-right-dir"><a href={{expression.complexWork}}>Complex Work</a></li>

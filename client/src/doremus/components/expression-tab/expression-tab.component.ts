@@ -22,9 +22,11 @@ export class Expression {
   complexWork: string;
   expCreation: string;
   composer: string;
+  casting: string;
+  castingNotes: string[];
 
-  constructor(title = null, key = null, keyURI = null, genre = null, genreURI = null, opus = null, note = null, catalogue = null,
-              individualWork = null, complexWork = null, expCreation = null, composer = null)
+  constructor(title = "", key = null, keyURI = null, genre = null, genreURI = null, opus = null, note = null, catalogue = null,
+              individualWork = null, complexWork = null, expCreation = null, composer = null, casting = null, castingNotes = [])
   {
     this.title= title;
     this.key= key;
@@ -38,6 +40,8 @@ export class Expression {
     this.complexWork= complexWork;
     this.expCreation= expCreation;
     this.composer= composer;
+    this.casting= casting;
+    this.castingNotes= castingNotes;
   }
 }
 
@@ -71,18 +75,15 @@ export class ExpressionTabComponent {
     this.expressionURI = "<http://data.doremus.org/Self_Contained_Expression/F22/98dcb7cd-1acf-4d1e-92cd-6ab41c8b2ffd>";
   }
   ngOnInit(){
-    console.log('onInit');
     this.service.getInformations('selfContainedExpressions')
         .subscribe(
           query => this.items = this.queryBind(query),
-          error => console.error('Error: ' + error),
-          () => console.log('Completed!')
+          error => console.error('Error: ' + error)
       );
-    this.service.getInformation('selfContainedExpressionDet', this.expressionURI)
+    this.service.getInformation('selfContainedExpressionDet', this.expressionURI, null)
       .subscribe(
         res => this.expression = this.queryBindExp(res),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+        error => console.error('Error: ' + error)
       );
   }
   queryBind(query) {
@@ -99,15 +100,42 @@ export class ExpressionTabComponent {
     var bindings = query.results.bindings;
     var results: Expression;
     var binding = bindings[0];
-    var result;
+    var expression = null;
+    var result = new Expression;
+    var lang = "fr";
+    for(var i in bindings){
+      result.title = (bindings[i]["title"]!=null) ? result.title.concat("- ", bindings[i]["title"].value) : result.title;
+      if(bindings[i]["castingNote"]!=null) {
+        result.castingNotes.push(bindings[i]["castingNote"].value);
+      }
+    }
     if(binding != undefined)
     {
-      result = new Expression();
-      result.title = (binding["title"]!=null) ? binding["title"].value : null;
-      result.key = (binding["key"]!=null) ? binding["key"].value : null;
-      result.keyURI = (binding["keyURI"]!=null) ? binding["keyURI"].value : null;
-      result.genre = (binding["genre"]!=null) ? binding["genre"].value : null;
-      result.genreURI = (binding["genreURI"]!=null) ? binding["genreURI"].value : null;
+      result.keyURI = (binding["key"]!=null) ? binding["key"].value : null;
+      if(result.keyURI!=null)
+      {
+        this.service.getInformation('vocabularyURI', "<"+result.keyURI+">", lang)
+          .subscribe(
+            query => result.key = query.results.bindings[0]["name"].value,
+            error => console.error('Error: ' + error)
+          );
+      }else
+      {
+        result.key = (binding["keyID"]!=null) ? binding["keyID"].value : null;
+      }
+
+      result.genreURI = (binding["genre"]!=null) ? binding["genre"].value : null;
+      if(result.genreURI!=null)
+      {
+        this.service.getInformation('vocabulary', "<"+result.genreURI+">", lang)
+          .subscribe(
+            query => result.genre = query.results.bindings[0]["name"].value,
+            error => console.error('Error: ' + error)
+          );
+      }else
+      {
+        result.genre = (binding["genreID"]!=null) ? binding["genreID"].value : null;
+      }
       result.opus = (binding["opusNote"]!=null) ? binding["opusNote"].value : null;
       result.note = (binding["note"]!=null) ? binding["note"].value : null;
       result.catalogue = (binding["catagNote"]!=null) ? binding["catagNote"].value : null;
@@ -115,8 +143,12 @@ export class ExpressionTabComponent {
       result.complexWork = (binding["complexWork"]!=null) ? binding["complexWork"].value : null;
       result.expCreation = (binding["expCreation"]!=null) ? binding["expCreation"].value : null;
       result.composer = (binding["composer"]!=null) ? binding["composer"].value : null;
+
+      result.casting = (binding["casting"]!=null) ? binding["casting"].value : null;
+
+      expression = result;
     }
-    return result;
+    return expression;
   }
   openInstruments()  {
     this.display = this.display.match('none') ? 'inline' : 'none' ;
@@ -130,10 +162,8 @@ export class ExpressionTabComponent {
     this.service.getMoreInformation('selfContainedExpressions')
       .subscribe(
         query => this.items = this.queryBind(query),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+        error => console.error('Error: ' + error)
       );
-	  console.log('scrolled!!');
 	}
   myIdChange(event)  {
     this.expressionURI = '<' + event.value + '>';

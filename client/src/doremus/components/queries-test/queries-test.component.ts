@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
-import {QueriesService} from "../../services/queries-test.service";
+import {RecommendationService} from "../../services/recommendations.service";
 
 declare var __moduleName: string;
 
@@ -15,7 +15,7 @@ export class resultQ {
 }
 
 export class Vocabulary {
-  id: number;
+  id: string;
   name: string;
   constructor(id, name)
   {
@@ -28,39 +28,35 @@ export class Vocabulary {
   moduleId: __moduleName,
   selector: 'queries-test',
   templateUrl: 'queries-test.template.html',
-  providers: [QueriesService],
+  providers: [RecommendationService],
   directives: [ROUTER_DIRECTIVES]
 })
 
 export class QueriesTestComponent {
    query: number;
    queryResult: resultQ[];
-   queriesService: QueriesService;
+   queriesService: RecommendationService;
    items: Vocabulary[];
 
-   constructor(_queriesService: QueriesService) {
+   constructor(_queriesService: RecommendationService) {
     this.queriesService= _queriesService;
     this.query = 0;
     var result1 = new resultQ('prueba1','tipo1');
     var result2 = new resultQ('prueba2','tipo2');
     this.queryResult = [result1, result2];
 
-    this.queriesService.loadVocabulary('queryVoc', '', '')
+    this.queriesService.getInformation('vocabulary', "<http://data.doremus.org/vocabulary/key>", 'fr')
       .subscribe(
         queryVoc => this.items = this.queryBindVoc(queryVoc),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+        error => console.error('Error: ' + error)
       );
     }
 
-    loadQuery(id) {
-      this.query = id;
-      //alert(this.query);
-      this.queriesService.loadVocabulary('queryTest', '<http://data.doremus.org/ontology/U11_has_key>',this.query)
+    loadQuery(sel) {
+      this.queriesService.getInformation('searchQuery', "<"+sel+">",null)
       .subscribe(
         query => this.queryResult = this.queryBind(query),
-        error => console.error('Error: ' + error),
-        () => console.log('Completed!')
+        error => console.error('Error: ' + error)
       );
     }
 
@@ -82,7 +78,7 @@ export class QueriesTestComponent {
       var results: Vocabulary[] = [];
       for(var i in bindings) {
         var binding = bindings[i];
-        var result = new Vocabulary(binding["concept"].value, binding["label"].value);
+        var result = new Vocabulary(binding["uri"].value, binding["label"].value);
         results.push(result);
       }
       return results;
