@@ -34,10 +34,11 @@ export class RecommendationService {
         .map(res => res.json());
   }
 
-  getInformation(id, uri) {
+  getInformation(id, uri, lang) {
     var options = new RequestOptions({
       search: 'id=' + id + '&' +
-      'uri=' + uri
+      'uri=' + uri + '&' +
+      'lang=' + lang
     });
     // FIXME relative URL
     return this.http.get("../api/query", options)

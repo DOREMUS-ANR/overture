@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 
 import {MdToolbar} from '@angular2-material/toolbar/toolbar';
@@ -25,7 +25,7 @@ declare var __moduleName: string;
   providers: [QueriesService]
 })
 
-export class RecommendationsComponent implements OnInit{
+export class RecommendationsComponent {
 	@Input() items: RecommendationCardInfo[];
   option: String;
   @Output() change= new EventEmitter();
@@ -33,14 +33,10 @@ export class RecommendationsComponent implements OnInit{
   constructor (
     private service: RecommendationService) {}
 
-  ngOnInit(){
-    // this.service.getInformations().then(info => this.infos = info);
-  }
-
   goToExpression(item){
     this.change.emit({
       value: item.id
     })
-    console.log('Click ' + item.id);
+    console.log("Selected: " + item.id);
   }
 }
