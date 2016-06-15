@@ -1,42 +1,9 @@
-<div id="top_nav">
-<!-- <md-toolbar color='accent'> -->
-    <div class="logo">
-      <a  [routerLink]="['/']">
-          <div class="logo-icon" title="Return to the DOREMUS web homepage."></div>
-      </a>
-    </div>
-    <!--<div class="main-browse" id="main_browse">
-      <div id="browse">
-          <div class="browse-img" (click)="clickMade('browse');"></div>
-          <div class="browse-img" id="work" (click)="clickMade('work');"></div>
-          <div class="browse-img" id="performance" (click)="clickMade('performance');"></div>
-          <div class="browse-img" id="score" (click)="clickMade('score');"></div>
-          <div class="browse-img" id="recording" (click)="clickMade('recording');"></div>
-      </div>
-    </div>-->
-    <div class="sections-part">
-      <a id="work" [routerLink]="['/work']">Work</a>
-      <a id="expression" [routerLink]="['/expression']">Expression</a>
-      <a id="performance" [routerLink]="['/performance']">Performance</a>
-      <a id="recording" [routerLink]="['/recording']">Recording</a>
-      <a id="score" [routerLink]="['/score']">Score</a>
-      <a id="person" [routerLink]="['/person']">Person</a>
-    </div>
-    <ul>
-      <li class="menu-item" id="login">
-          <a id="authorize-button">
-              <div class="menu-icon icon-user"></div>
-          </a>
-      </li>
-      <li id="social_media" class="menu-item">
-          <div class="menu-icon icon-share"></div>
-          <ul class="share-buttons">
-              <li><a href="https://www.facebook.com/" target="_blank" title="Share on Facebook"><span  class="menu-icon icon-facebook" (click)="clickMade('facebook');"></span></a></li>
-              <li><a href="https://twitter.com/" target="_blank" title="Tweet"><span class="menu-icon icon-twitter" (click)="clickMade('twitter');"></span></a></li>
-              <li><a href="https://plus.google.com/" target="_blank" title="Share on Google+"><span class="menu-icon icon-gplus" (click)="clickMade('gplus');"></span></a></li>
-              <li><a title="Email (using your default email client)"><span class="menu-icon icon-mail" (click)="clickMade('mail');"></span></a></li>
-          </ul>
-      </li>
-    </ul>
-<!-- </md-toolbar> -->
+<a [routerLink]="['/']" title="Overture Home" class="fullLogo">Overture</a>
+<div class="sections-part">
+  <a id="work" [routerLink]="['/work']">Work</a>
+  <a id="expression" [routerLink]="['/expression']">Expression</a>
+  <a id="performance" [routerLink]="['/performance']">Performance</a>
+  <a id="recording" [routerLink]="['/recording']">Recording</a>
+  <a id="score" [routerLink]="['/score']">Score</a>
+  <a id="person" [routerLink]="['/person']">Person</a>
 </div>
