@@ -6,11 +6,9 @@ top-nav
 	flex-flow row wrap
 	padding 1em
 
-	& > .sections-part
+	.sections-part
 		flex-grow 4
 		text-align center
-		+above('m')
-			text-align right
 		a
 			display inline-block
 			cursor pointer
@@ -21,3 +19,6 @@ top-nav
 			&:hover, &:focus
 				text-decoration none
 				background alpha(#000, .18)
+
+	button[md-icon-button]
+		font-size 21px
