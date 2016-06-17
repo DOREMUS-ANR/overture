@@ -1,12 +1,11 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 
 import {MdToolbar} from '@angular2-material/toolbar/toolbar';
 
-import { NgFor } from '@angular/common';
+import {NgFor} from '@angular/common';
 
-import { SummaryInfo } from '../summaryInfo';
-import { RecommendationService } from '../../services/recommendations.service';
+import {SummaryInfo} from '../summaryInfo';
 
 import {MdCard, MdCardHeader} from './card';
 

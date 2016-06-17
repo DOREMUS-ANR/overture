@@ -82,7 +82,7 @@ export class ExpressionTabComponent {
 
   onSearchClick(item){
     this.search = item;
-    console.log("Search: " + this.search)
+    //console.log("Search: " + this.search)
   }
 
   ngOnInit(){
