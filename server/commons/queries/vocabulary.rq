@@ -8,3 +8,4 @@ WHERE {
          skos:prefLabel ?label .
     FILTER (lang(?label) = "$$lang$$")
 }
+ORDER BY ?label

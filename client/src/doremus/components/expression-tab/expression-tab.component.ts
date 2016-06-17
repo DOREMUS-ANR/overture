@@ -1,11 +1,14 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {MdToolbar} from '@angular2-material/toolbar/toolbar';
+import {Observable} from 'rxjs/Observable';
 import {NgStyle, NgClass} from '@angular/common';
 import {InfiniteScroll} from 'angular2-infinite-scroll/angular2-infinite-scroll';
 import {RecommendationsComponent} from '../recommendations/recommendations.component';
-import { RecommendationService } from '../../services/recommendations.service';
+import {SearchComponent} from '../search/search.component';
+
+import {SharedService} from '../../services/sharedService.service';
+import {QueryService} from '../../services/queries.service';
 import {RecommendationCardInfo} from '../recommendations/cardInfo' ;
-import {resultQ} from '../queries-test/queries-test.component' ;
 
 declare var __moduleName: string;
 
@@ -49,43 +52,52 @@ export class Expression {
   moduleId: __moduleName,
   selector: 'expression-tab',
   templateUrl: 'expression-tab.template.html',
-  directives: [MdToolbar, NgStyle, NgClass, InfiniteScroll, RecommendationsComponent],
+  directives: [MdToolbar, NgStyle, NgClass, InfiniteScroll, RecommendationsComponent, SearchComponent],
 	styles: [
 		`.forever-scroll {
 			height: auto;
 			overflow: hidden;
 		}`
 	],
-  providers:[RecommendationService],
+  providers:[QueryService],
 })
 
 export class ExpressionTabComponent {
+  @Input() expressionURI: string;
+
+  @Output() items: RecommendationCardInfo[];
+
   display ='none';
   class = 'menu-icon icon-plus';
   displayDiscover ='none';
   classDiscover = 'menu-icon icon-plus';
-  @Input() expressionURI: string;
   expression: Expression;
-  service: RecommendationService;
-	@Output() items: RecommendationCardInfo[];
-  queryResult: resultQ[];
+  search: boolean = false;
 
-  constructor(private _service: RecommendationService){
-    this.service= _service;
-    this.expressionURI = "<http://data.doremus.org/Self_Contained_Expression/F22/98dcb7cd-1acf-4d1e-92cd-6ab41c8b2ffd>";
+  constructor(private _service: QueryService,
+              private _sharedService: SharedService){
+    this.expressionURI = "<>";
+    this._sharedService.showSearch$.subscribe(item => this.onSearchClick(item));
   }
+
+  onSearchClick(item){
+    this.search = item;
+    console.log("Search: " + this.search)
+  }
+
   ngOnInit(){
-    this.service.getInformations('selfContainedExpressions')
+    this._service.getInformations('selfContainedExpressions')
         .subscribe(
           query => this.items = this.queryBind(query),
           error => console.error('Error: ' + error)
       );
-    this.service.getInformation('selfContainedExpressionDet', this.expressionURI, null)
+    this._service.getInformation('selfContainedExpressionDet', this.expressionURI, null)
       .subscribe(
         res => this.expression = this.queryBindExp(res),
         error => console.error('Error: ' + error)
       );
   }
+
   queryBind(query) {
     var bindings = query.results.bindings;
     var results: RecommendationCardInfo[] = [];
@@ -96,6 +108,7 @@ export class ExpressionTabComponent {
     }
     return results;
   }
+
   queryBindExp(query) {
     var bindings = query.results.bindings;
     var results: Expression;
@@ -114,7 +127,7 @@ export class ExpressionTabComponent {
       result.keyURI = (binding["key"]!=null) ? binding["key"].value : null;
       if(result.keyURI!=null)
       {
-        this.service.getInformation('vocabularyURI', "<"+result.keyURI+">", lang)
+        this._service.getInformation('vocabularyURI', "<"+result.keyURI+">", lang)
           .subscribe(
             query => result.key = query.results.bindings[0]["name"].value,
             error => console.error('Error: ' + error)
@@ -127,7 +140,7 @@ export class ExpressionTabComponent {
       result.genreURI = (binding["genre"]!=null) ? binding["genre"].value : null;
       if(result.genreURI!=null)
       {
-        this.service.getInformation('vocabulary', "<"+result.genreURI+">", lang)
+        this._service.getInformation('vocabulary', "<"+result.genreURI+">", lang)
           .subscribe(
             query => result.genre = query.results.bindings[0]["name"].value,
             error => console.error('Error: ' + error)
@@ -150,21 +163,25 @@ export class ExpressionTabComponent {
     }
     return expression;
   }
+
   openInstruments()  {
     this.display = this.display.match('none') ? 'inline' : 'none' ;
     this.class = this.display.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus' ;
   }
+
   openDiscover()  {
     this.displayDiscover = this.displayDiscover.match('none') ? 'inline' : 'none' ;
     this.classDiscover = this.classDiscover.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus' ;
   }
+
   onScroll () {
-    this.service.getMoreInformation('selfContainedExpressions')
+    this._service.getMoreInformation('selfContainedExpressions')
       .subscribe(
         query => this.items = this.queryBind(query),
         error => console.error('Error: ' + error)
       );
 	}
+
   myIdChange(event)  {
     this.expressionURI = '<' + event.value + '>';
     this.ngOnInit();

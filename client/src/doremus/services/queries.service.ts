@@ -2,9 +2,10 @@ import { INFORMATION } from '../components/auxExpressions';
 import { Injectable } from '@angular/core';
 import { SummaryInfo } from '../components/summaryInfo';
 import {Http, RequestOptions, Request} from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Injectable()
-export class RecommendationService {
+export class QueryService {
   public query;
   http: Http;
   end: number;

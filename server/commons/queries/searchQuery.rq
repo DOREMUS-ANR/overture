@@ -1,8 +1,7 @@
 PREFIX mus: <http://data.doremus.org/ontology#>
 PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
-SELECT DISTINCT(?title) from <http://data.doremus.org/data>
+SELECT DISTINCT(?expressions) from <http://data.doremus.org/data>
 WHERE {
-    ?expressions mus:U11_has_key $$uri$$ ;
-    cidoc:P102_has_title ?title .
-    FILTER(str(?title)!="")
+    ?expressions mus:U11_has_key $$uriKey$$ ;
+                 mus:U12_has_genre $$uriGenre$$ .
 }

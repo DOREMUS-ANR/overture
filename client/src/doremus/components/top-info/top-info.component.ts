@@ -14,6 +14,6 @@ export class TopInfoComponent {
   }
 
   goToSearch() {
-    this.router.navigate(['/search']);
+    this.router.navigate(['/expression']);
   }
 }

@@ -3,7 +3,7 @@ import {ROUTER_DIRECTIVES, Routes, Router, ROUTER_PROVIDERS} from '@angular/rout
 import {TopNavComponent} from './top-nav/top-nav.component';
 import {LeftMenuComponent} from './left-menu/left-menu.component';
 import {TopInfoComponent} from './top-info/top-info.component';
-import {QueriesTestComponent} from './queries-test/queries-test.component';
+import {QueriesTestComponent} from './search/queries-test.component';
 import {WorkTabComponent} from './work-tab/work-tab.component';
 import {PerformanceTabComponent} from './performance-tab/performance-tab.component';
 import {RecordingTabComponent} from './recording-tab/recording-tab.component';

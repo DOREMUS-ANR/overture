@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
-import {RecommendationService} from "../../services/recommendations.service";
+import {QueryService} from "../../services/queries.service";
 
 declare var __moduleName: string;
 
@@ -28,24 +28,23 @@ export class Vocabulary {
   moduleId: __moduleName,
   selector: 'queries-test',
   templateUrl: 'queries-test.template.html',
-  providers: [RecommendationService],
+  providers: [QueryService],
   directives: [ROUTER_DIRECTIVES]
 })
 
 export class QueriesTestComponent {
    query: number;
    queryResult: resultQ[];
-   queriesService: RecommendationService;
+   queriesService: QueryService;
    items: Vocabulary[];
 
-   constructor(_queriesService: RecommendationService) {
-    this.queriesService= _queriesService;
+   constructor(private _queriesService: QueryService) {
     this.query = 0;
     var result1 = new resultQ('prueba1','tipo1');
     var result2 = new resultQ('prueba2','tipo2');
     this.queryResult = [result1, result2];
 
-    this.queriesService.getInformation('vocabulary', "<http://data.doremus.org/vocabulary/key>", 'fr')
+    this._queriesService.getInformation('vocabulary', "<http://data.doremus.org/vocabulary/key>", 'fr')
       .subscribe(
         queryVoc => this.items = this.queryBindVoc(queryVoc),
         error => console.error('Error: ' + error)
@@ -53,7 +52,7 @@ export class QueriesTestComponent {
     }
 
     loadQuery(sel) {
-      this.queriesService.getInformation('searchQuery', "<"+sel+">",null)
+      this._queriesService.getInformation('searchQuery', "<"+sel+">",null)
       .subscribe(
         query => this.queryResult = this.queryBind(query),
         error => console.error('Error: ' + error)

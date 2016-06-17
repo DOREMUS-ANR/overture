@@ -10,7 +10,6 @@ import { RecommendationService } from '../../services/recommendations.service';
 
 import {MdCard, MdCardHeader} from './card';
 
-import {QueriesService} from "../../services/queries-test.service";
 import {RecommendationCardInfo} from '../recommendations/cardInfo' ;
 
 declare var __moduleName: string;
@@ -21,22 +20,19 @@ declare var __moduleName: string;
   inputs: ['items'],
   templateUrl: 'recommendations.template.html',
   directives: [NgFor, MdToolbar, MdCard, MdCardHeader, ROUTER_DIRECTIVES],
-	changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [QueriesService]
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class RecommendationsComponent {
 	@Input() items: RecommendationCardInfo[];
-  option: String;
-  @Output() change= new EventEmitter();
+  @Output() change = new EventEmitter();
 
-  constructor (
-    private service: RecommendationService) {}
+  constructor () {}
 
   goToExpression(item){
     this.change.emit({
       value: item.id
     })
-    console.log("Selected: " + item.id);
+    //console.log("Selected: " + item.id);
   }
 }

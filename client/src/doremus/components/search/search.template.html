@@ -1,0 +1,16 @@
+<div class="searchcontainer">
+  <div class="searchbox">
+    <form>
+      <label>Key</label>
+      <select #selKey name="singleSelect" (change)="loadQuery(selKey.value, selGenre.value)">
+            <option value="noSel">Select ...</option>
+            <option value="{{item.id}}" *ngFor="let item of itemsKey">{{item.name}}</option>
+      </select><br>
+      <label>Genre</label>
+      <select #selGenre name="singleSelect" (change)="loadQuery(selKey.value, selGenre.value)">
+            <option value="noSel">Select ...</option>
+            <option value="{{item.id}}" *ngFor="let item of itemsGenre">{{item.name}}</option>
+      </select><br>
+    </form>
+  </div>
+</div>

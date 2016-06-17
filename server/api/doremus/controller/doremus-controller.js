@@ -18,7 +18,9 @@ export default class DoremusController {
                                        .replace("$$lim$$", query.lim)
                                        .replace("$$lang$$", query.lang)
                                        .replace(/\$\$expr\$\$/g, query.uri)
-                                       .replace("$$uri$$", query.uri), endpoint))
+                                       .replace("$$uri$$", query.uri)
+                                       .replace("$$uriKey$$", query.uriKey)
+                                       .replace("$$uriGenre$$", query.uriGenre), endpoint))
       .then(results => res.json(results))
       .catch(err => console.error('error ' + err.message));
   }
