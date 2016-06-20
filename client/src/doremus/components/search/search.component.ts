@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {NgClass} from '@angular/common';
 import {QueryService} from "../../services/queries.service";
+import {SharedService} from "../../services/sharedService.service";
 
 declare var __moduleName: string;
 
@@ -25,7 +26,8 @@ export class SearchComponent {
   itemsKey: Vocabulary[];
   itemsGenre: Vocabulary[];
 
-  constructor(private _queriesService: QueryService) {
+  constructor(private _queriesService: QueryService,
+              private _sharedService: SharedService) {
 
     this._queriesService.getInformation('vocabulary', "<http://data.doremus.org/vocabulary/key>", 'fr')
       .subscribe(
@@ -51,13 +53,7 @@ export class SearchComponent {
    }
 
    loadQuery(selKey, selGenre) {
-     console.log("Key: " + selKey);
-     console.log("Genre: " + selGenre);
-
-     /*this._queriesService.getInformation('searchQuery', "<"+selKey+">" + "??" + "<"+selGenre.id+">",null)
-     .subscribe(
-       query => this.queryResult = this.queryBind(query),
-       error => console.error('Error: ' + error)
-     );*/
+     this._sharedService.setFilterOptions([selKey, selGenre]);
+     this._sharedService.filter();
    }
 }

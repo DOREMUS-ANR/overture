@@ -14,21 +14,37 @@ export class QueryService {
     this.http = http;
   }
 
-  getInformations(id) {
+  getInformations(id, items){
+    this.end = 10;
+    var filterOptions = "";
+    if(items != undefined && items[0]!= undefined) {
+      filterOptions = '&' + 'key=' + items[0];
+    }
+    if(items != undefined && items[1]!= undefined) {
+      filterOptions = filterOptions + '&' + 'genre=' + items[1];
+    }
     var options = new RequestOptions({
       search: 'id=' + id + '&' +
-      'lim=' + this.end + '&'
+      'lim=' + this.end + '&' +
+      filterOptions
     });
-    // FIXME relative URL
     return this.http.get("../api/query", options)
       .map(res => res.json());
   }
 
-  getMoreInformation(id){
+  getMoreInformation(id, items){
       this.end += 10;
+      var filterOptions = "";
+      if(items != undefined && items[0]!= undefined) {
+        filterOptions = '&' + 'key=' + items[0];
+      }
+      if(items != undefined && items[1]!= undefined) {
+        filterOptions = filterOptions + '&' + 'genre=' + items[1];
+      }
       var options = new RequestOptions({
         search: 'id=' + id + '&' +
-        'lim=' + this.end
+        'lim=' + this.end  +
+        filterOptions
       });
       // FIXME relative URL
       return this.http.get("../api/query", options)

@@ -9,18 +9,12 @@ export default class DoremusController {
   static sendQuery(req, res) {
     let query = req.query;
 
-    console.log('Query to ' + endpoint);
-    console.log('URI: ' + query.uri);
+    //console.log('Query to ' + endpoint);
+    //console.log('URI: ' + query.uri);
     let _q = 'server/commons/queries/' + query.id + '.rq';
+
     readFile(_q)
-      .then(content => askQuery(content.replace("$$prop$$", query.prop)
-                                       .replace("$$val$$", query.val)
-                                       .replace("$$lim$$", query.lim)
-                                       .replace("$$lang$$", query.lang)
-                                       .replace(/\$\$expr\$\$/g, query.uri)
-                                       .replace("$$uri$$", query.uri)
-                                       .replace("$$uriKey$$", query.uriKey)
-                                       .replace("$$uriGenre$$", query.uriGenre), endpoint))
+      .then(content => askQuery(content, endpoint, req.query))
       .then(results => res.json(results))
       .catch(err => console.error('error ' + err.message));
   }
@@ -38,7 +32,23 @@ function readFile(name) {
   });
 }
 
-function askQuery(query, endpoint) {
+function askQuery(query, endpoint, req) {
+  query = query.replace("$$prop$$", req.prop)
+               .replace("$$val$$", req.val)
+               .replace("$$lim$$", req.lim)
+               .replace("$$lang$$", req.lang)
+               .replace(/\$\$expr\$\$/g, req.uri)
+               .replace("$$uri$$", req.uri)
+               .replace("$$uriKey$$", req.uriKey)
+               .replace("$$uriGenre$$", req.uriGenre);
+  if(!(req.key === undefined) ){
+    var filterKey = "has_title ?titleAux ; mus:U11_has_key <" + req.key + ">";
+    query = query.replace("has_title ?titleAux", filterKey);
+  }
+  if(!(req.genre === undefined)){
+    var filterGenre = "has_title ?titleAux ; mus:U12_has_genre <" + req.genre + ">";
+    query = query.replace("has_title ?titleAux", filterGenre);
+  }
   console.log('askquery: ' + query);
   var client = new SparqlClient(endpoint);
   return new Promise(function(resolve, reject) {

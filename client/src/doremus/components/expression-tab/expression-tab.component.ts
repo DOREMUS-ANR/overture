@@ -73,11 +73,12 @@ export class ExpressionTabComponent {
   classDiscover = 'menu-icon icon-plus';
   expression: Expression;
   search: boolean = false;
-
+  filter: Array<string>;
   constructor(private _service: QueryService,
               private _sharedService: SharedService){
     this.expressionURI = "<>";
     this._sharedService.showSearch$.subscribe(item => this.onSearchClick(item));
+    this._sharedService.filterOptions$.subscribe(item => this.onSearchChoosed(item));
   }
 
   onSearchClick(item){
@@ -85,8 +86,16 @@ export class ExpressionTabComponent {
     //console.log("Search: " + this.search)
   }
 
+  onSearchChoosed(item){
+    this.filter = item;
+    this._service.getInformations('selfContainedExpressions', this.filter)
+      .subscribe(
+        query => this.items = this.queryBind(query),
+        error => console.error('Error: ' + error)
+      );
+  }
   ngOnInit(){
-    this._service.getInformations('selfContainedExpressions')
+    this._service.getInformations('selfContainedExpressions', this.filter)
         .subscribe(
           query => this.items = this.queryBind(query),
           error => console.error('Error: ' + error)
@@ -175,7 +184,7 @@ export class ExpressionTabComponent {
   }
 
   onScroll () {
-    this._service.getMoreInformation('selfContainedExpressions')
+    this._service.getMoreInformation('selfContainedExpressions', this.filter)
       .subscribe(
         query => this.items = this.queryBind(query),
         error => console.error('Error: ' + error)

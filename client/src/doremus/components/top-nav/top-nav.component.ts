@@ -16,7 +16,7 @@ export class TopNavComponent {
   isOn: boolean = false;
 
   constructor(private _sharedService: SharedService) {
-      this.isOn = _sharedService.get();
+      this.isOn = _sharedService.getSearch();
   }
 
   clickSearch(){
