@@ -179,8 +179,9 @@ export class ExpressionTabComponent {
   }
 
   openDiscover()  {
+    console.log(this.classDiscover);
     this.displayDiscover = this.displayDiscover.match('none') ? 'inline' : 'none' ;
-    this.classDiscover = this.classDiscover.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus' ;
+    this.classDiscover = this.displayDiscover.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus' ;
   }
 
   onScroll () {

@@ -35,13 +35,13 @@
       <span style="width: auto; align-self: left;">{{expression.casting}}</span>
       <span *ngIf="expression.castingNotes.length > 0" (click)="openInstruments();" [ngClass]="class" style="width: 16px; height: 16px; padding: 0"></span>
     </div>
-    <ul [ngStyle]="{'display': display}" style="list-style-type: none; margin: 0; padding: 0;" *ngIf="expression.castingNotes">
+    <ul [ngStyle]="{'display': display}" style="list-style-type: none; margin: 0; padding: 0" *ngIf="expression.castingNotes">
       <li *ngFor="let note of expression.castingNotes" class="instr icon-right-dir">{{note}}</li>
     </ul>
     <div style="display: flex; flex-flow: row wrap;">
       <span>Discover: </span>
       &nbsp;
-      <span (click)="openDiscover();" [ngClass]="classDiscover" style="width: 16px; height: 16px; padding: 0"></span>
+      <span (click)="openDiscover();" [ngClass]="classDiscover" style="width: 16px; height: 16px; padding: 0; line-height: 1.4em;"></span>
     </div>
     <ul [ngStyle]="{'display': displayDiscover}" style="list-style-type: none; margin: 0; padding: 0;">
       <li *ngIf="expression.complexWork" class="instr icon-right-dir"><a href={{expression.complexWork}}>Complex Work</a></li>
