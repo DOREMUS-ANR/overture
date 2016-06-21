@@ -93,6 +93,7 @@ export class ExpressionTabComponent {
         query => this.items = this.queryBind(query),
         error => console.error('Error: ' + error)
       );
+    this.expression = null;
   }
   ngOnInit(){
     this._service.getInformations('selfContainedExpressions', this.filter)
