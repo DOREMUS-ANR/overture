@@ -1,18 +1,18 @@
 .infinite-list
-  padding: 10px
-  margin: 0
-  display: flex
-  width: 100%
-  flex-wrap: wrap
-  justify-content: space-around
+  padding 10px
+  margin 0
+  display flex
+  width 100%
+  flex-wrap wrap
+  justify-content space-around
 md-card
-  margin: 16px 16px 16px 16px
-  width: 240px
+  margin 16px 16px 16px 16px
+  width 240px
 .card-container
-  display: flex
-  flex: column
-  width: 240px
-  height: 320px
+  display flex
+  flex column
+  width 240px
+  height 320px
 
 rem($multiplier)
   $font-size = 9px
@@ -20,107 +20,107 @@ rem($multiplier)
 $md-shadow-bottom-z-1 = 0 2px 5px 0 rgba(0, 0, 0, 0.26)
 $md-shadow-bottom-z-2 = 0 4px 8px 0 rgba(0, 0, 0, 0.4)
 $md-body-font-size-base = 10px
-$font-family = Roboto, "Helvetica Neue", sans-serif
+$font-family = Roboto, sans-serif
 $md-mobile-screen = 600px
 $md-card-default-padding = rem(2.4)
 $md-card-mobile-padding = rem(2.4) rem(1.6)
 $md-card-border-radius = 2px
 $md-card-header-size = rem(4)
 md-card
-  display: block
-  position: relative
-  padding: $md-card-default-padding
-  border-radius: $md-card-border-radius
-  box-shadow: $md-shadow-bottom-z-1
-  font-family: $font-family
-  background: white
+  display block
+  position relative
+  padding $md-card-default-padding
+  border-radius $md-card-border-radius
+  box-shadow $md-shadow-bottom-z-1
+  font-family $font-family
+  background white
   // to be replaced with theming
 $md_card_title_base
-  display: block
-  margin-bottom: rem(1.6)
+  display block
+  margin-bottom rem(1.6)
 md-card-title
   @extend $md_card_title_base
-  font-size: rem(1.8)
-  font-weight: 400
+  font-size rem(1.8)
+  font-weight 400
 md-card-subtitle
   @extend $md_card_title_base
-  font-size: $md-body-font-size-base
-  color: rgba(0, 0, 0, 0.54)
+  font-size $md-body-font-size-base
+  color rgba(0, 0, 0, 0.54)
   //to be replaced with theming
 md-card-content
-  display: block
-  font-size: $md-body-font-size-base
-  margin-bottom: rem(1.6)
+  display block
+  font-size $md-body-font-size-base
+  margin-bottom rem(1.6)
 md-card-actions
-  display: block
-  margin: rem(1.6) rem(-1.6)
-  padding: rem(0.8) 0
+  display block
+  margin rem(1.6) rem(-1.6)
+  padding rem(0.8) 0
 md-card-actions
   [md-button], [md-raised-button], button
-    margin: 0 rem(0.4)
+    margin 0 rem(0.4)
 img[md-card-image]
-  width: 100%
+  width 100%
 img[md-card-xl-image]
-  width: rem(24)
-  height: rem(24)
-  margin: rem(-0.8)
+  width rem(24)
+  height rem(24)
+  margin rem(-0.8)
 md-card-footer
-  position: absolute
-  bottom: 0
+  position absolute
+  bottom 0
 /* HEADER STYLES */
 md-card-header
-  display: flex
-  flex-direction: row
-  height: $md-card-header-size
-  margin: rem(-0.8) 0 rem(1.6) 0
+  display flex
+  flex-direction row
+  height $md-card-header-size
+  margin rem(-0.8) 0 rem(1.6) 0
 .md-card-header-text
-  height: $md-card-header-size
-  margin: 0 rem(0.8)
+  height $md-card-header-size
+  margin 0 rem(0.8)
 img[md-card-avatar]
-  height: $md-card-header-size
-  width: $md-card-header-size
-  border-radius: 50%
+  height $md-card-header-size
+  width $md-card-header-size
+  border-radius 50%
 md-card-header md-card-title
-  font-size: $md-body-font-size-base
+  font-size $md-body-font-size-base
 md-card-header md-card-subtitle:not(:first-child)
-  margin-top: rem(-0.8)
+  margin-top rem(-0.8)
 /* TITLE-GROUP STYLES */
 $md_card_title_img
-  margin: rem(-0.8) 0
+  margin rem(-0.8) 0
 md-card-title-group
-  display: flex
-  justify-content: space-between
-  margin: 0 rem(-0.8)
+  display flex
+  justify-content space-between
+  margin 0 rem(-0.8)
 /* MEDIA QUERIES */
 @media (max-width: $md-mobile-screen)
   md-card-title-group
-    margin: 0
+    margin 0
 /* FIRST/LAST CHILD ADJUSTMENTS */
 md-card-title:not(:first-child), md-card-subtitle:not(:first-child)
-  margin-top: rem(-0.4)
+  margin-top rem(-0.4)
 div[md-card-image-container]:first-child
-  margin-top: rem(-2.4)
+  margin-top rem(-2.4)
 md-card-content:first-child
-  margin: 0
-  padding-top: 0
+  margin 0
+  padding-top 0
 md-card-content > *:first-child
-  margin-top: 0
+  margin-top 0
 .md-card > img[md-card-xl-image]:first-child
-  margin-top: rem(-0.8)
+  margin-top rem(-0.8)
 .md-card > img[md-card-xl-image]:last-child
-  margin-bottom: rem(-0.8)
+  margin-bottom rem(-0.8)
 .md-card > *:last-child, md-card-content > *:last-child
-  margin-bottom: 0
+  margin-bottom 0
 .md-card > md-card-actions:last-child
-  margin-bottom: rem(-1.6)
-  padding-bottom: 0
+  margin-bottom rem(-1.6)
+  padding-bottom 0
 
 img[md-card-image]:hover
-  cursor: pointer
-  transform: scale(1.1)
+  cursor pointer
+  transform scale(1.1)
 
 div[md-card-image-container]
-  width: calc(100% + 2*rem(1.6))
-  height: 110px
-  margin: 0 rem(-2.4) rem(1.6) rem(-2.4)
-  overflow: hidden
+  width calc(100% + 2*rem(1.6))
+  height 110px
+  margin 0 rem(-2.4) rem(1.6) rem(-2.4)
+  overflow hidden

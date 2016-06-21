@@ -11,7 +11,7 @@ h1
 	font-size 2.5em
 
 h2
-	color #9e009e
+	color mainDark
 	font-family Roboto, sans-serif
 	font-weight lighter
 
@@ -35,10 +35,17 @@ a
 		color lighten(main, 10)
 
 my-app
-	padding-top 60px
+	margin-top 60px
 	display flex
 	flex-flow column nowrap
 	min-height 100vh
+
+@media screen and (max-width: 763px)
+	my-app
+		margin-top 100px
+@media screen and (max-width: 592px)
+	my-app
+		margin-top 130px
 
 .header
 	width 100%
@@ -134,7 +141,6 @@ my-app
 	z-index 9999
 
 .main
-	align-self flex-start
 	margin 20px auto
 	flex 1 0 auto
 	height auto
@@ -219,5 +225,5 @@ button.light
 @import 'components/performance-tab'
 @import 'components/work-tab'
 @import 'components/recommendations'
-@import 'search'   
+@import 'search'
 @import 'tabs'

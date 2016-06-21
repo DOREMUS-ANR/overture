@@ -6,7 +6,7 @@
       <!-- <iframe id="video1" src="https://www.youtube.com/embed/sdE3bGV0qYI" frameborder="0" allowfullscreen></iframe> -->
     </div>
   </div>
-  <div class='main-text'>
+  <div class='main-text card'>
     <h2 style="font-size: 150%;" *ngIf="expression.title">{{expression.title}}</h2>
     <p *ngIf="expression.note">{{expression.note}}</p>
    <div *ngIf="expression.key">
@@ -29,7 +29,7 @@
       <span>Composer: </span>
       <span><a>{{expression.composer}}</a></span>
     </div>
-    <div style="display: flex; flex-flow: row wrap;" *ngIf="expression.casting || expression.castingNotes.length > 0">
+    <div *ngIf="expression.casting || expression.castingNotes.length > 0">
       <span>Casting: </span>
       &nbsp;
       <span style="width: auto; align-self: left;">{{expression.casting}}</span>
@@ -38,7 +38,7 @@
     <ul [ngStyle]="{'display': display}" style="list-style-type: none; margin: 0; padding: 0" *ngIf="expression.castingNotes">
       <li *ngFor="let note of expression.castingNotes" class="instr icon-right-dir">{{note}}</li>
     </ul>
-    <div style="display: flex; flex-flow: row wrap;">
+    <div>
       <span>Discover: </span>
       &nbsp;
       <span (click)="openDiscover();" [ngClass]="classDiscover" style="width: 16px; height: 16px; padding: 0; line-height: 1.4em;"></span>

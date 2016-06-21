@@ -127,7 +127,9 @@ export class ExpressionTabComponent {
     var result = new Expression;
     var lang = "fr";
     for(var i in bindings){
-      result.title = (bindings[i]["title"]!=null) ? result.title.concat("- ", bindings[i]["title"].value) : result.title;
+      result.title = (bindings[i]["title"]!=null) ?
+                      ((result.title == "") ? result.title.concat(bindings[i]["title"].value) : result.title.concat("- ", bindings[i]["title"].value))
+                      : result.title;
       if(bindings[i]["castingNote"]!=null) {
         result.castingNotes.push(bindings[i]["castingNote"].value);
       }
@@ -150,7 +152,7 @@ export class ExpressionTabComponent {
       result.genreURI = (binding["genre"]!=null) ? binding["genre"].value : null;
       if(result.genreURI!=null)
       {
-        this._service.getInformation('vocabulary', "<"+result.genreURI+">", lang)
+        this._service.getInformation('vocabularyURI', "<"+result.genreURI+">", lang)
           .subscribe(
             query => result.genre = query.results.bindings[0]["name"].value,
             error => console.error('Error: ' + error)
@@ -180,7 +182,6 @@ export class ExpressionTabComponent {
   }
 
   openDiscover()  {
-    console.log(this.classDiscover);
     this.displayDiscover = this.displayDiscover.match('none') ? 'inline' : 'none' ;
     this.classDiscover = this.displayDiscover.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus' ;
   }
