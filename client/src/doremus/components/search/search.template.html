@@ -1,16 +1,26 @@
 <div class="searchcontainer">
   <div class="searchbox">
     <form>
-      <label>Key</label>
-      <select #selKey name="singleSelect" (change)="loadQuery(selKey.value, selGenre.value)">
-            <option value="noSel">Select ...</option>
-            <option value="{{item.id}}" *ngFor="let item of itemsKey">{{item.name}}</option>
-      </select><br>
-      <label>Genre</label>
-      <select #selGenre name="singleSelect" (change)="loadQuery(selKey.value, selGenre.value)">
-            <option value="noSel">Select ...</option>
-            <option value="{{item.id}}" *ngFor="let item of itemsGenre">{{item.name}}</option>
-      </select><br>
+      <div>
+        <label>Key</label>
+        <ng-select #selKey *ngIf="itemsKey" [allowClear]="true"
+                    [items]="itemsKey"
+                    [disabled]="disabled"
+                    (selected)="loadQuery(selKey, selGenre)"
+                    (removed)="removeItem('key')"
+                    placeholder="No key selected">
+        </ng-select><br>
+      </div>
+      <div>
+        <label>Genre</label>
+        <ng-select #selGenre *ngIf="itemsGenre" [allowClear]="true"
+                    [items]="itemsGenre"
+                    [disabled]="disabled"
+                    (selected)="loadQuery(selKey, selGenre)"
+                    (removed)="removeItem('genre')"
+                    placeholder="No genre selected">
+        </ng-select>
+      </div>
     </form>
   </div>
 </div>

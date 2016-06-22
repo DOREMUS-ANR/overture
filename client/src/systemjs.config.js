@@ -8,7 +8,8 @@
     '@angular': 'lib/@angular',
     '@angular2-material': 'lib/@angular2-material',
     'symbol-observable': 'lib/symbol-observable',
-    'angular2-infinite-scroll': 'lib/angular2-infinite-scroll'
+    'angular2-infinite-scroll': 'lib/angular2-infinite-scroll',
+    'ng2-select': 'lib/ng2-select'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension

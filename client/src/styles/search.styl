@@ -11,12 +11,19 @@
 	padding 2em 2em
 	z-depth(1)
 	border-radius 0.3em
+	& > form
+		display flex
+		flex-flow row wrap
+		& > div
+			display flex
+			flex-flow row wrap
+			& > label
+				align-self center
 
-select
+ng-select
 	width auto
-	padding 12px 20px
+	padding 0 12px
 	margin 8px 8px
 	display inline-block
-	border 1px solid #ccc
 	border-radius 4px
 	box-sizing border-box
