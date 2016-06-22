@@ -49,6 +49,10 @@ function askQuery(query, endpoint, req) {
     var filterGenre = "has_title ?titleAux ; mus:U12_has_genre <" + req.genre + ">";
     query = query.replace("has_title ?titleAux", filterGenre);
   }
+  if(!(req.title === undefined)){
+    var filterTitle = "FILTER (regex(str(?titleAux),'" + req.title + "') && str(?titleAux)";
+    query = query.replace("FILTER (str(?titleAux)", filterTitle);
+  }
   console.log('askquery: ' + query);
   var client = new SparqlClient(endpoint);
   return new Promise(function(resolve, reject) {

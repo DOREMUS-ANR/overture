@@ -4,7 +4,7 @@ import { Subject }    from 'rxjs/Subject';
 @Injectable()
 export class SharedService {
   search: boolean = false;
-  filterOptions: Array<string> = [null,null]; /*key, genre*/
+  filterOptions: Array<string> = [null,null,null]; /*key, genre*/
   public showSearch$: EventEmitter<boolean>;
   public filterOptions$: EventEmitter<string[]>;
 
@@ -25,8 +25,8 @@ export class SharedService {
     this.filterOptions = new Array<string>();
     for(var i in options){
       if(options[i] == "noSel"){
-          var genre;
-          this.filterOptions.push(genre);
+          var noSel;
+          this.filterOptions.push(noSel);
       }else{
           this.filterOptions.push(options[i]);
       }
@@ -43,6 +43,6 @@ export class SharedService {
   }
 
   public clean(){
-    this.filterOptions = [null,null];
+    this.filterOptions = [null,null,null];
   }
 }

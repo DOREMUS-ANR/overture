@@ -23,6 +23,9 @@ export class QueryService {
     if(items != undefined && items[1]!= undefined) {
       filterOptions = filterOptions + '&' + 'genre=' + items[1];
     }
+    if(items != undefined && items[2]!= undefined) {
+      filterOptions = filterOptions + '&' + 'title=' + items[2];
+    }
     var options = new RequestOptions({
       search: 'id=' + id + '&' +
       'lim=' + this.end + '&' +
@@ -40,6 +43,9 @@ export class QueryService {
       }
       if(items != undefined && items[1]!= undefined) {
         filterOptions = filterOptions + '&' + 'genre=' + items[1];
+      }
+      if(items != undefined && items[2]!= undefined) {
+        filterOptions = filterOptions + '&' + 'title=' + items[2];
       }
       var options = new RequestOptions({
         search: 'id=' + id + '&' +

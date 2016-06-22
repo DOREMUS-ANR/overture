@@ -2,24 +2,33 @@
   <div class="searchbox">
     <form>
       <div>
-        <label>Key</label>
-        <ng-select #selKey *ngIf="itemsKey" [allowClear]="true"
-                    [items]="itemsKey"
-                    [disabled]="disabled"
-                    (selected)="loadQuery(selKey, selGenre)"
-                    (removed)="removeItem('key')"
-                    placeholder="No key selected">
-        </ng-select><br>
+        <div>
+          <label>Title</label>
+          <input (keyup)="onTitle($event)" placeholder="Type here...">
+        </div>
       </div>
+      <br>
       <div>
-        <label>Genre</label>
-        <ng-select #selGenre *ngIf="itemsGenre" [allowClear]="true"
-                    [items]="itemsGenre"
-                    [disabled]="disabled"
-                    (selected)="loadQuery(selKey, selGenre)"
-                    (removed)="removeItem('genre')"
-                    placeholder="No genre selected">
-        </ng-select>
+        <div>
+          <label>Key</label>
+          <ng-select #selKey *ngIf="itemsKey" [allowClear]="true"
+                      [items]="itemsKey"
+                      [disabled]="disabled"
+                      (selected)="loadQuery(selKey, selGenre)"
+                      (removed)="removeItem('key')"
+                      placeholder="Type here...">
+          </ng-select><br>
+        </div>
+        <div>
+          <label>Genre</label>
+          <ng-select #selGenre *ngIf="itemsGenre" [allowClear]="true"
+                      [items]="itemsGenre"
+                      [disabled]="disabled"
+                      (selected)="loadQuery(selKey, selGenre)"
+                      (removed)="removeItem('genre')"
+                      placeholder="Type here...">
+          </ng-select>
+        </div>
       </div>
     </form>
   </div>

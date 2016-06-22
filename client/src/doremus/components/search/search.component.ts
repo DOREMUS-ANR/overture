@@ -56,18 +56,25 @@ export class SearchComponent{
    }
 
    loadQuery(selKey, selGenre) {
-     selGenre = (selGenre == undefined) ? "noSel" : selGenre.activeOption.id;
-     selKey = (selKey == undefined) ? "noSel" : selKey.activeOption.id;
-     this._sharedService.setFilterOptions([selKey, selGenre]);
+     var options = this._sharedService.getFilterOptions();
+     options[0] = (selKey == undefined) ? 'noSel': selKey.activeOption.id;
+     options[1] = (selGenre == undefined) ? 'noSel': selGenre.activeOption.id;
+     this._sharedService.setFilterOptions(options);
      this._sharedService.filter();
    }
 
    removeItem(item){
-     var oldOptions = this._sharedService.getFilterOptions();
-     var newOptions = [null,null];
-     newOptions[0] = (item == 'key') ? 'noSel': oldOptions[0];
-     newOptions[1] = (item == 'genre') ? 'noSel': oldOptions[1];
-     this._sharedService.setFilterOptions(newOptions);
+     var options = this._sharedService.getFilterOptions();
+     options[0] = (item == 'key') ? 'noSel': options[0];
+     options[1] = (item == 'genre') ? 'noSel': options[1];
+     this._sharedService.setFilterOptions(options);
+     this._sharedService.filter();
+   }
+
+   onTitle(event:any) {
+     var options = this._sharedService.getFilterOptions();
+     options[2] = event.target.value;
+     this._sharedService.setFilterOptions(options);
      this._sharedService.filter();
    }
 }
