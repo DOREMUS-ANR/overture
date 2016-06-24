@@ -21,15 +21,31 @@ The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][
 ### Run (dev mode)
 - Install some global packages
 
-        npm install -g gulp gulp-cli nodemon typings
+      npm install -g gulp gulp-cli nodemon typings
 
 - In application folder
 
-        npm install
-        npm start
+      npm install
+      npm start
 
 ### Run (production mode)
  TBD
+
+### Docker
+
+Build
+
+    docker build -t doremus/overture .
+
+Run
+
+    docker run -p 3000:3000 -d --name  overture doremus/overture
+    docker logs overture
+
+Stop
+
+    docker stop overture
+    docker rm overture ##remove from images
 
 [1]: https://drive.google.com/file/d/0B_nxZpGQv9GKZmpKRGl2dmRENGc/view
 [2]: https://www.w3.org/TR/sparql11-query/
