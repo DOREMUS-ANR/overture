@@ -1,6 +1,8 @@
 import fs from 'fs';
 import SparqlClient from 'sparql-client';
-import {EXT_URI} from '../../../config/constants';
+import {
+  EXT_URI
+} from '../../../config/constants';
 
 const endpoint = EXT_URI.SPARQL_ENDPOINT;
 
@@ -19,22 +21,22 @@ function readFile(name) {
 
 function askQuery(query, endpoint, req) {
   query = query.replace('$$prop$$', req.prop)
-               .replace('$$val$$', req.val)
-               .replace('$$lim$$', req.lim)
-               .replace('$$lang$$', req.lang)
-               .replace(/\$\$expr\$\$/g, req.uri)
-               .replace('$$uri$$', req.uri)
-               .replace('$$uriKey$$', req.uriKey)
-               .replace('$$uriGenre$$', req.uriGenre);
-  if(req.key !== undefined){
+    .replace('$$val$$', req.val)
+    .replace('$$lim$$', req.lim)
+    .replace('$$lang$$', req.lang)
+    .replace(/\$\$expr\$\$/g, req.uri)
+    .replace('$$uri$$', req.uri)
+    .replace('$$uriKey$$', req.uriKey)
+    .replace('$$uriGenre$$', req.uriGenre);
+  if (req.key !== undefined) {
     var filterKey = 'has_title ?titleAux ; mus:U11_has_key <' + req.key + '>';
     query = query.replace('has_title ?titleAux', filterKey);
   }
-  if(req.genre !== undefined){
+  if (req.genre !== undefined) {
     var filterGenre = 'has_title ?titleAux ; mus:U12_has_genre <' + req.genre + '>';
     query = query.replace('has_title ?titleAux', filterGenre);
   }
-  if(req.title !== undefined){
+  if (req.title !== undefined) {
     var filterTitle = 'FILTER (regex(str(?titleAux),\'' + req.title + '\') && str(?titleAux)';
     query = query.replace('FILTER (str(?titleAux)', filterTitle);
   }
@@ -62,8 +64,8 @@ export default class DoremusController {
     let _q = 'server/commons/queries/' + query.id + '.rq';
 
     readFile(_q)
-    .then(content => askQuery(content, endpoint, req.query))
-    .then(results => res.json(results))
-    .catch(err => console.error('error ' + err.message));
+      .then(content => askQuery(content, endpoint, req.query))
+      .then(results => res.json(results))
+      .catch(err => console.error('error ' + err.message));
   }
 }

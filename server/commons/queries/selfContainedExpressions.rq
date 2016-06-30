@@ -2,7 +2,7 @@ PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
 PREFIX frbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX mus: <http://data.doremus.org/ontology#>
 SELECT ?expressions (SAMPLE(?titleAux) AS ?title) (SAMPLE(?activityAux) AS ?activity) (SAMPLE(?personAux) AS ?person) (SAMPLE(?composerAux) AS ?composer)
-from <http://data.doremus.org/data>
+
 WHERE {
     ?expressions a  frbroo:F22_Self-Contained_Expression ;
              cidoc:P102_has_title ?titleAux .

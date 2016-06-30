@@ -2,7 +2,7 @@ PREFIX mus: <http://data.doremus.org/ontology#>
 PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
 PREFIX frbroo: <http://erlangen-crm.org/efrbroo/>
 
-SELECT DISTINCT * from <http://data.doremus.org/data>
+SELECT DISTINCT *
 WHERE {
     $$expr$$ a frbroo:F22_Self-Contained_Expression ;
              cidoc:P102_has_title ?title .
