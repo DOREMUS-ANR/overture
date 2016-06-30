@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouteSegment, OnActivate, RouteTree } from '@angular/router';
+import { Router, ActivatedRoute} from '@angular/router';
 
 import {MdToolbar} from '@angular2-material/toolbar/toolbar';
 
@@ -15,16 +15,26 @@ declare var __moduleName: string;
   directives: [MdToolbar]
 })
 
-export class WorkSubDetailComponent implements OnActivate  {
+export class WorkSubDetailComponent {
   subDetail: WorkSubDetail;
 
   constructor(
     private router: Router,
-    private service: WorkSubDetailService) {}
+    private route: ActivatedRoute,
+    private service: WorkSubDetailService) { }
+    private sub: any;
 
 
-  routerOnActivate(curr: RouteSegment): void {
-    let id = +curr.getParam('id');
-    this.service.getSubDetail(id).then(subDetail => this.subDetail = subDetail);
+  ngOnInit(): void {
+    this.sub = this.route.params.subscribe(params => {
+      let id = +params['id']; // (+) converts string 'id' to a number
+      if(!id) return;
+      this.service.getSubDetail(id).then(subDetail => this.subDetail = subDetail);
+    });
   }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
 }

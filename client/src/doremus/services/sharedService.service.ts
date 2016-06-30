@@ -9,8 +9,8 @@ export class SharedService {
   public filterOptions$: EventEmitter<string[]>;
 
   constructor() {
-    this.showSearch$ = new EventEmitter();
-    this.filterOptions$ = new EventEmitter();
+    this.showSearch$ = new EventEmitter<boolean>();
+    this.filterOptions$ = new EventEmitter<string[]>();
   }
 
   getSearch() : boolean {

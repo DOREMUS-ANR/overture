@@ -32,10 +32,9 @@
 <div class="content">
   <div class="tab-container" [ngStyle]="{'display': display}">
     <ul>
-      <li *ngFor="let subDetail of subDetails"
-        [class.selected]="isSelected(subDetail)"
-        (click)="onSelect(subDetail)">
-        <label>{{subDetail.shortname}}</label>
+      <li *ngFor="let subDetail of subDetails">
+        <!-- routerLinkActive="active" -->
+        <a [routerLink]="[subDetail.id]" >{{subDetail.shortname}}</a>
       </li>
     </ul>
   </div>
