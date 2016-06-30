@@ -11,11 +11,11 @@
     <p *ngIf="expression.note">{{expression.note}}</p>
    <div *ngIf="expression.key">
       <span>Key: </span>
-      <span><a href={{expression.keyURI}}>{{expression.key}}</a></span>
+      <span><a (click)="wip()">{{expression.key}}</a></span>
     </div>
     <div *ngIf="expression.genre">
       <span>Genre: </span>
-      <span><a href={{expression.genreURI}}>{{expression.genre}}</a></span>
+      <span><a (click)="wip()">{{expression.genre}}</a></span>
     </div>
     <div *ngIf="expression.opus">
       <span>Opus: </span>
@@ -44,9 +44,9 @@
       <span (click)="openDiscover();" [ngClass]="classDiscover" style="width: 16px; height: 16px; padding: 0; line-height: 1.4em;"></span>
     </div>
     <ul [ngStyle]="{'display': displayDiscover}" style="list-style-type: none; margin: 0; padding: 0;">
-      <li *ngIf="expression.complexWork" class="instr icon-right-dir"><a href={{expression.complexWork}}>Complex Work</a></li>
-      <li *ngIf="expression.individualWork" class="instr icon-right-dir"><a href={{expression.individualWork}}>Individual Work</a></li>
-      <li *ngIf="expression.expCreation" class="instr icon-right-dir"><a href={{expression.expCreation}}>Expression Creation</a></li>
+      <li *ngIf="expression.complexWork" class="instr icon-right-dir"><a (click)="wip()">Complex Work</a></li>
+      <li *ngIf="expression.individualWork" class="instr icon-right-dir"><a (click)="wip()">Individual Work</a></li>
+      <li *ngIf="expression.expCreation" class="instr icon-right-dir"><a (click)="wip()">Expression Creation</a></li>
     </ul>
   </div>
 </div>

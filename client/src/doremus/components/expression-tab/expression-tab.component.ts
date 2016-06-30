@@ -1,4 +1,5 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
+import {Router} from '@angular/router';
 import {MdToolbar} from '@angular2-material/toolbar/toolbar';
 import {Observable} from 'rxjs/Observable';
 import {NgStyle, NgClass} from '@angular/common';
@@ -75,7 +76,8 @@ export class ExpressionTabComponent {
   search: boolean = false;
   filter: Array<string>;
   constructor(private _service: QueryService,
-              private _sharedService: SharedService){
+              private _sharedService: SharedService,
+             private router: Router){
     this.expressionURI = "<>";
     this._sharedService.showSearch$.subscribe(item => this.onSearchClick(item));
     this._sharedService.filterOptions$.subscribe(item => this.onSearchChoosed(item));
@@ -198,5 +200,10 @@ export class ExpressionTabComponent {
     this.expressionURI = '<' + event.value + '>';
     this.ngOnInit();
     window.scrollTo(0, 0);
+  }
+
+  wip() {
+    console.log("wip");
+      this.router.navigate(['/wip']);
   }
 }

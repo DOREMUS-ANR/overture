@@ -11,6 +11,7 @@ import {PersonTabComponent} from './person-tab/person-tab.component';
 import {ScoreTabComponent} from './score-tab/score-tab.component';
 import {WorkSubDetailComponent} from './work-tab/workSubDetail.component';
 import {ExpressionTabComponent} from './expression-tab/expression-tab.component';
+import {WipComponent} from './wip/wip.component';
 import {WorkSubDetailService} from '../services/workSubDetail.service';
 import {QueryService} from '../services/queries.service';
 
@@ -60,6 +61,10 @@ import {QueryService} from '../services/queries.service';
   {
     path: '/expression',
     component: ExpressionTabComponent
+  },
+  {
+    path: '/wip',
+    component: WipComponent
   }
 ])
 

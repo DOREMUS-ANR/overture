@@ -6,7 +6,7 @@ declare var __moduleName: string;
 @Component({
   moduleId: __moduleName,
   selector: 'score-tab',
-  templateUrl: 'score-tab.template.html',
+  templateUrl: '../wip/wip.template.html',
   directives: [MdToolbar]
 })
 

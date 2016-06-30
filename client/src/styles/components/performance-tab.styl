@@ -9,18 +9,13 @@
     height 360px !important
     margin auto !important
 .main-part
-  display flex
-  flex-flow row wrap
-  flex 1 0 auto
-  height auto
+  height 100%
   width 100%
-.description-panel
-  width 35%
-  height auto
-  background-color #D8D8D8
-  margin 10% 2% 2% 2%
-  box-shadow 5px 5px 5px grey
-  flex 1 0 auto
+  display flex
+  justify-content space-around
+  flex-flow row wrap
+  align-items center
+
 .title-panel
   flex 1 0 auto
   width 100%
@@ -32,12 +27,16 @@
   font-weight 800
 
 .video2
-  margin 4% 0% 4% 2%
+  margin auto
   flex 1 0 auto
+  align-content center
   & iframe
-    width 70%
+    margin: 0 auto;
+    display block
+    width 100%
     max-width 300px
 .desc2
+  margin: 10px auto;
   color black
   text-align center
   width 70%
@@ -60,26 +59,10 @@
     margin-left 1%
     font-family 'Lato', sans-serif
 
-.main-img
-  flex 1 0 auto
-  height 100%
-  width 35%
-  padding 10px
-  .video1
-    position relative
-    width 100%
-    height auto
-  .video1 iframe
-    position absolute
-    left 0
-    top 0
-    width 75%
-    height 200px
-    margin-left 15%
-    margin-top 2.5%
-
 .comment-panel
   width 90%
+  flex 1 0 auto
+  align-self flex-start
   background-color #D8D8D8
   margin-left 5%
   margin-top 4%
