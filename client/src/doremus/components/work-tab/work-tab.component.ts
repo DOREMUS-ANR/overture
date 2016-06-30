@@ -51,4 +51,8 @@ export class WorkTabComponent implements OnActivate {
       this.router.navigate(['/work']);
     }
   }
+
+  wip() {
+    this.router.navigate(['/wip']);
+  }
 }

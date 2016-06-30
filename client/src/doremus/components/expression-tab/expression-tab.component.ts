@@ -203,7 +203,6 @@ export class ExpressionTabComponent {
   }
 
   wip() {
-    console.log("wip");
-      this.router.navigate(['/wip']);
+    this.router.navigate(['/wip']);
   }
 }
