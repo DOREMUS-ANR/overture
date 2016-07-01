@@ -34,9 +34,14 @@ Compile front end
 
         npm run build-dist
 
-Run production mode
+Run production mode (UNIX)
 
         NODE_ENV=production node index
+
+Run production mode (Windows)
+
+        set NODE_ENV=production
+        node index
 
 ### Docker
 

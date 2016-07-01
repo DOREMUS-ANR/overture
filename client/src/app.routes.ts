@@ -40,9 +40,9 @@ export const routes: RouterConfig = [
         component: WorkSubDetailComponent
       },
       {
-        path: ''
+        path: '',
+        redirectTo: '1'
       }
-
     ]
   },
   {

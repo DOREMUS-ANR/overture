@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 
 import {MdToolbar} from '@angular2-material/toolbar/toolbar';
@@ -17,7 +17,6 @@ declare var __moduleName: string;
 
 export class WorkSubDetailComponent {
   subDetail: WorkSubDetail;
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,

@@ -34,8 +34,8 @@ System.register(['@angular/core', '@angular/common', '@angular/router', '@angula
                 function WorkTabComponent(service, router) {
                     this.service = service;
                     this.router = router;
-                    this.display = 'none';
-                    this.class = 'menu-icon icon-plus';
+                    this.display = 'flex';
+                    this.class = 'menu-icon icon-minus';
                     this.composed = 'Composed Of...';
                 }
                 WorkTabComponent.prototype.ngOnInit = function () {
@@ -43,7 +43,7 @@ System.register(['@angular/core', '@angular/common', '@angular/router', '@angula
                     this.service.getSubDetails().then(function (subDetails) { return _this.subDetails = subDetails; });
                 };
                 WorkTabComponent.prototype.showDetails = function () {
-                    this.display = this.display.match('none') ? 'inline' : 'none';
+                    this.display = this.display.match('none') ? 'flex' : 'none';
                     this.class = this.display.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus';
                     this.composed = this.display.match('none') ? 'Composed Of...' : 'Composed Of';
                 };
@@ -54,6 +54,7 @@ System.register(['@angular/core', '@angular/common', '@angular/router', '@angula
                     core_1.Component({
                         moduleId: __moduleName,
                         selector: 'work-tab',
+                        inputs: ['display'],
                         templateUrl: 'work-tab.template.html',
                         directives: [toolbar_1.MdToolbar, router_1.ROUTER_DIRECTIVES, common_1.NgStyle, common_1.NgClass],
                         providers: [workSubDetail_service_1.WorkSubDetailService],

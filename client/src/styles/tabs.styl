@@ -16,6 +16,8 @@
   ul
     list-style none
     text-align center
+    position relative
+    right -12px
     li
       margin 8px 0
       a
@@ -33,9 +35,9 @@
           border-left-color seaLight
           color #000
           cursor pointer
-        &:active
-          border-right none
-          background-color #fff
+        &.active
+          border-right-color rgba(255,255,255,0.8)
+          background-color rgba(255, 255, 255, 0.57)
           border-left-color #006699
 
 .main-container

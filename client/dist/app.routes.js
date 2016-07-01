@@ -83,7 +83,8 @@ System.register(['@angular/router', '@angular/core', './doremus/components/top-i
                             component: workSubDetail_component_1.WorkSubDetailComponent
                         },
                         {
-                            path: ''
+                            path: '',
+                            redirectTo: '1'
                         }
                     ]
                 },
