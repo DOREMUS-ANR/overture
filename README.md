@@ -29,7 +29,14 @@ The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][
         npm start
 
 ### Run (production mode)
- TBD
+
+Compile front end
+
+        npm run build-dist
+
+Run production mode
+
+        NODE_ENV=production node index
 
 ### Docker
 
@@ -39,7 +46,7 @@ Build
 
 Run
 
-    docker run -p 3000:3000 -d --name  overture doremus/overture
+    docker run -p 3333:3333 -d --name  overture doremus/overture
     docker logs overture
 
 Stop

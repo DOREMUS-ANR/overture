@@ -23,7 +23,8 @@ gulp.task(tasks.CLIENT_VIEWS_DIST, () => {
       base: path.SRC
     })
     .pipe(rev()).pipe(htmlmin({
-      collapseWhitespace: true
+      collapseWhitespace: true,
+      caseSensitive: true
     }))
     .pipe(gulp.dest(path.DIST));
 });
