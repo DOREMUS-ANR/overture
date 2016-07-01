@@ -30,8 +30,8 @@ The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][
 
 ### Run (production mode)
 
-Compile front end
-
+Build
+        npm install --production
         npm run build-dist
 
 Run production mode (UNIX)

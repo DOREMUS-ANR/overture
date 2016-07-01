@@ -3,11 +3,10 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "start": "gulp server:dev",
-    "build-dev": "gulp server:dev",
-    "build-dist": "gulp client.build:dist",
-    "prod": "NODE_ENV=production node index",
-    "postinstall": "typings install"
+    "start": "typings install && gulp server:dev",
+    "build-dev": "typings install && gulp server:dev",
+    "build-dist": "typings install && gulp client.build:dist",
+    "prod": "NODE_ENV=production node index"
   },
   "dependencies": {
     "@angular/common": "^2.0.0-rc.4",
