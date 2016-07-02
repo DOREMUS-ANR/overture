@@ -16,7 +16,7 @@
   "compileOnSave": false,
   "filesGlob": [
     "client/src/**/*.ts",
-    "typings/browser.d.ts",
+    "node_modules/angular2/typings/browser.d.ts",
     "node_modules/angular2/typings/main.d.ts"
   ],
   "files": [
@@ -45,8 +45,7 @@
     "client/src/doremus/services/queries.service.ts",
     "client/src/doremus/services/sharedService.service.ts",
     "client/src/doremus/services/workSubDetail.service.ts",
-    "client/src/index.ts",
-    "typings/browser.d.ts"
+    "client/src/index.ts"
   ],
   "atom": {
     "rewriteTsconfig": true
