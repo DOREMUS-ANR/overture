@@ -6,7 +6,7 @@
     "start": "typings install && gulp server:dev",
     "build-dev": "typings install && gulp server:dev",
     "build-dist": "typings install && gulp client.build:dist",
-    "prod": "NODE_ENV=production node index"
+    "prod": "BABEL_DISABLE_CACHE=1 NODE_ENV=production node index"
   },
   "dependencies": {
     "@angular/common": "^2.0.0-rc.4",
@@ -77,7 +77,7 @@
   },
   "author": [
     "Eva Fernandez <eva.fernandez-marin@eurecom.fr>",
-    "Pasquale Lisena <pasquale.lisena@eurecom.fr"
+    "Pasquale Lisena <pasquale.lisena@eurecom.fr>"
   ],
   "license": "MIT",
   "bugs": {

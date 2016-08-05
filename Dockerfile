@@ -1,15 +1,15 @@
-FROM node:argon
-
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+FROM jplu/node
 
 # Install app dependencies
-COPY package.json /usr/src/app/
+COPY . /usr/src/app
+WORKDIR /usr/src/app
 RUN npm install --production
 
-# Bundle app source
-COPY . /usr/src/app
+RUN adduser -D -g sudo nodeuser -u 1000 \
+    && chown -R nodeuser /usr/src/app \
+    && chown -R nodeuser /usr/src/app \
+    && chmod -R 777 /root \
+    && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 EXPOSE 3333
-CMD [ "npm", "run", "prod" ]
+CMD [ "sudo", "-E", "-u", "nodeuser", "npm", "run", "prod" ]
