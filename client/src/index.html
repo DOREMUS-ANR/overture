@@ -29,6 +29,8 @@
     <meta name="msapplication-config" content="static/img/favicon/browserconfig.xml">
     <meta name="theme-color" content="#d32f2f">
 
+    <link rel="stylesheet" href="static/styles/loading.css?rev=@@hash">
+
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="lib/@angular2-material/core/style/core.css">
     <link rel="stylesheet" href="lib/@angular2-material/core/overlay/overlay.css">
@@ -49,8 +51,19 @@
   </head>
   <body>
 
-    <!-- 3. Display the application -->
-    <my-app id="fullPage">Loading...</my-app>
+    <my-app id="fullPage">
+      <div id="loading">
+        <div class="logo">Overture</div>
+        <div class="loading-cont">
+          <div class="circle normal"></div>
+          <div class="circle transparent"></div>
+        </div>
+
+        <p class="disclaimer">
+          Troubles? Please try to disable AdBlock.
+        </p>
+      </div>
+    </my-app>
 
   </body>
 </html>

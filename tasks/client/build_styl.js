@@ -12,7 +12,8 @@ import {
 function stylProcess({dist = false} = {}) {
   'use strict';
   let dest = (dist? path.DIST : path.DEV) + 'styles';
-  return gulp.src(path.SRC + '/styles/styles.styl')
+  return gulp.src([path.SRC + '/styles/styles.styl',
+  path.SRC + '/styles/loading.styl'])
     .pipe(gulpif(!dist, sourcemaps.init()))
     .pipe(stylus({
       use: [nib(), rupture()],
