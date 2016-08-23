@@ -58,9 +58,9 @@ export default class DoremusController {
 
   static sendQuery(req, res) {
     let query = req.query;
-
     //console.log('Query to ' + endpoint);
     //console.log('URI: ' + query.uri);
+    console.log(req.query['id'])
     let _q = 'server/commons/queries/' + query.id + '.rq';
 
     readFile(_q)

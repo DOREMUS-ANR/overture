@@ -3,8 +3,6 @@ import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 
 import {MdToolbar} from '@angular2-material/toolbar/toolbar';
 
-import {NgFor} from '@angular/common';
-
 import {SummaryInfo} from '../summaryInfo';
 
 import {MdCard, MdCardHeader} from './card';
@@ -16,9 +14,8 @@ declare var __moduleName: string;
 @Component({
   moduleId: __moduleName,
   selector: 'infinite-list',
-  inputs: ['items'],
   templateUrl: 'recommendations.template.html',
-  directives: [NgFor, MdToolbar, MdCard, MdCardHeader, ROUTER_DIRECTIVES],
+  directives: [MdToolbar, MdCard, MdCardHeader, ROUTER_DIRECTIVES],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 

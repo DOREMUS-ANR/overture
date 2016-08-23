@@ -10,8 +10,7 @@ declare var __moduleName: string;
 })
 
 export class TopInfoComponent {
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) { }
 
   goToSearch() {
     this.router.navigate(['/expression']);

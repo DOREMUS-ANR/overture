@@ -1,60 +1,57 @@
 import { INFORMATION } from '../components/auxExpressions';
 import { Injectable } from '@angular/core';
 import { SummaryInfo } from '../components/summaryInfo';
-import {Http, RequestOptions, Request} from '@angular/http';
-import 'rxjs/add/operator/map';
+import {Http, RequestOptions} from '@angular/http';
 
 @Injectable()
 export class QueryService {
-  public query;
-  http: Http;
   end: number;
-  constructor(http:Http){
+
+  constructor(private http: Http) {
     this.end = 20;
-    this.http = http;
   }
 
-  getInformations(id, items){
+  getInformations(id, items) {
     this.end = 10;
     var filterOptions = "";
-    if(items != undefined && items[0]!= undefined) {
-      filterOptions = '&' + 'key=' + items[0];
+
+    if (items && items[0]) {
+      filterOptions = '&key=' + items[0];
     }
-    if(items != undefined && items[1]!= undefined) {
-      filterOptions = filterOptions + '&' + 'genre=' + items[1];
+    if (items && items[1]) {
+      filterOptions += '&genre=' + items[1];
     }
-    if(items != undefined && items[2]!= undefined) {
-      filterOptions = filterOptions + '&' + 'title=' + items[2];
+    if (items && items[2]) {
+      filterOptions += '&title=' + items[2];
+    }
+
+    var options = new RequestOptions({
+      search: 'id=' + id + '&lim=' + this.end + filterOptions
+    });
+
+    return this.http.get("../api/query", options).map(res => res.json());
+  }
+
+  getMoreInformation(id, items) {
+    this.end += 10;
+    var filterOptions = "";
+    if (items && items[0]) {
+      filterOptions = '&key=' + items[0];
+    }
+    if (items && items[1]) {
+      filterOptions += '&genre=' + items[1];
+    }
+    if (items && items[2]) {
+      filterOptions += '&title=' + items[2];
     }
     var options = new RequestOptions({
       search: 'id=' + id + '&' +
-      'lim=' + this.end + '&' +
+      'lim=' + this.end +
       filterOptions
     });
+    // FIXME relative URL
     return this.http.get("../api/query", options)
       .map(res => res.json());
-  }
-
-  getMoreInformation(id, items){
-      this.end += 10;
-      var filterOptions = "";
-      if(items != undefined && items[0]!= undefined) {
-        filterOptions = '&' + 'key=' + items[0];
-      }
-      if(items != undefined && items[1]!= undefined) {
-        filterOptions = filterOptions + '&' + 'genre=' + items[1];
-      }
-      if(items != undefined && items[2]!= undefined) {
-        filterOptions = filterOptions + '&' + 'title=' + items[2];
-      }
-      var options = new RequestOptions({
-        search: 'id=' + id + '&' +
-        'lim=' + this.end  +
-        filterOptions
-      });
-      // FIXME relative URL
-      return this.http.get("../api/query", options)
-        .map(res => res.json());
   }
 
   getInformation(id, uri, lang) {

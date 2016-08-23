@@ -1,4 +1,5 @@
-<search-comp *ngIf="search"></search-comp>
+<search-comp *ngIf="sharedService.sharchBarVisible" (filterChange)="onSearchChoosed($event)"></search-comp>
+
 <div *ngIf="expression" class="top_info">
   <div class="main-img">
     <div class="video">
@@ -50,6 +51,7 @@
     </ul>
   </div>
 </div>
+
 <div class="forever-scroll"
     infinite-scroll
     [infiniteScrollDistance]="2"

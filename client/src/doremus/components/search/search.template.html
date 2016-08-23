@@ -11,23 +11,11 @@
       <div>
         <div>
           <label>Key</label>
-          <ng-select #selKey *ngIf="itemsKey" [allowClear]="true"
-                      [items]="itemsKey"
-                      [disabled]="disabled"
-                      (selected)="loadQuery(selKey, selGenre)"
-                      (removed)="removeItem('key')"
-                      placeholder="Type here...">
-          </ng-select><br>
+          <ng-select #selKey *ngIf="itemsKey" [allowClear]="true" [items]="itemsKey" [disabled]="disabled" (data)="onSelectChanged($event, 'key')" placeholder="Type here..."></ng-select><br>
         </div>
         <div>
           <label>Genre</label>
-          <ng-select #selGenre *ngIf="itemsGenre" [allowClear]="true"
-                      [items]="itemsGenre"
-                      [disabled]="disabled"
-                      (selected)="loadQuery(selKey, selGenre)"
-                      (removed)="removeItem('genre')"
-                      placeholder="Type here...">
-          </ng-select>
+          <ng-select #selGenre *ngIf="itemsGenre" [allowClear]="true" [items]="itemsGenre" [disabled]="disabled" (data)="onSelectChanged($event, 'genre')" placeholder="Type here..."></ng-select>
         </div>
       </div>
     </div>

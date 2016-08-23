@@ -20,6 +20,7 @@
     "node_modules/angular2/typings/main.d.ts"
   ],
   "files": [
+    "client/src/app.module.ts",
     "client/src/app.routes.ts",
     "client/src/doremus/components/app.component.ts",
     "client/src/doremus/components/auxExpressions.ts",
@@ -45,7 +46,8 @@
     "client/src/doremus/services/queries.service.ts",
     "client/src/doremus/services/sharedService.service.ts",
     "client/src/doremus/services/workSubDetail.service.ts",
-    "client/src/index.ts"
+    "client/src/index.ts",
+    "client/src/systemjs.config.ts"
   ],
   "atom": {
     "rewriteTsconfig": true

@@ -19,4 +19,5 @@ import {QueryService} from '../services/queries.service';
 
 
 export class AppComponent {
+  showSearch: boolean = false
 }

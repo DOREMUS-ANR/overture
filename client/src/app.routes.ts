@@ -1,4 +1,4 @@
-import { provideRouter, RouterConfig } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { Component } from '@angular/core';
 
 import {TopInfoComponent} from './doremus/components/top-info/top-info.component';
@@ -19,7 +19,7 @@ import {WipComponent} from './doremus/components/wip/wip.component';
 })
 class Stub { }
 
-export const routes: RouterConfig = [
+const appRoutes: Routes = [
   {
     path: '',
     // name: 'Main',
@@ -71,6 +71,4 @@ export const routes: RouterConfig = [
   }
 ]
 
-export const APP_ROUTER_PROVIDERS = [
-  provideRouter(routes)
-];
+export const routing = RouterModule.forRoot(appRoutes);

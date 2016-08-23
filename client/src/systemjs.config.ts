@@ -35,14 +35,26 @@
     '@angular/router-deprecated',
     '@angular/testing',
     '@angular/upgrade',
+    '@angular/forms',
   ];
 
-  // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
+
   packageNames.forEach(function(pkgName) {
     packages[pkgName] = {
       main: 'index.js',
       defaultExtension: 'js'
     };
+  });
+
+  // put the names of any of your Material components here
+  const materialPkgs: string[] = [
+    'core',
+    'button',
+    'card',
+  ];
+
+  materialPkgs.forEach((pkg) => {
+    packages[`@angular2-material/${pkg}`] = { main: `${pkg}.js` };
   });
 
   var config = {

@@ -1,21 +1,9 @@
-import { Injectable, EventEmitter } from '@angular/core';
-import { Subject }    from 'rxjs/Subject';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SharedService {
-  search: boolean = false;
-  filterOptions: Array<string> = [null,null,null]; /*key, genre*/
-  public showSearch$: EventEmitter<boolean>;
-  public filterOptions$: EventEmitter<string[]>;
-
-  constructor() {
-    this.showSearch$ = new EventEmitter<boolean>();
-    this.filterOptions$ = new EventEmitter<string[]>();
-  }
-
-  getSearch() : boolean {
-    return this.search;
-  }
+  public sharchBarVisible: boolean = false;
+  public filterOptions: Array<string> = [null,null,null]; /*key, genre*/
 
   getFilterOptions() : string[] {
     return this.filterOptions;
@@ -34,12 +22,7 @@ export class SharedService {
   }
 
   public show() {
-    this.search = !this.search;
-    this.showSearch$.emit(this.search);
-  }
-
-  public filter() {
-    this.filterOptions$.emit(this.filterOptions);
+    this.sharchBarVisible = !this.sharchBarVisible;
   }
 
   public clean(){
