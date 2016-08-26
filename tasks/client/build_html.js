@@ -1,6 +1,8 @@
 import gulp from 'gulp';
 import htmlmin from 'gulp-htmlmin';
 import rev from 'gulp-rev-append';
+import inlinesource from 'gulp-inline-source';
+
 import {
   path,
   tasks
@@ -14,7 +16,11 @@ gulp.task(tasks.CLIENT_VIEWS_DEV, () => {
   return gulp.src(VIEWS, {
       base: path.SRC
     })
-    .pipe(gulp.dest(path.DEV));
+    .pipe(inlinesource({
+      rootpath: path.DEV
+    }))
+
+  .pipe(gulp.dest(path.DEV));
 });
 
 gulp.task(tasks.CLIENT_VIEWS_DIST, () => {
@@ -22,6 +28,9 @@ gulp.task(tasks.CLIENT_VIEWS_DIST, () => {
   return gulp.src(VIEWS, {
       base: path.SRC
     })
+    .pipe(inlinesource({
+      rootpath: path.DIST
+    }))
     .pipe(rev()).pipe(htmlmin({
       collapseWhitespace: true,
       caseSensitive: true
