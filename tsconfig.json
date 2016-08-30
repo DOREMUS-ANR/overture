@@ -19,37 +19,7 @@
     "node_modules/angular2/typings/browser.d.ts",
     "node_modules/angular2/typings/main.d.ts"
   ],
-  "files": [
-    "client/src/app.module.ts",
-    "client/src/app.routes.ts",
-    "client/src/doremus/components/app.component.ts",
-    "client/src/doremus/components/auxExpressions.ts",
-    "client/src/doremus/components/expression-tab/expression-tab.component.ts",
-    "client/src/doremus/components/left-menu/left-menu.component.ts",
-    "client/src/doremus/components/performance-tab/performance-tab.component.ts",
-    "client/src/doremus/components/person-tab/person-tab.component.ts",
-    "client/src/doremus/components/recommendations/card.ts",
-    "client/src/doremus/components/recommendations/cardInfo.ts",
-    "client/src/doremus/components/recommendations/recommendations.component.ts",
-    "client/src/doremus/components/recording-tab/recording-tab.component.ts",
-    "client/src/doremus/components/score-tab/score-tab.component.ts",
-    "client/src/doremus/components/search/queries-test.component.ts",
-    "client/src/doremus/components/search/search.component.ts",
-    "client/src/doremus/components/summaryInfo.ts",
-    "client/src/doremus/components/top-info/top-info.component.ts",
-    "client/src/doremus/components/top-nav/top-nav.component.ts",
-    "client/src/doremus/components/wip/wip.component.ts",
-    "client/src/doremus/components/work-tab/auxDetails.ts",
-    "client/src/doremus/components/work-tab/work-tab.component.ts",
-    "client/src/doremus/components/work-tab/workSubDetail.component.ts",
-    "client/src/doremus/components/work-tab/workSubDetail.ts",
-    "client/src/doremus/services/queries.service.ts",
-    "client/src/doremus/services/sharedService.service.ts",
-    "client/src/doremus/services/workSubDetail.service.ts",
-    "client/src/index.ts",
-    "client/src/systemjs.config.ts"
-  ],
   "atom": {
-    "rewriteTsconfig": true
+    "rewriteTsconfig": false
   }
 }

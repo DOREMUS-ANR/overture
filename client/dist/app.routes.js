@@ -11,7 +11,7 @@ System.register(['@angular/router', '@angular/core', './doremus/components/top-i
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var router_1, core_1, top_info_component_1, queries_test_component_1, work_tab_component_1, performance_tab_component_1, recording_tab_component_1, person_tab_component_1, score_tab_component_1, workSubDetail_component_1, expression_tab_component_1, wip_component_1;
-    var Stub, routes, APP_ROUTER_PROVIDERS;
+    var Stub, appRoutes, routing;
     return {
         setters:[
             function (router_1_1) {
@@ -63,7 +63,7 @@ System.register(['@angular/router', '@angular/core', './doremus/components/top-i
                 ], Stub);
                 return Stub;
             }());
-            exports_1("routes", routes = [
+            appRoutes = [
                 {
                     path: '',
                     // name: 'Main',
@@ -112,10 +112,8 @@ System.register(['@angular/router', '@angular/core', './doremus/components/top-i
                     path: 'wip',
                     component: wip_component_1.WipComponent
                 }
-            ]);
-            exports_1("APP_ROUTER_PROVIDERS", APP_ROUTER_PROVIDERS = [
-                router_1.provideRouter(routes)
-            ]);
+            ];
+            exports_1("routing", routing = router_1.RouterModule.forRoot(appRoutes));
         }
     }
 });

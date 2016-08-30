@@ -35,6 +35,7 @@ System.register(['@angular/core', '@angular/router', './top-nav/top-nav.componen
         execute: function() {
             AppComponent = (function () {
                 function AppComponent() {
+                    this.showSearch = false;
                 }
                 AppComponent = __decorate([
                     core_1.Component({

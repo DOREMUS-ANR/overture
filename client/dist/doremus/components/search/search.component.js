@@ -40,6 +40,8 @@ System.register(['@angular/core', 'ng2-select/ng2-select', "../../services/queri
                     var _this = this;
                     this._queriesService = _queriesService;
                     this._sharedService = _sharedService;
+                    this.filterChange = new core_1.EventEmitter();
+                    this.filterOptions = [null, null, null]; /*key, genre, title*/
                     this.disabled = false;
                     this._queriesService.getInformation('vocabulary', "<http://data.doremus.org/vocabulary/key>", 'fr')
                         .subscribe(function (queryVoc) { return _this.itemsKey = _this.queryBindVoc(queryVoc); }, function (error) { return console.error('Error: ' + error); });
@@ -49,33 +51,38 @@ System.register(['@angular/core', 'ng2-select/ng2-select', "../../services/queri
                 SearchComponent.prototype.queryBindVoc = function (query) {
                     var bindings = query.results.bindings;
                     var results = [];
-                    for (var i in bindings) {
-                        var binding = bindings[i];
+                    for (var _i = 0, bindings_1 = bindings; _i < bindings_1.length; _i++) {
+                        var binding = bindings_1[_i];
                         var result = new Vocabulary(binding["uri"].value, binding["label"].value);
                         results.push(result);
                     }
                     return results;
                 };
-                SearchComponent.prototype.loadQuery = function (selKey, selGenre) {
-                    var options = this._sharedService.getFilterOptions();
-                    options[0] = (selKey == undefined) ? 'noSel' : selKey.activeOption.id;
-                    options[1] = (selGenre == undefined) ? 'noSel' : selGenre.activeOption.id;
-                    this._sharedService.setFilterOptions(options);
-                    this._sharedService.filter();
-                };
-                SearchComponent.prototype.removeItem = function (item) {
-                    var options = this._sharedService.getFilterOptions();
-                    options[0] = (item == 'key') ? 'noSel' : options[0];
-                    options[1] = (item == 'genre') ? 'noSel' : options[1];
-                    this._sharedService.setFilterOptions(options);
-                    this._sharedService.filter();
+                SearchComponent.prototype.onSelectChanged = function (key, label) {
+                    var index;
+                    switch (label) {
+                        case 'key':
+                            index = 0;
+                            break;
+                        case 'genre':
+                        default:
+                            index = 1;
+                    }
+                    var old = this.filterOptions[index];
+                    this.filterOptions[index] = key && key.id;
+                    if (old == this.filterOptions[index])
+                        return;
+                    this.filterChange.emit(this.filterOptions);
                 };
                 SearchComponent.prototype.onTitle = function (event) {
-                    var options = this._sharedService.getFilterOptions();
+                    var options = this.filterOptions;
                     options[2] = event.target.value;
-                    this._sharedService.setFilterOptions(options);
-                    this._sharedService.filter();
+                    this.filterChange.emit(this.filterOptions);
                 };
+                __decorate([
+                    core_1.Output(), 
+                    __metadata('design:type', Object)
+                ], SearchComponent.prototype, "filterChange", void 0);
                 SearchComponent = __decorate([
                     core_1.Component({
                         moduleId: __moduleName,

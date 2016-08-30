@@ -20,14 +20,9 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         execute: function() {
             SharedService = (function () {
                 function SharedService() {
-                    this.search = false;
+                    this.sharchBarVisible = false;
                     this.filterOptions = [null, null, null]; /*key, genre*/
-                    this.showSearch$ = new core_1.EventEmitter();
-                    this.filterOptions$ = new core_1.EventEmitter();
                 }
-                SharedService.prototype.getSearch = function () {
-                    return this.search;
-                };
                 SharedService.prototype.getFilterOptions = function () {
                     return this.filterOptions;
                 };
@@ -44,11 +39,7 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     }
                 };
                 SharedService.prototype.show = function () {
-                    this.search = !this.search;
-                    this.showSearch$.emit(this.search);
-                };
-                SharedService.prototype.filter = function () {
-                    this.filterOptions$.emit(this.filterOptions);
+                    this.sharchBarVisible = !this.sharchBarVisible;
                 };
                 SharedService.prototype.clean = function () {
                     this.filterOptions = [null, null, null];

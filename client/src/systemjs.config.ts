@@ -68,6 +68,6 @@
     global.filterSystemConfig(config);
   }
 
-  System.config(config);
+  global.System.config(config);
 
 })(this);

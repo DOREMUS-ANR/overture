@@ -28,15 +28,15 @@ The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][
         npm install
         npm start
 
-### Run (production mode)
-
-Build
-        npm install --production
+Build for production
         npm run build-dist
+
+### Run (production mode)
 
 Run production mode (UNIX)
 
-        NODE_ENV=production node index
+        npm install --production
+        npm run prod
 
 Run production mode (Windows)
 
@@ -48,7 +48,6 @@ Run production mode (Windows)
 Dependency: [jplu/node](https://github.com/jplu/docker-node). Clone, point the folder, build.
 
 Build
-
     docker build -t doremus/overture .
 
 Run

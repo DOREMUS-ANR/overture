@@ -4,9 +4,9 @@ import {
   tasks
 } from './const';
 
-const JS = path.SRC + '**/*.js';
+const FONTS = path.SRC + 'font/**/*';
 
-function copyJs({
+function copyFonts({
   dist = false
 } = {}) {
   'use strict';
@@ -14,16 +14,16 @@ function copyJs({
   let dest = dist ? path.DIST : path.DEV;
 
   //just copy
-  return gulp.src(JS, {
+  return gulp.src(FONTS, {
       base: path.SRC
     })
     .pipe(gulp.dest(dest));
 }
 
-gulp.task(tasks.CLIENT_JS_DEV, copyJs);
-gulp.task(tasks.CLIENT_JS_DIST, () => {
+gulp.task(tasks.CLIENT_FONT_DEV, copyFonts);
+gulp.task(tasks.CLIENT_FONT_DIST, () => {
   'use strict';
-  return copyJs({
+  return copyFonts({
     dist: true
   });
 });

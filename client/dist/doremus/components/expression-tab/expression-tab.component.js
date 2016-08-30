@@ -80,10 +80,8 @@ System.register(['@angular/core', '@angular/router', '@angular2-material/toolbar
             }());
             exports_1("Expression", Expression);
             ExpressionTabComponent = (function () {
-                function ExpressionTabComponent(_service, _sharedService, router) {
-                    var _this = this;
+                function ExpressionTabComponent(_service, sharedService, router) {
                     this._service = _service;
-                    this._sharedService = _sharedService;
                     this.router = router;
                     this.display = 'none';
                     this.class = 'menu-icon icon-plus';
@@ -91,8 +89,7 @@ System.register(['@angular/core', '@angular/router', '@angular2-material/toolbar
                     this.classDiscover = 'menu-icon icon-plus';
                     this.search = false;
                     this.expressionURI = "<>";
-                    this._sharedService.showSearch$.subscribe(function (item) { return _this.onSearchClick(item); });
-                    this._sharedService.filterOptions$.subscribe(function (item) { return _this.onSearchChoosed(item); });
+                    this.sharedService = sharedService;
                 }
                 ExpressionTabComponent.prototype.onSearchClick = function (item) {
                     this.search = item;
@@ -204,7 +201,7 @@ System.register(['@angular/core', '@angular/router', '@angular2-material/toolbar
                         styles: [
                             ".forever-scroll {\n\t\t\theight: auto;\n\t\t\toverflow: hidden;\n\t\t}"
                         ],
-                        providers: [queries_service_1.QueryService],
+                        providers: [queries_service_1.QueryService]
                     }), 
                     __metadata('design:paramtypes', [queries_service_1.QueryService, sharedService_service_1.SharedService, router_1.Router])
                 ], ExpressionTabComponent);

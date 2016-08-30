@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/http', 'rxjs/add/operator/map'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -19,45 +19,41 @@ System.register(['@angular/core', '@angular/http', 'rxjs/add/operator/map'], fun
             },
             function (http_1_1) {
                 http_1 = http_1_1;
-            },
-            function (_1) {}],
+            }],
         execute: function() {
             QueryService = (function () {
                 function QueryService(http) {
-                    this.end = 20;
                     this.http = http;
+                    this.end = 20;
                 }
                 QueryService.prototype.getInformations = function (id, items) {
                     this.end = 10;
                     var filterOptions = "";
-                    if (items != undefined && items[0] != undefined) {
-                        filterOptions = '&' + 'key=' + items[0];
+                    if (items && items[0]) {
+                        filterOptions = '&key=' + items[0];
                     }
-                    if (items != undefined && items[1] != undefined) {
-                        filterOptions = filterOptions + '&' + 'genre=' + items[1];
+                    if (items && items[1]) {
+                        filterOptions += '&genre=' + items[1];
                     }
-                    if (items != undefined && items[2] != undefined) {
-                        filterOptions = filterOptions + '&' + 'title=' + items[2];
+                    if (items && items[2]) {
+                        filterOptions += '&title=' + items[2];
                     }
                     var options = new http_1.RequestOptions({
-                        search: 'id=' + id + '&' +
-                            'lim=' + this.end + '&' +
-                            filterOptions
+                        search: 'id=' + id + '&lim=' + this.end + filterOptions
                     });
-                    return this.http.get("../api/query", options)
-                        .map(function (res) { return res.json(); });
+                    return this.http.get("../api/query", options).map(function (res) { return res.json(); });
                 };
                 QueryService.prototype.getMoreInformation = function (id, items) {
                     this.end += 10;
                     var filterOptions = "";
-                    if (items != undefined && items[0] != undefined) {
-                        filterOptions = '&' + 'key=' + items[0];
+                    if (items && items[0]) {
+                        filterOptions = '&key=' + items[0];
                     }
-                    if (items != undefined && items[1] != undefined) {
-                        filterOptions = filterOptions + '&' + 'genre=' + items[1];
+                    if (items && items[1]) {
+                        filterOptions += '&genre=' + items[1];
                     }
-                    if (items != undefined && items[2] != undefined) {
-                        filterOptions = filterOptions + '&' + 'title=' + items[2];
+                    if (items && items[2]) {
+                        filterOptions += '&title=' + items[2];
                     }
                     var options = new http_1.RequestOptions({
                         search: 'id=' + id + '&' +

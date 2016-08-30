@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', '@angular2-material/toolbar/toolbar', '@angular/common', './card'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '@angular2-material/toolbar/toolbar', './card'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', '@angular2-material/toolbar
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, toolbar_1, common_1, card_1;
+    var core_1, router_1, toolbar_1, card_1;
     var RecommendationsComponent;
     return {
         setters:[
@@ -22,9 +22,6 @@ System.register(['@angular/core', '@angular/router', '@angular2-material/toolbar
             },
             function (toolbar_1_1) {
                 toolbar_1 = toolbar_1_1;
-            },
-            function (common_1_1) {
-                common_1 = common_1_1;
             },
             function (card_1_1) {
                 card_1 = card_1_1;
@@ -52,9 +49,8 @@ System.register(['@angular/core', '@angular/router', '@angular2-material/toolbar
                     core_1.Component({
                         moduleId: __moduleName,
                         selector: 'infinite-list',
-                        inputs: ['items'],
                         templateUrl: 'recommendations.template.html',
-                        directives: [common_1.NgFor, toolbar_1.MdToolbar, card_1.MdCard, card_1.MdCardHeader, router_1.ROUTER_DIRECTIVES],
+                        directives: [toolbar_1.MdToolbar, card_1.MdCard, card_1.MdCardHeader, router_1.ROUTER_DIRECTIVES],
                         changeDetection: core_1.ChangeDetectionStrategy.OnPush
                     }), 
                     __metadata('design:paramtypes', [])

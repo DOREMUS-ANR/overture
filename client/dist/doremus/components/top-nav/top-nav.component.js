@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router', '@angular2-material/button/button', '../../services/sharedService.service'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', '../../services/sharedService.service'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router', '@angular2-material/button/
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, button_1, sharedService_service_1;
+    var core_1, router_1, sharedService_service_1;
     var TopNavComponent;
     return {
         setters:[
@@ -20,29 +20,25 @@ System.register(['@angular/core', '@angular/router', '@angular2-material/button/
             function (router_1_1) {
                 router_1 = router_1_1;
             },
-            function (button_1_1) {
-                button_1 = button_1_1;
-            },
             function (sharedService_service_1_1) {
                 sharedService_service_1 = sharedService_service_1_1;
             }],
         execute: function() {
             TopNavComponent = (function () {
-                function TopNavComponent(_sharedService) {
-                    this._sharedService = _sharedService;
-                    this.isOn = false;
-                    this.isOn = _sharedService.getSearch();
+                function TopNavComponent(sharedService) {
+                    this.showSearch = false;
+                    this.sharedService = sharedService;
                 }
                 TopNavComponent.prototype.clickSearch = function () {
-                    this.isOn = !this.isOn;
-                    this._sharedService.show();
+                    this.showSearch = !this.showSearch;
+                    this.sharedService.sharchBarVisible = this.showSearch;
                 };
                 TopNavComponent = __decorate([
                     core_1.Component({
                         moduleId: __moduleName,
                         selector: 'top-nav',
                         templateUrl: 'top-nav.template.html',
-                        directives: [router_1.ROUTER_DIRECTIVES, button_1.MD_BUTTON_DIRECTIVES]
+                        directives: [router_1.ROUTER_DIRECTIVES]
                     }), 
                     __metadata('design:paramtypes', [sharedService_service_1.SharedService])
                 ], TopNavComponent);
