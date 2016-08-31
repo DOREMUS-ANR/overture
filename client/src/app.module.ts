@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { MdButtonModule } from '@angular2-material/button';
 
 import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
-
+import { InfiniteScrollModule } from 'angular2-infinite-scroll/angular2-infinite-scroll';
 
 import {AppComponent} from './doremus/components/app.component';
 
@@ -25,7 +25,7 @@ import {SharedService} from './doremus/services/sharedService.service';
 import { routing }        from './app.routes';
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpModule, routing, MdButtonModule],
+  imports: [BrowserModule, FormsModule, HttpModule, routing, MdButtonModule, InfiniteScrollModule],
   declarations: [AppComponent, TopInfoComponent, QueriesTestComponent, WorkTabComponent, PerformanceTabComponent, RecordingTabComponent, PersonTabComponent, ScoreTabComponent, WorkSubDetailComponent, ExpressionTabComponent, WipComponent],
   bootstrap: [AppComponent],
   providers: [ SharedService ]

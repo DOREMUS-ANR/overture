@@ -55,9 +55,9 @@ export class Expression {
   directives: [MdToolbar, NgStyle, NgClass, InfiniteScroll, RecommendationsComponent, SearchComponent],
   styles: [
     `.forever-scroll {
-			height: auto;
-			overflow: hidden;
-		}`
+      height: auto;
+      overflow: hidden;
+    }`
   ],
   providers: [QueryService]
 })

@@ -1,7 +1,7 @@
 ![OVERTURE](client/src/img/logos/overture.logo.color.png)
 
 ### About
-DOREMUS Web App is based on the [DOREMUS model][1] that allows a detailed description of a musical work and the events associated with it (creation, execution, etc.). It allows the user to go through the musical database easily.
+OVERTURE is based on the [DOREMUS model][1] that allows a detailed description of a musical work and the events associated with it (creation, execution, etc.). It allows the user to go through the musical database easily.
 
 It connects with a virtuoso sparql endpoint and gets the data using SPARQL queries.
 
@@ -29,6 +29,7 @@ The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][
         npm start
 
 Build for production
+
         npm run build-dist
 
 ### Run (production mode)
@@ -48,6 +49,7 @@ Run production mode (Windows)
 Dependency: [jplu/node](https://github.com/jplu/docker-node). Clone, point the folder, build.
 
 Build
+
     docker build -t doremus/overture .
 
 Run

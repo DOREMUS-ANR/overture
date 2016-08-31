@@ -1,0 +1,10 @@
+typings.json
+tsconfing.json
+README.md
+gulpfile.babel.js
+*.yml
+.jshintrc
+.editorconfig
+typings/*
+node_modules/*
+.git/*

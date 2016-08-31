@@ -199,7 +199,7 @@ System.register(['@angular/core', '@angular/router', '@angular2-material/toolbar
                         templateUrl: 'expression-tab.template.html',
                         directives: [toolbar_1.MdToolbar, common_1.NgStyle, common_1.NgClass, angular2_infinite_scroll_1.InfiniteScroll, recommendations_component_1.RecommendationsComponent, search_component_1.SearchComponent],
                         styles: [
-                            ".forever-scroll {\n\t\t\theight: auto;\n\t\t\toverflow: hidden;\n\t\t}"
+                            ".forever-scroll {\n      height: auto;\n      overflow: hidden;\n    }"
                         ],
                         providers: [queries_service_1.QueryService]
                     }), 
