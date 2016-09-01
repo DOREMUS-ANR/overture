@@ -9,11 +9,17 @@ import {
   tasks
 } from './const';
 
-function stylProcess({dist = false} = {}) {
+function stylProcess({
+  dist = false
+} = {}) {
   'use strict';
-  let dest = (dist? path.DIST : path.DEV) + 'styles';
-  return gulp.src([path.SRC + '/styles/styles.styl',
-  path.SRC + '/styles/loading.styl'])
+
+  let dest = (dist ? path.DIST : path.DEV);
+
+  return gulp.src([
+      path.SRC + '/**/*.styl',
+      `!${path.SRC}/styles/dep/**/*.styl`
+    ])
     .pipe(gulpif(!dist, sourcemaps.init()))
     .pipe(stylus({
       use: [nib(), rupture()],
@@ -26,12 +32,13 @@ function stylProcess({dist = false} = {}) {
       sourceRoot: path.SRC
     })))
     .pipe(gulp.dest(dest));
-
 }
 
 gulp.task(tasks.CLIENT_BUILD_STYL_DEV, stylProcess);
 
 gulp.task(tasks.CLIENT_BUILD_STYL_DIST, () => {
   'use strict';
-  stylProcess({dist: true});
+  stylProcess({
+    dist: true
+  });
 });

@@ -1,246 +1,255 @@
 /* global imports */
-@import 'fontello';
-@import 'fonts';
+@import 'dep/fontello';
+@import 'dep/fonts';
 @import '../../../node_modules/material-shadows/material-shadows'
-@import 'vars';
+@import 'dep/vars';
 
 /* global styles */
 
 
 h1
-	color #369
-	font-family Roboto, sans-serif
-	font-size 2.5em
+  color #369
+  font-family Roboto, sans-serif
+  font-size 2.5em
 
 h2
-	color mainDark
-	font-family Roboto, sans-serif
-	font-weight lighter
+  color mainDark
+  font-family Roboto, sans-serif
+  font-weight lighter
 
 h3
-	color #963
-	font-family Roboto, sans-serif
-	font-weight lighter
+  color #963
+  font-family Roboto, sans-serif
+  font-weight lighter
 
 body
-	margin auto
-	display block
-	background grayLight
-	color grayDark
-	font-family Roboto, sans-serif
-	line-height normal
+  margin auto
+  display block
+  background grayLight
+  color grayDark
+  font-family Roboto, sans-serif
+  line-height normal
 
 a
-	color main
-	transition color .3s materialBezier
-	&:hover, &:focus
-		color lighten(main, 10)
+  color main
+  transition color .3s materialBezier
+  &:hover, &:focus
+    color lighten(main, 10)
 
 my-app
-	padding-top 60px
-	display flex
-	flex-flow column nowrap
-	min-height 100vh
+  padding-top 60px
+  display flex
+  flex-flow column nowrap
+  min-height 100vh
 
 @media screen and (max-width: 763px)
-	my-app
-		margin-top 100px
+  my-app
+    margin-top 100px
 @media screen and (max-width: 592px)
-	my-app
-		margin-top 130px
+  my-app
+    margin-top 130px
 
 .header
-	width 100%
-	background-color white
-	box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
-	padding 0
-	margin 0
-	z-index 9998
-	position fixed
-	top 0
-	left 0
-	background main
-	a
-		text-transform uppercase
-		color #fff
-		text-decoration none
-		&:hover
-			color #fff
+  width 100%
+  background-color white
+  box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
+  padding 0
+  margin 0
+  z-index 9998
+  position fixed
+  top 0
+  left 0
+  background main
+  a
+    text-transform uppercase
+    color #fff
+    text-decoration none
+    &:hover
+      color #fff
 
 #appFooter
-	box-shadow inset 0 9px 16px -12px grayDark
-	padding 4em 3em
-	background darken(grayLight, 10)
-	.footerCont
-		margin auto
-		max-width pageWidthLimit
-		+above('m')
-			display flex
-			flex-flow space-between
-		div
-			flex 1 1
-		.projLogoCont
-			+below('m')
-				width 7em
-				max-width 100%
-				margin 1em auto
-			+above('m')
-				border-left 1px solid grayMedium
-				padding-left 1.3em
-				margin-left 1.3em
-				flex 0 1 9em
-			a
-				opacity .4
-				display block
-				text-decoration none
-				width 100%
-				height 100%
-				transition opacity .3s materialBezier
-				img
-					max-width 100%
-					max-height 100%
-					filter saturate(0%)
-					-webkit-filter saturate(0%)
-					transition all .3s materialBezier
+  box-shadow inset 0 9px 16px -12px grayDark
+  padding 4em 3em
+  background darken(grayLight, 10)
+  .footerCont
+    margin auto
+    max-width pageWidthLimit
+    +above('m')
+      display flex
+      flex-flow space-between
+    div
+      flex 1 1
+    .projLogoCont
+      +below('m')
+        width 7em
+        max-width 100%
+        margin 1em auto
+      +above('m')
+        border-left 1px solid grayMedium
+        padding-left 1.3em
+        margin-left 1.3em
+        flex 0 1 9em
+      a
+        opacity .4
+        display block
+        text-decoration none
+        width 100%
+        height 100%
+        transition opacity .3s materialBezier
+        img
+          max-width 100%
+          max-height 100%
+          filter saturate(0%)
+          -webkit-filter saturate(0%)
+          transition all .3s materialBezier
 
-				&:hover
-					opacity 1
-					filter none
-					img
-						filter saturate(100%)
-						-webkit-filter saturate(100%)
+        &:hover
+          opacity 1
+          filter none
+          img
+            filter saturate(100%)
+            -webkit-filter saturate(100%)
 
 .fullLogo
-	display inline-block
-	position relative
+  display inline-block
+  position relative
 
-	font-size 1.5em
-	line-height 1.6em
-	letter-spacing .1em
-	text-transform uppercase
+  font-size 1.5em
+  line-height 1.6em
+  letter-spacing .1em
+  text-transform uppercase
 
-	padding-left 2em
-	height 1.6em
+  padding-left 2em
+  height 1.6em
 
-	background url(../img/logos/overture.logo.png) left center no-repeat
-	background-size 1.9em
-	font-family Raleway, sans-serif
-	&:hover, &:focus
-		text-decoration none
-		text-shadow 0 0 2px #fff
-	&:after
-		content "by DOREMUS.org"
-		font-variant small-caps
-		position absolute
-		display block
-		font-size .3em
-		line-height 1em
-		right 0
-		bottom 0
-		letter-spacing normal
+  background url(../img/logos/overture.logo.png) left center no-repeat
+  background-size 1.9em
+  font-family Raleway, sans-serif
+  &:hover, &:focus
+    text-decoration none
+    text-shadow 0 0 2px #fff
+  &:after
+    content "by DOREMUS.org"
+    font-variant small-caps
+    position absolute
+    display block
+    font-size .3em
+    line-height 1em
+    right 0
+    bottom 0
+    letter-spacing normal
 
 .aside
-	z-index 9999
+  z-index 9999
 
 .main
-	margin 20px auto
-	flex 1 0 auto
-	height auto
-	display flex
-	flex-flow column wrap
-	width pageWidthLimit
-	max-width 100%
+  margin 20px auto
+  flex 1 0 auto
+  height auto
+  display flex
+  flex-flow column wrap
+  width pageWidthLimit
+  max-width 100%
 
 .btn-primary
-	background-color #e7892b
-	border-color #d47c24
-	&:hover, &:focus
-		background-color #d47c24 !important
-		border-color #d47c24 !important
-		box-shadow none
+  background-color #e7892b
+  border-color #d47c24
+  &:hover, &:focus
+    background-color #d47c24 !important
+    border-color #d47c24 !important
+    box-shadow none
 
 .selected
-	background-color #CFD8DC !important
-	color white
+  background-color #CFD8DC !important
+  color white
 
 
 .workSubDetail
-	margin 0 0 2em 0
-	list-style-type none
-	padding 0
-	width 100%
-	display flex
-	flex-flow row wrap
+  margin 0 0 2em 0
+  list-style-type none
+  padding 0
+  width 100%
+  display flex
+  flex-flow row wrap
 
 .workSubDetail li
-	flex 1
-	width auto
-	cursor pointer
-	left 0
-	background-color #EEE
-	margin .5em
-	padding .3em 0
-	height 1.6em
-	border-radius 4px
+  flex 1
+  width auto
+  cursor pointer
+  left 0
+  background-color #EEE
+  margin .5em
+  padding .3em 0
+  height 1.6em
+  border-radius 4px
 
 .workSubDetail li:hover
-	color #607D8B
-	background-color #DDD
-	left .1em
+  color #607D8B
+  background-color #DDD
+  left .1em
 
 .workSubDetail li.selected:hover
-	background-color #BBD8DC !important
-	color white
+  background-color #BBD8DC !important
+  color white
 
 .workSubDetail .badge
-	display inline-block
-	font-size small
-	color white
-	padding 0.8em 0.7em 0 0.7em
-	background-color #607D8B
-	line-height 1em
-	position relative
-	left -1px
-	top -4px
-	height 1.8em
-	margin-right .8em
-	border-radius 4px 0 0 4px
-	width auto
+  display inline-block
+  font-size small
+  color white
+  padding 0.8em 0.7em 0 0.7em
+  background-color #607D8B
+  line-height 1em
+  position relative
+  left -1px
+  top -4px
+  height 1.8em
+  margin-right .8em
+  border-radius 4px 0 0 4px
+  width auto
 
 .card
-	background #fff
-	z-depth(1)
-	padding 2em
+  background #fff
+  z-depth(1)
+  padding 2em
 
 .flex-span
-	flex 1 1
+  flex 1 1
 
 button.light
-	color #fff
+  color #fff
 .wip
-	display flex
-	flex-flow column nowrap
-	align-items center
+  display flex
+  flex-flow column nowrap
+  align-items center
 .wip-img
-	margin-top 10px
-	width 140px
-	height auto
-	flex 1 0 auto
+  margin-top 10px
+  width 140px
+  height auto
+  flex 1 0 auto
 .wip-text
-	font-family Roboto, sans-serif
-	font-weight 300
-	padding-top 10px
-	text-align center
-	width 300px
-	font-size 3.5em
-	color grayDark
-	flex 1 0 auto
+  font-family Roboto, sans-serif
+  font-weight 300
+  padding-top 10px
+  text-align center
+  width 300px
+  font-size 3.5em
+  color grayDark
+  flex 1 0 auto
+
 /* component-specific styles */
 /* TODO consider about load it on needed */
-@import 'components/left-menu'
-@import 'components/top-info'
-@import 'components/top-nav'
-@import 'components/performance-tab'
-@import 'components/recommendations'
-@import 'search'
-@import 'tabs'
+.infinite-list
+  padding 10px
+  display flex
+  width 100%
+  flex-wrap wrap
+  justify-content space-between
+
+top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab, wip
+  display flex
+  flex-flow row wrap
+  justify-content center
+  width 100%
+
+@import 'dep/search'
+@import 'dep/tabs'

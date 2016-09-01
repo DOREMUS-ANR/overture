@@ -1,23 +1,16 @@
 import { Routes, RouterModule } from '@angular/router';
 import { Component } from '@angular/core';
 
-import {TopInfoComponent} from './doremus/components/top-info/top-info.component';
-import {QueriesTestComponent} from './doremus/components/search/queries-test.component';
-import {WorkTabComponent} from './doremus/components/work-tab/work-tab.component';
-import {PerformanceTabComponent} from './doremus/components/performance-tab/performance-tab.component';
-import {RecordingTabComponent} from './doremus/components/recording-tab/recording-tab.component';
-import {PersonTabComponent} from './doremus/components/person-tab/person-tab.component';
-import {ScoreTabComponent} from './doremus/components/score-tab/score-tab.component';
-import {WorkSubDetailComponent} from './doremus/components/work-tab/workSubDetail.component';
-import {ExpressionTabComponent} from './doremus/components/expression-tab/expression-tab.component';
-import {WipComponent} from './doremus/components/wip/wip.component';
-
-
-@Component({
-  selector: '',
-  template: ''
-})
-class Stub { }
+import {TopInfoComponent} from './components/top-info/top-info.component';
+import {QueriesTestComponent} from './components/search/queries-test.component';
+import {WorkTabComponent} from './components/work-tab/work-tab.component';
+import {PerformanceTabComponent} from './components/performance-tab/performance-tab.component';
+import {RecordingTabComponent} from './components/recording-tab/recording-tab.component';
+import {PersonTabComponent} from './components/person-tab/person-tab.component';
+import {ScoreTabComponent} from './components/score-tab/score-tab.component';
+import {WorkSubDetailComponent} from './components/work-tab/workSubDetail.component';
+import {ExpressionTabComponent} from './components/expression-tab/expression-tab.component';
+import {WipComponent} from './components/wip/wip.component';
 
 const appRoutes: Routes = [
   {

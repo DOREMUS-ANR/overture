@@ -1,0 +1,14 @@
+<div class="card-container" *ngFor="let card of items">
+
+  <md-card>
+    <md-card-header>
+      <img md-card-avatar src="static/img/defPicExpr.png">
+      <md-card-subtitle>{{card.subtitle}}</md-card-subtitle>
+    </md-card-header>
+    <img (click)='goToExpression(card)' md-card-image alt="Main image" src="static/img/defPicExpr.png">
+    <md-card-content>
+      <h3>{{card.title}}</h3>
+    </md-card-content>
+  </md-card>
+
+</div>
