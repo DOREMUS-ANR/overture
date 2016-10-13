@@ -9,16 +9,9 @@
     "noImplicitAny": false
   },
   "exclude": [
-    "node_modules",
-    "typings/main",
-    "typings/main.d.ts"
+    "node_modules"
   ],
   "compileOnSave": false,
-  "filesGlob": [
-    "client/src/**/*.ts",
-    "node_modules/angular2/typings/browser.d.ts",
-    "node_modules/angular2/typings/main.d.ts"
-  ],
   "atom": {
     "rewriteTsconfig": false
   }

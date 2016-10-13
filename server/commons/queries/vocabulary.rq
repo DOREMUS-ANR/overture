@@ -1,11 +1,14 @@
-PREFIX mus: <http://data.doremus.org/ontology#>
-PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
-PREFIX frbroo: <http://erlangen-crm.org/efrbroo/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT DISTINCT *
+FROM <http://data.doremus.org/vocabulary>
 WHERE {
-    ?uri skos:inScheme $$uri$$ ;
-         skos:prefLabel ?label .
-    FILTER (lang(?label) = "$$lang$$")
+    {
+     ?uri skos:inScheme <%%uri%%>
+    } UNION {
+     ?uri skos:topConceptOf <%%uri%%>
+    }
+    ?uri skos:prefLabel ?label
+    FILTER regex(lang(?label), "%%lang%%")
 }
 ORDER BY ?label

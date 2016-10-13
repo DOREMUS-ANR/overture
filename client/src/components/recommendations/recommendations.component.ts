@@ -20,6 +20,7 @@ export class RecommendationsComponent {
   constructor() { }
 
   goToExpression(item) {
+    console.log(item)
     this.change.emit({ value: item.id })
     //console.log("Selected: " + item.id);
   }

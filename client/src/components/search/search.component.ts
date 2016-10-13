@@ -1,6 +1,7 @@
 import {Component, Output, EventEmitter} from '@angular/core';
-import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
+// import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {QueryService} from "../../services/queries.service";
+import {Globals } from '../../app.globals';
 
 declare var __moduleName: string;
 
@@ -18,8 +19,7 @@ export class Vocabulary {
   moduleId: __moduleName,
   selector: 'search-comp',
   templateUrl: 'search.template.html',
-  providers: [QueryService],
-  directives: [SELECT_DIRECTIVES]
+  providers: [QueryService, Globals]
 })
 export class SearchComponent {
   @Output() filterChange = new EventEmitter();
@@ -30,15 +30,15 @@ export class SearchComponent {
   itemsGenre: Vocabulary[];
   private disabled: boolean = false;
 
-  constructor(private _queriesService: QueryService) {
+  constructor(private _queriesService: QueryService, private globals: Globals) {
 
-    this._queriesService.getInformation('vocabulary', "<http://data.doremus.org/vocabulary/key>", 'fr')
-      .subscribe(
+    this._queriesService.getInformation('vocabulary', 'http://data.doremus.org/vocabulary/key/', globals.lang)
+      .then(
       queryVoc => this.itemsKey = this.queryBindVoc(queryVoc),
       error => console.error('Error: ' + error)
       );
-    this._queriesService.getInformation('vocabulary', "<http://data.doremus.org/vocabulary/genre>", 'fr')
-      .subscribe(
+    this._queriesService.getInformation('vocabulary', 'http://data.doremus.org/vocabulary/genre/', globals.lang)
+      .then(
       queryVoc => this.itemsGenre = this.queryBindVoc(queryVoc),
       error => console.error('Error: ' + error)
       );

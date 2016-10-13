@@ -1,12 +1,11 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from '@angular/router';
-import {InfiniteScroll} from 'angular2-infinite-scroll/angular2-infinite-scroll';
-import {RecommendationsComponent} from '../recommendations/recommendations.component';
-import {SearchComponent} from '../search/search.component';
 
 import {SharedService} from '../../services/sharedService.service';
 import {QueryService} from '../../services/queries.service';
 import {RecommendationCardInfo} from '../recommendations/cardInfo';
+import {Globals } from '../../app.globals';
+
 
 declare var __moduleName: string;
 
@@ -49,13 +48,7 @@ export class Expression {
   moduleId: __moduleName,
   selector: 'expression-tab',
   templateUrl: 'expression-tab.template.html',
-  directives: [InfiniteScroll, RecommendationsComponent, SearchComponent],
-  styles: [
-    `.forever-scroll {
-      height: auto;
-      overflow: hidden;
-    }`
-  ],
+  styleUrls: ['expression.css'],
   providers: [QueryService]
 })
 
@@ -75,11 +68,13 @@ export class ExpressionTabComponent {
 
   constructor(private _service: QueryService,
     sharedService: SharedService,
-    private router: Router) {
+    private router: Router, private globals: Globals) {
 
     this.expressionURI = "<>";
 
     this.sharedService = sharedService;
+
+    this.globals = globals;
   }
 
   onSearchClick(item) {
@@ -90,7 +85,7 @@ export class ExpressionTabComponent {
   onSearchChoosed(item) {
     this.filter = item;
     this._service.getInformations('selfContainedExpressions', this.filter)
-      .subscribe(
+      .then(
       query => this.items = this.queryBind(query),
       error => console.error('Error: ' + error)
       );
@@ -98,12 +93,12 @@ export class ExpressionTabComponent {
   }
   ngOnInit() {
     this._service.getInformations('selfContainedExpressions', this.filter)
-      .subscribe(
+      .then(
       query => this.items = this.queryBind(query),
       error => console.error('Error: ' + error)
       );
     this._service.getInformation('selfContainedExpressionDet', this.expressionURI, null)
-      .subscribe(
+      .then(
       res => this.expression = this.queryBindExp(res),
       error => console.error('Error: ' + error)
       );
@@ -126,7 +121,7 @@ export class ExpressionTabComponent {
     var binding = bindings[0];
     var expression = null;
     var result = new Expression;
-    var lang = "fr";
+    var lang = this.globals.lang || 'en';
     for (var i in bindings) {
       result.title = (bindings[i]["title"] != null) ?
         ((result.title == "") ? result.title.concat(bindings[i]["title"].value) : result.title.concat("- ", bindings[i]["title"].value))
@@ -137,9 +132,9 @@ export class ExpressionTabComponent {
     }
     if (binding != undefined) {
       result.keyURI = (binding["key"] != null) ? binding["key"].value : null;
-      if (result.keyURI != null) {
+      if (result.keyURI) {
         this._service.getInformation('vocabularyURI', "<" + result.keyURI + ">", lang)
-          .subscribe(
+          .then(
           query => result.key = query.results.bindings[0]["name"].value,
           error => console.error('Error: ' + error)
           );
@@ -150,7 +145,7 @@ export class ExpressionTabComponent {
       result.genreURI = (binding["genre"] != null) ? binding["genre"].value : null;
       if (result.genreURI != null) {
         this._service.getInformation('vocabularyURI', "<" + result.genreURI + ">", lang)
-          .subscribe(
+          .then(
           query => result.genre = query.results.bindings[0]["name"].value,
           error => console.error('Error: ' + error)
           );
@@ -184,7 +179,7 @@ export class ExpressionTabComponent {
 
   onScroll() {
     this._service.getMoreInformation('selfContainedExpressions', this.filter)
-      .subscribe(
+      .then(
       query => this.items = this.queryBind(query),
       error => console.error('Error: ' + error)
       );

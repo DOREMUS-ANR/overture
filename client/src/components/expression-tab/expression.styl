@@ -1,0 +1,104 @@
+@import "../../styles/dep/vars"
+
+.forever-scroll {
+  height: auto;
+  overflow: hidden;
+}
+
+.top_info
+  //background-color rgba(#404040, 0.5)
+  height 100%
+  width 100%
+  display flex
+  justify-content space-around
+  flex-flow row wrap
+  align-items center
+
+.main-img
+  flex 1 0 auto
+  height 100%
+  width 35%
+  padding 10px
+  .video
+    position relative
+    width 100%
+    height 0
+    padding-bottom 56%
+  .video iframe
+    position absolute
+    left 0
+    top 0
+    width 100%
+    height 100%
+  .video img
+    position absolute
+    left 0
+    top 0
+    width 100%
+    height 100%
+
+.main-text
+  width 50%
+  font-weight lighter
+  flex 2 0 auto
+  & > h2
+    font-family Roboto, sans-serif
+    font-size 1.4em
+    font-weight bold
+    color main
+  & > p
+    font-family Roboto, sans-serif
+    font-weight normal
+    font-size 1em
+  & > h2#title0
+    color #298356
+  & > h2#title1
+    color #9e009e
+  & > h2#title2
+    color #963
+  & > div > span
+    font-size 100%
+    font-family Roboto, sans-serif
+    font-weight normal
+    & > a
+      color seaMedium
+      font-family Roboto, sans-serif
+      font-weight normal
+      cursor pointer
+      font-size 100%
+
+.instr
+  font-size 90%
+  color seaMedium
+  font-family Roboto, sans-serif
+  margin 0
+  padding-left 20px
+  cursor pointer
+
+.top_info
+  ul
+    li
+      a
+        &, &:hover
+          color seaMedium
+          font-family Roboto, sans-serif
+          font-weight normal
+
++below(650px)
+  .top_info
+    flex-flow row wrap
+    .main-text
+      font-size 16px
+      width 100%
+    .main-image
+      width 100%
+    .main-text
+      > p
+        font-size 0
+      > h2
+        margin 0
+
++below(400px)
+  .top_info
+    & .main-text > h2
+      font-size 12px

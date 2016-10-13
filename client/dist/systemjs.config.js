@@ -1,63 +1,51 @@
 (function (global) {
     'use strict';
-    // map tells the System loader where to look for things
-    var map = {
-        'app': 'static/',
-        'rxjs': 'lib/rxjs',
-        'angular2-in-memory-web-api': 'lib/angular2-in-memory-web-api',
-        '@angular': 'lib/@angular',
-        '@angular2-material': 'lib/@angular2-material',
-        'symbol-observable': 'lib/symbol-observable',
-        'angular2-infinite-scroll': 'lib/angular2-infinite-scroll',
-        'ng2-select': 'lib/ng2-select'
-    };
-    // packages tells the System loader how to load when no filename and/or no extension
-    var packages = {
-        'app': {
-            main: 'index.js',
-            defaultExtension: 'js'
+    var System = global.System;
+    /**
+     * System configuration for Angular samples
+     * Adjust as necessary for your application needs.
+     */
+    System.config({
+        paths: {
+            // paths serve as alias
+            'npm:': 'lib/'
         },
-        'symbol-observable': {
-            main: 'index.js',
-            defaultExtension: 'js'
+        // map tells the System loader where to look for things
+        map: {
+            // our app is within the app folder
+            app: 'static',
+            // angular bundles
+            '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
+            '@angular/common': 'npm:@angular/common/bundles/common.umd.js',
+            '@angular/compiler': 'npm:@angular/compiler/bundles/compiler.umd.js',
+            '@angular/platform-browser': 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
+            '@angular/platform-browser-dynamic': 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+            '@angular/http': 'npm:@angular/http/bundles/http.umd.js',
+            '@angular/router': 'npm:@angular/router/bundles/router.umd.js',
+            '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
+            '@angular/material': 'npm:@angular/material/material.umd.js',
+            // other libraries
+            'rxjs': 'npm:rxjs',
+            'angular2-infinite-scroll': 'npm:angular2-infinite-scroll',
+            'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
+        },
+        // packages tells the System loader how to load when no filename and/or no extension
+        packages: {
+            app: {
+                main: './main.js',
+                defaultExtension: 'js'
+            },
+            rxjs: {
+                defaultExtension: 'js'
+            },
+            'angular2-infinite-scroll': {
+                main: './angular2-infinite-scroll.js',
+                defaultExtension: 'js'
+            },
+            'angular-in-memory-web-api': {
+                main: './index.js',
+                defaultExtension: 'js'
+            }
         }
-    };
-    var packageNames = [
-        '@angular/common',
-        '@angular/compiler',
-        '@angular/core',
-        '@angular/http',
-        '@angular/platform-browser',
-        '@angular/platform-browser-dynamic',
-        '@angular/router',
-        '@angular/router-deprecated',
-        '@angular/testing',
-        '@angular/upgrade',
-        '@angular/forms',
-    ];
-    packageNames.forEach(function (pkgName) {
-        packages[pkgName] = {
-            main: 'index.js',
-            defaultExtension: 'js'
-        };
     });
-    // put the names of any of your Material components here
-    var materialPkgs = [
-        'core',
-        'button',
-        'card',
-    ];
-    materialPkgs.forEach(function (pkg) {
-        packages[("@angular2-material/" + pkg)] = { main: pkg + ".js" };
-    });
-    var config = {
-        map: map,
-        packages: packages,
-        defaultJSExtensions: true
-    };
-    // filterSystemConfig - index.html's chance to modify config before we register it.
-    if (global.filterSystemConfig) {
-        global.filterSystemConfig(config);
-    }
-    global.System.config(config);
 })(this);

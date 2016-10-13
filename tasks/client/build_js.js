@@ -9,8 +9,6 @@ const JS = path.SRC + '**/*.js';
 function copyJs({
   dist = false
 } = {}) {
-  'use strict';
-
   let dest = dist ? path.DIST : path.DEV;
 
   //just copy

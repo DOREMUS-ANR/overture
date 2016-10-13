@@ -1,6 +1,9 @@
 import { INFORMATION } from '../components/auxExpressions';
 import { Injectable } from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
+import { Observable } from "rxjs/Rx";
+import { Http, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/toPromise';
+
 
 @Injectable()
 export class QueryService {
@@ -28,7 +31,7 @@ export class QueryService {
       search: 'id=' + id + '&lim=' + this.end + filterOptions
     });
 
-    return this.http.get("../api/query", options).map(res => res.json());
+    return this.http.get("../api/query", options).toPromise().then(res => res.json());
   }
 
   getMoreInformation(id, items) {
@@ -50,7 +53,7 @@ export class QueryService {
     });
     // FIXME relative URL
     return this.http.get("../api/query", options)
-      .map(res => res.json());
+      .toPromise().then(res => res.json());
   }
 
   getInformation(id, uri, lang) {
@@ -61,7 +64,7 @@ export class QueryService {
     });
     // FIXME relative URL
     return this.http.get("../api/query", options)
-      .map(res => res.json());
+      .toPromise().then(res => res.json());
   }
 
 }

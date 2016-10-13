@@ -6,14 +6,14 @@ import {
   tasks
 } from './const';
 
-const tsProject = tsc.createProject('tsconfig.json',  { sortOutput: true });
+const tsProject = tsc.createProject('tsconfig.json');
 
 gulp.task(tasks.CLIENT_BUILD_TS_DEV, () => {
   'use strict';
 
   return tsProject.src()
     .pipe(sourcemaps.init())
-    .pipe(tsc(tsProject))
+    .pipe(tsProject())
     .js
     .pipe(sourcemaps.write('.', {
       includeContent: false,
@@ -26,7 +26,7 @@ gulp.task(tasks.CLIENT_BUILD_TS_DIST, () => {
   'use strict';
 
   return tsProject.src()
-    .pipe(tsc(tsProject))
+    .pipe(tsProject())
     .js
     .pipe(gulp.dest(path.DIST));
 });

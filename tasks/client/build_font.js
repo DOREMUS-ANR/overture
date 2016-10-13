@@ -9,8 +9,6 @@ const FONTS = path.SRC + 'font/**/*';
 function copyFonts({
   dist = false
 } = {}) {
-  'use strict';
-
   let dest = dist ? path.DIST : path.DEV;
 
   //just copy

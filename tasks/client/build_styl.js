@@ -12,8 +12,6 @@ import {
 function stylProcess({
   dist = false
 } = {}) {
-  'use strict';
-
   let dest = (dist ? path.DIST : path.DEV);
 
   return gulp.src([

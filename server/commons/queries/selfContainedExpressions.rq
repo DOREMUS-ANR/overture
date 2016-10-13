@@ -1,18 +1,19 @@
-PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
-PREFIX frbroo: <http://erlangen-crm.org/efrbroo/>
+PREFIX ecrm: <http://erlangen-crm.org/current/>
+PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX mus: <http://data.doremus.org/ontology#>
-SELECT ?expressions (SAMPLE(?titleAux) AS ?title) (SAMPLE(?activityAux) AS ?activity) (SAMPLE(?personAux) AS ?person) (SAMPLE(?composerAux) AS ?composer)
 
+SELECT ?expressions (SAMPLE(?titleAux) AS ?title) (SAMPLE(?activityAux) AS ?activity) (SAMPLE(?personAux) AS ?person) (SAMPLE(?composerAux) AS ?composer)
+FROM <http://data.doremus.org/>
 WHERE {
-    ?expressions a  frbroo:F22_Self-Contained_Expression ;
-             cidoc:P102_has_title ?titleAux .
-    OPTIONAL{?expCreation frbroo:R17_created ?expressions ;
-            cidoc:P9_consists_of ?activityAux .
-            ?activityAux cidoc:P14_carried_out_by ?personAux .
-            ?personAux cidoc:P131_is_identified_by ?composerAux .
+    ?expressions a  efrbroo:F22_Self-Contained_Expression ;
+             ecrm:P102_has_title ?titleAux .
+    OPTIONAL{?expCreation efrbroo:R17_created ?expressions ;
+            ecrm:P9_consists_of ?activityAux .
+            ?activityAux ecrm:P14_carried_out_by ?personAux .
+            ?personAux ecrm:P1_is_identified_by ?composerAux .
      }
     FILTER (str(?titleAux) != "")
 }
 GROUP BY (?expressions)
 ORDER BY (?expressions)
-LIMIT $$lim$$
+LIMIT %%lim%%
