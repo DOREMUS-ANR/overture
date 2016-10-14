@@ -77,17 +77,13 @@ export class ExpressionListComponent {
     this.globals = globals;
   }
 
-  onSearchClick(item) {
-    this.search = item;
-    //console.log("Search: " + this.search)
-  }
-
-  getList(filter = {}) {
+  getList(filter = {}, reload?: boolean) {
     this._expressionService.query(filter).then(
       res => this.items = res,
       error => console.error('Error: ' + error)
     );
-    this.expression = null;
+    if (reload) //if i am filtering
+      this.router.navigate(['/expression']);
   }
   ngOnInit() {
     this.getList();

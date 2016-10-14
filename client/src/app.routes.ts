@@ -47,7 +47,18 @@ const appRoutes: Routes = [
   },
   {
     path: 'expression',
-    component: myComponents.ExpressionListComponent
+    component: myComponents.ExpressionListComponent,
+    children: [
+      {
+        path: ':id',
+        component: myComponents.ExpressionDetailComponent
+      },
+      {
+        path: '',
+        //TODO change
+        component: myComponents.ExpressionDetailComponent
+      }
+    ]
   },
   {
     path: 'wip',

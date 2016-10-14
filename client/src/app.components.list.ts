@@ -7,13 +7,14 @@ import {PersonTabComponent} from './components/person-tab/person-tab.component';
 import {ScoreTabComponent} from './components/score-tab/score-tab.component';
 import {WorkSubDetailComponent} from './components/work-tab/workSubDetail.component';
 import {ExpressionListComponent} from './components/expression/expression.list.component';
+import {ExpressionDetailComponent} from './components/expression/expression.detail.component';
 import {TopNavComponent} from './components/top-nav/top-nav.component';
 import {SearchComponent} from './components/search/search.component';
 import {WipComponent} from './components/wip/wip.component';
 
 
 export const myComponents = {
- TopInfoComponent, QueriesTestComponent, WorkTabComponent, PerformanceTabComponent, RecordingTabComponent, PersonTabComponent, ScoreTabComponent, WorkSubDetailComponent, ExpressionListComponent, WipComponent, TopNavComponent, SearchComponent
+ TopInfoComponent, QueriesTestComponent, WorkTabComponent, PerformanceTabComponent, RecordingTabComponent, PersonTabComponent, ScoreTabComponent, WorkSubDetailComponent, ExpressionListComponent, ExpressionDetailComponent, WipComponent, TopNavComponent, SearchComponent
 };
 
 export const myComponentsList =  Object.keys(myComponents).map(key => myComponents[key]);
