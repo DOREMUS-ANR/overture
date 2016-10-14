@@ -3,9 +3,8 @@ import {Router} from '@angular/router';
 
 import {SharedService} from '../../services/sharedService.service';
 import {QueryService} from '../../services/queries.service';
-import {RecommendationCardInfo} from '../recommendations/cardInfo';
 import {Globals } from '../../app.globals';
-
+import {ExpressionService} from './expression.service';
 
 declare var __moduleName: string;
 
@@ -46,16 +45,15 @@ export class Expression {
 
 @Component({
   moduleId: __moduleName,
-  selector: 'expression-tab',
-  templateUrl: 'expression-tab.template.html',
+  templateUrl: 'expression.list.template.html',
   styleUrls: ['expression.css'],
-  providers: [QueryService]
+  providers: [QueryService, ExpressionService]
 })
 
-export class ExpressionTabComponent {
+export class ExpressionListComponent {
   @Input() expressionURI: string;
 
-  @Output() items: RecommendationCardInfo[];
+  @Output() items: any[];
 
   display = 'none';
   class = 'menu-icon icon-plus';
@@ -66,8 +64,10 @@ export class ExpressionTabComponent {
   filter: Array<string>;
   sharedService: SharedService
 
+  private scrollInProgress = false;
+
   constructor(private _service: QueryService,
-    sharedService: SharedService,
+    private _expressionService: ExpressionService, sharedService: SharedService,
     private router: Router, private globals: Globals) {
 
     this.expressionURI = "<>";
@@ -82,37 +82,20 @@ export class ExpressionTabComponent {
     //console.log("Search: " + this.search)
   }
 
-  onSearchChoosed(item) {
-    this.filter = item;
-    this._service.getInformations('selfContainedExpressions', this.filter)
-      .then(
-      query => this.items = this.queryBind(query),
+  getList(filter = {}) {
+    this._expressionService.query(filter).then(
+      res => this.items = res,
       error => console.error('Error: ' + error)
-      );
+    );
     this.expression = null;
   }
   ngOnInit() {
-    this._service.getInformations('selfContainedExpressions', this.filter)
-      .then(
-      query => this.items = this.queryBind(query),
-      error => console.error('Error: ' + error)
-      );
+    this.getList();
     this._service.getInformation('selfContainedExpressionDet', this.expressionURI, null)
       .then(
       res => this.expression = this.queryBindExp(res),
       error => console.error('Error: ' + error)
       );
-  }
-
-  queryBind(query) {
-    var bindings = query.results.bindings;
-    var results: RecommendationCardInfo[] = [];
-    for (var i in bindings) {
-      var binding = bindings[i];
-      var result = new RecommendationCardInfo(binding["expressions"].value, binding["title"].value, (binding["composer"] != null) ? binding["composer"].value : null);
-      results.push(result);
-    }
-    return results;
   }
 
   queryBindExp(query) {
@@ -178,9 +161,14 @@ export class ExpressionTabComponent {
   }
 
   onScroll() {
-    this._service.getMoreInformation('selfContainedExpressions', this.filter)
+    if (this.scrollInProgress) return;
+    this.scrollInProgress = true;
+    this._expressionService.query(this.filter, this.items.length)
       .then(
-      query => this.items = this.queryBind(query),
+      res => {
+        this.scrollInProgress = false;
+        this.items.push(...res);
+      },
       error => console.error('Error: ' + error)
       );
   }

@@ -1,5 +1,4 @@
 import {Component, Output, EventEmitter} from '@angular/core';
-// import {SELECT_DIRECTIVES} from 'ng2-select/ng2-select';
 import {QueryService} from "../../services/queries.service";
 import {Globals } from '../../app.globals';
 
@@ -19,12 +18,12 @@ export class Vocabulary {
   moduleId: __moduleName,
   selector: 'search-comp',
   templateUrl: 'search.template.html',
+  styleUrls: ['./search.css'],
   providers: [QueryService, Globals]
 })
 export class SearchComponent {
-  @Output() filterChange = new EventEmitter();
-
-  public filterOptions: Array<string> = [null, null, null]; /*key, genre, title*/
+  @Output() onFilterChanged = new EventEmitter();
+  filter = {};
 
   itemsKey: Vocabulary[];
   itemsGenre: Vocabulary[];
@@ -54,27 +53,12 @@ export class SearchComponent {
     return results;
   }
 
-  onSelectChanged(key, label) {
-    let index;
-    switch (label) {
-      case 'key':
-        index = 0;
-        break;
-      case 'genre':
-      default:
-        index = 1;
-    }
-
-    let old = this.filterOptions[index];
-    this.filterOptions[index] = key && key.id;
-
-    if (old == this.filterOptions[index]) return;
-    this.filterChange.emit(this.filterOptions);
+  onSelectChanged({id}, label) {
+    this.filter[label] = id;
+    this.onFilterChanged.emit(this.filter);
   }
 
-  onTitle(event: any) {
-    var options = this.filterOptions;
-    options[2] = event.target.value;
-    this.filterChange.emit(this.filterOptions);
+  changeFilter(event: any) {
+    this.onFilterChanged.emit(this.filter);
   }
 }

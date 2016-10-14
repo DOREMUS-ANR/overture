@@ -30,17 +30,21 @@ function askQuery(query, endpoint, req) {
     query = query.replace(regex, req[param]);
   }
 
-  if (req.key !== undefined) {
+  if (req.key) {
     var filterKey = 'has_title ?titleAux ; mus:U11_has_key <' + req.key + '>';
     query = query.replace('has_title ?titleAux', filterKey);
   }
-  if (req.genre !== undefined) {
+  if (req.genre) {
     var filterGenre = 'has_title ?titleAux ; mus:U12_has_genre <' + req.genre + '>';
     query = query.replace('has_title ?titleAux', filterGenre);
   }
-  if (req.title !== undefined) {
+  if (req.title) {
     var filterTitle = 'FILTER (regex(str(?titleAux),\'' + req.title + '\') && str(?titleAux)';
     query = query.replace('FILTER (str(?titleAux)', filterTitle);
+  }
+
+  if (req.offset) {
+    query += 'OFFSET ' + req.offset;
   }
 
   console.log('*** SPARQL QUERY ***');

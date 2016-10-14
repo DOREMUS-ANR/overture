@@ -57,6 +57,7 @@ export class QueryService {
   }
 
   getInformation(id, uri, lang) {
+    if(!uri) return null;
     var options = new RequestOptions({
       search: 'id=' + id + '&' +
       'uri=' + uri + '&' +

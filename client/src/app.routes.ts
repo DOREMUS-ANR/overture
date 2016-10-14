@@ -1,36 +1,27 @@
 import { Routes, RouterModule } from '@angular/router';
 import { Component } from '@angular/core';
 
-import {TopInfoComponent} from './components/top-info/top-info.component';
-import {QueriesTestComponent} from './components/search/queries-test.component';
-import {WorkTabComponent} from './components/work-tab/work-tab.component';
-import {PerformanceTabComponent} from './components/performance-tab/performance-tab.component';
-import {RecordingTabComponent} from './components/recording-tab/recording-tab.component';
-import {PersonTabComponent} from './components/person-tab/person-tab.component';
-import {ScoreTabComponent} from './components/score-tab/score-tab.component';
-import {WorkSubDetailComponent} from './components/work-tab/workSubDetail.component';
-import {ExpressionTabComponent} from './components/expression-tab/expression-tab.component';
-import {WipComponent} from './components/wip/wip.component';
+import {myComponents} from './app.components.list';
 
 const appRoutes: Routes = [
   {
     path: '',
     // name: 'Main',
-    component: TopInfoComponent
+    component: myComponents.TopInfoComponent
     // useAsDefault: true
   },
   {
     path: 'search',
     // name: 'Search',
-    component: QueriesTestComponent
+    component: myComponents.QueriesTestComponent
   },
   {
     path: 'work',
-    component: WorkTabComponent,
+    component: myComponents.WorkTabComponent,
     children: [
       {
         path: ':id',
-        component: WorkSubDetailComponent
+        component: myComponents.WorkSubDetailComponent
       },
       {
         path: '',
@@ -40,27 +31,27 @@ const appRoutes: Routes = [
   },
   {
     path: 'performance',
-    component: PerformanceTabComponent
+    component: myComponents.PerformanceTabComponent
   },
   {
     path: 'recording',
-    component: RecordingTabComponent
+    component: myComponents.RecordingTabComponent
   },
   {
     path: 'person',
-    component: PersonTabComponent
+    component: myComponents.PersonTabComponent
   },
   {
     path: 'score',
-    component: ScoreTabComponent
+    component: myComponents.ScoreTabComponent
   },
   {
     path: 'expression',
-    component: ExpressionTabComponent
+    component: myComponents.ExpressionListComponent
   },
   {
     path: 'wip',
-    component: WipComponent
+    component: myComponents.WipComponent
   }
 ]
 

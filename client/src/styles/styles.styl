@@ -6,6 +6,11 @@
 
 /* global styles */
 
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
 
 h1
   color #369
@@ -29,6 +34,7 @@ body
   color grayDark
   font-family Roboto, sans-serif
   line-height normal
+  font-size 14px
 
 a
   color main
@@ -143,7 +149,7 @@ my-app
   z-index 9999
 
 .main
-  margin 20px auto
+  margin 9px auto
   flex 1 0 auto
   height auto
   display flex
@@ -251,5 +257,25 @@ top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab, wip
   justify-content center
   width 100%
 
-@import 'dep/search'
 @import 'dep/tabs'
+
+
+// overriding bootstrap in ng2-select
+.form-control
+  border 0
+  border-radius 0
+  border-bottom 1px solid #333
+  box-shadow none
+  .btn-link
+    color #333
+ng-select
+  .btn
+  input.form-control
+    padding 0 12px
+    height: auto;
+    line-height: 1.5em;
+    &:focus
+      border none
+      box-shadow: none
+  .ui-select-choices-row.active > a
+    background-color main !important
