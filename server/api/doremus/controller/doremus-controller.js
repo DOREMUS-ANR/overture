@@ -29,7 +29,7 @@ function askQuery(query, endpoint, req) {
     let regex = new RegExp(`%%${param}%%`, 'g');
     query = query.replace(regex, req[param]);
   }
-
+  
   if (req.key) {
     var filterKey = 'has_title ?titleAux ; mus:U11_has_key <' + req.key + '>';
     query = query.replace('has_title ?titleAux', filterKey);

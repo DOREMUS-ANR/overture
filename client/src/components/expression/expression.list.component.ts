@@ -2,7 +2,6 @@ import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@
 import {Router} from '@angular/router';
 
 import {SharedService} from '../../services/sharedService.service';
-import {QueryService} from '../../services/queries.service';
 import {Globals } from '../../app.globals';
 import {ExpressionService} from './expression.service';
 
@@ -47,7 +46,7 @@ export class Expression {
   moduleId: __moduleName,
   templateUrl: 'expression.list.template.html',
   styleUrls: ['expression.css'],
-  providers: [QueryService, ExpressionService]
+  providers: [ExpressionService]
 })
 
 export class ExpressionListComponent {
@@ -66,14 +65,11 @@ export class ExpressionListComponent {
 
   private scrollInProgress = false;
 
-  constructor(private _service: QueryService,
+  constructor(
     private _expressionService: ExpressionService, sharedService: SharedService,
     private router: Router, private globals: Globals) {
 
-    this.expressionURI = "<>";
-
     this.sharedService = sharedService;
-
     this.globals = globals;
   }
 
@@ -85,65 +81,9 @@ export class ExpressionListComponent {
     if (reload) //if i am filtering
       this.router.navigate(['/expression']);
   }
+
   ngOnInit() {
     this.getList();
-    this._service.getInformation('selfContainedExpressionDet', this.expressionURI, null)
-      .then(
-      res => this.expression = this.queryBindExp(res),
-      error => console.error('Error: ' + error)
-      );
-  }
-
-  queryBindExp(query) {
-    var bindings = query.results.bindings;
-    var results: Expression;
-    var binding = bindings[0];
-    var expression = null;
-    var result = new Expression;
-    var lang = this.globals.lang || 'en';
-    for (var i in bindings) {
-      result.title = (bindings[i]["title"] != null) ?
-        ((result.title == "") ? result.title.concat(bindings[i]["title"].value) : result.title.concat("- ", bindings[i]["title"].value))
-        : result.title;
-      if (bindings[i]["castingNote"] != null) {
-        result.castingNotes.push(bindings[i]["castingNote"].value);
-      }
-    }
-    if (binding != undefined) {
-      result.keyURI = (binding["key"] != null) ? binding["key"].value : null;
-      if (result.keyURI) {
-        this._service.getInformation('vocabularyURI', "<" + result.keyURI + ">", lang)
-          .then(
-          query => result.key = query.results.bindings[0]["name"].value,
-          error => console.error('Error: ' + error)
-          );
-      } else {
-        result.key = (binding["keyID"] != null) ? binding["keyID"].value : null;
-      }
-
-      result.genreURI = (binding["genre"] != null) ? binding["genre"].value : null;
-      if (result.genreURI != null) {
-        this._service.getInformation('vocabularyURI', "<" + result.genreURI + ">", lang)
-          .then(
-          query => result.genre = query.results.bindings[0]["name"].value,
-          error => console.error('Error: ' + error)
-          );
-      } else {
-        result.genre = (binding["genreID"] != null) ? binding["genreID"].value : null;
-      }
-      result.opus = (binding["opusNote"] != null) ? binding["opusNote"].value : null;
-      result.note = (binding["note"] != null) ? binding["note"].value : null;
-      result.catalogue = (binding["catagNote"] != null) ? binding["catagNote"].value : null;
-      result.individualWork = (binding["individualWork"] != null) ? binding["individualWork"].value : null;
-      result.complexWork = (binding["complexWork"] != null) ? binding["complexWork"].value : null;
-      result.expCreation = (binding["expCreation"] != null) ? binding["expCreation"].value : null;
-      result.composer = (binding["composer"] != null) ? binding["composer"].value : null;
-
-      result.casting = (binding["casting"] != null) ? binding["casting"].value : null;
-
-      expression = result;
-    }
-    return expression;
   }
 
   openInstruments() {

@@ -6,54 +6,45 @@
     </div>
   </div>
   <div class='main-text card'>
-    <h2 style="font-size: 150%;" *ngIf="expression.title">{{expression.title}}</h2>
-    <p *ngIf="expression.note">{{expression.note}}</p>
+    <div class="title-cont">
+      <h2 style="font-size: 150%;" *ngIf="expression.title">{{expression.title[0]}}</h2>
+      <h3>{{expression.title.slice(1)}}</h3>
+    </div>
+    <p *ngFor="let note of expression.note">{{note}}</p>
     <div *ngIf="expression.key">
-      <span>Key:
-      </span>
-      <span>
-        <a (click)="wip()">{{expression.key}}</a>
+      <label>Key</label>
+      <span *ngFor="let key of expression.key; let i = index">
+        <a href="{{expression.keyURI[i]}}">{{key}}</a>
       </span>
     </div>
     <div *ngIf="expression.genre">
-      <span>Genre:
-      </span>
-      <span>
-        <a (click)="wip()">{{expression.genre}}</a>
+      <label>Genre</label>
+      <span *ngFor="let genre of expression.genre; let i = index">
+        <a href="{{expression.genreURI[i]}}">{{genre}}</a>
       </span>
     </div>
     <div *ngIf="expression.opus">
-      <span>Opus:
-      </span>
-      <span>
-        <a>{{expression.opus}}</a>
-      </span>
+      <label>Opus</label>
+      <span>{{expression.opusNote}}</span>
     </div>
     <div *ngIf="expression.catalogue">
-      <span>Catalogue:
-      </span>
-      <span>
-        <a>{{expression.catalogue}}</a>
-      </span>
+      <label>Catalog</label>
+      <span>{{expression.catalogNote}}</span>
     </div>
     <div *ngIf="expression.composer">
-      <span>Composer:
-      </span>
-      <span>
-        <a>{{expression.composer}}</a>
-      </span>
+      <label>Composer</label>
+      <span>{{expression.composer}}</span>
     </div>
-    <div *ngIf="expression.casting || (expression.castingNotes && expression.castingNotes.length > 0)">
-      <span>Casting:
-      </span>
-      &nbsp;
-      <span style="width: auto; align-self: left;">{{expression.casting}}</span>
-      <span *ngIf="expression.castingNotes.length > 0" (click)="openInstruments();" [ngClass]="class" style="width: 16px; height: 16px; padding: 0"></span>
+    <div *ngIf="expression.castingURI">
+      <label>Casting</label>
+      <ul style="list-style-type: none; margin: 0; padding: 0">
+        <li *ngFor="let mop of expression.mop; let i = index" class="instr icon-right-dir">
+          <a *ngIf="!isNode(expression.mopURI[i])" href="{{expression.mopURI[i]}}">{{mop}}</a>
+          <span *ngIf="isNode(expression.mopURI[i])">{{mop}}</span>
+        </li>
+      </ul>
     </div>
-    <ul style="list-style-type: none; margin: 0; padding: 0" *ngIf="expression.castingNotes">
-      <li *ngFor="let note of expression.castingNotes" class="instr icon-right-dir">{{note}}</li>
-    </ul>
-    <div>
+    <!-- <div>
       <span>Discover:
       </span>
       &nbsp;
@@ -69,6 +60,6 @@
       <li *ngIf="expression.expCreation" class="instr icon-right-dir">
         <a (click)="wip()">Expression Creation</a>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </div>

@@ -39,10 +39,26 @@ export class ExpressionService {
     // FIXME relative URL
     return this.http.get("../api/query", new RequestOptions({ search }))
       .toPromise().then(res => {
-        let data = this._processResult(res); 
-        if(data.length>1) console.warn('[expression.service.ts]', 'The query returned more then one value.');
+        let data = this._processResult(res);
+        data = this._mergeData(data);
         return data[0];
       });
+  }
+
+  _mergeData(data) {
+    let output = {};
+    
+    for(let row of data){
+      Object.keys(row).forEach(prop => {
+        let value = row[prop];
+        if(!output[prop]){
+          output[prop] = [value];
+        } else if(!output[prop].includes(value)){
+          output[prop].push(value)
+        }
+      });
+    }
+    return [output];
   }
 
   _processResult(res) {

@@ -34,4 +34,8 @@ export class ExpressionDetailComponent {
     });
   }
 
+  isNode(a){
+    return a.startsWith('node');
+  }
+
 }

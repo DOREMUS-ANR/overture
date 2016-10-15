@@ -13,6 +13,14 @@
   justify-content space-around
   flex-flow row wrap
   align-items center
+  .title-cont
+    margin 1em 0
+  h2
+    margin-bottom 0
+    + h3
+      font-size .8em
+      color #aaa
+      margin .3em 0 0
 
 .main-img
   flex 1 0 auto
@@ -60,6 +68,10 @@
     font-size 100%
     font-family Roboto, sans-serif
     font-weight normal
+    &:before
+      content: ", "
+    &:first-of-type:before
+      content none
     & > a
       color seaMedium
       font-family Roboto, sans-serif
@@ -69,12 +81,10 @@
 
 .instr
   font-size 90%
-  color seaMedium
-  font-family Roboto, sans-serif
   margin 0
   padding-left 20px
-  cursor pointer
-
+  cursor default
+  
 .top_info
   ul
     li
