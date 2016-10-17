@@ -66,6 +66,8 @@ System.register(['@angular/core', '@angular/http', 'rxjs/add/operator/toPromise'
                         .toPromise().then(function (res) { return res.json(); });
                 };
                 QueryService.prototype.getInformation = function (id, uri, lang) {
+                    if (!uri)
+                        return null;
                     var options = new http_1.RequestOptions({
                         search: 'id=' + id + '&' +
                             'uri=' + uri + '&' +

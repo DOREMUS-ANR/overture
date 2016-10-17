@@ -54,8 +54,8 @@ Build
 
 Run
 
-    docker run -p 3333:3333 -d --name  overture doremus/overture
-    docker logs overture
+    docker run -p 5050:3333 -d --name  doremus_overture doremus/overture
+    docker logs doremus_overture
 
 Stop
 

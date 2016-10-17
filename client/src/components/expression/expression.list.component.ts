@@ -60,7 +60,7 @@ export class ExpressionListComponent {
   classDiscover = 'menu-icon icon-plus';
   expression: Expression;
   search: boolean = false;
-  filter: Array<string>;
+  filter: any;
   sharedService: SharedService
 
   private scrollInProgress = false;
@@ -74,6 +74,7 @@ export class ExpressionListComponent {
   }
 
   getList(filter = {}, reload?: boolean) {
+    this.filter = filter;
     this._expressionService.query(filter).then(
       res => this.items = res,
       error => console.error('Error: ' + error)

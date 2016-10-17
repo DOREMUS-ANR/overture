@@ -37,8 +37,11 @@ System.register(['@angular/core', "../../services/queries.service", '../../app.g
                     var _this = this;
                     this._queriesService = _queriesService;
                     this.globals = globals;
-                    this.filterChange = new core_1.EventEmitter();
-                    this.filterOptions = [null, null, null]; /*key, genre, title*/
+                    this.onFilterChanged = new core_1.EventEmitter();
+                    this.filter = {
+                        key: '',
+                        genre: ''
+                    };
                     this.disabled = false;
                     this._queriesService.getInformation('vocabulary', 'http://data.doremus.org/vocabulary/key/', globals.lang)
                         .then(function (queryVoc) { return _this.itemsKey = _this.queryBindVoc(queryVoc); }, function (error) { return console.error('Error: ' + error); });
@@ -55,36 +58,24 @@ System.register(['@angular/core', "../../services/queries.service", '../../app.g
                     }
                     return results;
                 };
-                SearchComponent.prototype.onSelectChanged = function (key, label) {
-                    var index;
-                    switch (label) {
-                        case 'key':
-                            index = 0;
-                            break;
-                        case 'genre':
-                        default:
-                            index = 1;
-                    }
-                    var old = this.filterOptions[index];
-                    this.filterOptions[index] = key && key.id;
-                    if (old == this.filterOptions[index])
-                        return;
-                    this.filterChange.emit(this.filterOptions);
+                SearchComponent.prototype.onSelectChanged = function (_a, label) {
+                    var id = _a.id;
+                    this.filter[label] = id;
+                    this.onFilterChanged.emit(this.filter);
                 };
-                SearchComponent.prototype.onTitle = function (event) {
-                    var options = this.filterOptions;
-                    options[2] = event.target.value;
-                    this.filterChange.emit(this.filterOptions);
+                SearchComponent.prototype.changeFilter = function (event) {
+                    this.onFilterChanged.emit(this.filter);
                 };
                 __decorate([
                     core_1.Output(), 
                     __metadata('design:type', Object)
-                ], SearchComponent.prototype, "filterChange", void 0);
+                ], SearchComponent.prototype, "onFilterChanged", void 0);
                 SearchComponent = __decorate([
                     core_1.Component({
                         moduleId: __moduleName,
                         selector: 'search-comp',
                         templateUrl: 'search.template.html',
+                        styleUrls: ['./search.css'],
                         providers: [queries_service_1.QueryService, app_globals_1.Globals]
                     }), 
                     __metadata('design:paramtypes', [queries_service_1.QueryService, app_globals_1.Globals])

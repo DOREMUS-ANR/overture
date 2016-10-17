@@ -23,7 +23,10 @@ export class Vocabulary {
 })
 export class SearchComponent {
   @Output() onFilterChanged = new EventEmitter();
-  filter = {};
+  filter = {
+    key: '',
+    genre: ''
+  };
 
   itemsKey: Vocabulary[];
   itemsGenre: Vocabulary[];
