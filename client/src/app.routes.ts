@@ -7,7 +7,7 @@ const appRoutes: Routes = [
   {
     path: '',
     // name: 'Main',
-    component: myComponents.TopInfoComponent
+    component: myComponents.HomeComponent
     // useAsDefault: true
   },
   {
@@ -17,21 +17,21 @@ const appRoutes: Routes = [
   },
   {
     path: 'work',
-    component: myComponents.WorkTabComponent,
-    children: [
-      {
-        path: ':id',
-        component: myComponents.WorkSubDetailComponent
-      },
-      {
-        path: '',
-        redirectTo: '1'
-      }
-    ]
+    component: myComponents.WipComponent,
+    // children: [
+    //   {
+    //     path: ':id',
+    //     component: myComponents.WorkSubDetailComponent
+    //   },
+    //   {
+    //     path: '',
+    //     redirectTo: '1'
+    //   }
+    // ]
   },
   {
     path: 'performance',
-    component: myComponents.PerformanceTabComponent
+    component: myComponents.WipComponent
   },
   {
     path: 'recording',

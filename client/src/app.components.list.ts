@@ -1,4 +1,4 @@
-import {TopInfoComponent} from './components/top-info/top-info.component';
+import {HomeComponent} from './components/home/home.component';
 import {QueriesTestComponent} from './components/search/queries-test.component';
 import {WorkTabComponent} from './components/work-tab/work-tab.component';
 import {PerformanceTabComponent} from './components/performance-tab/performance-tab.component';
@@ -14,7 +14,7 @@ import {WipComponent} from './components/wip/wip.component';
 
 
 export const myComponents = {
- TopInfoComponent, QueriesTestComponent, WorkTabComponent, PerformanceTabComponent, RecordingTabComponent, PersonTabComponent, ScoreTabComponent, WorkSubDetailComponent, ExpressionListComponent, ExpressionDetailComponent, WipComponent, TopNavComponent, SearchComponent
+ HomeComponent, QueriesTestComponent, WorkTabComponent, PerformanceTabComponent, RecordingTabComponent, PersonTabComponent, ScoreTabComponent, WorkSubDetailComponent, ExpressionListComponent, ExpressionDetailComponent, WipComponent, TopNavComponent, SearchComponent
 };
 
 export const myComponentsList =  Object.keys(myComponents).map(key => myComponents[key]);

@@ -5,12 +5,11 @@ declare var __moduleName: string;
 
 @Component({
   moduleId: __moduleName,
-  selector: 'top-info',
-  templateUrl: 'top-info.template.html',
-  styleUrls: ['top-info.css']
+  templateUrl: 'home.template.html',
+  styleUrls: ['home.css']
 })
 
-export class TopInfoComponent {
+export class HomeComponent {
   constructor(private router: Router) { }
 
   goToSearch() {

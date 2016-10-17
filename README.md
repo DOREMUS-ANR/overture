@@ -59,8 +59,9 @@ Run
 
 Stop
 
-    docker stop overture
-    docker rm overture ##remove from images
+    docker stop doremus_overture
+    docker rm doremus_overture ##remove from available containers
+    docker rmi doremus/overture ##remove from images
 
 [1]: https://drive.google.com/file/d/0B_nxZpGQv9GKZmpKRGl2dmRENGc/view
 [2]: https://www.w3.org/TR/sparql11-query/
