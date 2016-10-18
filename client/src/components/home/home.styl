@@ -1,107 +1,65 @@
 @import "../../styles/dep/vars"
 
+.home
+  h1
+    display: block;
+    color #fff
+    text-shadow 1px 1px 2px #333
+    margin 2em 1em 0
+    padding .3em .5em
+    font 3em normal Raleway, sans-serif
+    background alpha(#000, .5)
+    text-align left
 
-.top_info
-  //background-color rgba(#404040, 0.5)
-  height 100%
-  width 100%
-  display flex
-  justify-content space-around
-  flex-flow row wrap
-  align-items center
-
-.main-img
-  flex 1 0 auto
-  height 100%
-  width 35%
-  padding 10px
-  .video
+  .cover
+    height 45em
+    max-height 90vh
+    width 100%
+    background #000 url('/static/img/bg/violin.jpeg') center center no-repeat
+    background-size cover
     position relative
+    display flex
+    align-items center
+    justify-content center
+    text-align center
+    box-shadow inset 0 -3px 16px 0 #333
+    +below('m')
+      font-size .8em
+    +below('m')
+      font-size .5em
+    [md-raised-button]
+      margin 1em auto
+      font-size 1.4em
+      background main
+      color #fff
+      &:hover
+        text-decoration none
+        z-depth(4)
+        background lighten(main, 5)
+
+  .descriptive
+    display flex
+    flex-flow row no-wrap
+    align-items center
+    justify-content center
+    padding 2em 0
+    > *
+      padding 1em 2em
+    .img-cont
+      flex 0 1 12em
+      min-width: 28em
+      opacity: .5
+      img
+        max-width 100%
+        max-height 16em
+    p
+      flex 2 0 20em
+      max-width 31em
+      font-size: 1.3em
+
+  .divider
     width 100%
-    height 0
-    padding-bottom 56%
-  .video iframe
-    position absolute
-    left 0
-    top 0
-    width 100%
-    height 100%
-  .video img
-    position absolute
-    left 0
-    top 0
-    width 100%
-    height 100%
-
-.main-text
-  width 50%
-  font-weight lighter
-  flex 2 0 auto
-  & > h2
-    font-family Roboto, sans-serif
-    font-size 1.4em
-    font-weight bold
-    color main
-  & > p
-    font-family Roboto, sans-serif
-    font-weight normal
-    font-size 1em
-  & > h2#title0
-    color #298356
-  & > h2#title1
-    color #9e009e
-  & > h2#title2
-    color #963
-  & > div > span
-    font-size 100%
-    font-family Roboto, sans-serif
-    font-weight normal
-    & > a
-      color seaMedium
-      font-family Roboto, sans-serif
-      font-weight normal
-      cursor pointer
-      font-size 100%
-
-md-button.butI
-  margin-top 5px
-  height 100%
-  width 140px
-  background-color main
-  color #fff
-
-.instr
-  font-size 90%
-  color seaMedium
-  font-family Roboto, sans-serif
-  margin 0
-  padding-left 20px
-  cursor pointer
-
-.top_info
-  ul
-    li
-      a
-        &, &:hover
-          color seaMedium
-          font-family Roboto, sans-serif
-          font-weight normal
-
-+below(650px)
-  .top_info
-    flex-flow row wrap
-    .main-text
-      font-size 16px
-      width 100%
-    .main-image
-      width 100%
-    .main-text
-      > p
-        font-size 0
-      > h2
-        margin 0
-
-+below(400px)
-  .top_info
-    & .main-text > h2
-      font-size 12px
+    height 10em
+    background #333 center -3em no-repeat
+    background-size cover
+    box-shadow inset 0 -3px 16px 0 #333

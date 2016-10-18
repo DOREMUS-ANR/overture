@@ -1,30 +1,27 @@
 <div class="home">
   <div class="cover">
-    <h1>Discover the catalog of the DOREMUS project</h1>
+    <div>
+      <h1>Discover the catalog of the DOREMUS project</h1>
+      <a md-raised-button [routerLink]="['expression']">Explore the Expressions</a>
+    </div>
   </div>
-  <div class="descriptive">
+  <div class="descriptive main">
     <div class="img-cont">
-      <img src="static/img/beethoven-dutilleux.png" />
+      <img src="static/img/beethoven-dutilleux.png"/>
     </div>
     <p>
-      We loaded a thematic corpus of data about the works of Ludwig van Beethoven and Henry Dutilleux in our triplestore at <a href="http://data.doremus.org/sparql">data.doremus.org/sparql</a>.
+      OVERTURE allows you to explore a thematic corpus of data about the works of Ludwig van Beethoven and Henry Dutilleux. This data is also available in our triplestore at
+      <a href="http://data.doremus.org/sparql">data.doremus.org/sparql</a>.
     </p>
   </div>
-</div>
-
-<div class="top_info">
-  <div class="main-img">
-    <div class="video">
-      <iframe id="video1" src="https://www.youtube.com/embed/PprEQF9C0Qk" frameborder="0" allowfullscreen></iframe>
+  <div class="divider" style="background-image:url('static/img/classical_music_composers_montage.jpg')"></div>
+  <div class="descriptive main">
+    <p>
+      The DOREMUS project has the ambitious goal of improving music description to foster music exchange and reuse. We travel to the heart of the musical archives in France’s greatest institutions and publish musical metadata on the web of data.
+      <a href="http://www.doremus.org">Learn more</a>.
+    </p>
+    <div class="img-cont">
+      <img src="/static/img/logos/doremus.logo.png"/>
     </div>
   </div>
-  <div class='main-text card'>
-    <h2 id="title0">Improve music description to foster music exchange and reuse</h2>
-    <p>We create a FRBRoo-based data model and multilingual controlled vocabularies specifically designed for music, along with documentation, examples and tutorials.</p>
-    <h2 id="title1">Travel to the heart of the musical archives of major French institutions</h2>
-    <p>We publish musical metadata coming form BnF, Radio France and Philharmonie de Paris on the web of data, and align datasets together with the major hubs of the Linked Open Data cloud.</p>
-    <h2 id="title2">Conect sources, multiply usage, enrich user experience</h2>
-    <p>We develop a musical recommendation system based on the enriched data model and the interconnection of musical catalogs, in order to offer innovative services.</p>
-  </div>
 </div>
-<button md-button md-raised-button (click)="goToSearch()" class="butI">Start Discovering!</button>

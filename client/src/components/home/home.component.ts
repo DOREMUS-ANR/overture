@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {Router} from '@angular/router';
-
 declare var __moduleName: string;
 
 @Component({
@@ -8,11 +6,4 @@ declare var __moduleName: string;
   templateUrl: 'home.template.html',
   styleUrls: ['home.css']
 })
-
-export class HomeComponent {
-  constructor(private router: Router) { }
-
-  goToSearch() {
-    this.router.navigate(['/expression']);
-  }
-}
+export class HomeComponent {}
