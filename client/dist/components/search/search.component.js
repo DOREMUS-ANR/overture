@@ -1,4 +1,4 @@
-System.register(['@angular/core', "../../services/queries.service", '../../app.globals'], function(exports_1, context_1) {
+System.register(['@angular/core', "../../services/queries.service", '../../app.globals', '@angular/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', "../../services/queries.service", '../../app.g
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, queries_service_1, app_globals_1;
+    var core_1, queries_service_1, app_globals_1, router_1;
     var Vocabulary, SearchComponent;
     return {
         setters:[
@@ -22,6 +22,9 @@ System.register(['@angular/core', "../../services/queries.service", '../../app.g
             },
             function (app_globals_1_1) {
                 app_globals_1 = app_globals_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             Vocabulary = (function () {
@@ -33,21 +36,24 @@ System.register(['@angular/core', "../../services/queries.service", '../../app.g
             }());
             exports_1("Vocabulary", Vocabulary);
             SearchComponent = (function () {
-                function SearchComponent(_queriesService, globals) {
+                function SearchComponent(_queriesService, globals, route) {
                     var _this = this;
                     this._queriesService = _queriesService;
                     this.globals = globals;
+                    this.route = route;
                     this.onFilterChanged = new core_1.EventEmitter();
                     this.filter = {
                         key: '',
                         genre: ''
                     };
-                    this.disabled = false;
                     this._queriesService.getInformation('vocabulary', 'http://data.doremus.org/vocabulary/key/', globals.lang)
                         .then(function (queryVoc) { return _this.itemsKey = _this.queryBindVoc(queryVoc); }, function (error) { return console.error('Error: ' + error); });
                     this._queriesService.getInformation('vocabulary', 'http://data.doremus.org/vocabulary/genre/', globals.lang)
                         .then(function (queryVoc) { return _this.itemsGenre = _this.queryBindVoc(queryVoc); }, function (error) { return console.error('Error: ' + error); });
                 }
+                SearchComponent.prototype.ngOnInit = function () {
+                    Object.assign(this.filter, this.route.queryParams['value']);
+                };
                 SearchComponent.prototype.queryBindVoc = function (query) {
                     var bindings = query.results.bindings;
                     var results = [];
@@ -78,7 +84,7 @@ System.register(['@angular/core', "../../services/queries.service", '../../app.g
                         styleUrls: ['./search.css'],
                         providers: [queries_service_1.QueryService, app_globals_1.Globals]
                     }), 
-                    __metadata('design:paramtypes', [queries_service_1.QueryService, app_globals_1.Globals])
+                    __metadata('design:paramtypes', [queries_service_1.QueryService, app_globals_1.Globals, router_1.ActivatedRoute])
                 ], SearchComponent);
                 return SearchComponent;
             }());

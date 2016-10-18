@@ -157,8 +157,9 @@ my-app
 
 .main
   margin 9px auto
-  width pageWidthLimit
   max-width 100%
+  +above(pageWidthLimit)
+    width pageWidthLimit
 
 .btn-primary
   background-color #e7892b
@@ -264,6 +265,7 @@ top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab, wip
   width 100%
 
 @import 'dep/tabs'
+@import 'dep/loading';
 
 
 // overriding bootstrap in ng2-select

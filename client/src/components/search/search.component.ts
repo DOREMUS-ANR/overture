@@ -1,6 +1,7 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {QueryService} from "../../services/queries.service";
 import {Globals } from '../../app.globals';
+import {ActivatedRoute} from '@angular/router';
 
 declare var __moduleName: string;
 
@@ -30,9 +31,8 @@ export class SearchComponent {
 
   itemsKey: Vocabulary[];
   itemsGenre: Vocabulary[];
-  private disabled: boolean = false;
 
-  constructor(private _queriesService: QueryService, private globals: Globals) {
+  constructor(private _queriesService: QueryService, private globals: Globals, private route: ActivatedRoute) {
 
     this._queriesService.getInformation('vocabulary', 'http://data.doremus.org/vocabulary/key/', globals.lang)
       .then(
@@ -44,6 +44,10 @@ export class SearchComponent {
       queryVoc => this.itemsGenre = this.queryBindVoc(queryVoc),
       error => console.error('Error: ' + error)
       );
+  }
+
+  ngOnInit() {
+    Object.assign(this.filter, this.route.queryParams['value'])
   }
 
   queryBindVoc(query) {

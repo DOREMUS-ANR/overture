@@ -47,13 +47,18 @@ export class ExpressionService {
 
   _mergeData(data) {
     let output = {};
-    
-    for(let row of data){
+
+    for (let row of data) {
       Object.keys(row).forEach(prop => {
         let value = row[prop];
-        if(!output[prop]){
+
+        if (!output[prop]) {
           output[prop] = [value];
-        } else if(!output[prop].includes(value)){
+        } else if (prop == 'keyURI'){
+          //FIXME workaround for key in @en-gb and @en-us
+          if(output['key'].length > output['keyURI'].length)
+            output[prop].push(value)
+        } else if (!output[prop].includes(value)) {
           output[prop].push(value)
         }
       });

@@ -65,29 +65,53 @@ System.register(['@angular/core', '@angular/router', '../../services/sharedServi
             }());
             exports_1("Expression", Expression);
             ExpressionListComponent = (function () {
-                function ExpressionListComponent(_expressionService, sharedService, router, globals) {
+                function ExpressionListComponent(_expressionService, sharedService, router, globals, route) {
                     this._expressionService = _expressionService;
                     this.router = router;
                     this.globals = globals;
+                    this.route = route;
                     this.display = 'none';
                     this.class = 'menu-icon icon-plus';
                     this.displayDiscover = 'none';
                     this.classDiscover = 'menu-icon icon-plus';
                     this.search = false;
+                    this.filter = {};
+                    this.querying = false;
                     this.scrollInProgress = false;
                     this.sharedService = sharedService;
                     this.globals = globals;
                 }
-                ExpressionListComponent.prototype.getList = function (filter, reload) {
-                    var _this = this;
-                    if (filter === void 0) { filter = {}; }
-                    this.filter = filter;
-                    this._expressionService.query(filter).then(function (res) { return _this.items = res; }, function (error) { return console.error('Error: ' + error); });
-                    if (reload)
-                        this.router.navigate(['/expression']);
-                };
                 ExpressionListComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.filter = this.route.queryParams['value'];
+                    if (Object.keys(this.filter).length)
+                        this.sharedService.show();
                     this.getList();
+                    this.router.events
+                        .map(function (event) { return event instanceof router_1.NavigationStart; })
+                        .subscribe(function () {
+                        var newFilter = _this.route.queryParams['value'];
+                        if (JSON.stringify(newFilter) != JSON.stringify(_this.filter)) {
+                            _this.filter = newFilter;
+                            _this.getList();
+                        }
+                    }, function (err) { return console.error(err); });
+                };
+                ExpressionListComponent.prototype.getList = function () {
+                    var _this = this;
+                    if (this.querying)
+                        return false;
+                    this.querying = true;
+                    this._expressionService.query(this.filter).then(function (res) {
+                        _this.items = res;
+                        _this.querying = false;
+                    }, function (error) { return console.error('Error: ' + error); });
+                };
+                ExpressionListComponent.prototype.onFilterChanged = function (filter) {
+                    if (filter === void 0) { filter = {}; }
+                    this.router.navigate(['/expression'], {
+                        queryParams: filter
+                    });
                 };
                 ExpressionListComponent.prototype.openInstruments = function () {
                     this.display = this.display.match('none') ? 'inline' : 'none';
@@ -132,7 +156,7 @@ System.register(['@angular/core', '@angular/router', '../../services/sharedServi
                         styleUrls: ['expression.css'],
                         providers: [expression_service_1.ExpressionService]
                     }), 
-                    __metadata('design:paramtypes', [expression_service_1.ExpressionService, sharedService_service_1.SharedService, router_1.Router, app_globals_1.Globals])
+                    __metadata('design:paramtypes', [expression_service_1.ExpressionService, sharedService_service_1.SharedService, router_1.Router, app_globals_1.Globals, router_1.ActivatedRoute])
                 ], ExpressionListComponent);
                 return ExpressionListComponent;
             }());

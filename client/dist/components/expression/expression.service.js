@@ -72,6 +72,11 @@ System.register(['@angular/core', '@angular/http', '../../app.globals', 'rxjs/ad
                             if (!output[prop]) {
                                 output[prop] = [value];
                             }
+                            else if (prop == 'keyURI') {
+                                //FIXME workaround for key in @en-gb and @en-us
+                                if (output['key'].length > output['keyURI'].length)
+                                    output[prop].push(value);
+                            }
                             else if (!output[prop].includes(value)) {
                                 output[prop].push(value);
                             }

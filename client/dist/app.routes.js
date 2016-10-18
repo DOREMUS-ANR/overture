@@ -16,7 +16,7 @@ System.register(['@angular/router', './app.components.list'], function(exports_1
                 {
                     path: '',
                     // name: 'Main',
-                    component: app_components_list_1.myComponents.TopInfoComponent
+                    component: app_components_list_1.myComponents.HomeComponent
                 },
                 {
                     path: 'search',
@@ -25,21 +25,11 @@ System.register(['@angular/router', './app.components.list'], function(exports_1
                 },
                 {
                     path: 'work',
-                    component: app_components_list_1.myComponents.WorkTabComponent,
-                    children: [
-                        {
-                            path: ':id',
-                            component: app_components_list_1.myComponents.WorkSubDetailComponent
-                        },
-                        {
-                            path: '',
-                            redirectTo: '1'
-                        }
-                    ]
+                    component: app_components_list_1.myComponents.WipComponent,
                 },
                 {
                     path: 'performance',
-                    component: app_components_list_1.myComponents.PerformanceTabComponent
+                    component: app_components_list_1.myComponents.WipComponent
                 },
                 {
                     path: 'recording',

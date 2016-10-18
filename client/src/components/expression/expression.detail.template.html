@@ -14,13 +14,13 @@
     <div *ngIf="expression.key">
       <label>Key</label>
       <span *ngFor="let key of expression.key; let i = index">
-        <a href="{{expression.keyURI[i]}}">{{key}}</a>
+        <a [routerLink]="['/expression']" [queryParams]="{ key: expression.keyURI[i]}">{{key}}</a>
       </span>
     </div>
     <div *ngIf="expression.genre">
       <label>Genre</label>
       <span *ngFor="let genre of expression.genre; let i = index">
-        <a href="{{expression.genreURI[i]}}">{{genre}}</a>
+        <a [routerLink]="['/expression']" [queryParams]="{ genre: expression.genreURI[i]}">{{genre}}</a>
       </span>
     </div>
     <div *ngIf="expression.opus">

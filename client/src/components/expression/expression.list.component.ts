@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute, NavigationStart} from '@angular/router';
 
 import {SharedService} from '../../services/sharedService.service';
 import {Globals } from '../../app.globals';
@@ -60,31 +60,55 @@ export class ExpressionListComponent {
   classDiscover = 'menu-icon icon-plus';
   expression: Expression;
   search: boolean = false;
-  filter: any;
+  filter = {};
   sharedService: SharedService
+  querying: boolean = false;
 
   private scrollInProgress = false;
 
   constructor(
     private _expressionService: ExpressionService, sharedService: SharedService,
-    private router: Router, private globals: Globals) {
+    private router: Router, private globals: Globals, private route: ActivatedRoute) {
 
     this.sharedService = sharedService;
     this.globals = globals;
   }
 
-  getList(filter = {}, reload?: boolean) {
-    this.filter = filter;
-    this._expressionService.query(filter).then(
-      res => this.items = res,
-      error => console.error('Error: ' + error)
-    );
-    if (reload) //if i am filtering
-      this.router.navigate(['/expression']);
+  ngOnInit() {
+    this.filter = this.route.queryParams['value'];
+    if (Object.keys(this.filter).length)
+      this.sharedService.show();
+
+    this.getList();
+
+    this.router.events
+      .map(event => event instanceof NavigationStart)
+      .subscribe(() => {
+        let newFilter = this.route.queryParams['value'];
+        if (JSON.stringify(newFilter) != JSON.stringify(this.filter)) {
+          this.filter = newFilter;
+          this.getList();
+        }
+      }, (err) => console.error(err));
   }
 
-  ngOnInit() {
-    this.getList();
+  getList() {
+    if (this.querying) return false;
+    this.querying = true;
+    this._expressionService.query(this.filter).then(
+      res => {
+        this.items = res;
+        this.querying = false;
+      },
+      error => console.error('Error: ' + error)
+    );
+  }
+
+
+  onFilterChanged(filter = {}) {
+    this.router.navigate(['/expression'], {
+      queryParams: filter
+    });
   }
 
   openInstruments() {
