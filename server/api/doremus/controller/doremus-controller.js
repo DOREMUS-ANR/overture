@@ -6,7 +6,6 @@ import {
 
 const endpoint = EXT_URI.SPARQL_ENDPOINT;
 
-
 function readFile(name) {
   'use strict';
 
@@ -29,7 +28,7 @@ function askQuery(query, endpoint, req) {
     let regex = new RegExp(`%%${param}%%`, 'g');
     query = query.replace(regex, req[param]);
   }
-  
+
   if (req.key) {
     var filterKey = 'has_title ?titleAux ; mus:U11_has_key <' + req.key + '>';
     query = query.replace('has_title ?titleAux', filterKey);
@@ -49,12 +48,13 @@ function askQuery(query, endpoint, req) {
 
   console.log('*** SPARQL QUERY ***');
   console.log(query);
+
   var client = new SparqlClient(endpoint);
+
   return new Promise(function(resolve, reject) {
     client.query(query, function(err, results) {
       if (err) {
-        console.error(err);
-        return reject(err);
+        reject(err);
       } else {
         resolve(results);
       }
@@ -71,6 +71,12 @@ export default class DoremusController {
     readFile(_q)
       .then(content => askQuery(content, endpoint, req.query))
       .then(results => res.json(results))
-      .catch(err => console.error('error ' + err.message));
+      .catch(err => {
+        console.error('error ', err.message);
+        res.status(500).send({
+          code: 500,
+          message: err.message
+        });
+      });
   }
 }

@@ -63,6 +63,7 @@ export class ExpressionListComponent {
   filter = {};
   sharedService: SharedService
   querying: boolean = false;
+  error: boolean = false;
 
   private scrollInProgress = false;
 
@@ -100,7 +101,11 @@ export class ExpressionListComponent {
         this.items = res;
         this.querying = false;
       },
-      error => console.error('Error: ' + error)
+      error => {
+        console.error('Error: ' + error);
+        this.querying = false;
+        this.error = true;
+      }
     );
   }
 
