@@ -16,20 +16,6 @@ const appRoutes: Routes = [
     component: myComponents.QueriesTestComponent
   },
   {
-    path: 'work',
-    component: myComponents.WipComponent,
-    // children: [
-    //   {
-    //     path: ':id',
-    //     component: myComponents.WorkSubDetailComponent
-    //   },
-    //   {
-    //     path: '',
-    //     redirectTo: '1'
-    //   }
-    // ]
-  },
-  {
     path: 'performance',
     component: myComponents.WipComponent
   },

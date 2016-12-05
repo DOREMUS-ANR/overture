@@ -1,46 +1,117 @@
 @import "../../styles/dep/vars"
+@import '../../../node_modules/material-shadows/material-shadows'
 
 .forever-scroll
   height: auto;
   overflow: hidden;
 
-.top_info
-  //background-color rgba(#404040, 0.5)
-  width 100%
-  display flex
-  justify-content space-around
-  flex-flow row wrap
-  align-items center
-  .title-cont
-    margin 1em 0
-  h2
-    margin-bottom 0
-    + h3
-      font-size .8em
-      color #aaa
-      margin .3em 0 0
-
-.main-img
-  flex 1 0 auto
-  width 35%
-  padding 10px
-  .video
+.expression-detail
+  .overview
+    background main
+    color white
     position relative
-    width 100%
-    height 0
-    padding-bottom 56%
-  .video iframe
-    position absolute
-    left 0
-    top 0
-    width 100%
-    height 100%
-  .video img
-    position absolute
-    left 0
-    top 0
-    width 100%
-    height 100%
+    overflow hidden
+    &:before
+      content ''
+      background url(/static/img/bg/detail-overview-bg.png) center center no-repeat
+      background-size 100em
+
+      position absolute
+      top 0
+      left 0
+      height 100%
+      width 100%
+      z-index 1
+
+    // final 'triangle' of the overview
+    &:after
+      content ''
+      background grayLight
+
+      position absolute
+      bottom 0
+      left 0
+      height 8em
+      width 115%
+      z-index 1
+      transform rotate(-3deg) translateX(-2em) translateY(-4em)
+      box-shadow 0 -15px 25px -14px grayDark
+
+    .bg
+      position absolute
+      top 0
+      left 0
+      height 100%
+      width 100%
+      z-index 1
+      opacity .4
+
+      background transparent center center no-repeat
+      background-size cover
+
+    .overview-cont
+      +above('m')
+        display flex
+        justify-content space-between
+
+      padding 2em
+      max-width pageWidthLimit
+      margin auto
+      position relative
+      z-index 2
+
+      .composer
+        font 200 1.3em Roboto, sans-serif
+        margin 0
+        opacity .8
+
+      .title
+        color white
+        font-weight 400
+        margin .1em 0 0
+
+      .other-title
+        font-weight 200
+        opacity .8
+        margin-top .2em
+
+      .work-note
+        opacity .9
+        font-weight 400
+        margin 2em 0 1em
+        p
+          margin 0
+
+    .title-cont
+      flex 60
+      padding-right 1em
+
+    .info-cont
+      flex 30
+      position relative
+      .info-card
+        margin-top 3em
+        background white
+        color black
+        padding 2em
+        min-height 14em
+        z-depth(3)
+
+        label
+          font-weight 400
+          text-transform uppercase
+          color main
+          font-size .8em
+          display block
+          margin 0
+        a
+          color black
+          text-transform capitalize
+          text-decoration underline
+        > div
+          margin-bottom 1em
+          display block
+
 
 .main-text
   width 50%
@@ -77,35 +148,6 @@
   margin 0
   padding-left 20px
   cursor default
-
-.top_info
-  ul
-    li
-      a
-        &, &:hover
-          color seaMedium
-          font-family Roboto, sans-serif
-          font-weight normal
-
-+below(650px)
-  .top_info
-    flex-flow row wrap
-    .main-text
-      font-size 16px
-      width 100%
-    .main-image
-      width 100%
-    .main-text
-      > p
-        font-size 0
-      > h2
-        margin 0
-
-+below(400px)
-  .top_info
-    & .main-text > h2
-      font-size 12px
-
 
 .card-container
   display inline-block
