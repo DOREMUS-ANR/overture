@@ -1,12 +1,11 @@
 import {Component} from '@angular/core';
 
-import {WorkSubDetailService} from '../services/workSubDetail.service';
 import {QueryService} from '../services/queries.service';
 
 @Component({
   selector: 'my-app',
   templateUrl: 'static/components/app.template.html',
-  providers: [WorkSubDetailService, QueryService]
+  providers: [QueryService]
 })
 
 export class AppComponent {
