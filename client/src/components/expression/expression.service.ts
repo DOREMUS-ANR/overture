@@ -35,9 +35,8 @@ export class ExpressionService {
   get(id) {
     if (!id) return Promise.resolve(null);
 
-    let search = `id=selfContainedExpressionDet&uri=<http://data.doremus.org/expression/${id}>&lang=${this.globals.lang}`;
-    // FIXME relative URL
-    return this.http.get("../api/query", new RequestOptions({ search }))
+    let search = `lang=${this.globals.lang}`;
+    return this.http.get(`/api/expression/${id}`, new RequestOptions({ search }))
       .toPromise().then(res => {
         let data = this._processResult(res);
         data = this._mergeData(data);
