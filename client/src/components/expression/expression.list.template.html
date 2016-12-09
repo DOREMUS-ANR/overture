@@ -4,10 +4,7 @@
 <router-outlet></router-outlet>
 
 <div class="main">
-  <div class="loading" *ngIf="(!items || items.length == 0) && querying">
-    <div class="circle normal"></div>
-    <div class="circle transparent"></div>
-  </div>
+  <h1>Expressions</h1>
 
   <div class="error-msg" *ngIf="error">
     <img src="static/img/rest.png"/>
@@ -15,22 +12,18 @@
     <h3>Sorry for this, we are yet working for fixing it.</h3>
   </div>
 
-  <div class="forever-scroll" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="100" (scrolled)="onScroll();">
-    <section class="expressions-list">
-      <div class="infinite-list">
-        <div class="card-container " *ngFor="let expression of items">
-          <md-card [routerLink]=[expression.id] preserveQueryParams>
-            <md-card-header>
-              <img md-card-avatar src="static/img/defPicExpr.png">
-              <md-card-subtitle>{{expression.composer}}</md-card-subtitle>
-            </md-card-header>
-            <img md-card-image alt="Main image" src="static/img/defPicExpr.png">
-            <md-card-content>
-              <h3>{{expression.title}}</h3>
-            </md-card-content>
-          </md-card>
-        </div>
-      </div>
-    </section>
+  <div class="forever-scroll card-list" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="100" (scrolled)="onScroll();">
+    <div class="expression-summary " *ngFor="let expression of items" [routerLink]=[expression.id]>
+      <img md-card-avatar src="static/img/defPicExpr.png">
+      <p class="composer">{{expression.composer}}</p>
+      <h3>{{expression.title}}</h3>
+    </div>
+
+    <div class="loading" *ngIf="querying || scrollInProgress">
+      <div class="circle normal"></div>
+      <div class="circle transparent"></div>
+    </div>
+
   </div>
+
 </div>

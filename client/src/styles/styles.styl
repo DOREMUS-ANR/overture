@@ -13,17 +13,10 @@
 }
 
 h1
-  color main
   font-family Roboto, sans-serif
   font-size 2.5em
 
 h2
-  color mainDark
-  font-family Roboto, sans-serif
-  font-weight lighter
-
-h3
-  color #963
   font-family Roboto, sans-serif
   font-weight lighter
 
@@ -158,8 +151,7 @@ my-app
 .main
   margin 9px auto
   max-width 100%
-  +above(pageWidthLimit)
-    width pageWidthLimit
+  width pageWidthLimit
 
 .btn-primary
   background-color #e7892b
@@ -302,3 +294,34 @@ ng-select
     float: left;
     opacity: .7
     height 15em
+
+.card-list
+  z-depth(2)
+  background #fff
+
+.expression-summary
+  clearfix()
+  padding 1em .5em
+  border-bottom 1px solid grayLight
+  cursor pointer
+  &:hover
+    background #F4F4F4
+  img
+    width 3.5em
+    height 3.5em
+    margin 0 1em
+    object-fit cover
+    object-position center center
+    float left
+  .composer
+    opacity .4
+    margin 0
+    font-weight 400
+    color grayDark
+    margin-bottom .5em
+    min-height .6em
+  h3
+    color grayDark
+    font-size 1em
+    font-weight 400
+    margin 0

@@ -11,7 +11,7 @@ declare var __moduleName: string;
   selector: 'search-comp',
   templateUrl: 'search.template.html',
   styleUrls: ['./search.css'],
-  providers: [QueryService, VocabularyService, Globals]
+  providers: [VocabularyService, Globals]
 })
 export class SearchComponent {
   @Output() onFilterChanged = new EventEmitter();
@@ -23,14 +23,14 @@ export class SearchComponent {
   itemsKey: Object[];
   itemsGenre: Object[];
 
-  constructor(private _queriesService: QueryService, private _vocabularyService: VocabularyService, private globals: Globals, private route: ActivatedRoute) {
+  constructor(private _vocabularyService: VocabularyService, private globals: Globals, private route: ActivatedRoute) {
 
     this._vocabularyService.get('key')
       .then(
       voc => {
         this.itemsKey = voc.map((item) => ({
           id: item.uri.value,
-          label: (item.label || item.labelEn || item.labelAny).value
+          text: (item.label || item.labelEn || item.labelAny).value
         }));
       },
       error => console.error('Error: ' + error)
@@ -41,7 +41,7 @@ export class SearchComponent {
       voc => {
         this.itemsGenre = voc.map((item) => ({
           id: item.uri.value,
-          label: (item.label || item.labelEn || item.labelAny).value
+          text: (item.label || item.labelEn || item.labelAny).value
         }));
       },
       error => console.error('Error: ' + error)
@@ -53,7 +53,7 @@ export class SearchComponent {
   }
 
   onSelectChanged({id}, label) {
-    this.filter[label] = id;
+    this.filter[label] = id || '';
     this.onFilterChanged.emit(this.filter);
   }
 
