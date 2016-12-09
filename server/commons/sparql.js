@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import SparqlClient from 'sparql-client';
+import SparqlClient from 'sparql-client2';
 import {
   EXT_URI
 } from '../config/constants';
