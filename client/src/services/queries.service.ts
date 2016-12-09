@@ -1,4 +1,3 @@
-import { INFORMATION } from '../components/auxExpressions';
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Rx";
 import { Http, RequestOptions } from '@angular/http';

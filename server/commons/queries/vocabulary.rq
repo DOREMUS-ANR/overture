@@ -1,14 +1,22 @@
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT DISTINCT *
+SELECT DISTINCT ?uri ?label ?labelEn SAMPLE(?labelAny) as ?labelAny
 FROM <http://data.doremus.org/vocabulary>
 WHERE {
     {
-     ?uri skos:inScheme <%%uri%%>
+     ?uri skos:inScheme %%uri%%
     } UNION {
-     ?uri skos:topConceptOf <%%uri%%>
+     ?uri skos:topConceptOf %%uri%%
     }
-    ?uri skos:prefLabel ?label
-    FILTER regex(lang(?label), "%%lang%%")
+    OPTIONAL {
+      ?uri skos:prefLabel ?label
+      FILTER regex(lang(?label), "%%lang%%")
+    }
+    OPTIONAL {
+      ?uri skos:prefLabel ?labelEn
+      FILTER regex(lang(?labelEn), "en")
+    }
+    ?uri skos:prefLabel ?labelAny
 }
+GROUP BY ?uri ?label ?labelEn
 ORDER BY ?label

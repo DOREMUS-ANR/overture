@@ -1,26 +1,17 @@
 import {Component, Output, EventEmitter} from '@angular/core';
 import {QueryService} from "../../services/queries.service";
+import {VocabularyService} from './vocabulary.service';
 import {Globals } from '../../app.globals';
 import {ActivatedRoute} from '@angular/router';
 
 declare var __moduleName: string;
-
-export class Vocabulary {
-  id: string;
-  text: string;
-
-  constructor(id, text) {
-    this.id = id;
-    this.text = text;
-  }
-}
 
 @Component({
   moduleId: __moduleName,
   selector: 'search-comp',
   templateUrl: 'search.template.html',
   styleUrls: ['./search.css'],
-  providers: [QueryService, Globals]
+  providers: [QueryService, VocabularyService, Globals]
 })
 export class SearchComponent {
   @Output() onFilterChanged = new EventEmitter();
@@ -29,35 +20,36 @@ export class SearchComponent {
     genre: ''
   };
 
-  itemsKey: Vocabulary[];
-  itemsGenre: Vocabulary[];
+  itemsKey: Object[];
+  itemsGenre: Object[];
 
-  constructor(private _queriesService: QueryService, private globals: Globals, private route: ActivatedRoute) {
+  constructor(private _queriesService: QueryService, private _vocabularyService: VocabularyService, private globals: Globals, private route: ActivatedRoute) {
 
-    this._queriesService.getInformation('vocabulary', 'http://data.doremus.org/vocabulary/key/', globals.lang)
+    this._vocabularyService.get('key')
       .then(
-      queryVoc => this.itemsKey = this.queryBindVoc(queryVoc),
+      voc => {
+        this.itemsKey = voc.map((item) => ({
+          id: item.uri.value,
+          label: (item.label || item.labelEn || item.labelAny).value
+        }));
+      },
       error => console.error('Error: ' + error)
       );
-    this._queriesService.getInformation('vocabulary', 'http://data.doremus.org/vocabulary/genre/', globals.lang)
+
+    this._vocabularyService.get('iaml/genre')
       .then(
-      queryVoc => this.itemsGenre = this.queryBindVoc(queryVoc),
+      voc => {
+        this.itemsGenre = voc.map((item) => ({
+          id: item.uri.value,
+          label: (item.label || item.labelEn || item.labelAny).value
+        }));
+      },
       error => console.error('Error: ' + error)
       );
   }
 
   ngOnInit() {
     Object.assign(this.filter, this.route.queryParams['value'])
-  }
-
-  queryBindVoc(query) {
-    var bindings = query.results.bindings;
-    var results: Vocabulary[] = [];
-    for (let binding of bindings) {
-      var result = new Vocabulary(binding["uri"].value, binding["label"].value);
-      results.push(result);
-    }
-    return results;
   }
 
   onSelectChanged({id}, label) {

@@ -28,7 +28,6 @@ export default class Sparql {
         }
       });
     });
-
   }
 
   loadQuery(queryId, opt = {}) {
@@ -42,6 +41,15 @@ export default class Sparql {
         if (err) {
           return reject(err);
         }
+
+        // find and solve the $if statements
+        let ifRegex = /\$if{(.+)}(.+)\$end/g;
+        query = query.replace(ifRegex, (match, condition, content) => {
+          if (opt[condition]) {
+            return content;
+          }
+          return '';
+        });
 
         // replace params in query
         for (let param in opt) {

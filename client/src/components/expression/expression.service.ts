@@ -19,17 +19,18 @@ export class ExpressionService {
         filterOptions += `&${k}=${filter[k]}`
     });
 
-    let search = 'id=selfContainedExpressions&lim=' + this.limit + filterOptions;
+    let search = 'lim=' + this.limit + filterOptions;
     if (offset) search += '&offset=' + offset;
 
-    return this.http.get("../api/query", new RequestOptions({ search })).toPromise().then(res => {
-      let data = this._processResult(res);
+    return this.http.get("/api/expression", new RequestOptions({ search }))
+      .toPromise().then(res => {
+        let data = this._processResult(res);
 
-      for (let d of data)
-        d.id = /[^/]*$/.exec(d.expression)[0];
+        for (let d of data)
+          d.id = /[^/]*$/.exec(d.expression)[0];
 
-      return data;
-    });
+        return data;
+      });
   }
 
   get(id) {
@@ -53,9 +54,9 @@ export class ExpressionService {
 
         if (!output[prop]) {
           output[prop] = [value];
-        } else if (prop == 'keyURI'){
+        } else if (prop == 'keyURI') {
           //FIXME workaround for key in @en-gb and @en-us
-          if(output['key'].length > output['keyURI'].length)
+          if (output['key'].length > output['keyURI'].length)
             output[prop].push(value)
         } else if (!output[prop].includes(value)) {
           output[prop].push(value)
