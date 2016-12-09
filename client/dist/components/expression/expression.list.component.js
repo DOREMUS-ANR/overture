@@ -1,6 +1,5 @@
-System.register(['@angular/core', '@angular/router', '../../services/sharedService.service', '../../app.globals', './expression.service'], function(exports_1, context_1) {
+System.register(["@angular/core", "@angular/router", "../../services/sharedService.service", "../../app.globals", "./expression.service"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,10 +9,10 @@ System.register(['@angular/core', '@angular/router', '../../services/sharedServi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1, sharedService_service_1, app_globals_1, expression_service_1;
-    var Expression, ExpressionListComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, router_1, sharedService_service_1, app_globals_1, expression_service_1, Expression, ExpressionListComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -28,8 +27,9 @@ System.register(['@angular/core', '@angular/router', '../../services/sharedServi
             },
             function (expression_service_1_1) {
                 expression_service_1 = expression_service_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             Expression = (function () {
                 function Expression(title, key, keyURI, genre, genreURI, opus, note, catalogue, individualWork, complexWork, expCreation, composer, casting, castingNotes) {
                     if (title === void 0) { title = ""; }
@@ -146,26 +146,27 @@ System.register(['@angular/core', '@angular/router', '../../services/sharedServi
                 ExpressionListComponent.prototype.wip = function () {
                     this.router.navigate(['/wip']);
                 };
-                __decorate([
-                    core_1.Input(), 
-                    __metadata('design:type', String)
-                ], ExpressionListComponent.prototype, "expressionURI", void 0);
-                __decorate([
-                    core_1.Output(), 
-                    __metadata('design:type', Array)
-                ], ExpressionListComponent.prototype, "items", void 0);
-                ExpressionListComponent = __decorate([
-                    core_1.Component({
-                        moduleId: __moduleName,
-                        templateUrl: 'expression.list.template.html',
-                        styleUrls: ['expression.css'],
-                        providers: [expression_service_1.ExpressionService]
-                    }), 
-                    __metadata('design:paramtypes', [expression_service_1.ExpressionService, sharedService_service_1.SharedService, router_1.Router, app_globals_1.Globals, router_1.ActivatedRoute])
-                ], ExpressionListComponent);
                 return ExpressionListComponent;
             }());
+            __decorate([
+                core_1.Input(),
+                __metadata("design:type", String)
+            ], ExpressionListComponent.prototype, "expressionURI", void 0);
+            __decorate([
+                core_1.Output(),
+                __metadata("design:type", Array)
+            ], ExpressionListComponent.prototype, "items", void 0);
+            ExpressionListComponent = __decorate([
+                core_1.Component({
+                    moduleId: __moduleName,
+                    templateUrl: 'expression.list.template.html',
+                    styleUrls: ['expression.css'],
+                    providers: [expression_service_1.ExpressionService]
+                }),
+                __metadata("design:paramtypes", [expression_service_1.ExpressionService, sharedService_service_1.SharedService,
+                    router_1.Router, app_globals_1.Globals, router_1.ActivatedRoute])
+            ], ExpressionListComponent);
             exports_1("ExpressionListComponent", ExpressionListComponent);
         }
-    }
+    };
 });

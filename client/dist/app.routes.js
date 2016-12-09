@@ -1,17 +1,17 @@
-System.register(['@angular/router', './app.components.list'], function(exports_1, context_1) {
+System.register(["@angular/router", "./app.components.list"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var router_1, app_components_list_1;
-    var appRoutes, routing;
+    var router_1, app_components_list_1, appRoutes, routing;
     return {
-        setters:[
+        setters: [
             function (router_1_1) {
                 router_1 = router_1_1;
             },
             function (app_components_list_1_1) {
                 app_components_list_1 = app_components_list_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             appRoutes = [
                 {
                     path: '',
@@ -61,5 +61,5 @@ System.register(['@angular/router', './app.components.list'], function(exports_1
             ];
             exports_1("routing", routing = router_1.RouterModule.forRoot(appRoutes));
         }
-    }
+    };
 });

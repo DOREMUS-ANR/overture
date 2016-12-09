@@ -1,6 +1,5 @@
-System.register(['@angular/core', './vocabulary.service', '../../app.globals', '@angular/router'], function(exports_1, context_1) {
+System.register(["@angular/core", "./vocabulary.service", "../../app.globals", "@angular/router"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,10 +9,10 @@ System.register(['@angular/core', './vocabulary.service', '../../app.globals', '
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, vocabulary_service_1, app_globals_1, router_1;
-    var SearchComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, vocabulary_service_1, app_globals_1, router_1, SearchComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -25,8 +24,9 @@ System.register(['@angular/core', './vocabulary.service', '../../app.globals', '
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             SearchComponent = (function () {
                 function SearchComponent(_vocabularyService, globals, route) {
                     var _this = this;
@@ -64,23 +64,23 @@ System.register(['@angular/core', './vocabulary.service', '../../app.globals', '
                 SearchComponent.prototype.changeFilter = function (event) {
                     this.onFilterChanged.emit(this.filter);
                 };
-                __decorate([
-                    core_1.Output(), 
-                    __metadata('design:type', Object)
-                ], SearchComponent.prototype, "onFilterChanged", void 0);
-                SearchComponent = __decorate([
-                    core_1.Component({
-                        moduleId: __moduleName,
-                        selector: 'search-comp',
-                        templateUrl: 'search.template.html',
-                        styleUrls: ['./search.css'],
-                        providers: [vocabulary_service_1.VocabularyService, app_globals_1.Globals]
-                    }), 
-                    __metadata('design:paramtypes', [vocabulary_service_1.VocabularyService, app_globals_1.Globals, router_1.ActivatedRoute])
-                ], SearchComponent);
                 return SearchComponent;
             }());
+            __decorate([
+                core_1.Output(),
+                __metadata("design:type", Object)
+            ], SearchComponent.prototype, "onFilterChanged", void 0);
+            SearchComponent = __decorate([
+                core_1.Component({
+                    moduleId: __moduleName,
+                    selector: 'search-comp',
+                    templateUrl: 'search.template.html',
+                    styleUrls: ['./search.css'],
+                    providers: [vocabulary_service_1.VocabularyService, app_globals_1.Globals]
+                }),
+                __metadata("design:paramtypes", [vocabulary_service_1.VocabularyService, app_globals_1.Globals, router_1.ActivatedRoute])
+            ], SearchComponent);
             exports_1("SearchComponent", SearchComponent);
         }
-    }
+    };
 });

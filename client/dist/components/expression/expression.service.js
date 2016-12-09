@@ -1,6 +1,5 @@
-System.register(['@angular/core', '@angular/http', '../../app.globals', 'rxjs/add/operator/toPromise'], function(exports_1, context_1) {
+System.register(["@angular/core", "@angular/http", "../../app.globals", "rxjs/add/operator/toPromise"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,10 +9,10 @@ System.register(['@angular/core', '@angular/http', '../../app.globals', 'rxjs/ad
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, app_globals_1;
-    var ExpressionService;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, http_1, app_globals_1, ExpressionService;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -23,8 +22,10 @@ System.register(['@angular/core', '@angular/http', '../../app.globals', 'rxjs/ad
             function (app_globals_1_1) {
                 app_globals_1 = app_globals_1_1;
             },
-            function (_1) {}],
-        execute: function() {
+            function (_1) {
+            }
+        ],
+        execute: function () {
             ExpressionService = (function () {
                 function ExpressionService(http, globals) {
                     this.http = http;
@@ -66,7 +67,7 @@ System.register(['@angular/core', '@angular/http', '../../app.globals', 'rxjs/ad
                 };
                 ExpressionService.prototype._mergeData = function (data) {
                     var output = {};
-                    var _loop_1 = function(row) {
+                    var _loop_1 = function (row) {
                         Object.keys(row).forEach(function (prop) {
                             var value = row[prop];
                             if (!output[prop]) {
@@ -97,13 +98,13 @@ System.register(['@angular/core', '@angular/http', '../../app.globals', 'rxjs/ad
                     });
                     return bindings;
                 };
-                ExpressionService = __decorate([
-                    core_1.Injectable(), 
-                    __metadata('design:paramtypes', [http_1.Http, app_globals_1.Globals])
-                ], ExpressionService);
                 return ExpressionService;
             }());
+            ExpressionService = __decorate([
+                core_1.Injectable(),
+                __metadata("design:paramtypes", [http_1.Http, app_globals_1.Globals])
+            ], ExpressionService);
             exports_1("ExpressionService", ExpressionService);
         }
-    }
+    };
 });
