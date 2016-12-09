@@ -39,10 +39,11 @@ System.register(['@angular/core', '@angular/http', '../../app.globals', 'rxjs/ad
                         if (filter[k])
                             filterOptions += "&" + k + "=" + filter[k];
                     });
-                    var search = 'id=selfContainedExpressions&lim=' + this.limit + filterOptions;
+                    var search = 'lim=' + this.limit + filterOptions;
                     if (offset)
                         search += '&offset=' + offset;
-                    return this.http.get("../api/query", new http_1.RequestOptions({ search: search })).toPromise().then(function (res) {
+                    return this.http.get("/api/expression", new http_1.RequestOptions({ search: search }))
+                        .toPromise().then(function (res) {
                         var data = _this._processResult(res);
                         for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
                             var d = data_1[_i];
@@ -55,9 +56,8 @@ System.register(['@angular/core', '@angular/http', '../../app.globals', 'rxjs/ad
                     var _this = this;
                     if (!id)
                         return Promise.resolve(null);
-                    var search = "id=selfContainedExpressionDet&uri=<http://data.doremus.org/expression/" + id + ">&lang=" + this.globals.lang;
-                    // FIXME relative URL
-                    return this.http.get("../api/query", new http_1.RequestOptions({ search: search }))
+                    var search = "lang=" + this.globals.lang;
+                    return this.http.get("/api/expression/" + id, new http_1.RequestOptions({ search: search }))
                         .toPromise().then(function (res) {
                         var data = _this._processResult(res);
                         data = _this._mergeData(data);

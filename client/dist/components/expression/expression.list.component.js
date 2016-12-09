@@ -77,6 +77,7 @@ System.register(['@angular/core', '@angular/router', '../../services/sharedServi
                     this.search = false;
                     this.filter = {};
                     this.querying = false;
+                    this.error = false;
                     this.scrollInProgress = false;
                     this.sharedService = sharedService;
                     this.globals = globals;
@@ -105,7 +106,11 @@ System.register(['@angular/core', '@angular/router', '../../services/sharedServi
                     this._expressionService.query(this.filter).then(function (res) {
                         _this.items = res;
                         _this.querying = false;
-                    }, function (error) { return console.error('Error: ' + error); });
+                    }, function (error) {
+                        console.error('Error: ' + error);
+                        _this.querying = false;
+                        _this.error = true;
+                    });
                 };
                 ExpressionListComponent.prototype.onFilterChanged = function (filter) {
                     if (filter === void 0) { filter = {}; }

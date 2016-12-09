@@ -24,10 +24,6 @@ System.register(['@angular/router', './app.components.list'], function(exports_1
                     component: app_components_list_1.myComponents.QueriesTestComponent
                 },
                 {
-                    path: 'work',
-                    component: app_components_list_1.myComponents.WipComponent,
-                },
-                {
                     path: 'performance',
                     component: app_components_list_1.myComponents.WipComponent
                 },
