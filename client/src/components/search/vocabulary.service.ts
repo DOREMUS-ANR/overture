@@ -15,7 +15,7 @@ export class VocabularyService {
     if (!id) return Promise.resolve(null);
 
     let search = `lang=${this.globals.lang}`;
-    return this.http.get(`/api/vocabulary/${encodeURIComponent(id)}`, new RequestOptions({ search }))
+    return this.http.get(`/api/vocabulary/${id.replace(/\//g, '-')}`, new RequestOptions({ search }))
       .toPromise().then(res => {
         let data = res.json();
         data = data.results && data.results.bindings;

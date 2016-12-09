@@ -15,7 +15,8 @@ export default class ExpressionController {
 
   static get(req, res) {
     sparql.loadQuery('expression.detail', {
-        uri: `<http://data.doremus.org/expression/${req.params.id}>`
+        uri: `<http://data.doremus.org/expression/${req.params.id}>`,
+        lang: req.query.lang || 'en'
       })
       .then(results => res.json(results))
       .catch(err => sendStandardError(res, err));

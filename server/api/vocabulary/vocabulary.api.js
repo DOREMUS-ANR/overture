@@ -6,7 +6,7 @@ export default class VocabularyController {
   static get(req, res) {
 
     sparql.loadQuery('vocabulary', {
-        uri: `<http://data.doremus.org/vocabulary/${req.params.id}/>`,
+        uri: `<http://data.doremus.org/vocabulary/${req.params.id.replace(/-/g, '/')}/>`,
         lang: req.query.lang
       })
       .then(results => res.json(results))
