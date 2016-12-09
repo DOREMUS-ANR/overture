@@ -7,6 +7,7 @@ FROM <http://data.doremus.org/>
 WHERE {
     ?expression a  efrbroo:F22_Self-Contained_Expression ;
             $if{key} mus:U11_has_key <%%key%%>; $end
+            $if{genre} mus:U12_has_genre <%%req.genre%%>; $end
             ecrm:P102_has_title ?title .
     OPTIONAL{
       ?expCreation efrbroo:R17_created ?expression ;
@@ -14,7 +15,7 @@ WHERE {
       ?activity ecrm:P14_carried_out_by ?person .
       ?person ecrm:P1_is_identified_by ?composer .
      }
-    FILTER (str(?title) != "")
+    FILTER (str(?title) != "" $if{title} && regex(str(?title),'%%title%%', 'i') $end )
 }
 GROUP BY (?expression)
 ORDER BY (?expression)
