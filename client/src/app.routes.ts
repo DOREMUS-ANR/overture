@@ -33,7 +33,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'expression',
-    component: myComponents.ExpressionListComponent,
+    component: myComponents.ExpressionComponent,
     children: [
       {
         path: ':id',
@@ -41,8 +41,7 @@ const appRoutes: Routes = [
       },
       {
         path: '',
-        //TODO change
-        component: myComponents.ExpressionDetailComponent
+        component: myComponents.ExpressionListComponent
       }
     ]
   },

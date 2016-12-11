@@ -7,7 +7,8 @@
 
 .expression-detail
   .overview
-    background main
+    @extend .first-content
+    background darken(main, 3)
     color white
     position relative
     overflow hidden
@@ -53,7 +54,7 @@
         display flex
         justify-content space-between
 
-      padding 2em
+      padding 3em 2em
       max-width pageWidthLimit
       margin auto
       position relative

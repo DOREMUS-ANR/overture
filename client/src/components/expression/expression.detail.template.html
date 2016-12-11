@@ -1,3 +1,8 @@
+<div class="bearing" *ngIf="!expression" ></div>
+<error-msg *ngIf="error"></error-msg>
+
+<loading *ngIf="querying"></loading>
+
 <article *ngIf="expression" class="expression-detail">
   <section class="overview">
     <div style="background-image: url(/static/img/bg/generic-score.jpg)" class="bg"></div>

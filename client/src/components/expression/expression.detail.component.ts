@@ -14,6 +14,7 @@ declare var __moduleName: string;
 export class ExpressionDetailComponent {
   sharedService: SharedService;
   expression: any;
+  querying: boolean;
 
   constructor(sharedService: SharedService,
     private expressionService: ExpressionService,
@@ -27,7 +28,12 @@ export class ExpressionDetailComponent {
       let id = params['id'];
 
       if (id) {
-        this.expressionService.get(id).then(exp => { this.expression = exp; console.log(this.expression); });
+        this.querying = true;
+        this.expressionService.get(id).then(exp => {
+          this.expression = exp;
+          console.log(this.expression);
+          this.querying = false;
+         });
         // FIXME discover why this is not propagated to sharedService
         this.sharedService.sharchBarVisible = false;
       }

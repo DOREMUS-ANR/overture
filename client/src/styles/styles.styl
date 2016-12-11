@@ -36,29 +36,40 @@ a
     color lighten(main, 10)
 
 my-app
-  padding-top 60px
   display flex
   flex-flow column nowrap
   min-height 100vh
 
-+below('m')
-  my-app
-    margin-top 42px
-+below('s')
-  my-app
-    margin-top 102px
-
 .header
   width 100%
-  background-color white
-  box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
   padding 0
   margin 0
   z-index 9998
   position fixed
   top 0
   left 0
-  background main
+  background alpha(#000, .15)
+  &:after //line
+    content: ''
+    border-bottom 1px solid #fff
+    display block
+    width 100%
+    height 1px
+
+  > .bg //background
+    box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
+    position absolute
+    z-index 0
+
+    background main
+    top 0
+    left 0
+    width 100%
+    height 100%
+
+  > *
+    position relative
+    z-index 1
   a
     text-transform uppercase
     color #fff
@@ -271,6 +282,7 @@ top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab, wip
 ng-select
   .btn
   input.form-control
+    background transparent
     padding 0 12px
     height: auto;
     line-height: 1.5em;
@@ -325,3 +337,8 @@ ng-select
     font-size 1em
     font-weight 400
     margin 0
+
+.bearing
+  height headerHeight
+  background main
+  width 100%

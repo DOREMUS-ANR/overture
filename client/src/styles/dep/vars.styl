@@ -13,8 +13,17 @@ pageWidthLimit = 1280px
 /* ANIMATIONS */
 materialBezier = cubic-bezier(.55,0,.1,1)
 
+headerHeight = 68px
+
 clearfix()
   &:after
     content ""
     display table
     clear both
+
+.first-content
+  padding-top headerHeight
+  +below('m')
+    padding-top 42px
+  +below('s')
+    padding-top 42px
