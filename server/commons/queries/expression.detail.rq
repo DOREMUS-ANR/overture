@@ -10,7 +10,6 @@ FROM <http://data.doremus.org/vocabulary>
 WHERE {
     %%uri%% a efrbroo:F22_Self-Contained_Expression ;
              ecrm:P102_has_title ?title .
-    FILTER(str(?title)!="")
     OPTIONAL{%%uri%% efrbroo:R45i_was_assigned_by ?assigned .}
 	  OPTIONAL{%%uri%% ecrm:P3_has_note ?note .}
     OPTIONAL {

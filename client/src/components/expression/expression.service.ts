@@ -45,6 +45,18 @@ export class ExpressionService {
       });
   }
 
+  recommend(id) {
+    if (!id) return Promise.resolve(null);
+
+    let search = `lang=${this.globals.lang}`;
+    return this.http.get(`/api/recommendation/${id}`, new RequestOptions({ search }))
+      .toPromise().then(res => {
+        let data = res.json();
+        console.log(data);
+        return data;
+      });
+  }
+
   _mergeData(data) {
     let output = {};
 

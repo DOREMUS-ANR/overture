@@ -7,40 +7,6 @@ import {ExpressionService} from './expression.service';
 
 declare var __moduleName: string;
 
-export class Expression {
-  title: string;
-  key: string;
-  keyURI: string;
-  genre: string;
-  genreURI: string;
-  opus: string;
-  note: string;
-  catalogue: string;
-  individualWork: string;
-  complexWork: string;
-  expCreation: string;
-  composer: string;
-  casting: string;
-  castingNotes: string[];
-
-  constructor(title = "", key = null, keyURI = null, genre = null, genreURI = null, opus = null, note = null, catalogue = null,
-    individualWork = null, complexWork = null, expCreation = null, composer = null, casting = null, castingNotes = []) {
-    this.title = title;
-    this.key = key;
-    this.keyURI = keyURI;
-    this.genre = genre;
-    this.genreURI = genreURI;
-    this.opus = opus;
-    this.note = note;
-    this.catalogue = catalogue;
-    this.individualWork = individualWork;
-    this.complexWork = complexWork;
-    this.expCreation = expCreation;
-    this.composer = composer;
-    this.casting = casting;
-    this.castingNotes = castingNotes;
-  }
-}
 
 @Component({
   moduleId: __moduleName,
@@ -58,7 +24,7 @@ export class ExpressionListComponent {
   class = 'menu-icon icon-plus';
   displayDiscover = 'none';
   classDiscover = 'menu-icon icon-plus';
-  expression: Expression;
+  expression: any;
   search: boolean = false;
   filter = {};
   sharedService: SharedService
@@ -90,7 +56,10 @@ export class ExpressionListComponent {
           this.filter = newFilter;
           this.getList();
         }
-      }, (err) => console.error(err));
+      }, (err) => {
+        this.error = true;
+        console.error(err);
+      });
   }
 
   getList() {

@@ -8,11 +8,7 @@
   <search-comp (onFilterChanged)="onFilterChanged($event)"></search-comp>
 
   <div class="forever-scroll card-list" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="100" (scrolled)="onScroll();">
-    <div class="expression-summary " *ngFor="let expression of items" [routerLink]=[expression.id]>
-      <img md-card-avatar src="static/img/defPicExpr.png">
-      <p class="composer">{{expression.composer}}</p>
-      <h3>{{expression.title}}</h3>
-    </div>
+    <expression-summary *ngFor="let expression of items" [expression]="expression"></expression-summary>
 
     <loading *ngIf="querying || scrollInProgress"></loading>
 

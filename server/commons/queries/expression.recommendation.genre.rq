@@ -1,13 +1,17 @@
+PREFIX mus: <http://data.doremus.org/ontology#>
 PREFIX ecrm: <http://erlangen-crm.org/current/>
 PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
-PREFIX mus: <http://data.doremus.org/ontology#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT ?expression (SAMPLE(?title) AS ?title) (SAMPLE(?composer) AS ?composer)
+SELECT DISTINCT *
 FROM <http://data.doremus.org/>
+FROM <http://data.doremus.org/vocabulary>
+
 WHERE {
+    <%%uri%%> a efrbroo:F22_Self-Contained_Expression ;
+             mus:U12_has_genre ?genre .
     ?expression a  efrbroo:F22_Self-Contained_Expression ;
-            $if{key} mus:U11_has_key <%%key%%>; $end
-            $if{genre} mus:U12_has_genre <%%genre%%>; $end
+            mus:U12_has_genre ?genre;
             ecrm:P102_has_title ?title .
     OPTIONAL{
       ?expCreation efrbroo:R17_created ?expression ;
@@ -15,8 +19,5 @@ WHERE {
       ?activity ecrm:P14_carried_out_by ?person .
       ?person ecrm:P1_is_identified_by ?composer .
      }
-    FILTER (str(?title) != "" $if{title} && regex(str(?title),'%%title%%', 'i') $end )
-}
-GROUP BY (?expression)
-ORDER BY (?expression)
-LIMIT %%lim%%
+    FILTER (str(?title) != "")
+} LIMIT %%limit%%

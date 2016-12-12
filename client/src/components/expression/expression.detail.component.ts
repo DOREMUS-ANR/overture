@@ -14,6 +14,7 @@ declare var __moduleName: string;
 export class ExpressionDetailComponent {
   sharedService: SharedService;
   expression: any;
+  recommendation: [any];
   querying: boolean;
 
   constructor(sharedService: SharedService,
@@ -33,14 +34,19 @@ export class ExpressionDetailComponent {
           this.expression = exp;
           console.log(this.expression);
           this.querying = false;
-         });
+
+          // retrieve recommendations
+          this.expressionService.recommend(id)
+            .then((res) => this.recommendation = res);
+
+        });
         // FIXME discover why this is not propagated to sharedService
         this.sharedService.sharchBarVisible = false;
       }
     });
   }
 
-  isNode(a){
+  isNode(a) {
     return a.startsWith('node');
   }
 

@@ -11,6 +11,7 @@ import {ScoreTabComponent} from './components/score-tab/score-tab.component';
 import {ExpressionComponent} from './components/expression/expression.component';
 import {ExpressionListComponent} from './components/expression/expression.list.component';
 import {ExpressionDetailComponent} from './components/expression/expression.detail.component';
+import {ExpressionSummaryComponent} from './components/expression/expression.summary.component';
 
 import {TopNavComponent} from './components/top-nav/top-nav.component';
 import {SearchComponent} from './components/search/search.component';
@@ -20,7 +21,7 @@ import {WipComponent} from './components/wip/wip.component';
 export const myComponents = {
   HomeComponent, ErrorComponent, LoadingComponent,
   QueriesTestComponent, PerformanceTabComponent, RecordingTabComponent, PersonTabComponent, ScoreTabComponent,
-  ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent,
+  ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, ExpressionSummaryComponent,
   WipComponent, TopNavComponent, SearchComponent
 };
 
