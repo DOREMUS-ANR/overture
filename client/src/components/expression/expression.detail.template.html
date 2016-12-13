@@ -57,12 +57,16 @@
       </div>
     </div>
   </section>
-</article>
 
-<section class="recommendation-cont">
-  <div *ngFor="let group of recommendation">
-    <h3>{{group.label}}</h3>
-    <expression-summary *ngFor="let expr of group.data" [expression]="expr"></expression-summary>
+  <div class="main info">
+    <timeline *ngIf="expression" [dates]="this.dates"></timeline>
 
+    <section class="recommendation-cont">
+      <div *ngFor="let group of recommendation">
+        <h3>{{group.label}}</h3>
+        <expression-summary *ngFor="let expr of group.data" [expression]="expr"></expression-summary>
+
+      </div>
+    </section>
   </div>
-</section>
+</article>

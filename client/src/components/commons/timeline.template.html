@@ -1,0 +1,13 @@
+<ul>
+  <li *ngFor="let d of dates">
+    <time datetime="d.date">{{d.time.start.year()}}</time>
+    <label>{{d.label}}</label>
+
+    <label *ngIf="d.type=='creation'" [ngPlural]="d.agent.length">
+      <ng-container *ngPluralCase="'=0'">there is nothing</ng-container>
+      <ng-container *ngPluralCase="'=1'">there is one</ng-container>
+      <ng-container *ngPluralCase="'few'">there are a few</ng-container>
+      <ng-container *ngPluralCase="'other'">there are exactly #</ng-container>
+    </label>
+  </li>
+</ul>

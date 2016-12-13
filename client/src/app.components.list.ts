@@ -1,6 +1,8 @@
 import {HomeComponent} from './components/home/home.component';
+
 import {ErrorComponent} from './components/commons/error.component';
 import {LoadingComponent} from './components/commons/loading.component';
+import {TimelineComponent} from './components/commons/timeline.component';
 
 import {QueriesTestComponent} from './components/search/queries-test.component';
 import {PerformanceTabComponent} from './components/performance-tab/performance-tab.component';
@@ -19,7 +21,8 @@ import {WipComponent} from './components/wip/wip.component';
 
 
 export const myComponents = {
-  HomeComponent, ErrorComponent, LoadingComponent,
+  HomeComponent,
+  ErrorComponent, LoadingComponent, TimelineComponent,
   QueriesTestComponent, PerformanceTabComponent, RecordingTabComponent, PersonTabComponent, ScoreTabComponent,
   ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, ExpressionSummaryComponent,
   WipComponent, TopNavComponent, SearchComponent

@@ -342,3 +342,54 @@ ng-select
   height headerHeight
   background main
   width 100%
+
+
+timeline
+  ul
+    list-style none
+    position relative
+    padding 0
+    margin 0 1em
+    &:before //vertical line
+      content ''
+      display block
+      position absolute
+
+      top 0
+      left 5.3em
+
+      width 2px
+      height 100%
+      background alpha(grayDark, .4)
+    li
+      margin-bottom 3em
+    time
+      display inline-block
+      vertical-align middle
+      line-height 1.3em
+      color alpha(grayDark, .4)
+      font-weight bold
+      font-size 1.4em
+      width 5em
+      text-align right
+      &:after // circle
+        content ''
+        display inline-block
+        vertical-align text-top
+        margin 0 .5em
+
+        width 1.3em
+        height 1.3em
+
+        border-radius 50%
+        border 2px solid main
+        background grayLight
+
+        position relative
+        z-index 3
+
+    label
+      display inline-block
+      vertical-align middle
+      margin 0
+      font-weight 400

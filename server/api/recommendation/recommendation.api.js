@@ -23,6 +23,10 @@ function packResults(res, label) {
     });
   });
 
+  for (let d of data) {
+    d.id = /[^/]*$/.exec(d.expression)[0];
+  }
+
   return {
     data,
     label

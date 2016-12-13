@@ -3,7 +3,7 @@ PREFIX ecrm: <http://erlangen-crm.org/current/>
 PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT DISTINCT *
+SELECT ?expression, SAMPLE(?title) AS ?title, SAMPLE (?composer) AS ?composer
 FROM <http://data.doremus.org/>
 FROM <http://data.doremus.org/vocabulary>
 
@@ -20,4 +20,6 @@ WHERE {
       ?person ecrm:P1_is_identified_by ?composer .
      }
     FILTER (str(?title) != "")
-} LIMIT %%limit%%
+}
+GROUP BY ?expression
+LIMIT %%limit%%

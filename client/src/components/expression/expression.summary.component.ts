@@ -10,8 +10,4 @@ declare var __moduleName: string;
 
 export class ExpressionSummaryComponent {
   @Input() expression: {};
-
-  ngOnInit (){
-    console.log(this.expression)
-  }
 }

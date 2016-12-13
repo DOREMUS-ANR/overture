@@ -55,8 +55,16 @@ WHERE {
     OPTIONAL{%%uri%% ecrm:P1_is_identified_by ?identified .}
     OPTIONAL{?complexWork efrbroo:R40_has_representative_expression %%uri%% .}
     OPTIONAL{?individualWork efrbroo:R9_is_realised_in %%uri%% .}
-    OPTIONAL{?expCreation efrbroo:R17_created %%uri%% ;
-             ecrm:P9_consists_of ?activity .
-             ?activity ecrm:P14_carried_out_by ?person .
-             ?person ecrm:P1_is_identified_by ?composer .}
+    OPTIONAL{
+      ?expCreation efrbroo:R17_created %%uri%% .
+      OPTIONAL {
+        ?expCreation ecrm:P9_consists_of ?activity .
+        ?activity ecrm:P14_carried_out_by ?person .
+        ?person ecrm:P1_is_identified_by ?composer .
+      }
+      OPTIONAL {
+        ?expCreation ecrm:P4_has_time-span ?creationTimeSpan.
+        ?creationTimeSpan ecrm:P82_at_some_time_within ?creationTime.
+      }
+    }
 }

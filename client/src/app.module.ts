@@ -4,6 +4,7 @@ import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 import { MaterialModule } from '@angular/material';
+import { MomentModule } from 'angular2-moment';
 
 import { SelectModule } from 'ng2-select';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
@@ -18,7 +19,7 @@ import { Globals } from './app.globals';
 
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpModule, routing, MaterialModule.forRoot(), InfiniteScrollModule, SelectModule],
+  imports: [BrowserModule, FormsModule, HttpModule, routing, MaterialModule.forRoot(), MomentModule, InfiniteScrollModule, SelectModule],
   declarations: [...myComponentsList, AppComponent],
   bootstrap: [AppComponent],
   providers: [SharedService, Globals]
