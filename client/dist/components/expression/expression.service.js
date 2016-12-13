@@ -65,6 +65,17 @@ System.register(["@angular/core", "@angular/http", "../../app.globals", "rxjs/ad
                         return data[0];
                     });
                 };
+                ExpressionService.prototype.recommend = function (id) {
+                    if (!id)
+                        return Promise.resolve(null);
+                    var search = "lang=" + this.globals.lang;
+                    return this.http.get("/api/recommendation/" + id, new http_1.RequestOptions({ search: search }))
+                        .toPromise().then(function (res) {
+                        var data = res.json();
+                        console.log(data);
+                        return data;
+                    });
+                };
                 ExpressionService.prototype._mergeData = function (data) {
                     var output = {};
                     var _loop_1 = function (row) {

@@ -10,7 +10,7 @@ System.register(["@angular/core", "@angular/router", "../../services/sharedServi
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, router_1, sharedService_service_1, app_globals_1, expression_service_1, Expression, ExpressionListComponent;
+    var core_1, router_1, sharedService_service_1, app_globals_1, expression_service_1, ExpressionListComponent;
     return {
         setters: [
             function (core_1_1) {
@@ -30,40 +30,6 @@ System.register(["@angular/core", "@angular/router", "../../services/sharedServi
             }
         ],
         execute: function () {
-            Expression = (function () {
-                function Expression(title, key, keyURI, genre, genreURI, opus, note, catalogue, individualWork, complexWork, expCreation, composer, casting, castingNotes) {
-                    if (title === void 0) { title = ""; }
-                    if (key === void 0) { key = null; }
-                    if (keyURI === void 0) { keyURI = null; }
-                    if (genre === void 0) { genre = null; }
-                    if (genreURI === void 0) { genreURI = null; }
-                    if (opus === void 0) { opus = null; }
-                    if (note === void 0) { note = null; }
-                    if (catalogue === void 0) { catalogue = null; }
-                    if (individualWork === void 0) { individualWork = null; }
-                    if (complexWork === void 0) { complexWork = null; }
-                    if (expCreation === void 0) { expCreation = null; }
-                    if (composer === void 0) { composer = null; }
-                    if (casting === void 0) { casting = null; }
-                    if (castingNotes === void 0) { castingNotes = []; }
-                    this.title = title;
-                    this.key = key;
-                    this.keyURI = keyURI;
-                    this.genre = genre;
-                    this.genreURI = genreURI;
-                    this.opus = opus;
-                    this.note = note;
-                    this.catalogue = catalogue;
-                    this.individualWork = individualWork;
-                    this.complexWork = complexWork;
-                    this.expCreation = expCreation;
-                    this.composer = composer;
-                    this.casting = casting;
-                    this.castingNotes = castingNotes;
-                }
-                return Expression;
-            }());
-            exports_1("Expression", Expression);
             ExpressionListComponent = (function () {
                 function ExpressionListComponent(_expressionService, sharedService, router, globals, route) {
                     this._expressionService = _expressionService;
@@ -96,7 +62,10 @@ System.register(["@angular/core", "@angular/router", "../../services/sharedServi
                             _this.filter = newFilter;
                             _this.getList();
                         }
-                    }, function (err) { return console.error(err); });
+                    }, function (err) {
+                        _this.error = true;
+                        console.error(err);
+                    });
                 };
                 ExpressionListComponent.prototype.getList = function () {
                     var _this = this;

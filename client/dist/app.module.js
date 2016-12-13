@@ -1,4 +1,4 @@
-System.register(["@angular/core", "@angular/platform-browser", "@angular/forms", "@angular/http", "@angular/material", "ng2-select", "angular2-infinite-scroll", "./components/app.component", "./app.components.list", "./services/sharedService.service", "./app.routes", "./app.globals"], function (exports_1, context_1) {
+System.register(["@angular/core", "@angular/platform-browser", "@angular/forms", "@angular/http", "@angular/material", "angular2-moment", "ng2-select", "angular2-infinite-scroll", "./components/app.component", "./app.components.list", "./services/sharedService.service", "./app.routes", "./app.globals"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/forms",
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, platform_browser_1, forms_1, http_1, material_1, ng2_select_1, angular2_infinite_scroll_1, app_component_1, app_components_list_1, sharedService_service_1, app_routes_1, app_globals_1, AppModule;
+    var core_1, platform_browser_1, forms_1, http_1, material_1, angular2_moment_1, ng2_select_1, angular2_infinite_scroll_1, app_component_1, app_components_list_1, sharedService_service_1, app_routes_1, app_globals_1, AppModule;
     return {
         setters: [
             function (core_1_1) {
@@ -27,6 +27,9 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/forms",
             },
             function (material_1_1) {
                 material_1 = material_1_1;
+            },
+            function (angular2_moment_1_1) {
+                angular2_moment_1 = angular2_moment_1_1;
             },
             function (ng2_select_1_1) {
                 ng2_select_1 = ng2_select_1_1;
@@ -58,7 +61,7 @@ System.register(["@angular/core", "@angular/platform-browser", "@angular/forms",
             }());
             AppModule = __decorate([
                 core_1.NgModule({
-                    imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routes_1.routing, material_1.MaterialModule.forRoot(), angular2_infinite_scroll_1.InfiniteScrollModule, ng2_select_1.SelectModule],
+                    imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routes_1.routing, material_1.MaterialModule.forRoot(), angular2_moment_1.MomentModule, angular2_infinite_scroll_1.InfiniteScrollModule, ng2_select_1.SelectModule],
                     declarations: app_components_list_1.myComponentsList.concat([app_component_1.AppComponent]),
                     bootstrap: [app_component_1.AppComponent],
                     providers: [sharedService_service_1.SharedService, app_globals_1.Globals]

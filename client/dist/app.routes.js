@@ -41,7 +41,7 @@ System.register(["@angular/router", "./app.components.list"], function (exports_
                 },
                 {
                     path: 'expression',
-                    component: app_components_list_1.myComponents.ExpressionListComponent,
+                    component: app_components_list_1.myComponents.ExpressionComponent,
                     children: [
                         {
                             path: ':id',
@@ -49,8 +49,7 @@ System.register(["@angular/router", "./app.components.list"], function (exports_
                         },
                         {
                             path: '',
-                            //TODO change
-                            component: app_components_list_1.myComponents.ExpressionDetailComponent
+                            component: app_components_list_1.myComponents.ExpressionListComponent
                         }
                     ]
                 },

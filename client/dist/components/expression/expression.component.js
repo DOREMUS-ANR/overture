@@ -10,7 +10,7 @@ System.register(["@angular/core"], function (exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, headerOpacityThreshold, AppComponent;
+    var core_1, ExpressionComponent;
     return {
         setters: [
             function (core_1_1) {
@@ -18,32 +18,20 @@ System.register(["@angular/core"], function (exports_1, context_1) {
             }
         ],
         execute: function () {
-            headerOpacityThreshold = 300;
-            AppComponent = (function () {
-                function AppComponent() {
-                    this.showSearch = false;
-                    this.headerOpacity = 0;
+            ExpressionComponent = (function () {
+                function ExpressionComponent() {
                 }
-                AppComponent.prototype.ngOnInit = function () {
-                };
-                AppComponent.prototype.updateHeaderOpacity = function (evt) {
-                    var currPos = (window.pageYOffset || evt.target.scrollTop) - (evt.target.clientTop || 0);
-                    var headerOpacity = isNaN(currPos) ? 0 : currPos / headerOpacityThreshold;
-                    this.headerOpacity = headerOpacity > 1 ? 1 : headerOpacity;
-                };
-                return AppComponent;
+                return ExpressionComponent;
             }());
-            AppComponent = __decorate([
+            ExpressionComponent = __decorate([
                 core_1.Component({
-                    selector: 'my-app',
-                    templateUrl: 'static/components/app.template.html',
-                    host: {
-                        '(window:scroll)': 'updateHeaderOpacity($event)'
-                    }
+                    moduleId: __moduleName,
+                    template: '<router-outlet></router-outlet>',
+                    styleUrls: ['expression.css'],
                 }),
                 __metadata("design:paramtypes", [])
-            ], AppComponent);
-            exports_1("AppComponent", AppComponent);
+            ], ExpressionComponent);
+            exports_1("ExpressionComponent", ExpressionComponent);
         }
     };
 });

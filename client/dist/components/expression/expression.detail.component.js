@@ -10,7 +10,7 @@ System.register(["@angular/core", "./expression.service", "../../services/shared
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, expression_service_1, sharedService_service_1, router_1, ExpressionDetailComponent;
+    var core_1, expression_service_1, sharedService_service_1, router_1, frenchDateRegex, ExpressionDetailComponent;
     return {
         setters: [
             function (core_1_1) {
@@ -27,6 +27,7 @@ System.register(["@angular/core", "./expression.service", "../../services/shared
             }
         ],
         execute: function () {
+            frenchDateRegex = /(1er|[\d]{1,2}) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d{4})/;
             ExpressionDetailComponent = (function () {
                 function ExpressionDetailComponent(sharedService, expressionService, route) {
                     this.expressionService = expressionService;
@@ -38,7 +39,40 @@ System.register(["@angular/core", "./expression.service", "../../services/shared
                     this.route.params.forEach(function (params) {
                         var id = params['id'];
                         if (id) {
-                            _this.expressionService.get(id).then(function (exp) { _this.expression = exp; console.log(_this.expression); });
+                            _this.querying = true;
+                            _this.expressionService.get(id).then(function (exp) {
+                                _this.expression = exp;
+                                console.log(_this.expression);
+                                _this.querying = false;
+                                // prepare dates for timeline
+                                _this.dates = [];
+                                if (_this.expression.creationTime) {
+                                    _this.dates.push({
+                                        type: 'creation',
+                                        agent: _this.expression.composer,
+                                        date: _this.expression.creationTime[0]
+                                    });
+                                }
+                                if (_this.expression.premiere) {
+                                    _this.dates.push({
+                                        type: 'premiere',
+                                        description: _this.expression.premiereNote,
+                                        date: frenchDateRegex.exec(_this.expression.premiereNote)[0]
+                                    });
+                                }
+                                if (_this.expression.publicationEvent) {
+                                    var note = _this.expression.publicationEventNote[0];
+                                    var yearRegex = /d{4}/;
+                                    _this.dates.push({
+                                        type: 'publication',
+                                        description: note,
+                                        date: yearRegex.exec(note.substring(note.length - 4))
+                                    });
+                                }
+                            });
+                            // retrieve recommendations
+                            _this.expressionService.recommend(id)
+                                .then(function (res) { return _this.recommendation = res; });
                             // FIXME discover why this is not propagated to sharedService
                             _this.sharedService.sharchBarVisible = false;
                         }
