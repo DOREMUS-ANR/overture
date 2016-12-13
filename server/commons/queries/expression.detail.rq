@@ -26,8 +26,12 @@ WHERE {
     OPTIONAL{%%uri%% efrbroo:R17i_was_created_by ?created .}
     OPTIONAL{
             %%uri%% mus:U12_has_genre ?genreURI .
-            ?genreURI skos:prefLabel ?genre .
-            FILTER regex(lang(?genre), "%%lang%%")
+            {
+              ?genreURI skos:prefLabel ?genre .
+              FILTER regex(lang(?genre), "%%lang%%")
+            } UNION {
+              ?genreURI ecrm:P1_is_identified_by ?genre .
+            }
     }
     OPTIONAL{%%uri%% mus:U12_has_genre ?genreN .
              ?genreN ecrm:P1_is_identified_by ?genreID .}
@@ -54,7 +58,17 @@ WHERE {
     OPTIONAL{%%uri%% ecrm:P165i_is_incorporated_in ?incorporated .}
     OPTIONAL{%%uri%% ecrm:P1_is_identified_by ?identified .}
     OPTIONAL{?complexWork efrbroo:R40_has_representative_expression %%uri%% .}
-    OPTIONAL{?individualWork efrbroo:R9_is_realised_in %%uri%% .}
+    OPTIONAL{
+      ?individualWork efrbroo:R9_is_realised_in %%uri%% .
+      OPTIONAL{
+        ?individualWork  mus:U4_had_princeps_publication ?publicationEvent .
+        ?publicationEvent ecrm:P3_has_note ?publicationEventNote.
+      }
+      OPTIONAL{
+        ?individualWork mus:U5_had_premiere ?premiere .
+        ?premiere ecrm:P3_has_note ?premiereNote.
+      }
+    }
     OPTIONAL{
       ?expCreation efrbroo:R17_created %%uri%% .
       OPTIONAL {
@@ -64,7 +78,11 @@ WHERE {
       }
       OPTIONAL {
         ?expCreation ecrm:P4_has_time-span ?creationTimeSpan.
-        ?creationTimeSpan ecrm:P82_at_some_time_within ?creationTime.
+        {
+          ?creationTimeSpan ecrm:P82_at_some_time_within ?creationTime
+        } UNION {
+          ?creationTimeSpan ecrm:P81_ongoing_throughout ?creationTime
+        }
       }
     }
 }

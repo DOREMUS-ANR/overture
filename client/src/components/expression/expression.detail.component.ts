@@ -5,6 +5,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 declare var __moduleName: string;
 
+const frenchDateRegex = /(1er|[\d]{1,2}) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d{4})/;
+
 @Component({
   moduleId: __moduleName,
   templateUrl: 'expression.detail.template.html',
@@ -16,7 +18,7 @@ export class ExpressionDetailComponent {
   expression: any;
   recommendation: [any];
   querying: boolean;
-  dates: [any];
+  dates: any[];
 
   constructor(sharedService: SharedService,
     private expressionService: ExpressionService,
@@ -36,16 +38,30 @@ export class ExpressionDetailComponent {
           console.log(this.expression);
           this.querying = false;
 
+          // prepare dates for timeline
+          this.dates = [];
           if (this.expression.creationTime) {
-            // prepare dates for timeline
-            this.dates = [{
+            this.dates.push({
               type: 'creation',
               agent: this.expression.composer,
               date: this.expression.creationTime[0]
-            }, {
-                type: 'composition',
-                date: this.expression.creationTime[0]
-              }]
+            });
+          }
+          if (this.expression.premiere) {
+            this.dates.push({
+              type: 'premiere',
+              description: this.expression.premiereNote,
+              date: frenchDateRegex.exec(this.expression.premiereNote)[0]
+            });
+          }
+          if (this.expression.publicationEvent) {
+            let note = this.expression.publicationEventNote[0];
+            let yearRegex = /d{4}/
+            this.dates.push({
+              type: 'publication',
+              description: note,
+              date: yearRegex.exec(note.substring(note.length - 4))
+            });
           }
         });
         // retrieve recommendations

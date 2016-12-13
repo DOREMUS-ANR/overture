@@ -4,7 +4,28 @@ const moment = moment_["default"];
 
 declare var __moduleName: string;
 
+const months = [
+  { fr: 'janvier', en: 'january' },
+  { fr: 'février', en: 'february' },
+  { fr: 'mars', en: 'march' },
+  { fr: 'avril', en: 'april' },
+  { fr: 'mai', en: 'may' },
+  { fr: 'juin', en: 'june' },
+  { fr: 'juillet', en: 'july' },
+  { fr: 'août', en: 'august' },
+  { fr: 'septembre', en: 'september' },
+  { fr: 'octobre', en: 'october' },
+  { fr: 'novembre', en: 'november' },
+  { fr: 'décembre', en: 'december' }
+];
+
 function toTimeSpan(str: String) {
+  if (!str) return null;
+
+  for (let m of months) {
+    str = str.replace(m.fr, m.en);
+  }
+
   let [start, end] = str.split('/');
   return {
     start: moment(start),
@@ -20,12 +41,18 @@ function toTimeSpan(str: String) {
 export class TimelineComponent {
   @Input() dates: [any];
 
-  ngOnInit() {
+  ngOnChanges() {
     if (!this.dates) return;
+
     this.dates.forEach((d) => {
       d.time = toTimeSpan(d.date);
-      if(!d.agent) d.agent = [];
+      if (!d.agent) d.agent = [];
     });
-    console.log(this.dates)
+
+    this.dates.sort((a, b) => {
+      if (!a.time) return 1;
+      if (!b.time) return -1;
+      return a.time.start - b.time.start;
+    });
   }
 }

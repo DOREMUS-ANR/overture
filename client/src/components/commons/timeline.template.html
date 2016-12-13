@@ -1,13 +1,25 @@
 <ul>
   <li *ngFor="let d of dates">
-    <time datetime="d.date">{{d.time.start.year()}}</time>
-    <label>{{d.label}}</label>
+    <time datetime="d.date">{{(d.time && d.time.start.year()) || '?'}}</time>
 
-    <label *ngIf="d.type=='creation'" [ngPlural]="d.agent.length">
-      <ng-container *ngPluralCase="'=0'">there is nothing</ng-container>
-      <ng-container *ngPluralCase="'=1'">there is one</ng-container>
-      <ng-container *ngPluralCase="'few'">there are a few</ng-container>
-      <ng-container *ngPluralCase="'other'">there are exactly #</ng-container>
+    <label *ngIf="d.type=='creation'">
+      <!--  TODO replace with ngPlural when bug fixed https://github.com/angular/angular/issues/12363 -->
+      <ng-container *ngIf="d.agent.length == 0">The work is created</ng-container>
+      <ng-container *ngIf="d.agent.length == 1">{{d.agent[0]}}
+        composes the work</ng-container>
+      <ng-container *ngIf="d.agent.length > 1">{{d.agent.join(', ')}}
+        compose the work</ng-container>
     </label>
+
+    <label *ngIf="d.type=='premiere'">
+      Premiere
+      <small>{{d.description}}</small>
+    </label>
+
+    <label *ngIf="d.type=='publication'">
+      1st Publication
+      <small>{{d.description}}</small>
+    </label>
+
   </li>
 </ul>

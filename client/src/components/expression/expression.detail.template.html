@@ -59,7 +59,7 @@
   </section>
 
   <div class="main info">
-    <timeline *ngIf="expression" [dates]="this.dates"></timeline>
+    <timeline *ngIf="dates && dates.length > 0" [dates]="this.dates"></timeline>
 
     <section class="recommendation-cont">
       <div *ngFor="let group of recommendation">
