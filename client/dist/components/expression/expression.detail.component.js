@@ -54,10 +54,11 @@ System.register(["@angular/core", "./expression.service", "../../services/shared
                                     });
                                 }
                                 if (_this.expression.premiere) {
+                                    var pNoteParse = frenchDateRegex.exec(_this.expression.premiereNote);
                                     _this.dates.push({
                                         type: 'premiere',
                                         description: _this.expression.premiereNote,
-                                        date: frenchDateRegex.exec(_this.expression.premiereNote)[0]
+                                        date: pNoteParse && pNoteParse[0]
                                     });
                                 }
                                 if (_this.expression.publicationEvent) {

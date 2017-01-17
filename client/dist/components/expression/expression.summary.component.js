@@ -32,8 +32,7 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                     moduleId: __moduleName,
                     selector: 'expression-summary',
                     templateUrl: 'expression.summary.template.html'
-                }),
-                __metadata("design:paramtypes", [])
+                })
             ], ExpressionSummaryComponent);
             exports_1("ExpressionSummaryComponent", ExpressionSummaryComponent);
         }

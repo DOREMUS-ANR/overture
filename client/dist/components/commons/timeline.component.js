@@ -79,8 +79,7 @@ System.register(["@angular/core", "moment"], function (exports_1, context_1) {
                     moduleId: __moduleName,
                     templateUrl: 'timeline.template.html',
                     selector: 'timeline'
-                }),
-                __metadata("design:paramtypes", [])
+                })
             ], TimelineComponent);
             exports_1("TimelineComponent", TimelineComponent);
         }
