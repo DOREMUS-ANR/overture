@@ -4,9 +4,6 @@ PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT DISTINCT *
-FROM <http://data.doremus.org/>
-FROM <http://data.doremus.org/vocabulary>
-
 WHERE {
     %%uri%% a efrbroo:F22_Self-Contained_Expression ;
              ecrm:P102_has_title ?title .
@@ -74,7 +71,7 @@ WHERE {
       OPTIONAL {
         ?expCreation ecrm:P9_consists_of ?activity .
         ?activity ecrm:P14_carried_out_by ?person .
-        ?person ecrm:P1_is_identified_by ?composer .
+        ?person ecrm:P131_is_identified_by ?composer .
       }
       OPTIONAL {
         ?expCreation ecrm:P4_has_time-span ?creationTimeSpan.

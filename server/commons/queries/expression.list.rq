@@ -3,7 +3,6 @@ PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX mus: <http://data.doremus.org/ontology#>
 
 SELECT ?expression (SAMPLE(?title) AS ?title) (SAMPLE(?composer) AS ?composer)
-FROM <http://data.doremus.org/>
 WHERE {
     ?expression a  efrbroo:F22_Self-Contained_Expression ;
             $if{key} mus:U11_has_key <%%key%%>; $end
@@ -13,7 +12,7 @@ WHERE {
       ?expCreation efrbroo:R17_created ?expression ;
                   ecrm:P9_consists_of ?activity .
       ?activity ecrm:P14_carried_out_by ?person .
-      ?person ecrm:P1_is_identified_by ?composer .
+      ?person ecrm:P131_is_identified_by ?composer .
      }
     FILTER (str(?title) != "" $if{title} && regex(str(?title),'%%title%%', 'i') $end )
 }

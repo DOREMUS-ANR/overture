@@ -11,7 +11,7 @@
         <p class="composer" *ngIf="expression.composer">{{expression.composer}}</p>
         <h1 class="title" *ngIf="expression.title">{{expression.title[0]}}</h1>
         <p class="other-title">
-          {{expression.title.slice(1)}}
+          {{expression.title.slice(1).join(' | ')}}
         </p>
 
         <div class="work-note">

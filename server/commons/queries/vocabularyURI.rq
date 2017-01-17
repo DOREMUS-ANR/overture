@@ -1,7 +1,6 @@
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT DISTINCT *
-FROM <http://data.doremus.org/vocabulary>
 WHERE {
     %%uri%% skos:prefLabel ?name .
     FILTER (lang(?name) = "%%lang%%")

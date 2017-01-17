@@ -1,7 +1,6 @@
 PREFIX mus: <http://data.doremus.org/ontology#>
 PREFIX cidoc: <http://www.cidoc-crm.org/cidoc-crm/>
 SELECT DISTINCT(?expressions)
-FROM <http://data.doremus.org/>
 WHERE {
     ?expressions mus:U11_has_key %%uriKey%% ;
                  mus:U12_has_genre %%uriGenre%% .
