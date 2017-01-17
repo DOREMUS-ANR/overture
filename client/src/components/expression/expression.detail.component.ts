@@ -48,10 +48,11 @@ export class ExpressionDetailComponent {
             });
           }
           if (this.expression.premiere) {
+            let pNoteParse =   frenchDateRegex.exec(this.expression.premiereNote);
             this.dates.push({
               type: 'premiere',
               description: this.expression.premiereNote,
-              date: frenchDateRegex.exec(this.expression.premiereNote)[0]
+              date: pNoteParse && pNoteParse[0]
             });
           }
           if (this.expression.publicationEvent) {
