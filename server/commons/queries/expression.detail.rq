@@ -6,7 +6,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 SELECT DISTINCT *
 WHERE {
     %%uri%% a efrbroo:F22_Self-Contained_Expression ;
-             ecrm:P102_has_title ?title .
+             mus:U70_has_title ?title .
     OPTIONAL{%%uri%% efrbroo:R45i_was_assigned_by ?assigned .}
 	  OPTIONAL{%%uri%% ecrm:P3_has_note ?note .}
     OPTIONAL {

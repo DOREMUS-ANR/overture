@@ -12,7 +12,7 @@ WHERE {
             ecrm:P102_has_title ?title .
     OPTIONAL{
       ?expCreation efrbroo:R17_created ?expression ;
-                  ecrm:P9_consists_of ?activity .
+                  mus:U70_has_title ?activity .
       ?activity ecrm:P14_carried_out_by ?person .
       ?person ecrm:P131_is_identified_by ?composer .
      }

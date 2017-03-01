@@ -7,7 +7,7 @@ WHERE {
     ?expression a  efrbroo:F22_Self-Contained_Expression ;
             $if{key} mus:U11_has_key <%%key%%>; $end
             $if{genre} mus:U12_has_genre <%%genre%%>; $end
-            ecrm:P102_has_title ?title .
+            mus:U70_has_title ?title .
     OPTIONAL{
       ?expCreation efrbroo:R17_created ?expression ;
                   ecrm:P9_consists_of ?activity .
