@@ -1,11 +1,9 @@
 import {Component, Input} from '@angular/core';
 
-declare var __moduleName: string;
-
 @Component({
-  moduleId: __moduleName,
+  moduleId: module.id,
   selector: 'expression-summary',
-  templateUrl: 'expression.summary.template.html'
+  templateUrl: './expression.summary.template.html'
 })
 
 export class ExpressionSummaryComponent {

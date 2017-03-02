@@ -1,16 +1,15 @@
 {
   "compilerOptions": {
-    "module": "system",
+    "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": false
+    "lib": [ "es2015", "dom" ],
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true
   },
-  "exclude": [
-    "node_modules"
-  ],
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false

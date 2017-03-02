@@ -1,7 +1,9 @@
 <div class="searchbox">
   <form class="main">
     <div class="field">
-      <md-input placeholder="Title" [(ngModel)]="filter.title" name="title" (ngModelChange)="changeFilter($event)"></md-input>
+      <md-input-container>
+        <input mdInput placeholder="Title" [(ngModel)]="filter.title" name="title" (ngModelChange)="changeFilter($event)" />
+      </md-input-container>
     </div>
     <div class="field">
       <label>Key</label>

@@ -3,8 +3,6 @@ import {Router} from '@angular/router';
 import {QueryService} from "../../services/queries.service";
 import {Globals } from '../../app.globals';
 
-declare var __moduleName: string;
-
 export class resultQ {
   value: string;
   type: string;
@@ -24,9 +22,9 @@ export class Vocabulary {
 }
 
 @Component({
-  moduleId: __moduleName,
+  moduleId: module.id,
   selector: 'queries-test',
-  templateUrl: 'queries-test.template.html',
+  templateUrl: './queries-test.template.html',
   providers: [QueryService, Globals]
 })
 

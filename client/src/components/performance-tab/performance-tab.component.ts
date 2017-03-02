@@ -1,12 +1,10 @@
 import {Component} from '@angular/core';
 
-declare var __moduleName: string;
-
 @Component({
-  moduleId: __moduleName,
+  moduleId: module.id,
   selector: 'performance-tab',
-  templateUrl: 'performance-tab.template.html',
-  styleUrls: ['performance-tab.css']
+  templateUrl: './performance-tab.template.html',
+  styleUrls: ['./performance-tab.css']
 })
 
-export class PerformanceTabComponent {}
+export class PerformanceTabComponent { }

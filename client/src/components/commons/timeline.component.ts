@@ -2,8 +2,6 @@ import {Component, Input} from '@angular/core';
 import * as moment_ from 'moment';
 const moment = moment_["default"];
 
-declare var __moduleName: string;
-
 const months = [
   { fr: 'janvier', en: 'january' },
   { fr: 'février', en: 'february' },
@@ -34,8 +32,8 @@ function toTimeSpan(str: String) {
 }
 
 @Component({
-  moduleId: __moduleName,
-  templateUrl: 'timeline.template.html',
+  moduleId: module.id,
+  templateUrl: './timeline.template.html',
   selector: 'timeline'
 })
 export class TimelineComponent {

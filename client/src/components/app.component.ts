@@ -1,15 +1,14 @@
-import {Component} from '@angular/core';
-
+import { Component } from '@angular/core';
 const headerOpacityThreshold = 300;
 
 @Component({
+  moduleId: module.id,
   selector: 'my-app',
-  templateUrl: 'static/components/app.template.html',
+  templateUrl: './app.template.html',
   host: {
     '(window:scroll)': 'updateHeaderOpacity($event)'
   }
 })
-
 export class AppComponent {
   showSearch: boolean = false
   headerOpacity: number = 0

@@ -4,12 +4,10 @@ import {VocabularyService} from './vocabulary.service';
 import {Globals } from '../../app.globals';
 import {ActivatedRoute} from '@angular/router';
 
-declare var __moduleName: string;
-
 @Component({
-  moduleId: __moduleName,
+  moduleId: module.id,
   selector: 'search-comp',
-  templateUrl: 'search.template.html',
+  templateUrl: './search.template.html',
   styleUrls: ['./search.css'],
   providers: [VocabularyService, Globals]
 })

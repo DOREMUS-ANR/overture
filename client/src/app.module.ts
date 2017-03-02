@@ -19,7 +19,7 @@ import { Globals } from './app.globals';
 
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpModule, routing, MaterialModule.forRoot(), MomentModule, InfiniteScrollModule, SelectModule],
+  imports: [BrowserModule, FormsModule, HttpModule, routing, MaterialModule, MomentModule, InfiniteScrollModule, SelectModule],
   declarations: [...myComponentsList, AppComponent],
   bootstrap: [AppComponent],
   providers: [SharedService, Globals]

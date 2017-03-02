@@ -1,11 +1,9 @@
 import {Component} from '@angular/core';
 
-declare var __moduleName: string;
-
 @Component({
-  moduleId: __moduleName,
+  moduleId: module.id,
   selector: 'wip',
-  templateUrl: 'wip.template.html',
+  templateUrl: './wip.template.html',
 })
 
-export class WipComponent {}
+export class WipComponent { }

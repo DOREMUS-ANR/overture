@@ -5,13 +5,10 @@ import {SharedService} from '../../services/sharedService.service';
 import {Globals } from '../../app.globals';
 import {ExpressionService} from './expression.service';
 
-declare var __moduleName: string;
-
-
 @Component({
-  moduleId: __moduleName,
-  templateUrl: 'expression.list.template.html',
-  styleUrls: ['expression.css'],
+  moduleId: module.id,
+  templateUrl: './expression.list.template.html',
+  styleUrls: ['./expression.css'],
   providers: [ExpressionService]
 })
 

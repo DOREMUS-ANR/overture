@@ -3,14 +3,12 @@ import {ExpressionService} from './expression.service';
 import {SharedService} from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-declare var __moduleName: string;
-
 const frenchDateRegex = /(1er|[\d]{1,2}) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d{4})/;
 
 @Component({
-  moduleId: __moduleName,
-  templateUrl: 'expression.detail.template.html',
-  styleUrls: ['expression.css'],
+  moduleId: module.id,
+  templateUrl: './expression.detail.template.html',
+  styleUrls: ['./expression.css'],
   providers: [ExpressionService]
 })
 export class ExpressionDetailComponent {
@@ -48,7 +46,7 @@ export class ExpressionDetailComponent {
             });
           }
           if (this.expression.premiere) {
-            let pNoteParse =   frenchDateRegex.exec(this.expression.premiereNote);
+            let pNoteParse = frenchDateRegex.exec(this.expression.premiereNote);
             this.dates.push({
               type: 'premiere',
               description: this.expression.premiereNote,

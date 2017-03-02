@@ -1,13 +1,11 @@
 import {Component} from '@angular/core';
 import {SharedService} from '../../services/sharedService.service';
 
-declare var __moduleName: string;
-
 @Component({
-  moduleId: __moduleName,
+  moduleId: module.id,
   selector: 'top-nav',
-  templateUrl: 'top-nav.template.html',
-  styleUrls: ['top-nav.css']
+  templateUrl: './top-nav.template.html',
+  styleUrls: ['./top-nav.css']
 })
 
 export class TopNavComponent {
