@@ -1,64 +1,52 @@
-System.register(["@angular/router", "./app.components.list"], function (exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
-    var router_1, app_components_list_1, appRoutes, routing;
-    return {
-        setters: [
-            function (router_1_1) {
-                router_1 = router_1_1;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var router_1 = require("@angular/router");
+var app_components_list_1 = require("./app.components.list");
+var appRoutes = [
+    {
+        path: '',
+        // name: 'Main',
+        component: app_components_list_1.myComponents.HomeComponent
+        // useAsDefault: true
+    },
+    {
+        path: 'search',
+        // name: 'Search',
+        component: app_components_list_1.myComponents.QueriesTestComponent
+    },
+    {
+        path: 'performance',
+        component: app_components_list_1.myComponents.WipComponent
+    },
+    {
+        path: 'recording',
+        component: app_components_list_1.myComponents.RecordingTabComponent
+    },
+    {
+        path: 'person',
+        component: app_components_list_1.myComponents.PersonTabComponent
+    },
+    {
+        path: 'score',
+        component: app_components_list_1.myComponents.ScoreTabComponent
+    },
+    {
+        path: 'expression',
+        component: app_components_list_1.myComponents.ExpressionComponent,
+        children: [
+            {
+                path: ':id',
+                component: app_components_list_1.myComponents.ExpressionDetailComponent
             },
-            function (app_components_list_1_1) {
-                app_components_list_1 = app_components_list_1_1;
+            {
+                path: '',
+                component: app_components_list_1.myComponents.ExpressionListComponent
             }
-        ],
-        execute: function () {
-            appRoutes = [
-                {
-                    path: '',
-                    // name: 'Main',
-                    component: app_components_list_1.myComponents.HomeComponent
-                },
-                {
-                    path: 'search',
-                    // name: 'Search',
-                    component: app_components_list_1.myComponents.QueriesTestComponent
-                },
-                {
-                    path: 'performance',
-                    component: app_components_list_1.myComponents.WipComponent
-                },
-                {
-                    path: 'recording',
-                    component: app_components_list_1.myComponents.RecordingTabComponent
-                },
-                {
-                    path: 'person',
-                    component: app_components_list_1.myComponents.PersonTabComponent
-                },
-                {
-                    path: 'score',
-                    component: app_components_list_1.myComponents.ScoreTabComponent
-                },
-                {
-                    path: 'expression',
-                    component: app_components_list_1.myComponents.ExpressionComponent,
-                    children: [
-                        {
-                            path: ':id',
-                            component: app_components_list_1.myComponents.ExpressionDetailComponent
-                        },
-                        {
-                            path: '',
-                            component: app_components_list_1.myComponents.ExpressionListComponent
-                        }
-                    ]
-                },
-                {
-                    path: 'wip',
-                    component: app_components_list_1.myComponents.WipComponent
-                }
-            ];
-            exports_1("routing", routing = router_1.RouterModule.forRoot(appRoutes));
-        }
-    };
-});
+        ]
+    },
+    {
+        path: 'wip',
+        component: app_components_list_1.myComponents.WipComponent
+    }
+];
+exports.routing = router_1.RouterModule.forRoot(appRoutes);
