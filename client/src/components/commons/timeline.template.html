@@ -1,6 +1,7 @@
 <ul>
   <li *ngFor="let d of dates">
-    <time datetime="d.date">{{(d.time && d.time.start.year()) || '?'}}</time>
+    <time *ngIf="d.time" datetime="d.date">{{d.time | date: 'yyyy'}}</time>
+    <time *ngIf="!d.time">?</time>
 
     <label *ngIf="d.type=='creation'">
       <!--  TODO replace with ngPlural when bug fixed https://github.com/angular/angular/issues/12363 -->

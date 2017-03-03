@@ -43,7 +43,7 @@ export class TimelineComponent {
     if (!this.dates) return;
 
     this.dates.forEach((d) => {
-      d.time = toTimeSpan(d.date);
+      d.time = new Date(d.date);
       if (!d.agent) d.agent = [];
     });
 

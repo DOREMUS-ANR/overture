@@ -14,7 +14,7 @@ WHERE {
       ?activity ecrm:P14_carried_out_by ?person .
       ?person ecrm:P131_is_identified_by ?composer .
      }
-    FILTER (str(?title) != "" $if{title} && regex(str(?title),'%%title%%', 'i') $end )
+    $if{title} FILTER (regex(str(?title),'%%title%%', 'i')) $end
 }
 GROUP BY (?expression)
 ORDER BY (?expression)

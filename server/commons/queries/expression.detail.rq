@@ -6,7 +6,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 SELECT DISTINCT *
 WHERE {
     %%uri%% a efrbroo:F22_Self-Contained_Expression ;
-             mus:U70_has_title ?title .
+            mus:U70_has_title ?title ;
+            dct:publisher ?publisher .
     OPTIONAL{%%uri%% efrbroo:R45i_was_assigned_by ?assigned .}
 	  OPTIONAL{%%uri%% ecrm:P3_has_note ?note .}
     OPTIONAL {
@@ -59,11 +60,19 @@ WHERE {
       ?individualWork efrbroo:R9_is_realised_in %%uri%% .
       OPTIONAL{
         ?individualWork  mus:U4_had_princeps_publication ?publicationEvent .
-        ?publicationEvent ecrm:P3_has_note ?publicationEventNote.
+        ?publicationEvent ecrm:P3_has_note ?publicationEventNote .
+        OPTIONAL {
+          ?publicationEvent ecrm:P4_has_time-span ?publicationTime .
+          ?publicationTime  ecrm:P79_beginning_is_qualified_by ?publicationStart .
+        }
       }
       OPTIONAL{
         ?individualWork mus:U5_had_premiere ?premiere .
         ?premiere ecrm:P3_has_note ?premiereNote.
+        OPTIONAL {
+          ?premiere ecrm:P4_has_time-span ?premiereTime .
+          ?premiereTime  ecrm:P79_beginning_is_qualified_by ?premiereStart .
+        }
       }
     }
     OPTIONAL{
@@ -75,11 +84,8 @@ WHERE {
       }
       OPTIONAL {
         ?expCreation ecrm:P4_has_time-span ?creationTimeSpan.
-        {
-          ?creationTimeSpan ecrm:P82_at_some_time_within ?creationTime
-        } UNION {
-          ?creationTimeSpan ecrm:P81_ongoing_throughout ?creationTime
-        }
+        ?creationTimeSpan ecrm:P80_end_is_qualified_by ?creationEnd ;
+                      ecrm:P79_beginning_is_qualified_by ?creationStart
       }
     }
 }

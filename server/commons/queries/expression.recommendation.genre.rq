@@ -9,14 +9,14 @@ WHERE {
              mus:U12_has_genre ?genre .
     ?expression a  efrbroo:F22_Self-Contained_Expression ;
             mus:U12_has_genre ?genre;
-            ecrm:P102_has_title ?title .
+            mus:U70_has_title ?title .
+
     OPTIONAL{
       ?expCreation efrbroo:R17_created ?expression ;
-                  mus:U70_has_title ?activity .
+                  ecrm:P9_consists_of ?activity .
       ?activity ecrm:P14_carried_out_by ?person .
       ?person ecrm:P131_is_identified_by ?composer .
-     }
-    FILTER (str(?title) != "")
+    }
 }
 GROUP BY ?expression
 LIMIT %%limit%%

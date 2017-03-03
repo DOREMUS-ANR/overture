@@ -3,8 +3,6 @@ import {ExpressionService} from './expression.service';
 import {SharedService} from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-const frenchDateRegex = /(1er|[\d]{1,2}) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre) (\d{4})/;
-
 @Component({
   moduleId: module.id,
   templateUrl: './expression.detail.template.html',
@@ -38,30 +36,25 @@ export class ExpressionDetailComponent {
 
           // prepare dates for timeline
           this.dates = [];
-          if (this.expression.creationTime) {
+          if (this.expression.creationStart)
             this.dates.push({
               type: 'creation',
               agent: this.expression.composer,
-              date: this.expression.creationTime[0]
+              date: this.expression.creationStart
             });
-          }
-          if (this.expression.premiere) {
-            let pNoteParse = frenchDateRegex.exec(this.expression.premiereNote);
+          if (this.expression.premiere)
             this.dates.push({
               type: 'premiere',
               description: this.expression.premiereNote,
-              date: pNoteParse && pNoteParse[0]
+              date: this.expression.premiereStart
             });
-          }
-          if (this.expression.publicationEvent) {
-            let note = this.expression.publicationEventNote[0];
-            let yearRegex = /d{4}/
+          if (this.expression.publicationEvent)
             this.dates.push({
               type: 'publication',
-              description: note,
-              date: yearRegex.exec(note.substring(note.length - 4))
+              description: this.expression.publicationEventNote,
+              date: this.expression.publicationStart
             });
-          }
+
         });
         // retrieve recommendations
         this.expressionService.recommend(id)

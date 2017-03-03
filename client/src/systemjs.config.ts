@@ -32,6 +32,7 @@
       'angular2-infinite-scroll': 'npm:angular2-infinite-scroll',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
       'moment': 'npm:moment',
+      'hammerjs': 'npm:hammerjs/hammer.js',
       'angular2-moment': 'npm:angular2-moment',
     },
     // packages tells the System loader how to load when no filename and/or no extension
