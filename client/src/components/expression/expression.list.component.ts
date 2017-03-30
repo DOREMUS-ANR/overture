@@ -93,7 +93,7 @@ export class ExpressionListComponent {
   }
 
   onScroll() {
-    if (this.scrollInProgress) return;
+    if (this.scrollInProgress ||  !this.items) return;
     this.scrollInProgress = true;
     this._expressionService.query(this.filter, this.items.length)
       .then(

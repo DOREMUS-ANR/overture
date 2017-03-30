@@ -2,7 +2,15 @@ import NodeCache from 'node-cache';
 
 export default class Cache {
   constructor() {
-    this.cache = new NodeCache();
+    let cacheOpt = {};
+    if (process.env.NODE_ENV === 'development') {
+      cacheOpt = {
+        stdTTL: 100,
+        checkperiod: 120
+      };
+    }
+    this.cache = new NodeCache(cacheOpt);
+
   }
 
   get(api, params) {

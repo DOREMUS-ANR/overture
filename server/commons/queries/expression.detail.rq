@@ -32,11 +32,7 @@ WHERE {
     }
     OPTIONAL{%%uri%% mus:U12_has_genre ?genreN .
              ?genreN ecrm:P1_is_identified_by ?genreID .}
-    OPTIONAL{%%uri%% efrbroo:R40i_is_representative_expression_of ?repExp .}
-    OPTIONAL{
-      %%uri%% mus:U17_has_opus_statement ?opus .
-      OPTIONAL{?opus ecrm:P3_has_note ?opusNote .}
-    }
+    OPTIONAL{%%uri%% mus:U17_has_opus_statement / ecrm:P3_has_note ?opusNote}
     OPTIONAL{%%uri%% mus:U10_has_order_number ?order .}
     OPTIONAL{%%uri%% mus:U11_has_key ?keyURI .
       {
@@ -77,7 +73,7 @@ WHERE {
       OPTIONAL {
         ?expCreation ecrm:P9_consists_of ?activity .
         ?activity ecrm:P14_carried_out_by ?person .
-        ?person ecrm:P131_is_identified_by ?composer .
+        ?person foaf:name ?composer .
       }
       OPTIONAL {
         ?expCreation ecrm:P4_has_time-span ?creationTimeSpan.

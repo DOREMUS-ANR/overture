@@ -16,7 +16,7 @@ let server = http.createServer(app);
 let monkey = nomo({
   server: {
     server: server,
-    silent:true
+    silent: true
   }
 });
 
