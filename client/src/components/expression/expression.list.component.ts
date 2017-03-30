@@ -75,21 +75,10 @@ export class ExpressionListComponent {
     );
   }
 
-
   onFilterChanged(filter = {}) {
     this.router.navigate(['/expression'], {
       queryParams: filter
     });
-  }
-
-  openInstruments() {
-    this.display = this.display.match('none') ? 'inline' : 'none';
-    this.class = this.display.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus';
-  }
-
-  openDiscover() {
-    this.displayDiscover = this.displayDiscover.match('none') ? 'inline' : 'none';
-    this.classDiscover = this.displayDiscover.match('none') ? 'menu-icon icon-plus' : 'menu-icon icon-minus';
   }
 
   onScroll() {

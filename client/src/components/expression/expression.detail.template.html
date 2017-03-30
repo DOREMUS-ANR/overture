@@ -21,6 +21,9 @@
       </div>
 
       <div class="info-cont">
+        <div class="source" *ngIf="expression.source">
+          <img src='{{getSource(expression.source).img}}' alt='{{getSource(expression.source).label}}' title="data from {{getSource(expression.source).label}}" />
+        </div>
         <div class="info-card">
 
           <div *ngIf="expression.key">

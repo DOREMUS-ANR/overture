@@ -3,6 +3,17 @@ import {ExpressionService} from './expression.service';
 import {SharedService} from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+const organizBase = 'http://data.doremus.org/organization/';
+const institutions = {
+  Philharmonie_de_Paris: {
+    label: 'Philharmonie de Paris',
+    img: '/static/img/logos/philharmonie.png'
+  },
+  BnF: {
+    label: 'BnF',
+    img: '/static/img/logos/bnf.png'
+  }
+}
 @Component({
   moduleId: module.id,
   templateUrl: './expression.detail.template.html',
@@ -68,6 +79,15 @@ export class ExpressionDetailComponent {
 
   isNode(a) {
     return a.startsWith('node');
+  }
+
+  getSource(source) {
+    if (Array.isArray(source)) source = source[0];
+
+    if (!source.startsWith(organizBase)) return null;
+
+    let inst = source.replace(organizBase, '');
+    return institutions[inst];
   }
 
 }

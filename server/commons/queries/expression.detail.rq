@@ -7,7 +7,7 @@ SELECT DISTINCT *
 WHERE {
     %%uri%% a efrbroo:F22_Self-Contained_Expression ;
             mus:U70_has_title ?title ;
-            dct:publisher ?publisher .
+            dct:publisher ?source .
     OPTIONAL{%%uri%% efrbroo:R45i_was_assigned_by ?assigned .}
     OPTIONAL{%%uri%% ecrm:P3_has_note ?note .}
     OPTIONAL {
