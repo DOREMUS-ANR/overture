@@ -5,7 +5,6 @@ import { myComponents } from './app.components.list';
 
 const appRoutes: Routes = [
   { path: '', component: myComponents.HomeComponent },
-  { path: 'search', component: myComponents.QueriesTestComponent },
   { path: 'performance', component: myComponents.WipComponent },
   { path: 'recording', component: myComponents.RecordingTabComponent },
   { path: 'person', component: myComponents.PersonTabComponent },
