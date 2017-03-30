@@ -9,50 +9,47 @@ WHERE {
             mus:U70_has_title ?title ;
             dct:publisher ?publisher .
     OPTIONAL{%%uri%% efrbroo:R45i_was_assigned_by ?assigned .}
-	  OPTIONAL{%%uri%% ecrm:P3_has_note ?note .}
+    OPTIONAL{%%uri%% ecrm:P3_has_note ?note .}
     OPTIONAL {
-          %%uri%% mus:U13_has_casting ?castingURI .
-          ?castingURI mus:U23_has_casting_detail ?castingDet .
-          ?castingDet mus:U2_foresees_use_of_medium_of_performance_of_type ?mopURI .
-          { ?mopURI ecrm:P1_is_identified_by ?mop }
-          UNION
-          {
-            ?mopURI skos:prefLabel ?mop .
-            FILTER regex(lang(?mop), "%%lang%%")
-          }
+      %%uri%% mus:U13_has_casting ?castingURI .
+      ?castingURI mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance_of_type ?mopURI .
+      { ?mopURI ecrm:P1_is_identified_by ?mop }
+      UNION
+      {
+        ?mopURI skos:prefLabel ?mop .
+        FILTER regex(lang(?mop), "%%lang%%")
+      }
     }
     OPTIONAL{%%uri%% efrbroo:R17i_was_created_by ?created .}
     OPTIONAL{
-            %%uri%% mus:U12_has_genre ?genreURI .
-            {
-              ?genreURI skos:prefLabel ?genre .
-              FILTER regex(lang(?genre), "%%lang%%")
-            } UNION {
-              ?genreURI ecrm:P1_is_identified_by ?genre .
-            }
+      %%uri%% mus:U12_has_genre ?genreURI .
+      {
+        ?genreURI skos:prefLabel ?genre .
+        FILTER regex(lang(?genre), "%%lang%%")
+      } UNION {
+        ?genreURI ecrm:P1_is_identified_by ?genre .
+      }
     }
     OPTIONAL{%%uri%% mus:U12_has_genre ?genreN .
              ?genreN ecrm:P1_is_identified_by ?genreID .}
     OPTIONAL{%%uri%% efrbroo:R40i_is_representative_expression_of ?repExp .}
     OPTIONAL{
-			%%uri%% mus:U17_has_opus_statement ?opus .
-			OPTIONAL{?opus ecrm:P3_has_note ?opusNote .}
-	  }
+      %%uri%% mus:U17_has_opus_statement ?opus .
+      OPTIONAL{?opus ecrm:P3_has_note ?opusNote .}
+    }
     OPTIONAL{%%uri%% mus:U10_has_order_number ?order .}
     OPTIONAL{%%uri%% mus:U11_has_key ?keyURI .
-          ?keyURI skos:prefLabel ?key .
-          FILTER regex(lang(?key), "%%lang%%")
+      {
+        ?keyURI skos:prefLabel ?key .
+        FILTER regex(lang(?key), "%%lang%%")
+      } UNION {
+        ?keyURI ecrm:P1_is_identified_by ?key }
+      }
+    OPTIONAL{
+      %%uri%% ecrm:P67_refers_to ?refers .
+      OPTIONAL{?refers ecrm:P3_has_note ?refersNote .}
     }
-    OPTIONAL{%%uri%% mus:U11_has_key ?keyN .
-             ?keyN ecrm:P1_is_identified_by ?keyID .}
-    OPTIONAL{
-			%%uri%% ecrm:P67_refers_to ?refers .
-			OPTIONAL{?refers ecrm:P3_has_note ?refersNote .}
-	  }
-    OPTIONAL{
-  		%%uri%% mus:U16_has_catalogue_statement ?catalog .
-  		?catalog ecrm:P3_has_note ?catalogNote .
-	  }
+    OPTIONAL{%%uri%% mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
     OPTIONAL{%%uri%% ecrm:P165i_is_incorporated_in ?incorporated .}
     OPTIONAL{%%uri%% ecrm:P1_is_identified_by ?identified .}
     OPTIONAL{?complexWork efrbroo:R40_has_representative_expression %%uri%% .}
