@@ -7,15 +7,15 @@ SELECT ?expression, SAMPLE(?title) AS ?title, SAMPLE (?composer) AS ?composer
 WHERE {
     <%%uri%%> a efrbroo:F22_Self-Contained_Expression .
     ?expCreationOrig efrbroo:R17_created <%%uri%%> ;
-                ecrm:P9_consists_of ?activityOrig .
-    ?activityOrig ecrm:P14_carried_out_by ?personOrig .
-    ?personOrig ecrm:P131_is_identified_by ?composer .
+                ecrm:P9_consists_of / ecrm:P14_carried_out_by ?personOrig .
+    ?personOrig foaf:name ?composer .
 
     ?expression a efrbroo:F22_Self-Contained_Expression ;
             mus:U70_has_title ?title .
     ?expCreation efrbroo:R17_created ?expression ;
-                ecrm:P9_consists_of ?activity .
-    ?activity ecrm:P14_carried_out_by ?personOrig .
+                ecrm:P9_consists_of / ecrm:P14_carried_out_by ?personOrig .
+
+    FILTER( ?expression != <%%uri%%>)
 }
 GROUP BY ?expression
 LIMIT %%limit%%

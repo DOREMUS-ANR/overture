@@ -13,16 +13,15 @@ export default class Sparql {
   constructor(endpoint = doremusEndpoint) {
     this.endpoint = endpoint;
     this.cache = new Cache();
+    this.client = new SparqlClient(this.endpoint);
   }
 
   execute(query) {
     console.log('*** SPARQL QUERY ***');
     console.log(query);
 
-    var client = new SparqlClient(this.endpoint);
-
-    return new Promise(function(resolve, reject) {
-      client.query(query, function(err, results) {
+    return new Promise((resolve, reject) => {
+      this.client.query(query, function(err, results) {
         if (err) {
           reject(err);
         } else {

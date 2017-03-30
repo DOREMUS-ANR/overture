@@ -12,7 +12,7 @@ function sendStandardError(res, err) {
   });
 }
 
-function packResults(expression, res, label) {
+function packResults(res, label) {
   'use strict';
 
   let data = (res && res.results && res.results.bindings) || [];
@@ -27,9 +27,6 @@ function packResults(expression, res, label) {
   for (let d of data) {
     d.id = /[^/]*$/.exec(d.expression)[0];
   }
-
-  // filter: i do not want the requested value
-  data = data.filter((d) => d.id !== expression);
 
   return {
     data,
@@ -46,18 +43,18 @@ export default class RecommendationController {
         sparql.loadQuery('expression.recommendation.genre', {
             uri: `http://data.doremus.org/expression/${expression}`,
             lang: req.query.lang || 'en',
-            limit: req.query.limit || 4
+            limit: req.query.limit || 3
           })
-          .then(results => callback(null, packResults(expression, results, 'of the same genre')))
+          .then(results => callback(null, packResults(results, 'of the same genre')))
           .catch(err => callback(err));
       },
       function(callback) {
         sparql.loadQuery('expression.recommendation.composer', {
             uri: `http://data.doremus.org/expression/${expression}`,
             lang: req.query.lang || 'en',
-            limit: req.query.limit || 4
+            limit: req.query.limit || 3
           })
-          .then(results => callback(null, packResults(expression, results, 'of the same composer')))
+          .then(results => callback(null, packResults(results, 'of the same composer')))
           .catch(err => callback(err));
       }
     ], function(err, results) {

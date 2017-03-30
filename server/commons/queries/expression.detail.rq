@@ -32,7 +32,7 @@ WHERE {
     }
     OPTIONAL{%%uri%% mus:U12_has_genre ?genreN .
              ?genreN ecrm:P1_is_identified_by ?genreID .}
-    OPTIONAL{%%uri%% mus:U17_has_opus_statement / ecrm:P3_has_note ?opusNote}
+    OPTIONAL{%%uri%% mus:U17_has_opus_statement / ecrm:P3_has_note ?opus}
     OPTIONAL{%%uri%% mus:U10_has_order_number ?order .}
     OPTIONAL{%%uri%% mus:U11_has_key ?keyURI .
       {
