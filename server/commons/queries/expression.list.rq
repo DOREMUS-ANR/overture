@@ -15,6 +15,7 @@ WHERE {
       ?person ecrm:P131_is_identified_by ?composer .
      }
     $if{title} FILTER (regex(str(?title),'%%title%%', 'i')) $end
+    $if{composer} FILTER (regex(str(?composer),'%%composer%%', 'i')) $end
 }
 GROUP BY (?expression)
 ORDER BY (?expression)

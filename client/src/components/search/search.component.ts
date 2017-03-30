@@ -33,7 +33,6 @@ export class SearchComponent {
       },
       error => console.error('Error: ' + error)
       );
-
     this._vocabularyService.get('iaml/genre')
       .then(
       voc => {
