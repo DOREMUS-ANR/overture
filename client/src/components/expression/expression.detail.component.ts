@@ -26,6 +26,7 @@ export class ExpressionDetailComponent {
   recommendation: [any];
   querying: boolean;
   dates: any[];
+  error: boolean = false;
 
   constructor(sharedService: SharedService,
     private expressionService: ExpressionService,
@@ -44,6 +45,7 @@ export class ExpressionDetailComponent {
           this.expression = exp;
           console.log(this.expression);
           this.querying = false;
+          this.error = false;
 
           // prepare dates for timeline
           this.dates = [];
@@ -66,10 +68,17 @@ export class ExpressionDetailComponent {
               date: this.expression.publicationStart
             });
 
+        }, (err) => {
+          this.querying = false;
+          this.error = true;
+          console.error(err);
         });
         // retrieve recommendations
         this.expressionService.recommend(id)
-          .then((res) => this.recommendation = res);
+          .then((res) => this.recommendation = res, (err) => {
+            this.error = true;
+            console.error(err);
+          });
 
         // FIXME discover why this is not propagated to sharedService
         this.sharedService.sharchBarVisible = false;

@@ -1,7 +1,5 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {Router, ActivatedRoute, NavigationStart} from '@angular/router';
-
-import {SharedService} from '../../services/sharedService.service';
 import {Globals } from '../../app.globals';
 import {ExpressionService} from './expression.service';
 
@@ -24,25 +22,20 @@ export class ExpressionListComponent {
   expression: any;
   search: boolean = false;
   filter = {};
-  sharedService: SharedService
   querying: boolean = false;
   error: boolean = false;
 
   private scrollInProgress = false;
 
   constructor(
-    private _expressionService: ExpressionService, sharedService: SharedService,
+    private _expressionService: ExpressionService,
     private router: Router, private globals: Globals, private route: ActivatedRoute) {
 
-    this.sharedService = sharedService;
     this.globals = globals;
   }
 
   ngOnInit() {
     this.filter = this.route.queryParams['value'];
-    if (Object.keys(this.filter).length)
-      this.sharedService.show();
-
     this.getList();
 
     this.router.events
@@ -60,7 +53,7 @@ export class ExpressionListComponent {
   }
 
   getList() {
-    if (this.querying) return false;
+    // if (this.querying) return false;
     this.querying = true;
     this._expressionService.query(this.filter).then(
       res => {
