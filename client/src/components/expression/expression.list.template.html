@@ -3,9 +3,9 @@
 <div class="main">
   <h1>Expressions</h1>
 
-  <error-msg *ngIf="error"></error-msg>
-
   <search-comp (onFilterChanged)="onFilterChanged($event)"></search-comp>
+
+  <error-msg *ngIf="error"></error-msg>
 
   <div class="forever-scroll card-list" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="100" (scrolled)="onScroll();">
     <expression-summary *ngFor="let expression of items" [expression]="expression"></expression-summary>

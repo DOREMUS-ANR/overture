@@ -23,7 +23,11 @@ export default class ExpressionController {
   }
 
   static query(req, res) {
-    sparql.loadQuery('expression.list', req.query)
+    let opt = Object.assign({
+      lim: 20,
+      lang: 'en'
+    }, req.query);
+    sparql.loadQuery('expression.list', opt)
       .then(results => res.json(results))
       .catch(err => sendStandardError(res, err));
   }

@@ -55,6 +55,8 @@ export class ExpressionListComponent {
   getList() {
     // if (this.querying) return false;
     this.querying = true;
+    this.error = false;
+
     this._expressionService.query(this.filter).then(
       res => {
         this.items = res;
@@ -75,7 +77,7 @@ export class ExpressionListComponent {
   }
 
   onScroll() {
-    if (this.scrollInProgress ||  !this.items) return;
+    if (this.scrollInProgress || !this.items) return;
     this.scrollInProgress = true;
     this._expressionService.query(this.filter, this.items.length)
       .then(
