@@ -46,7 +46,9 @@ Run production mode (Windows)
 
 ### Docker
 
-Dependency: [jplu/node](https://github.com/jplu/docker-node). Clone, point the folder, build.
+Install dependency: 
+ 
+    docker build -t jplu/node github.com/jplu/docker-node
 
 Build
 
@@ -54,7 +56,7 @@ Build
 
 Run
 
-    docker run -p 5050:3333 -d --name  doremus_overture doremus/overture
+    docker run -d -p 5050:3333 --restart=unless-stopped --name doremus_overture doremus/overture
     docker logs doremus_overture
 
 Stop
