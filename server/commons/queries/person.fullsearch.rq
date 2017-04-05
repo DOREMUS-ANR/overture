@@ -1,0 +1,10 @@
+SELECT DISTINCT *
+WHERE {
+  ?s1 foaf:name ?o1 .
+  ?o1 bif:contains 'MOZART or AMADEUS' .
+  OPTIONAL { ?s1 foaf:name ?ol . ?ol bif:contains 'MOZART' option ( score ?sc1 ) }
+  OPTIONAL { ?s1 foaf:name ?ol . ?ol bif:contains 'AMADEUS' option ( score ?sc2 )  }
+  BIND(COALESCE(?sc1,0)+COALESCE(?sc2,0) AS ?sc)
+}
+ORDER BY DESC(?sc)
+LIMIT 20

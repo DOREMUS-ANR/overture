@@ -1,4 +1,5 @@
 import {HomeComponent} from './components/home/home.component';
+import {SearchResultsComponent} from './components/search-results/search-results.component';
 
 import {ErrorComponent} from './components/commons/error.component';
 import {LoadingComponent} from './components/commons/loading.component';
@@ -20,7 +21,7 @@ import {WipComponent} from './components/wip/wip.component';
 
 
 export const myComponents = {
-  HomeComponent,
+  HomeComponent, SearchResultsComponent,
   ErrorComponent, LoadingComponent, TimelineComponent,
   PerformanceTabComponent, RecordingTabComponent, PersonTabComponent, ScoreTabComponent,
   ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, ExpressionSummaryComponent,

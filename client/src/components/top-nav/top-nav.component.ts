@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {SharedService} from '../../services/sharedService.service';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -9,16 +9,45 @@ import {SharedService} from '../../services/sharedService.service';
 })
 
 export class TopNavComponent {
+  @ViewChild('fullSearchInput') fullSearchInput: ElementRef;
+
   private showSearch: boolean = false;
-  private sharedService: SharedService;
+  private searchInput: string;
 
-  constructor(sharedService: SharedService) {
-    this.sharedService = sharedService;
+  private routes: [any] = [
+    {
+      name: 'expression',
+      label: 'Expressions'
+    }, {
+      name: 'performance',
+      label: 'Performances'
+    }, {
+      name: 'recording',
+      label: 'Recordings'
+    }, {
+      name: 'score',
+      label: 'Scores'
+    }, {
+      name: 'person',
+      label: 'Artists'
+    }];
+
+  constructor(private router: Router) { }
+
+  openSearch() {
+    this.showSearch = true;
+    this.fullSearchInput.nativeElement.focus();
   }
 
-  clickSearch() {
-    this.showSearch = !this.showSearch;
-    this.sharedService.sharchBarVisible = this.showSearch;
-  }
+  closeSearch() { this.showSearch = false; }
 
+  onSearchSubmit(e) {
+    e.preventDefault();
+    // this.closeSearch();
+    if (this.searchInput.split(' ').some(word => word.length > 3))
+      this.router.navigate(['search', this.searchInput]);
+    else alert('At least one word should be longer then 3 character');
+    // FIXME put a popup
+    // this.searchInput = null;
+  }
 }
