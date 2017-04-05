@@ -8,45 +8,29 @@ WHERE {
     %%uri%% a efrbroo:F22_Self-Contained_Expression ;
             mus:U70_has_title ?title ;
             dct:publisher ?source .
-    OPTIONAL{%%uri%% efrbroo:R45i_was_assigned_by ?assigned .}
     OPTIONAL{%%uri%% ecrm:P3_has_note ?note .}
     OPTIONAL {
       %%uri%% mus:U13_has_casting ?castingURI .
       ?castingURI mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance_of_type ?mopURI .
-      { ?mopURI ecrm:P1_is_identified_by ?mop }
-      UNION
-      {
-        ?mopURI skos:prefLabel ?mop .
-        FILTER regex(lang(?mop), "%%lang%%")
+      { SELECT ?mopURI sql:BEST_LANGMATCH(?mop, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop
+        WHERE { ?mopURI skos:prefLabel | ecrm:P1_is_identified_by ?mop }
       }
     }
-    OPTIONAL{%%uri%% efrbroo:R17i_was_created_by ?created .}
     OPTIONAL{
       %%uri%% mus:U12_has_genre ?genreURI .
-      {
-        ?genreURI skos:prefLabel ?genre .
-        FILTER regex(lang(?genre), "%%lang%%")
-      } UNION {
-        ?genreURI ecrm:P1_is_identified_by ?genre .
+      { SELECT ?genreURI sql:BEST_LANGMATCH(?genre, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?genre
+        WHERE { ?genreURI skos:prefLabel | ecrm:P1_is_identified_by ?genre }
       }
     }
-    OPTIONAL{%%uri%% mus:U12_has_genre ?genreN .
-             ?genreN ecrm:P1_is_identified_by ?genreID .}
     OPTIONAL{%%uri%% mus:U17_has_opus_statement / ecrm:P3_has_note ?opus}
     OPTIONAL{%%uri%% mus:U10_has_order_number ?order .}
     OPTIONAL{%%uri%% mus:U11_has_key ?keyURI .
-      {
-        ?keyURI skos:prefLabel ?key .
-        FILTER regex(lang(?key), "%%lang%%")
-      } UNION {
-        ?keyURI ecrm:P1_is_identified_by ?key }
+      { SELECT ?keyURI sql:BEST_LANGMATCH(?key, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?key
+        WHERE { ?keyURI skos:prefLabel | ecrm:P1_is_identified_by ?key }
       }
-    OPTIONAL{
-      %%uri%% ecrm:P67_refers_to ?refers .
-      OPTIONAL{?refers ecrm:P3_has_note ?refersNote .}
     }
+    OPTIONAL{%%uri%% ecrm:P67_refers_to / ecrm:P3_has_note ?refersNote .}
     OPTIONAL{%%uri%% mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
-    OPTIONAL{%%uri%% ecrm:P165i_is_incorporated_in ?incorporated .}
     OPTIONAL{%%uri%% ecrm:P1_is_identified_by ?identified .}
     OPTIONAL{?complexWork efrbroo:R40_has_representative_expression %%uri%% .}
     OPTIONAL{
@@ -71,9 +55,10 @@ WHERE {
     OPTIONAL{
       ?expCreation efrbroo:R17_created %%uri%% .
       OPTIONAL {
-        ?expCreation ecrm:P9_consists_of ?activity .
-        ?activity ecrm:P14_carried_out_by ?person .
-        ?person foaf:name ?composer .
+        ?expCreation ecrm:P9_consists_of / ecrm:P14_carried_out_by ?composerUri .
+        { SELECT ?composerUri sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?composer
+          WHERE { ?composerUri foaf:name ?composer }
+        }
       }
       OPTIONAL {
         ?expCreation ecrm:P4_has_time-span ?creationTimeSpan.

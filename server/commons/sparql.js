@@ -39,6 +39,8 @@ export default class Sparql {
     let _file = path.join(queryFolder, queryId + '.rq');
 
     return new Promise((resolve, reject) => {
+      if (!opt.offset) {opt.offset = 0;}
+
       this.cache.get(queryId, opt).then(resolve, () => {
         fs.readFile(_file, 'utf8', (err, query) => {
           if (err) {
@@ -60,9 +62,6 @@ export default class Sparql {
             query = query.replace(regex, opt[param]);
           }
 
-          if (opt.offset) {
-            query += 'OFFSET ' + opt.offset;
-          }
 
           resolve(this.execute(query).then((res) => this.cache.set(queryId, opt, res)));
         });

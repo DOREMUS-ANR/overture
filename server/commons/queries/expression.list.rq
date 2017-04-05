@@ -34,5 +34,6 @@ WHERE {
       $if{composer} FILTER (regex(str(?composer),'%%composer%%', 'i')) $end
     }
     LIMIT %%lim%%
+    OFFSET %%offset%%
   }
 }
