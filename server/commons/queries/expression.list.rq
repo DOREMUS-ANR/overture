@@ -2,7 +2,6 @@ PREFIX ecrm: <http://erlangen-crm.org/current/>
 PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX mus: <http://data.doremus.org/ontology#>
 
-
 SELECT DISTINCT
   ?expression
   sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?title

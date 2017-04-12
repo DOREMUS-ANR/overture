@@ -1,0 +1,19 @@
+CONSTRUCT {
+   <http://data.doremus.org/expression/d72301f0-0aba-3ba6-93e5-c4efbee9c6ea> a schema:MusicComposition ;
+      schema:name ?name ;
+      schema:genre ?genre ;
+      schema:musicalKey ?key .
+}
+WHERE {
+    <http://data.doremus.org/expression/d72301f0-0aba-3ba6-93e5-c4efbee9c6ea> a efrbroo:F22_Self-Contained_Expression ;
+         rdfs:label ?name .
+    OPTIONAL {
+      <http://data.doremus.org/expression/d72301f0-0aba-3ba6-93e5-c4efbee9c6ea> mus:U12_has_genre ?genreURI
+      { ?genreURI skos:prefLabel ?genre }
+      UNION { ?genreURI ecrm:P1_is_identified_by ?genre }
+    }
+    OPTIONAL { <http://data.doremus.org/expression/d72301f0-0aba-3ba6-93e5-c4efbee9c6ea> mus:U11_has_key ?keyURI
+      { ?keyURI skos:prefLabel ?key }
+      UNION { ?keyURI ecrm:P1_is_identified_by ?key }
+    }
+} LIMIT 100

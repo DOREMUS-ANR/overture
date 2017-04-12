@@ -5,7 +5,7 @@ import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 import 'hammerjs';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdSelectModule } from '@angular/material';
 import { MomentModule } from 'angular2-moment';
 
 import { SelectModule } from 'ng2-select';
@@ -21,7 +21,7 @@ import { Globals } from './app.globals';
 
 
 @NgModule({
-  imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpModule, routing, MaterialModule, MomentModule, InfiniteScrollModule, SelectModule],
+  imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpModule, routing, MaterialModule, MdSelectModule, MomentModule, InfiniteScrollModule, SelectModule],
   declarations: [...myComponentsList, AppComponent],
   bootstrap: [AppComponent],
   providers: [SharedService, Globals]

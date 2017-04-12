@@ -13,36 +13,27 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class SearchComponent {
   @Output() onFilterChanged = new EventEmitter();
-  filter = {
-    key: '',
-    genre: ''
-  };
+  filter = {};
 
   itemsKey: Object[];
   itemsGenre: Object[];
 
   constructor(private _vocabularyService: VocabularyService, private globals: Globals, private route: ActivatedRoute) {
-
     this._vocabularyService.get('key')
-      .then(
-      voc => {
+      .then(voc => {
         this.itemsKey = voc.map((item) => ({
           id: item.uri.value,
-          text: (item.label || item.labelEn || item.labelAny).value
+          label: item.label.value
         }));
-      },
-      error => console.error('Error: ' + error)
-      );
+      }, error => console.error('Error: ' + error));
+
     this._vocabularyService.get('iaml/genre')
-      .then(
-      voc => {
+      .then(voc => {
         this.itemsGenre = voc.map((item) => ({
           id: item.uri.value,
-          text: (item.label || item.labelEn || item.labelAny).value
+          label: item.label.value
         }));
-      },
-      error => console.error('Error: ' + error)
-      );
+      }, error => console.error('Error: ' + error));
   }
 
   ngOnInit() {

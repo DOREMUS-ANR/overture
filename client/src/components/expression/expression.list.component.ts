@@ -13,14 +13,7 @@ import {ExpressionService} from './expression.service';
 export class ExpressionListComponent {
   @Input() expressionURI: string;
 
-  @Output() items: any[];
-
-  display = 'none';
-  class = 'menu-icon icon-plus';
-  displayDiscover = 'none';
-  classDiscover = 'menu-icon icon-plus';
-  expression: any;
-  search: boolean = false;
+  items: any[];
   filter = {};
   querying: boolean = false;
   error: boolean = false;
@@ -30,7 +23,6 @@ export class ExpressionListComponent {
   constructor(
     private _expressionService: ExpressionService,
     private router: Router, private globals: Globals, private route: ActivatedRoute) {
-
     this.globals = globals;
   }
 
