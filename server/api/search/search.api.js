@@ -58,7 +58,7 @@ function _processResult(res) {
 
 export default class SearchController {
   static get(req, res) {
-    let input = req.params.input;
+    let input = req.params.input.replace(/[()[\]?*+]/g,'');
     let inputRegex = input.split(' ').filter(str => str.length > 3).join('|');
 
     sparql.loadQuery('expression.fullsearch', {

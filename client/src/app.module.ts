@@ -1,5 +1,6 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
@@ -20,7 +21,7 @@ import { Globals } from './app.globals';
 
 
 @NgModule({
-  imports: [BrowserModule, FormsModule, HttpModule, routing, MaterialModule, MomentModule, InfiniteScrollModule, SelectModule],
+  imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpModule, routing, MaterialModule, MomentModule, InfiniteScrollModule, SelectModule],
   declarations: [...myComponentsList, AppComponent],
   bootstrap: [AppComponent],
   providers: [SharedService, Globals]

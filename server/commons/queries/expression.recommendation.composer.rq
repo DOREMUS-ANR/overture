@@ -3,7 +3,11 @@ PREFIX ecrm: <http://erlangen-crm.org/current/>
 PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT ?expression, SAMPLE(?title) AS ?title, SAMPLE (?composer) AS ?composer
+SELECT
+  ?expression
+  sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?title
+  sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?composer
+  (SAMPLE(?catalogue) AS ?catalogue)
 WHERE {
     <%%uri%%> a efrbroo:F22_Self-Contained_Expression .
     ?expCreationOrig efrbroo:R17_created <%%uri%%> ;
@@ -12,10 +16,9 @@ WHERE {
 
     ?expression a efrbroo:F22_Self-Contained_Expression ;
             mus:U70_has_title ?title .
+    OPTIONAL { ?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
     ?expCreation efrbroo:R17_created ?expression ;
                 ecrm:P9_consists_of / ecrm:P14_carried_out_by ?personOrig .
 
     FILTER( ?expression != <%%uri%%>)
-}
-GROUP BY ?expression
-LIMIT %%limit%%
+} LIMIT %%limit%%
