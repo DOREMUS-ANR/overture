@@ -22,29 +22,29 @@ export class SearchComponent {
     this._vocabularyService.get('key')
       .then(voc => {
         this.itemsKey = voc.map((item) => ({
-          id: item.uri.value,
+          value: item.uri.value,
           label: item.label.value
         }));
+        setTimeout(() => this._loadFilter(), 0);
       }, error => console.error('Error: ' + error));
 
     this._vocabularyService.get('iaml/genre')
       .then(voc => {
         this.itemsGenre = voc.map((item) => ({
-          id: item.uri.value,
+          value: item.uri.value,
           label: item.label.value
         }));
+        setTimeout(() => this._loadFilter(), 0);
       }, error => console.error('Error: ' + error));
   }
 
   ngOnInit() {
+    this._loadFilter();
+  }
+
+  private _loadFilter() {
     Object.assign(this.filter, this.route.queryParams['value'])
   }
-
-  onSelectChanged({id}, label) {
-    this.filter[label] = id || '';
-    this.onFilterChanged.emit(this.filter);
-  }
-
   changeFilter(event: any) {
     debounce(() => {
       this.onFilterChanged.emit(this.filter);

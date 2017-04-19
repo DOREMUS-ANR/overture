@@ -9,15 +9,15 @@
       <input mdInput placeholder="Composer" [(ngModel)]="filter.composer" name="composer" (ngModelChange)="changeFilter($event)" />
     </md-input-container>
 
-    <md-select class="field" [(ngModel)]="filter.key" name="filter.key" (ngModelChange)="changeFilter($event)" placeholder="Musical Key">
-      <md-option [value]=''>all</md-option>
-      <md-option *ngFor="let key of itemsKey" [value]="key.id">{{key.label}}</md-option>
-    </md-select>
+    <div class="field select">
+      <label>Musical key</label>
+      <ng-select [(ngModel)]="filter.key" name="filter.key" (selected)="changeFilter($event)" (deselected)="changeFilter($event)" placeholder="all" [options]="itemsKey" [allowClear]="true" [ngStyle]="{'width': '15em'}" highlightColor="#c62c24"></ng-select>
+    </div>
 
-    <md-select class="field" [(ngModel)]="filter.genre" name="filter.genre" (ngModelChange)="changeFilter($event)" placeholder="Genre">
-      <md-option [value]=''>all</md-option>
-      <md-option *ngFor="let genre of itemsGenre" [value]="genre.id">{{genre.label}}</md-option>
-    </md-select>
+    <div class="field select">
+      <label>Genre</label>
+      <ng-select [(ngModel)]="filter.genre" name="filter.genre" (selected)="changeFilter($event)" (deselected)="changeFilter($event)" placeholder="all" [options]="itemsGenre" [allowClear]="true" [ngStyle]="{'width': '15em'}" highlightColor="#c62c24"></ng-select>
+    </div>
 
   </form>
 </div>

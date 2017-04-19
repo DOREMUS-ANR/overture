@@ -7,8 +7,9 @@ import { HttpModule }    from '@angular/http';
 import 'hammerjs';
 import { MaterialModule, MdSelectModule } from '@angular/material';
 import { MomentModule } from 'angular2-moment';
+import {SelectModule} from 'ng-select';
 
-import { SelectModule } from 'ng2-select';
+// import { SelectModule } from 'ng2-select';
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
 import {AppComponent} from './components/app.component';

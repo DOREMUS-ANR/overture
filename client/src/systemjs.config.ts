@@ -30,7 +30,7 @@
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
       '@angular/material': 'npm:@angular/material/bundles/material.umd.js',
       // other libraries
-      'ng2-select': 'npm:ng2-select',
+      'ng-select': 'npm:ng-select',
       'rxjs': 'npm:rxjs',
       'angular2-infinite-scroll': 'npm:angular2-infinite-scroll',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
@@ -55,8 +55,8 @@
         main: './index.js',
         defaultExtension: 'js'
       },
-      'ng2-select': {
-        main: 'ng2-select.js',
+      'ng-select': {
+        main: './index.js',
         defaultExtension: 'js'
       },
       'moment': {
