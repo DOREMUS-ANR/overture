@@ -1,12 +1,14 @@
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT DISTINCT ?uri sql:BEST_LANGMATCH(?prefLabel, '%%lang%%, en;q=0.9, en-gb;q=0.8, *;q=0.1', 'en') as ?label
-FROM <http://data.doremus.org/vocabulary>
 WHERE {
     {
-     ?uri skos:inScheme %%uri%%
+      ?uri skos:inScheme %%uri%%
     } UNION {
-     ?uri skos:topConceptOf %%uri%%
+      ?uri skos:topConceptOf %%uri%%
     }
     ?uri skos:prefLabel ?prefLabel
+
+    # GRAPH ?g { ?s ?p ?uri }
+    # FILTER (str(?g)!='http://data.doremus.org/vocabulary')
 }

@@ -15,8 +15,11 @@ export class ExpressionService {
     let filterOptions = "";
 
     Object.keys(filter).forEach(k => {
-      if (filter[k])
-        filterOptions += `&${k}=${filter[k]}`
+      let value = filter[k];
+      if (!value) return;
+      if (!Array.isArray(value)) value = [value]
+      for (let v of value)
+        filterOptions += `&${k}=${v}`
     });
 
     let search = 'lim=' + this.limit + filterOptions;

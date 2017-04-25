@@ -9,6 +9,14 @@ import {
 const doremusEndpoint = EXT_URI.SPARQL_ENDPOINT;
 const queryFolder = 'server/commons/queries';
 
+function uriWrap(v) {
+  'use strict';
+  if (typeof v === 'string' && v.startsWith('http:')) {
+    return `<${v}>`;
+  }
+  return v;
+}
+
 export default class Sparql {
   constructor(endpoint = doremusEndpoint) {
     this.endpoint = endpoint;
@@ -39,7 +47,9 @@ export default class Sparql {
     let _file = path.join(queryFolder, queryId + '.rq');
 
     return new Promise((resolve, reject) => {
-      if (!opt.offset) {opt.offset = 0;}
+      if (!opt.offset) {
+        opt.offset = 0;
+      }
 
       this.cache.get(queryId, opt).then(resolve, () => {
         fs.readFile(_file, 'utf8', (err, query) => {
@@ -57,15 +67,21 @@ export default class Sparql {
           });
 
           // replace params in query
+          console.log(opt);
           for (let param in opt) {
             let regex = new RegExp(`%%${param}%%`, 'g');
-            query = query.replace(regex, opt[param]);
+            let value = opt[param];
+            if (!Array.isArray(value)) {
+              value = [value];
+            }
+            value = value.map(uriWrap);
+            query = query.replace(regex, value);
           }
-
 
           resolve(this.execute(query).then((res) => this.cache.set(queryId, opt, res)));
         });
       });
     });
   }
+
 }

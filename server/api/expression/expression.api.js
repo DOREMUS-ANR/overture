@@ -23,6 +23,7 @@ export default class ExpressionController {
   }
 
   static query(req, res) {
+    console.log(req.query);
     let opt = Object.assign({
       lim: 20,
       lang: 'en'

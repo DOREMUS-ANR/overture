@@ -24,7 +24,7 @@ export class VocabularyService {
         let data = res.json();
         data = data.results && data.results.bindings;
         vocabularies[id] = data;
-        return data.sort((a, b) => a.label.value > b.label.value ? 1 : -1);
+        return data.sort((a, b) => a.label.value.toLowerCase() > b.label.value.toLowerCase() ? 1 : -1);
       });
   }
 

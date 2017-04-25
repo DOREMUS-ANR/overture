@@ -9,8 +9,8 @@ SELECT
   sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?composer
   (SAMPLE(?catalogue) AS ?catalogue)
 WHERE {
-    <%%uri%%> a efrbroo:F22_Self-Contained_Expression .
-    ?expCreationOrig efrbroo:R17_created <%%uri%%> ;
+    %%uri%% a efrbroo:F22_Self-Contained_Expression .
+    ?expCreationOrig efrbroo:R17_created %%uri%% ;
                 ecrm:P9_consists_of / ecrm:P14_carried_out_by ?personOrig .
     ?personOrig foaf:name ?composer .
 
@@ -20,5 +20,5 @@ WHERE {
     ?expCreation efrbroo:R17_created ?expression ;
                 ecrm:P9_consists_of / ecrm:P14_carried_out_by ?personOrig .
 
-    FILTER( ?expression != <%%uri%%>)
+    FILTER( ?expression != %%uri%%)
 } LIMIT %%limit%%

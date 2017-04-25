@@ -72,13 +72,10 @@ export class ExpressionListComponent {
     if (this.scrollInProgress || !this.items) return;
     this.scrollInProgress = true;
     this._expressionService.query(this.filter, this.items.length)
-      .then(
-      res => {
+      .then(res => {
         this.scrollInProgress = false;
         this.items.push(...res);
-      },
-      error => console.error('Error: ' + error)
-      );
+      }, error => console.error('Error: ' + error));
   }
 
   myIdChange(event) {

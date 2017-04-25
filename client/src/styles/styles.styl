@@ -283,17 +283,10 @@ top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab, wip
 @import 'dep/loading';
 
 
-// overriding bootstrap in ng2-select
-.form-control
-  border 0
-  border-radius 0
-  border-bottom 1px solid #333
-  box-shadow none
-  .btn-link
-    color #333
-
 .field.select
   position relative
+  &.long
+    width 30em
   label
     color alpha(#000, .38)
     top: -15px

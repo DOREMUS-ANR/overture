@@ -17,6 +17,7 @@ export class SearchComponent {
 
   itemsKey: Object[];
   itemsGenre: Object[];
+  itemsMop: Object[];
 
   constructor(private _vocabularyService: VocabularyService, private globals: Globals, private route: ActivatedRoute) {
     this._vocabularyService.get('key')
@@ -36,6 +37,15 @@ export class SearchComponent {
         }));
         setTimeout(() => this._loadFilter(), 0);
       }, error => console.error('Error: ' + error));
+
+    this._vocabularyService.get('iaml/mop')
+      .then(voc => {
+        this.itemsMop = voc.map((item) => ({
+          value: item.uri.value,
+          label: item.label.value
+        }));
+        setTimeout(() => this._loadFilter(), 0);
+      }, error => console.error('Error: ' + error));
   }
 
   ngOnInit() {
@@ -45,6 +55,7 @@ export class SearchComponent {
   private _loadFilter() {
     Object.assign(this.filter, this.route.queryParams['value'])
   }
+
   changeFilter(event: any) {
     debounce(() => {
       this.onFilterChanged.emit(this.filter);
