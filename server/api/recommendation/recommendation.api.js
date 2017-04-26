@@ -34,6 +34,7 @@ function packResults(res, label) {
   };
 }
 
+var nRecPerTipe = 2;
 export default class RecommendationController {
 
   static query(req, res) {
@@ -43,7 +44,7 @@ export default class RecommendationController {
         sparql.loadQuery('expression.recommendation.genre', {
             uri: `http://data.doremus.org/expression/${expression}`,
             lang: req.query.lang || 'en',
-            limit: req.query.limit || 3,
+            limit: req.query.limit || nRecPerTipe,
             nocache: true
           })
           .then(results => callback(null, packResults(results, 'of the same genre')))
@@ -53,10 +54,19 @@ export default class RecommendationController {
         sparql.loadQuery('expression.recommendation.composer', {
             uri: `http://data.doremus.org/expression/${expression}`,
             lang: req.query.lang || 'en',
-            limit: req.query.limit || 3,
+            limit: req.query.limit || nRecPerTipe,
             nocache: true
           })
           .then(results => callback(null, packResults(results, 'of the same composer')))
+          .catch(err => callback(err));
+      },
+      function(callback) {
+        sparql.loadQuery('expression.recommendation.mop', {
+            uri: `http://data.doremus.org/expression/${expression}`,
+            lang: req.query.lang || 'en',
+            limit: req.query.limit || nRecPerTipe
+          })
+          .then(results => callback(null, packResults(results, 'with the same instruments')))
           .catch(err => callback(err));
       }
     ], function(err, results) {
