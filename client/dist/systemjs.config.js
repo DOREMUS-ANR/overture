@@ -30,7 +30,7 @@
             // other libraries
             'ng-select': 'npm:ng-select',
             'rxjs': 'npm:rxjs',
-            'angular2-infinite-scroll': 'npm:angular2-infinite-scroll',
+            'ngx-infinite-scroll': 'npm:ngx-infinite-scroll/bundles/ngx-infinite-scroll.umd.js',
             'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
             'moment': 'npm:moment',
             'hammerjs': 'npm:hammerjs/hammer.js',
@@ -45,8 +45,7 @@
             rxjs: {
                 defaultExtension: 'js'
             },
-            'angular2-infinite-scroll': {
-                main: './angular2-infinite-scroll.js',
+            'ngx-infinite-scroll': {
                 defaultExtension: 'js'
             },
             'angular-in-memory-web-api': {
