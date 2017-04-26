@@ -30,11 +30,8 @@ export default class Sparql {
 
     return new Promise((resolve, reject) => {
       this.client.query(query, function(err, results) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(results);
-        }
+        if (err) reject(err);
+        else resolve(results);
       });
     });
   }
@@ -58,7 +55,7 @@ export default class Sparql {
           }
 
           // find and solve the $if statements
-          let ifRegex = /\$if{(.+)}(.+)\$end/g;
+          let ifRegex = /\$if{(.+)}((.|\n)+?)\$end/g;
           query = query.replace(ifRegex, (match, condition, content) => {
             if (opt[condition]) {
               return content;
@@ -67,7 +64,6 @@ export default class Sparql {
           });
 
           // replace params in query
-          console.log(opt);
           for (let param in opt) {
             let regex = new RegExp(`%%${param}%%`, 'g');
             let value = opt[param];
@@ -78,7 +74,8 @@ export default class Sparql {
             query = query.replace(regex, value);
           }
 
-          resolve(this.execute(query).then((res) => this.cache.set(queryId, opt, res)));
+          resolve(this.execute(query).then(res => this.cache.set(queryId, opt, res)
+        ));
         });
       });
     });

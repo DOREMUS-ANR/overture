@@ -10,7 +10,6 @@ export default class Cache {
       };
     }
     this.cache = new NodeCache(cacheOpt);
-
   }
 
   get(api, params) {
@@ -23,6 +22,7 @@ export default class Cache {
   }
 
   set(api, params, value) {
+    if (params.nocache) return Promise.resolve(value);
     return new Promise((resolve) => {
       let key = api + '?' + JSON.stringify(params);
       this.cache.set(key, value, () => resolve(value));

@@ -50,8 +50,7 @@
             <label>Casting</label>
             <ul style="list-style-type: none; margin: 0; padding: 0">
               <li *ngFor="let mop of expression.mop; let i = index" class="instr icon-right-dir">
-                <a *ngIf="!isNode(expression.mopURI[i])" href="{{expression.mopURI[i]}}">{{mop}}</a>
-                <span *ngIf="isNode(expression.mopURI[i])">{{mop}}</span>
+                <a [routerLink]="['/expression']" [queryParams]="{ mop: expression.mopURI[i]}">{{mop}}</a>
               </li>
             </ul>
           </div>

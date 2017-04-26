@@ -43,7 +43,8 @@ export default class RecommendationController {
         sparql.loadQuery('expression.recommendation.genre', {
             uri: `http://data.doremus.org/expression/${expression}`,
             lang: req.query.lang || 'en',
-            limit: req.query.limit || 3
+            limit: req.query.limit || 3,
+            nocache: true
           })
           .then(results => callback(null, packResults(results, 'of the same genre')))
           .catch(err => callback(err));
@@ -52,7 +53,8 @@ export default class RecommendationController {
         sparql.loadQuery('expression.recommendation.composer', {
             uri: `http://data.doremus.org/expression/${expression}`,
             lang: req.query.lang || 'en',
-            limit: req.query.limit || 3
+            limit: req.query.limit || 3,
+            nocache: true
           })
           .then(results => callback(null, packResults(results, 'of the same composer')))
           .catch(err => callback(err));
