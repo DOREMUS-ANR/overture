@@ -20,32 +20,37 @@ var SearchComponent = (function () {
         this.globals = globals;
         this.route = route;
         this.onFilterChanged = new core_1.EventEmitter();
-        this.filter = {
-            key: '',
-            genre: ''
-        };
+        this.filter = {};
         this._vocabularyService.get('key')
             .then(function (voc) {
             _this.itemsKey = voc.map(function (item) { return ({
-                id: item.uri.value,
-                text: (item.label || item.labelEn || item.labelAny).value
+                value: item.uri.value,
+                label: item.label.value
             }); });
+            setTimeout(function () { return _this._loadFilter(); }, 0);
         }, function (error) { return console.error('Error: ' + error); });
         this._vocabularyService.get('iaml/genre')
             .then(function (voc) {
             _this.itemsGenre = voc.map(function (item) { return ({
-                id: item.uri.value,
-                text: (item.label || item.labelEn || item.labelAny).value
+                value: item.uri.value,
+                label: item.label.value
             }); });
+            setTimeout(function () { return _this._loadFilter(); }, 0);
+        }, function (error) { return console.error('Error: ' + error); });
+        this._vocabularyService.get('iaml/mop')
+            .then(function (voc) {
+            _this.itemsMop = voc.map(function (item) { return ({
+                value: item.uri.value,
+                label: item.label.value
+            }); });
+            setTimeout(function () { return _this._loadFilter(); }, 0);
         }, function (error) { return console.error('Error: ' + error); });
     }
     SearchComponent.prototype.ngOnInit = function () {
-        Object.assign(this.filter, this.route.queryParams['value']);
+        this._loadFilter();
     };
-    SearchComponent.prototype.onSelectChanged = function (_a, label) {
-        var id = _a.id;
-        this.filter[label] = id || '';
-        this.onFilterChanged.emit(this.filter);
+    SearchComponent.prototype._loadFilter = function () {
+        Object.assign(this.filter, this.route.queryParams['value']);
     };
     SearchComponent.prototype.changeFilter = function (event) {
         var _this = this;

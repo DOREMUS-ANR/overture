@@ -8,12 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
+var animations_1 = require("@angular/platform-browser/animations");
 var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 require("hammerjs");
 var material_1 = require("@angular/material");
 var angular2_moment_1 = require("angular2-moment");
-var ng2_select_1 = require("ng2-select");
+var ng_select_1 = require("ng-select");
+// import { SelectModule } from 'ng2-select';
 var angular2_infinite_scroll_1 = require("angular2-infinite-scroll");
 var app_component_1 = require("./components/app.component");
 var app_components_list_1 = require("./app.components.list");
@@ -27,7 +29,7 @@ var AppModule = (function () {
 }());
 AppModule = __decorate([
     core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, app_routes_1.routing, material_1.MaterialModule, angular2_moment_1.MomentModule, angular2_infinite_scroll_1.InfiniteScrollModule, ng2_select_1.SelectModule],
+        imports: [platform_browser_1.BrowserModule, animations_1.BrowserAnimationsModule, forms_1.FormsModule, http_1.HttpModule, app_routes_1.routing, material_1.MaterialModule, material_1.MdSelectModule, angular2_moment_1.MomentModule, angular2_infinite_scroll_1.InfiniteScrollModule, ng_select_1.SelectModule],
         declarations: app_components_list_1.myComponentsList.concat([app_component_1.AppComponent]),
         bootstrap: [app_component_1.AppComponent],
         providers: [sharedService_service_1.SharedService, app_globals_1.Globals]

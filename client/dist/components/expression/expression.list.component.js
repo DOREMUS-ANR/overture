@@ -19,11 +19,6 @@ var ExpressionListComponent = (function () {
         this.router = router;
         this.globals = globals;
         this.route = route;
-        this.display = 'none';
-        this.class = 'menu-icon icon-plus';
-        this.displayDiscover = 'none';
-        this.classDiscover = 'menu-icon icon-plus';
-        this.search = false;
         this.filter = {};
         this.querying = false;
         this.error = false;
@@ -93,10 +88,6 @@ __decorate([
     core_1.Input(),
     __metadata("design:type", String)
 ], ExpressionListComponent.prototype, "expressionURI", void 0);
-__decorate([
-    core_1.Output(),
-    __metadata("design:type", Array)
-], ExpressionListComponent.prototype, "items", void 0);
 ExpressionListComponent = __decorate([
     core_1.Component({
         moduleId: module.id,

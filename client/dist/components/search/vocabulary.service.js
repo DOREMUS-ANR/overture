@@ -32,7 +32,7 @@ var VocabularyService = (function () {
             var data = res.json();
             data = data.results && data.results.bindings;
             vocabularies[id] = data;
-            return data.sort(function (a, b) { return a.label.value > b.label.value ? 1 : -1; });
+            return data.sort(function (a, b) { return a.label.value.toLowerCase() > b.label.value.toLowerCase() ? 1 : -1; });
         });
     };
     return VocabularyService;

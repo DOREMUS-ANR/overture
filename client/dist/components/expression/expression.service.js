@@ -24,8 +24,15 @@ var ExpressionService = (function () {
         if (filter === void 0) { filter = {}; }
         var filterOptions = "";
         Object.keys(filter).forEach(function (k) {
-            if (filter[k])
-                filterOptions += "&" + k + "=" + filter[k];
+            var value = filter[k];
+            if (!value)
+                return;
+            if (!Array.isArray(value))
+                value = [value];
+            for (var _i = 0, value_1 = value; _i < value_1.length; _i++) {
+                var v = value_1[_i];
+                filterOptions += "&" + k + "=" + v;
+            }
         });
         var search = 'lim=' + this.limit + filterOptions;
         if (offset)
