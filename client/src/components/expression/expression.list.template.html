@@ -8,7 +8,7 @@
   <error-msg *ngIf="error"></error-msg>
 
   <div class="forever-scroll card-list" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="100" (scrolled)="onScroll();">
-    <expression-summary *ngFor="let expression of items" [expression]="expression"></expression-summary>
+    <expression-summary *ngFor="let expression of items | async" [expression]="expression"></expression-summary>
 
     <loading *ngIf="querying || scrollInProgress"></loading>
 

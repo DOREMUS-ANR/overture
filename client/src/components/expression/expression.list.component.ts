@@ -1,5 +1,6 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {Router, ActivatedRoute, NavigationStart} from '@angular/router';
+import {Observable} from 'rxjs';
 import {Globals } from '../../app.globals';
 import {ExpressionService} from './expression.service';
 
@@ -49,7 +50,7 @@ export class ExpressionListComponent {
     this.querying = true;
     this.error = false;
 
-    this._expressionService.query(this.filter).then(
+    this._expressionService.query(this.filter).subscribe(
       res => {
         this.items = res;
         this.querying = false;
@@ -71,11 +72,11 @@ export class ExpressionListComponent {
   onScroll() {
     if (this.scrollInProgress || !this.items) return;
     this.scrollInProgress = true;
-    this._expressionService.query(this.filter, this.items.length)
-      .then(res => {
-        this.scrollInProgress = false;
-        this.items.push(...res);
-      }, error => console.error('Error: ' + error));
+
+    this._expressionService.query(this.filter, this.items.length).subscribe(res => {
+      this.scrollInProgress = false;
+      this.items.push(...res);
+    }, error => console.error('Error: ' + error));
   }
 
   myIdChange(event) {

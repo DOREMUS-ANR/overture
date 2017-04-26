@@ -22,6 +22,15 @@ export default class ExpressionController {
       .catch(err => sendStandardError(res, err));
   }
 
+  static getRealisations(req, res) {
+    sparql.loadQuery('expression.realisation', {
+        uri: `<http://data.doremus.org/expression/${req.params.id}>`,
+        lang: req.query.lang || 'en'
+      })
+      .then(results => res.json(results))
+      .catch(err => sendStandardError(res, err));
+  }
+
   static query(req, res) {
     console.log(req.query);
     let opt = Object.assign({

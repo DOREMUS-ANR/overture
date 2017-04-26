@@ -4,14 +4,17 @@ import { Http, RequestOptions } from '@angular/http';
 import { Globals } from '../../app.globals';
 
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class ExpressionService {
+  expressions: any[];
+
   private limit = 12;
 
   constructor(private http: Http, private globals: Globals) { }
 
-  query(filter = {}, offset?: number) {
+  query(filter = {}, offset?: number): Observable<any[]> {
     let filterOptions = "";
 
     Object.keys(filter).forEach(k => {
@@ -24,10 +27,11 @@ export class ExpressionService {
 
     let search = 'lim=' + this.limit + filterOptions;
     if (offset) search += '&offset=' + offset;
+    else this.expressions = [];
 
     return this.http.get("/api/expression", new RequestOptions({ search }))
-      .toPromise().then(res => {
-        let data = this._processResult(res);
+      .map(res => {
+        let data = _processResult(res);
 
         for (let d of data)
           d.id = /[^/]*$/.exec(d.expression)[0];
@@ -42,9 +46,8 @@ export class ExpressionService {
     let search = `lang=${this.globals.lang}`;
     return this.http.get(`/api/expression/${id}`, new RequestOptions({ search }))
       .toPromise().then(res => {
-        let data = this._processResult(res);
-        data = this._mergeData(data);
-        return data[0];
+        let data = _mergeData(_processResult(res));
+        return data;
       });
   }
 
@@ -60,34 +63,35 @@ export class ExpressionService {
       });
   }
 
-  _mergeData(data) {
-    let output = {};
+}
 
-    for (let row of data) {
-      Object.keys(row).forEach(prop => {
-        let value = row[prop];
+function _mergeData(data) {
+  let output = {};
 
-        if (!output[prop]) {
-          output[prop] = [value];
-        } else if (prop == 'keyURI') {
-          //FIXME workaround for key in @en-gb and @en-us
-          if (output['key'].length > output['keyURI'].length)
-            output[prop].push(value)
-        } else if (!output[prop].includes(value)) {
+  for (let row of data) {
+    Object.keys(row).forEach(prop => {
+      let value = row[prop];
+
+      if (!output[prop]) {
+        output[prop] = [value];
+      } else if (prop == 'keyURI') {
+        //FIXME workaround for key in @en-gb and @en-us
+        if (output['key'].length > output['keyURI'].length)
           output[prop].push(value)
-        }
-      });
-    }
-    return [output];
-  }
-
-  _processResult(res) {
-    let bindings = res.json().results.bindings;
-    bindings.forEach(b => {
-      Object.keys(b).forEach(prop => {
-        b[prop] = b[prop].value;
-      });
+      } else if (!output[prop].includes(value)) {
+        output[prop].push(value)
+      }
     });
-    return bindings;
   }
+  return output;
+}
+
+function _processResult(res) {
+  let bindings = res.json().results.bindings;
+  bindings.forEach(b => {
+    Object.keys(b).forEach(prop => {
+      b[prop] = b[prop].value;
+    });
+  });
+  return bindings;
 }

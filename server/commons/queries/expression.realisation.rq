@@ -1,0 +1,36 @@
+PREFIX mus: <http://data.doremus.org/ontology#>
+PREFIX ecrm: <http://erlangen-crm.org/current/>
+PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT DISTINCT *
+WHERE {
+  # performances
+  { ?event efrbroo:R25_performed ?realizedExpression }
+  UNION
+  # publications
+  { ?event efrbroo:R24_created ?realizedExpression }
+
+  ?realizedExpression ecrm:P165_incorporates %%uri%% .
+
+  ?event a ?class;
+      ecrm:P3_has_note ?note.
+
+  OPTIONAL { ?event ecrm:P4_has_time-span / ecrm:P79_beginning_is_qualified_by ?time . }
+  OPTIONAL { ?event ecrm:P7_took_place_at ?place }
+  OPTIONAL {
+    ?event ecrm:P9_consists_of ?activity .
+    ?activity ecrm:P14_carried_out_by ?actor .
+    OPTIONAL {
+    { SELECT ?actor sql:BEST_LANGMATCH(?actorName, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?actorName
+      WHERE { ?actor foaf:name ?actorName }
+    } }
+    OPTIONAL { ?activity mus:U35_foresees_function_of_type ?function }
+    OPTIONAL {
+      ?activity mus:U1_used_medium_of_performance ?mopURI
+      OPTIONAL {{ SELECT ?mopURI sql:BEST_LANGMATCH(?mop, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop
+        WHERE { ?mopURI skos:prefLabel | ecrm:P1_is_identified_by ?mop }
+      }}
+    }
+  }
+}

@@ -29,26 +29,21 @@ WHERE {
         WHERE { ?keyURI skos:prefLabel | ecrm:P1_is_identified_by ?key }
       }
     }
-    OPTIONAL{%%uri%% ecrm:P67_refers_to / ecrm:P3_has_note ?refersNote .}
     OPTIONAL{%%uri%% mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
-    OPTIONAL{%%uri%% ecrm:P1_is_identified_by ?identified .}
-    OPTIONAL{?complexWork efrbroo:R40_has_representative_expression %%uri%% .}
     OPTIONAL{
       ?individualWork efrbroo:R9_is_realised_in %%uri%% .
       OPTIONAL{
         ?individualWork  mus:U4_had_princeps_publication ?publicationEvent .
         ?publicationEvent ecrm:P3_has_note ?publicationEventNote .
         OPTIONAL {
-          ?publicationEvent ecrm:P4_has_time-span ?publicationTime .
-          ?publicationTime  ecrm:P79_beginning_is_qualified_by ?publicationStart .
+          ?publicationEvent ecrm:P4_has_time-span / ecrm:P79_beginning_is_qualified_by ?publicationStart .
         }
       }
       OPTIONAL{
         ?individualWork mus:U5_had_premiere ?premiere .
         ?premiere ecrm:P3_has_note ?premiereNote.
         OPTIONAL {
-          ?premiere ecrm:P4_has_time-span ?premiereTime .
-          ?premiereTime  ecrm:P79_beginning_is_qualified_by ?premiereStart .
+          ?premiere ecrm:P4_has_time-span / ecrm:P79_beginning_is_qualified_by ?premiereStart .
         }
       }
     }
