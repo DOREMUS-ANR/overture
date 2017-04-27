@@ -10,8 +10,6 @@ import { MomentModule } from 'angular2-moment';
 import {SelectModule} from 'ng-select';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-// import { InfiniteScrollModule } from 'angular2-infinite-scroll';
-
 import {AppComponent} from './components/app.component';
 import {myComponentsList} from './app.components.list';
 
@@ -20,12 +18,16 @@ import {SharedService} from './services/sharedService.service';
 import { routing }        from './app.routes';
 import { Globals } from './app.globals';
 
+import { KeysPipe } from './pipes/keys.pipe';
+import { SummaryPipe } from './pipes/summary.pipe';
+
+
 
 @NgModule({
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpModule, routing, MaterialModule, MdSelectModule, MomentModule, InfiniteScrollModule, SelectModule],
-  declarations: [...myComponentsList, AppComponent],
+  declarations: [...myComponentsList, AppComponent, KeysPipe, SummaryPipe],
   bootstrap: [AppComponent],
-  providers: [SharedService, Globals]
+  providers: [SharedService, Globals, KeysPipe, SummaryPipe]
 })
 
 export class AppModule { }

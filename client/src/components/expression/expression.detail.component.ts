@@ -41,7 +41,8 @@ export class ExpressionDetailComponent {
 
       if (id) {
         this.querying = true;
-        this.expressionService.get(id).then(exp => {
+
+        this.expressionService.get(id).subscribe(exp => {
           this.expression = exp;
           console.log(this.expression);
           this.querying = false;
@@ -97,6 +98,16 @@ export class ExpressionDetailComponent {
 
     let inst = source.replace(organizBase, '');
     return institutions[inst];
+  }
+
+  class2Label(cls: string) {
+    switch (cls) {
+      case 'http://erlangen-crm.org/efrbroo/F31_Performance':
+        return 'Performance';
+      case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
+        return 'Publication'
+      default: return cls;
+    }
   }
 
 }

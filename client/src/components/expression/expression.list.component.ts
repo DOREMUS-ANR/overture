@@ -1,6 +1,5 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {Router, ActivatedRoute, NavigationStart} from '@angular/router';
-import {Observable} from 'rxjs';
 import {Globals } from '../../app.globals';
 import {ExpressionService} from './expression.service';
 

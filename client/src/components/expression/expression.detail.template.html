@@ -61,12 +61,21 @@
   </section>
 
   <div class="main info">
-    <timeline *ngIf="dates && dates.length > 0" [dates]="this.dates"></timeline>
+    <section>
+      <timeline *ngIf="dates && dates.length > 0" [dates]="this.dates"></timeline>
+
+      <section class="realisations" *ngFor="let evtGroup of expression.events | keys">
+        <h2><strong>{{evtGroup.value.length}}</strong>{{class2Label(evtGroup.key)}}</h2>
+        <div class="card-list">
+          <summary *ngFor="let evt of evtGroup.value" [entity]="evt | summary: evt.class" [eclass]="evt.class"></summary>
+        </div>
+      </section>
+    </section>
 
     <section class="recommendation-cont">
       <div *ngFor="let group of recommendation">
         <h3>{{group.label}}</h3>
-        <expression-summary *ngFor="let expr of group.data" [expression]="expr"></expression-summary>
+        <summary *ngFor="let expr of group.data" [entity]="expr | summary: 'expression'"></summary>
         <p class="empty-msg" *ngIf="group.data.length < 1">nothing to show</p>
       </div>
     </section>

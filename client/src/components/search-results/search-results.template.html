@@ -6,11 +6,9 @@
   <error-msg *ngIf="error"></error-msg>
 
   <div class="forever-scroll card-list">
-    <!--  infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="100" (scrolled)="onScroll();" -->
     <loading *ngIf="querying || scrollInProgress"></loading>
 
-    <expression-summary *ngFor="let expression of items" [expression]="expression"></expression-summary>
-
+    <summary *ngFor="let expression of items" [entity]="expression | summary: 'expression'" [eclass]="'expression'"></summary>
 
   </div>
 

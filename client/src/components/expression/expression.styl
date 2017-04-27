@@ -125,10 +125,13 @@
           display block
 
   .info
-    display flex
+    +above('m')
+      display flex
     justify-content space-between
-    timeline
+    > section
       flex 60
+      +above('m')
+        padding-right 2em
     .recommendation-cont
       flex 30
       h3
@@ -190,3 +193,11 @@
     overflow hidden
     cursor pointer
     background #fff
+
+.realisations
+  h2
+    color main
+    font-size 1em
+    strong
+      margin .3em
+      font-size 1.6em
