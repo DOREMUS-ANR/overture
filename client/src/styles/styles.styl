@@ -334,9 +334,11 @@ top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab, wip
   clearfix()
   padding 1em .5em
   border-bottom 1px solid grayLight
-  cursor pointer
-  &:hover
-    background #F4F4F4
+  outline none
+  &[ng-reflect-router-link]
+    cursor pointer
+    &:hover
+      background #F4F4F4
   img
     width 3.5em
     height 3.5em

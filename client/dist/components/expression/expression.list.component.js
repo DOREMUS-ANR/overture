@@ -47,7 +47,7 @@ var ExpressionListComponent = (function () {
         // if (this.querying) return false;
         this.querying = true;
         this.error = false;
-        this._expressionService.query(this.filter).then(function (res) {
+        this._expressionService.query(this.filter).subscribe(function (res) {
             _this.items = res;
             _this.querying = false;
         }, function (error) {
@@ -67,8 +67,7 @@ var ExpressionListComponent = (function () {
         if (this.scrollInProgress || !this.items)
             return;
         this.scrollInProgress = true;
-        this._expressionService.query(this.filter, this.items.length)
-            .then(function (res) {
+        this._expressionService.query(this.filter, this.items.length).subscribe(function (res) {
             _this.scrollInProgress = false;
             (_a = _this.items).push.apply(_a, res);
             var _a;

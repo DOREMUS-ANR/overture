@@ -37,7 +37,7 @@ var ExpressionDetailComponent = (function () {
             var id = params['id'];
             if (id) {
                 _this.querying = true;
-                _this.expressionService.get(id).then(function (exp) {
+                _this.expressionService.get(id).subscribe(function (exp) {
                     _this.expression = exp;
                     console.log(_this.expression);
                     _this.querying = false;
@@ -88,6 +88,15 @@ var ExpressionDetailComponent = (function () {
             return null;
         var inst = source.replace(organizBase, '');
         return institutions[inst];
+    };
+    ExpressionDetailComponent.prototype.class2Label = function (cls) {
+        switch (cls) {
+            case 'http://erlangen-crm.org/efrbroo/F31_Performance':
+                return 'Performance';
+            case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
+                return 'Publication';
+            default: return cls;
+        }
     };
     return ExpressionDetailComponent;
 }());

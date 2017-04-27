@@ -10,20 +10,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var ExpressionSummaryComponent = (function () {
-    function ExpressionSummaryComponent() {
+var SummaryComponent = (function () {
+    function SummaryComponent() {
+        this.eclass = 'expression'; //entity class, i.e. expression
     }
-    return ExpressionSummaryComponent;
+    return SummaryComponent;
 }());
 __decorate([
     core_1.Input(),
     __metadata("design:type", Object)
-], ExpressionSummaryComponent.prototype, "expression", void 0);
-ExpressionSummaryComponent = __decorate([
+], SummaryComponent.prototype, "entity", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], SummaryComponent.prototype, "eclass", void 0);
+SummaryComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
-        selector: 'expression-summary',
-        templateUrl: './expression.summary.template.html'
+        selector: 'summary',
+        templateUrl: './summary.template.html'
     })
-], ExpressionSummaryComponent);
-exports.ExpressionSummaryComponent = ExpressionSummaryComponent;
+], SummaryComponent);
+exports.SummaryComponent = SummaryComponent;
