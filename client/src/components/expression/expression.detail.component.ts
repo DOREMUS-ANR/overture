@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ExpressionService} from './expression.service';
 import {SharedService} from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Title }     from '@angular/platform-browser';
 
 const organizBase = 'http://data.doremus.org/organization/';
 const institutions = {
@@ -28,7 +29,8 @@ export class ExpressionDetailComponent {
   dates: any[];
   error: boolean = false;
 
-  constructor(sharedService: SharedService,
+  constructor(private titleService: Title,
+    sharedService: SharedService,
     private expressionService: ExpressionService,
     private route: ActivatedRoute) {
 
@@ -44,6 +46,8 @@ export class ExpressionDetailComponent {
 
         this.expressionService.get(id).subscribe(exp => {
           this.expression = exp;
+          this.titleService.setTitle(exp.title[0]);
+
           console.log(this.expression);
           this.querying = false;
           this.error = false;

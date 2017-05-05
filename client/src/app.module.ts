@@ -1,5 +1,5 @@
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
@@ -27,7 +27,7 @@ import { SummaryPipe } from './pipes/summary.pipe';
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpModule, routing, MaterialModule, MdSelectModule, MomentModule, InfiniteScrollModule, SelectModule],
   declarations: [...myComponentsList, AppComponent, KeysPipe, SummaryPipe],
   bootstrap: [AppComponent],
-  providers: [SharedService, Globals, KeysPipe, SummaryPipe]
+  providers: [SharedService, Globals, KeysPipe, SummaryPipe, Title]
 })
 
 export class AppModule { }
