@@ -1,11 +1,22 @@
 <div class="top-nav">
+  <button md-icon-button id="openNav" (click)="openNav()">
+    <md-icon class="mdi mdi-dots-vertical"></md-icon>
+  </button>
+
+  <span class="flex-span"></span>
 
   <a [routerLink]="['']" title="Overture Home" class="fullLogo">Overture</a>
 
   <span class="flex-span"></span>
 
-  <nav class="sections-part">
-    <a *ngFor="let r of routes" [routerLink]="r.name" [routerLinkActive]="'active'">{{r.label}}</a>
+  <nav class="navigation" [ngClass]="{'open': showNav}">
+    <div class="close-nav">
+      <button md-icon-button disableRipple id="closeNav" (click)="closeNav()">
+        <md-icon class="mdi mdi-close"></md-icon>
+      </button>
+    </div>
+
+    <a *ngFor="let r of routes" [routerLink]="r.name" [routerLinkActive]="'active'" (click)="closeNav()">{{r.label}}</a>
   </nav>
 
   <span class="flex-span"></span>

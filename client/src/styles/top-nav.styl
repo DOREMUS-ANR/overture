@@ -5,8 +5,16 @@
 
   flex-flow row wrap
   padding 1em
+  position relative
 
-  .sections-part
+  color #fff
+
+  #openNav
+    &, & +.flex-span
+      +above('l')
+        display none
+
+  .navigation
     flex-grow 4
     text-align center
     a
@@ -18,16 +26,44 @@
       border-radius .3em
       position relative
       outline none
-      &.active:after
-        content ''
-        display block
-        position absolute
-        background #fff
-        height 2px
-        width calc(100% - 1em)
+      +above('l')
+        &.active:after
+          content ''
+          display block
+          position absolute
+          background #fff
+          height 2px
+          width calc(100% - 1em)
       &:hover, &:not(.active):focus
         text-decoration none
         background alpha(#000, .18)
+
+    .close-nav
+      text-align left
+      padding 1em
+      +above('l')
+        display none
+
+    +below('m')
+      transition all 200ms ease-in-out
+      width 0
+      height 0
+      border-radius 0 0 100em 0
+      &.open
+        width 100vw
+        height 100vh
+        border-radius 0
+      overflow hidden
+      position absolute
+      z-index 3
+      background main
+      top 0
+      left 0
+      a
+        display block
+        padding 1em
+      + .flex-span
+        display none
 
   button[md-icon-button]
     font-size 21px

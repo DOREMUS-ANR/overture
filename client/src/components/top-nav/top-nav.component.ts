@@ -4,14 +4,14 @@ import {Router} from '@angular/router';
 @Component({
   moduleId: module.id,
   selector: 'top-nav',
-  templateUrl: './top-nav.template.html',
-  styleUrls: ['./top-nav.css']
+  templateUrl: './top-nav.template.html'
 })
 
 export class TopNavComponent {
   @ViewChild('fullSearchInput') fullSearchInput: ElementRef;
 
   private showSearch: boolean = false;
+  private showNav: boolean = false;
   private searchInput: string;
 
   private routes: [any] = [
@@ -40,6 +40,9 @@ export class TopNavComponent {
   }
 
   closeSearch() { this.showSearch = false; }
+
+  openNav() { this.showNav = true; }
+  closeNav() { this.showNav = false; }
 
   onSearchSubmit(e) {
     e.preventDefault();
