@@ -107,6 +107,7 @@ export class ExpressionDetailComponent {
   class2Label(cls: string) {
     switch (cls) {
       case 'http://erlangen-crm.org/efrbroo/F31_Performance':
+      case 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation':
         return 'Performance';
       case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
         return 'Publication'

@@ -21,8 +21,10 @@
       </div>
 
       <div class="info-cont">
-        <div class="source" *ngIf="expression.source">
-          <img src='{{getSource(expression.source).img}}' alt='{{getSource(expression.source).label}}' title="data from {{getSource(expression.source).label}}" />
+        <div class="sources">
+          <a href='{{expression.sourceLink}}' rel="external" target="blank" class="source" *ngIf="expression.source">
+            <img src='{{getSource(expression.source).img}}' alt='{{getSource(expression.source).label}}' title="data from {{getSource(expression.source).label}}" />
+          </a>
         </div>
         <div class="info-card">
 

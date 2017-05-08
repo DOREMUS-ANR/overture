@@ -17,6 +17,7 @@ export class SummaryPipe implements PipeTransform {
           small: value.catalogue
         }
       case 'event':
+      case 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation' :
       case 'http://erlangen-crm.org/efrbroo/F31_Performance':
         return {
           super: `${value.time ? moment(value.time).year() + ',' : ''} ${toActorList(value.activities)}`,
