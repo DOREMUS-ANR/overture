@@ -13,6 +13,7 @@ var core_1 = require("@angular/core");
 var expression_service_1 = require("./expression.service");
 var sharedService_service_1 = require("../../services/sharedService.service");
 var router_1 = require("@angular/router");
+var platform_browser_1 = require("@angular/platform-browser");
 var organizBase = 'http://data.doremus.org/organization/';
 var institutions = {
     Philharmonie_de_Paris: {
@@ -25,7 +26,8 @@ var institutions = {
     }
 };
 var ExpressionDetailComponent = (function () {
-    function ExpressionDetailComponent(sharedService, expressionService, route) {
+    function ExpressionDetailComponent(titleService, sharedService, expressionService, route) {
+        this.titleService = titleService;
         this.expressionService = expressionService;
         this.route = route;
         this.error = false;
@@ -39,6 +41,7 @@ var ExpressionDetailComponent = (function () {
                 _this.querying = true;
                 _this.expressionService.get(id).subscribe(function (exp) {
                     _this.expression = exp;
+                    _this.titleService.setTitle(exp.title[0]);
                     console.log(_this.expression);
                     _this.querying = false;
                     _this.error = false;
@@ -92,6 +95,7 @@ var ExpressionDetailComponent = (function () {
     ExpressionDetailComponent.prototype.class2Label = function (cls) {
         switch (cls) {
             case 'http://erlangen-crm.org/efrbroo/F31_Performance':
+            case 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation':
                 return 'Performance';
             case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
                 return 'Publication';
@@ -107,7 +111,8 @@ ExpressionDetailComponent = __decorate([
         styleUrls: ['./expression.css'],
         providers: [expression_service_1.ExpressionService]
     }),
-    __metadata("design:paramtypes", [sharedService_service_1.SharedService,
+    __metadata("design:paramtypes", [platform_browser_1.Title,
+        sharedService_service_1.SharedService,
         expression_service_1.ExpressionService,
         router_1.ActivatedRoute])
 ], ExpressionDetailComponent);

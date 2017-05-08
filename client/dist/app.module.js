@@ -33,7 +33,7 @@ AppModule = __decorate([
         imports: [platform_browser_1.BrowserModule, animations_1.BrowserAnimationsModule, forms_1.FormsModule, http_1.HttpModule, app_routes_1.routing, material_1.MaterialModule, material_1.MdSelectModule, angular2_moment_1.MomentModule, ngx_infinite_scroll_1.InfiniteScrollModule, ng_select_1.SelectModule],
         declarations: app_components_list_1.myComponentsList.concat([app_component_1.AppComponent, keys_pipe_1.KeysPipe, summary_pipe_1.SummaryPipe]),
         bootstrap: [app_component_1.AppComponent],
-        providers: [sharedService_service_1.SharedService, app_globals_1.Globals, keys_pipe_1.KeysPipe, summary_pipe_1.SummaryPipe]
+        providers: [sharedService_service_1.SharedService, app_globals_1.Globals, keys_pipe_1.KeysPipe, summary_pipe_1.SummaryPipe, platform_browser_1.Title]
     })
 ], AppModule);
 exports.AppModule = AppModule;

@@ -15,6 +15,7 @@ var TopNavComponent = (function () {
     function TopNavComponent(router) {
         this.router = router;
         this.showSearch = false;
+        this.showNav = false;
         this.routes = [
             {
                 name: 'expression',
@@ -39,6 +40,8 @@ var TopNavComponent = (function () {
         this.fullSearchInput.nativeElement.focus();
     };
     TopNavComponent.prototype.closeSearch = function () { this.showSearch = false; };
+    TopNavComponent.prototype.openNav = function () { this.showNav = true; };
+    TopNavComponent.prototype.closeNav = function () { this.showNav = false; };
     TopNavComponent.prototype.onSearchSubmit = function (e) {
         e.preventDefault();
         // this.closeSearch();
@@ -59,8 +62,7 @@ TopNavComponent = __decorate([
     core_1.Component({
         moduleId: module.id,
         selector: 'top-nav',
-        templateUrl: './top-nav.template.html',
-        styleUrls: ['./top-nav.css']
+        templateUrl: './top-nav.template.html'
     }),
     __metadata("design:paramtypes", [router_1.Router])
 ], TopNavComponent);
