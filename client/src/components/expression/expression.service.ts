@@ -66,7 +66,7 @@ export class ExpressionService {
             if (!evt.activities) evt.activities = [];
 
             evt.activities.push({
-              actor: e.actor,
+              actor: e.actorName || e.actor,
               function: e.function,
               mop: e.mop
             });
