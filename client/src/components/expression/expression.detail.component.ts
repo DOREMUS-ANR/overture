@@ -4,6 +4,7 @@ import {SharedService} from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Title }     from '@angular/platform-browser';
 
+const defaultOverviewPic = '/static/img/bg/generic-score.jpg';
 const organizBase = 'http://data.doremus.org/organization/';
 const institutions = {
   Philharmonie_de_Paris: {
@@ -28,6 +29,7 @@ export class ExpressionDetailComponent {
   querying: boolean;
   dates: any[];
   error: boolean = false;
+  overviewPic: string = defaultOverviewPic;
 
   constructor(private titleService: Title,
     sharedService: SharedService,
@@ -72,6 +74,8 @@ export class ExpressionDetailComponent {
               description: this.expression.publicationEventNote,
               date: this.expression.publicationStart
             });
+
+          this.overviewPic = this.expression.composerPic || defaultOverviewPic;
 
         }, (err) => {
           this.querying = false;

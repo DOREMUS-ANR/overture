@@ -5,7 +5,7 @@
 
 <article *ngIf="expression" class="expression-detail">
   <section class="overview">
-    <div style="background-image: url(/static/img/bg/generic-score.jpg)" class="bg"></div>
+    <div [ngStyle]="{'background-image': 'url('+overviewPic+')'}" class="bg"></div>
     <div class="overview-cont">
       <div class="title-cont">
         <p class="composer" *ngIf="expression.composer">{{expression.composer}}</p>

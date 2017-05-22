@@ -50,8 +50,9 @@ WHERE {
       ?expCreation efrbroo:R17_created %%uri%% .
       OPTIONAL {
         ?expCreation ecrm:P9_consists_of / ecrm:P14_carried_out_by ?composerUri .
+        OPTIONAL { ?composerUri foaf:depiction ?composerPic }
         { SELECT ?composerUri sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?composer
-          WHERE { ?composerUri foaf:name ?composer }
+          WHERE { ?composerUri rdfs:label ?composer }
         }
       }
       OPTIONAL {
