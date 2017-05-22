@@ -38,10 +38,12 @@
         background lighten(main, 5)
 
   .descriptive
-    display flex
-    flex-flow row no-wrap
-    align-items center
-    justify-content center
+    +above('m')
+      display flex
+      flex-flow row no-wrap
+      align-items center
+      justify-content center
+    text-align center
     padding 2em 0
     > *
       padding 1em 2em
@@ -55,7 +57,8 @@
     p
       flex 2 0 20em
       max-width 31em
-      font-size: 1.3em
+      font-size 1.3em
+      text-align left
 
   .divider
     width 100%
