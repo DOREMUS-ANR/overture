@@ -26,12 +26,12 @@ var SummaryPipe = (function () {
             case 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation':
             case 'http://erlangen-crm.org/efrbroo/F31_Performance':
                 return {
-                    super: (value.time ? moment(value.time).year() + ',' : '') + " " + toActorList(value.activities),
+                    super: "" + (value.time ? moment(value.time).year() : '') + separator(value) + toActorList(value.activities),
                     title: value.place ? "Performance at " + value.place : 'Performance'
                 };
             case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
                 return {
-                    super: (value.time ? moment(value.time).year() + ',' : '') + " " + toActorList(value.activities),
+                    super: "" + (value.time ? moment(value.time).year() : '') + separator(value) + toActorList(value.activities),
                     title: value.place ? "Publication at " + value.place : 'Publication'
                 };
         }
@@ -42,6 +42,9 @@ SummaryPipe = __decorate([
     core_1.Pipe({ name: 'summary' })
 ], SummaryPipe);
 exports.SummaryPipe = SummaryPipe;
+function separator(value) {
+    return value.time && value.activities ? ', ' : '';
+}
 function toActorList(activities) {
     if (activities === void 0) { activities = []; }
     return activities.map(function (a) { return a.actor; }).join(', ');

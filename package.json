@@ -1,6 +1,6 @@
 {
   "name": "overture",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Exploring music data in DOREMUS",
   "main": "index.js",
   "scripts": {
@@ -68,7 +68,7 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-stylus": "^2.6.0",
     "gulp-typescript": "^3.1.6",
-    "gulp-uglify": "^2.1.2",
+    "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "lodash": "^4.17.4",
     "material-shadows": "^3.0.1",

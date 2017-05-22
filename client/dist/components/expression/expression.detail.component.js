@@ -14,6 +14,7 @@ var expression_service_1 = require("./expression.service");
 var sharedService_service_1 = require("../../services/sharedService.service");
 var router_1 = require("@angular/router");
 var platform_browser_1 = require("@angular/platform-browser");
+var defaultOverviewPic = '/static/img/bg/generic-score.jpg';
 var organizBase = 'http://data.doremus.org/organization/';
 var institutions = {
     Philharmonie_de_Paris: {
@@ -31,6 +32,7 @@ var ExpressionDetailComponent = (function () {
         this.expressionService = expressionService;
         this.route = route;
         this.error = false;
+        this.overviewPic = defaultOverviewPic;
         this.sharedService = sharedService;
     }
     ExpressionDetailComponent.prototype.ngOnInit = function () {
@@ -65,6 +67,7 @@ var ExpressionDetailComponent = (function () {
                             description: _this.expression.publicationEventNote,
                             date: _this.expression.publicationStart
                         });
+                    _this.overviewPic = _this.expression.composerPic || defaultOverviewPic;
                 }, function (err) {
                     _this.querying = false;
                     _this.error = true;
