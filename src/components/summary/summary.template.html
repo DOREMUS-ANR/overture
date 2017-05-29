@@ -1,0 +1,5 @@
+<div class="entity-summary" [routerLink]="entity.link">
+  <img md-card-avatar [src]="entity.pic || 'static/img/defPicExpr.png'">
+  <p class="composer"><span *ngIf="entity.super != 0">{{entity.super}}</span></p>
+  <h3>{{entity.title}}<small class="catalogue">{{entity.small}}</small></h3>
+</div>

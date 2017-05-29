@@ -7,4 +7,5 @@ gulpfile.babel.js
 .editorconfig
 typings/*
 node_modules/*
+src/*
 .git/*

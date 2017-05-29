@@ -5,7 +5,6 @@ import express from 'express';
 import http from 'http';
 import nomo from 'node-monkey';
 import RoutesConfig from './routes/routes.conf';
-import Routes from './routes/routes';
 
 const app = express();
 
@@ -33,7 +32,7 @@ app.get('/monkey', function(req, res) {
 /* end setup monkey*/
 
 RoutesConfig.init(app, express);
-Routes.init(app, express.Router());
+// Routes.init(app, express.Router());
 
 server.listen(PORT, () => {
   /* jshint strict:false */

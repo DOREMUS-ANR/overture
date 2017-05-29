@@ -1,0 +1,29 @@
+/* COLORS */
+grayLight = #ededed
+grayMedium = #8a8a8a
+grayDark = #222
+main = #c62c24
+mainDark = #631a19
+seaMedium = #2EC4B6
+seaLight = rgba(#2ec4b6, 0.71)
+orangeMedium = #FF9F1C
+/* MEASURES */
+pageWidthLimit = 1280px
+
+/* ANIMATIONS */
+materialBezier = cubic-bezier(.55,0,.1,1)
+
+headerHeight = 68px
+
+clearfix()
+  &:after
+    content ""
+    display table
+    clear both
+
+.first-content
+  padding-top headerHeight
+  +below('m')
+    padding-top 42px
+  +below('s')
+    padding-top 42px

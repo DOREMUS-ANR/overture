@@ -13,15 +13,11 @@ The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][
 ### Dependencies
 
 - [Node.JS](https://nodejs.org/en/)
-- An RDF store ([Virtuoso 7.2.1](http://www.openlinksw.com)
-)
- - running in the local machine in port 8890 (sparql endpoint: http://localhost:8890/sparql).
- - the database should contain the GRAPH <http://data.doremus.org/vocabulary/key> with some Concepts if the user wants to see some changes when doing the query.
 
 ### Run (dev mode)
 - Install some global packages
 
-        npm install -g gulp gulp-cli nodemon typings
+        npm install -g nodemon typings
 
 - In application folder
 
@@ -30,7 +26,9 @@ The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][
 
 Build for production
 
-        npm run build-dist
+        npm run build
+
+The project contains two main folders: `server` that contains the Node.JS/Express application, and `src` that contains the Angular app that runs on the client.
 
 ### Run (production mode)
 
@@ -41,13 +39,14 @@ Run production mode (UNIX)
 
 Run production mode (Windows)
 
+        npm install --production
         set NODE_ENV=production
         node index
 
 ### Docker
 
-Install dependency: 
- 
+Install dependency:
+
     docker build -t jplu/node github.com/jplu/docker-node
 
 Build
