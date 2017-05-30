@@ -1,0 +1,16 @@
+SELECT DISTINCT
+  ?artist as ?uri
+  sql:BEST_LANGMATCH(?label, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?label
+  ?pic
+WHERE {
+  ?artist a ecrm:E21_Person ;
+         rdfs:label ?label .
+  OPTIONAL { ?artist foaf:depiction ?pic }
+
+  # involved at least in one activity
+  ?activity ecrm:P14_carried_out_by ?artist .
+}
+GROUP BY ?artist ?pic
+ORDER BY desc(COUNT(?activity))
+LIMIT %%lim%%
+OFFSET %%offset%%

@@ -1,4 +1,4 @@
-![OVERTURE](client/src/img/logos/overture.logo.color.png)
+![OVERTURE](/src/img/logos/overture.logo.color.png)
 
 ### About
 OVERTURE is based on the [DOREMUS model][1] that allows a detailed description of a musical work and the events associated with it (creation, execution, etc.). It allows the user to go through the musical database easily.

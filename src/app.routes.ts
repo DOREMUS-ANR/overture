@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 import {HomeComponent} from './components/home/home.component';
 import {SearchResultsComponent} from './components/search-results/search-results.component';
 
-import {PersonTabComponent} from './components/person-tab/person-tab.component';
+import {ArtistDetailComponent} from './components/artist/artist.detail.component';
 import {ScoreTabComponent} from './components/score-tab/score-tab.component';
 
 import {ExpressionComponent} from './components/expression/expression.component';
@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   { path: 'search/:input', component: SearchResultsComponent, data: { title: 'Search' } },
   { path: 'performance', component: WipComponent, data: { title: 'Performances' } },
   { path: 'recording', component: WipComponent, data: { title: 'Recording' }},
-  { path: 'person', component: PersonTabComponent, data: { title: 'Artists' } },
+  { path: 'artist', component: ArtistDetailComponent, data: { title: 'Artists' } },
   { path: 'score', component: ScoreTabComponent, data: { title: 'Scores' } },
   {
     path: 'expression', component: ExpressionComponent,

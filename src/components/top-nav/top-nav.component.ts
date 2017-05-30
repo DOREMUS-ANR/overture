@@ -28,7 +28,7 @@ export class TopNavComponent {
       name: 'score',
       label: 'Scores'
     }, {
-      name: 'person',
+      name: 'artist',
       label: 'Artists'
     }];
 

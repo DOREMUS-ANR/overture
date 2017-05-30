@@ -1,0 +1,14 @@
+SELECT DISTINCT *
+WHERE {
+  ?uri a ecrm:E21_Person ;
+         rdfs:label ?label ;
+         foaf:name ?names .
+  OPTIONAL { ?uri ecrm:P98i_was_born ?birth }
+  OPTIONAL { ?uri ecrm:P100i_died_in ?death }
+  OPTIONAL { ?uri foaf:depiction ?pic }
+  OPTIONAL { ?uri rdfs:comment ?comment }
+  OPTIONAL { ?uri owl:sameAs ?sameAs }
+  OPTIONAL { ?uri foaf:isPrimaryTopicOf ?wikipedia }
+
+  FILTER (str(?uri) = %%uri%%)
+}

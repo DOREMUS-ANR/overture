@@ -29,7 +29,7 @@ import {ErrorComponent} from './components/commons/error.component';
 import {LoadingComponent} from './components/commons/loading.component';
 import {TimelineComponent} from './components/commons/timeline.component';
 
-import {PersonTabComponent} from './components/person-tab/person-tab.component';
+import {ArtistDetailComponent} from './components/artist/artist.detail.component';
 import {ScoreTabComponent} from './components/score-tab/score-tab.component';
 
 import {ExpressionComponent} from './components/expression/expression.component';
@@ -47,7 +47,7 @@ import {WipComponent} from './components/wip/wip.component';
   declarations: [AppComponent, KeysPipe, SummaryPipe,
     HomeComponent, SearchResultsComponent,
     ErrorComponent, LoadingComponent, TimelineComponent,
-    PersonTabComponent, ScoreTabComponent,
+    ArtistDetailComponent, ScoreTabComponent,
     ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, SummaryComponent,
     WipComponent, TopNavComponent, SearchComponent
   ],
