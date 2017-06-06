@@ -3,15 +3,15 @@ import Sparql from '../../commons/sparql';
 var sparql = new Sparql();
 
 const schemaOrgMapping = {
-  'uri': '@id',
-  'label': 'name',
-  'pic': 'image',
-  'names': 'additionalName',
-  'birth': 'birthDate',
-  'death': 'deathDate',
-  'comment': 'description',
-  'wikipedia': 'mainEntityOfPage',
-  'sameAs': 'sameAs'
+  uri: '@id',
+  label: 'name',
+  pic: 'image',
+  names: 'additionalName',
+  birth: 'birthDate',
+  death: 'deathDate',
+  comment: 'description',
+  wikipedia: 'mainEntityOfPage',
+  sameAs: 'sameAs'
 };
 
 function sendStandardError(res, err) {

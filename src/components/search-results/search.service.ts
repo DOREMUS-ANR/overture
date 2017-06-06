@@ -11,7 +11,7 @@ export class SearchService {
   constructor(private http: Http, private globals: Globals) { }
 
   query(input = {}, offset?: number) {
-    let search = `lang=${this.globals.lang}`;
+    let search = `lang=${Globals.lang}`;
     if (offset) search += '&offset=' + offset;
 
     return this.http.get(`/api/search/${input}`, new RequestOptions({ search }))

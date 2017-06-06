@@ -8,13 +8,15 @@
     <div [ngStyle]="{'background-image': 'url('+overviewPic+')'}" class="bg"></div>
     <div class="overview-cont">
       <div class="title-cont">
-        <p class="composer" *ngIf="expression.composer">{{expression.composer}}</p>
+        <p class="composer">
+          <a [routerLink]="['/artist/', expression.composerId[i]]" *ngFor="let composer of expression.composer; let i = index">{{composer}}</a>
+        </p>
         <h1 class="title" *ngIf="expression.title">{{expression.title[0]}}</h1>
         <p class="other-title">
           {{expression.title.slice(1).join(' | ')}}
         </p>
 
-        <div class="work-note">
+        <div class="note">
           <p *ngFor="let note of expression.note">{{note}}</p>
         </div>
 

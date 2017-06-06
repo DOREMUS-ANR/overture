@@ -5,4 +5,4 @@ import {Router} from '@angular/router';
   moduleId: module.id,
   template: '<router-outlet></router-outlet>'
 })
-export class ExpressionComponent { }
+export class ArtistComponent { }

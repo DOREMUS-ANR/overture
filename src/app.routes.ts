@@ -5,7 +5,10 @@ import { Component } from '@angular/core';
 import {HomeComponent} from './components/home/home.component';
 import {SearchResultsComponent} from './components/search-results/search-results.component';
 
+import {ArtistComponent} from './components/artist/artist.component';
+import {ArtistListComponent} from './components/artist/artist.list.component';
 import {ArtistDetailComponent} from './components/artist/artist.detail.component';
+
 import {ScoreTabComponent} from './components/score-tab/score-tab.component';
 
 import {ExpressionComponent} from './components/expression/expression.component';
@@ -19,8 +22,14 @@ const appRoutes: Routes = [
   { path: 'search/:input', component: SearchResultsComponent, data: { title: 'Search' } },
   { path: 'performance', component: WipComponent, data: { title: 'Performances' } },
   { path: 'recording', component: WipComponent, data: { title: 'Recording' }},
-  { path: 'artist', component: ArtistDetailComponent, data: { title: 'Artists' } },
   { path: 'score', component: ScoreTabComponent, data: { title: 'Scores' } },
+  {
+    path: 'artist', component: ArtistComponent,
+    children: [
+      { path: ':id', component: ArtistDetailComponent },
+      { path: '', component: ArtistListComponent, data: { title: 'Artists' } }
+    ]
+  },
   {
     path: 'expression', component: ExpressionComponent,
     children: [

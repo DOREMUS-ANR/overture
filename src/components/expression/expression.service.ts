@@ -12,7 +12,7 @@ export class ExpressionService {
 
   private limit = 12;
 
-  constructor(private http: Http, private globals: Globals) { }
+  constructor(private http: Http) { }
 
   query(filter = {}, offset?: number): Observable<any[]> {
     let filterOptions = "";
@@ -43,7 +43,7 @@ export class ExpressionService {
   get(id): Observable<any> {
     if (!id) return null;
 
-    let search = `lang=${this.globals.lang}`;
+    let search = `lang=${Globals.lang}`;
     return Observable.forkJoin(
       this.http.get(`/api/expression/${id}`, new RequestOptions({ search })),
       this.http.get(`/api/expression/${id}/realisations`, new RequestOptions({ search })))
@@ -84,7 +84,7 @@ export class ExpressionService {
   recommend(id) {
     if (!id) return Promise.resolve(null);
 
-    let search = `lang=${this.globals.lang}`;
+    let search = `lang=${Globals.lang}`;
     return this.http.get(`/api/recommendation/${id}`, new RequestOptions({ search }))
       .toPromise().then(res => {
         let data = res.json();

@@ -1,6 +1,68 @@
-<div class='square-box'>
-  <div class='square-content'>
-    <p>Working on progress</p>
-  </div>
-  <br>
-</div>
+<error-msg *ngIf="error"></error-msg>
+
+<loading *ngIf="querying"></loading>
+<article *ngIf="artist" vocab="http://schema.org/" typeof="Person" [attr.about]="artist['@id']" class="artist-detail">
+  <section class="overview">
+    <div [ngStyle]="{'background-image': 'url('+ (artist.image || overviewPic) +')'}" class="bg"></div>
+    <div class="overview-cont">
+      <div class="title-cont">
+        <div class="artist-round">
+          <img property="image" md-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
+        </div>
+
+        <h1 class="title" [innerHTML]="artist.name | jsonLDval: 'lang'"></h1>
+        <p class="other-title" property="name" [innerHTML]="artist.additionalName| jsonLDval: ['lang','array']"></p>
+
+        <div class="note">
+          <p [outerHTML]="artist.description | jsonLDval : 'lang'"></p>
+        </div>
+
+      </div>
+
+      <div class="info-cont">
+        <div class="sources">
+          <a href='{{sa.uri}}' rel="external" target="blank" class="source" *ngFor="let sa of sameAs">
+            <img src='{{sa.img}}' alt='{{sa.label}}' title="{{sa.label}}" />
+          </a>
+        </div>
+        <div class="info-card">
+
+          <div *ngIf="artist.birthDate">
+            <label>Birth Date</label>
+            <span>{{artist.birthDate}}</span>
+          </div>
+          <div *ngIf="artist.deathDate">
+            <label>Death Date</label>
+            <span>{{artist.deathDate}}</span>
+          </div>
+          <!--
+          <div *ngIf="expression.genre">
+            <label>Genre</label>
+            <span *ngFor="let genre of expression.genre; let i = index">
+              <a [routerLink]="['/expression']" [queryParams]="{ genre: expression.genreURI[i]}">{{genre}}</a>
+            </span>
+          </div>
+          <div *ngIf="expression.opus">
+            <label>Opus</label>
+            <span>{{expression.opus}}</span>
+          </div>
+          <div *ngIf="expression.catalogue">
+            <label>Catalog</label>
+            <span>{{expression.catalogue}}</span>
+          </div>
+          <div *ngIf="expression.castingURI">
+            <label>Casting</label>
+            <ul style="list-style-type: none; margin: 0; padding: 0">
+              <li *ngFor="let mop of expression.mop; let i = index" class="instr icon-right-dir">
+                <a [routerLink]="['/expression']" [queryParams]="{ mop: expression.mopURI[i]}">{{mop}}</a>
+              </li>
+            </ul>
+          </div>
+
+        -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+</article>

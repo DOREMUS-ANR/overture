@@ -7,7 +7,7 @@ import { HttpModule }    from '@angular/http';
 import 'hammerjs';
 import { MaterialModule, MdSelectModule } from '@angular/material';
 import { MomentModule } from 'angular2-moment';
-import {SelectModule} from 'ng-select';
+import { SelectModule } from 'ng-select';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import {AppComponent} from './components/app.component';
@@ -19,6 +19,7 @@ import { Globals } from './app.globals';
 
 import { KeysPipe } from './pipes/keys.pipe';
 import { SummaryPipe } from './pipes/summary.pipe';
+import { JsonLDvalPipe } from './pipes/jsonLDval.pipe';
 
 
 // components
@@ -29,7 +30,11 @@ import {ErrorComponent} from './components/commons/error.component';
 import {LoadingComponent} from './components/commons/loading.component';
 import {TimelineComponent} from './components/commons/timeline.component';
 
+import {ArtistComponent} from './components/artist/artist.component';
+import {ArtistListComponent} from './components/artist/artist.list.component';
 import {ArtistDetailComponent} from './components/artist/artist.detail.component';
+import {ArtistSummaryComponent} from './components/artist/artist.summary.component';
+
 import {ScoreTabComponent} from './components/score-tab/score-tab.component';
 
 import {ExpressionComponent} from './components/expression/expression.component';
@@ -44,14 +49,15 @@ import {WipComponent} from './components/wip/wip.component';
 
 @NgModule({
   imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpModule, routing, MaterialModule, MdSelectModule, MomentModule, InfiniteScrollModule, SelectModule],
-  declarations: [AppComponent, KeysPipe, SummaryPipe,
+  declarations: [AppComponent, KeysPipe, SummaryPipe, JsonLDvalPipe,
     HomeComponent, SearchResultsComponent,
     ErrorComponent, LoadingComponent, TimelineComponent,
-    ArtistDetailComponent, ScoreTabComponent,
+    ScoreTabComponent,
+    ArtistComponent, ArtistListComponent, ArtistDetailComponent, ArtistSummaryComponent,
     ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, SummaryComponent,
     WipComponent, TopNavComponent, SearchComponent
   ],
   bootstrap: [AppComponent],
-  providers: [SharedService, Globals, KeysPipe, SummaryPipe, Title]
+  providers: [SharedService, Globals, KeysPipe, SummaryPipe, JsonLDvalPipe, Title]
 })
 export class AppModule { }

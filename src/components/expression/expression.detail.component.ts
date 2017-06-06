@@ -48,6 +48,7 @@ export class ExpressionDetailComponent {
 
         this.expressionService.get(id).subscribe(exp => {
           this.expression = exp;
+          this.expression.composerId = this.expression.composerUri.map(c => c.replace('http://data.doremus.org/artist/', ''));
           this.titleService.setTitle(exp.title[0]);
 
           console.log(this.expression);
