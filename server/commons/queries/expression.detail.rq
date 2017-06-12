@@ -7,9 +7,11 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 SELECT DISTINCT *
 WHERE {
     %%uri%% a efrbroo:F22_Self-Contained_Expression ;
-            mus:U70_has_title ?title ;
-            owl:sameAs ?sourceLink ;
-            prov:wasDerivedFrom / prov:wasAttributedTo ?source .
+            mus:U70_has_title | ecrm:P102_has_title ?title .
+    OPTIONAL {
+    %%uri%% owl:sameAs ?sourceLink ;
+      prov:wasDerivedFrom / prov:wasAttributedTo ?source .
+    }
     OPTIONAL{%%uri%% ecrm:P3_has_note ?note .}
     OPTIONAL {
       %%uri%% mus:U13_has_casting ?castingURI .
@@ -49,16 +51,24 @@ WHERE {
     OPTIONAL{
       ?expCreation efrbroo:R17_created %%uri%% .
       OPTIONAL {
-        ?expCreation ecrm:P9_consists_of / ecrm:P14_carried_out_by ?composerUri .
+        {
+          ?expCreation efrbroo:R17_created ?expression ;
+            ecrm:P9_consists_of / ecrm:P14_carried_out_by  ?composerUri .
+        } UNION
+        {
+          ?expCreation efrbroo:R17_created ?expression ;
+            ecrm:P14_carried_out_by ?composerUri .
+        }
         OPTIONAL { ?composerUri foaf:depiction ?composerPic }
         { SELECT ?composerUri sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?composer
-          WHERE { ?composerUri rdfs:label ?composer }
+          WHERE { ?composerUri rdfs:label | ecrm:P131_is_identified_by ?composer }
         }
       }
       OPTIONAL {
         ?expCreation ecrm:P4_has_time-span ?creationTimeSpan.
-        ?creationTimeSpan ecrm:P80_end_is_qualified_by ?creationEnd ;
-                      ecrm:P79_beginning_is_qualified_by ?creationStart
+        ?creationTimeSpan ecrm:P80_end_is_qualified_by | ecrm:P81_ongoing_through ?creationEnd ;
+                      ecrm:P79_beginning_is_qualified_by | ecrm:P81_ongoing_through ?creationStart
       }
     }
+    FILTER (str(?composer) != "Radio France")
 }

@@ -25,7 +25,6 @@ export default class Sparql {
   }
 
   execute(query) {
-    console.log('*** SPARQL QUERY ***');
     console.log(query);
 
     return new Promise((resolve, reject) => {
@@ -73,9 +72,8 @@ export default class Sparql {
             value = value.map(uriWrap);
             query = query.replace(regex, value);
           }
-
-          resolve(this.execute(query).then(res => this.cache.set(queryId, opt, res)
-        ));
+          console.log(`*** SPARQL QUERY ${queryId} ***`);
+          resolve(this.execute(query).then(res => this.cache.set(queryId, opt, res)));
         });
       });
     });

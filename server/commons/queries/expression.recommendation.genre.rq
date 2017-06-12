@@ -13,14 +13,20 @@ WHERE {
              mus:U12_has_genre ?genre .
     ?expression a  efrbroo:F22_Self-Contained_Expression ;
             mus:U12_has_genre ?genre;
-            mus:U70_has_title ?title .
+            mus:U70_has_title | ecrm:P102_has_title ?title .
     OPTIONAL { ?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
 
     OPTIONAL{
-      ?expCreation efrbroo:R17_created ?expression ;
-                  ecrm:P9_consists_of / ecrm:P14_carried_out_by / foaf:name ?composer .
+      ?expCreation efrbroo:R17_created ?expression .
+        {
+          ?expCreation  ecrm:P9_consists_of / ecrm:P14_carried_out_by / foaf:name ?composer .
+        } UNION
+        {
+          ?expCreation ecrm:P14_carried_out_by / ecrm:P131_is_identified_by ?composer .
+        }
     }
     FILTER( ?expression != %%uri%%)
+    FILTER( str(?composer) != 'Radio France')
     BIND(RAND() as ?rnd)
 } ORDER BY ?rnd
 LIMIT %%limit%%
