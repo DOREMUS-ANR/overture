@@ -14,6 +14,9 @@ export class ArtistDetailComponent {
   querying: boolean;
   error: boolean = false;
   artist: any;
+  compositions: [any];
+  compositionShown = 4;
+  performances: [any];
   sameAs: any;
 
   overviewPic: string = 'img/pianist.jpg';
@@ -31,7 +34,16 @@ export class ArtistDetailComponent {
 
       this.artistService.get(id).subscribe(a => {
         let graph = a['@graph'];
-        this.artist = graph && graph[0];
+        if (!graph) {
+          this.querying = false;
+          this.error = true;
+          return;
+        }
+
+        this.artist = graph.splice(0, 1)[0];
+        console.log(this.artist);
+        this.compositions = graph.filter(c => c['@type'] ==='MusicComposition');
+        this.performances = graph.filter(c => c['@type'] ==='MusicEvent');
 
         this.sameAs = this.artist.sameAs || [];
         if (!Array.isArray(this.sameAs)) this.sameAs = [this.sameAs];
@@ -41,7 +53,6 @@ export class ArtistDetailComponent {
         let mainName = this.jsonLDpipe.transform(this.artist.name);
         this.titleService.setTitle(mainName);
 
-        console.log(this.artist);
         this.querying = false;
         this.error = false;
       });
@@ -52,7 +63,6 @@ export class ArtistDetailComponent {
 function toSource(input) {
   let img = '', label = '';
   let i = input.replace(/https?:\/\/([^\/]+)\/.+/, '$1');
-  console.log(i)
   switch (i) {
     case 'dbpedia.org':
       img = 'img/logos/dbpedia.png';

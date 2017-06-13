@@ -65,4 +65,24 @@
     </div>
   </section>
 
+  <section id="compositions">
+    <h2><strong>{{compositions.length}}</strong> Expressions as composer</h2>
+    <div class="card-list">
+      <div *ngFor="let a of compositions; let i = index">
+        <summary [entity]="a | summary: a['@type']" *ngIf="i<compositionShown" [eclass]="a['@type']"></summary>
+      </div>
+      <button class="long" (click)="compositionShown= compositionShown+ 10">Show More</button>
+    </div>
+  </section>
+
+  <!-- TODO title to performances -->
+  <!-- <section id="performances">
+    <h2><strong>{{performances.length}}</strong> Performances as performer</h2>
+    <div class="card-list">
+      <div *ngFor="let a of performances; let i = index">
+        <summary [entity]="a | summary: a['@type']" *ngIf="i<4" [eclass]="a['@type']"></summary>
+      </div>
+    </div>
+  </section> -->
+
 </article>
