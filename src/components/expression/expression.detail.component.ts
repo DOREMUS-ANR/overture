@@ -14,6 +14,10 @@ const institutions = {
   BnF: {
     label: 'BnF',
     img: '/static/img/logos/bnf.png'
+  },
+  Radio_France: {
+    label: 'Radio France',
+    img: '/static/img/logos/radiofrance.flat.png'
   }
 }
 @Component({
@@ -101,6 +105,8 @@ export class ExpressionDetailComponent {
   }
 
   getSource(source) {
+    // workaround redomi
+    if(!source) source = 'http://data.doremus.org/organization/Radio_France';
     if (Array.isArray(source)) source = source[0];
 
     if (!source.startsWith(organizBase)) return null;
