@@ -10,10 +10,10 @@
           <img property="image" md-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
         </div>
 
-        <h1 class="title" [innerHTML]="artist.name | jsonLDval: 'lang'"></h1>
-        <p class="other-title" property="name" [innerHTML]="artist.additionalName| jsonLDval: ['lang','array']"></p>
+        <h1 class="title" property="name" [innerHTML]="artist.name | jsonLDval: 'lang'"></h1>
+        <p class="other-title" property="additionalName" [innerHTML]="artist.additionalName| jsonLDval: ['lang','array']"></p>
 
-        <div class="note">
+        <div class="note" property="description">
           <p [outerHTML]="artist.description | jsonLDval : 'lang'"></p>
         </div>
 
