@@ -3,7 +3,13 @@
 ### About
 OVERTURE is based on the [DOREMUS model][1] that allows a detailed description of a musical work and the events associated with it (creation, execution, etc.). It allows the user to go through the musical database easily.
 
-It connects with a virtuoso sparql endpoint and gets the data using SPARQL queries.
+It connects with a Virtuoso SPARQL endpoint and gets the data using SPARQL queries.
+
+### Demo
+
+The application is online at http://overture.doremus.org.
+
+Some interesting page to visit for go deep in the richness of DOREMUS data are available [here](./EXAMPLES.md).
 
 ### SPARQL
 The [SPARQL 1.1 Query Language][2] allows to query datasources of [RDF triples][3].
