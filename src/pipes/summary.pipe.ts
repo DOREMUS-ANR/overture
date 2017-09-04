@@ -6,6 +6,7 @@ import * as moment from 'moment';
 @Pipe({ name: 'summary' })
 export class SummaryPipe implements PipeTransform {
   transform(value, eclass: string): any {
+    if(!value) return null;
 
     switch (eclass) {
       case 'expression':

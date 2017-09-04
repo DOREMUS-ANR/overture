@@ -40,6 +40,8 @@ import {ScoreTabComponent} from './components/score-tab/score-tab.component';
 import {ExpressionComponent} from './components/expression/expression.component';
 import {ExpressionListComponent} from './components/expression/expression.list.component';
 import {ExpressionDetailComponent} from './components/expression/expression.detail.component';
+
+import {RecommendationComponent} from './components/expression/recommendation.component';
 import {SummaryComponent} from './components/summary/summary.component';
 
 import {TopNavComponent} from './components/top-nav/top-nav.component';
@@ -54,7 +56,7 @@ import {WipComponent} from './components/wip/wip.component';
     ErrorComponent, LoadingComponent, TimelineComponent,
     ScoreTabComponent,
     ArtistComponent, ArtistListComponent, ArtistDetailComponent, ArtistSummaryComponent,
-    ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, SummaryComponent,
+    ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, RecommendationComponent, SummaryComponent,
     WipComponent, TopNavComponent, SearchComponent
   ],
   bootstrap: [AppComponent],

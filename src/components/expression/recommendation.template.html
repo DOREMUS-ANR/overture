@@ -1,0 +1,8 @@
+<loading *ngIf="loading">computing recommendation</loading>
+<error-msg class="small" *ngIf="error"></error-msg>
+
+<div *ngFor="let group of recommendation">
+  <h3>{{group.label}}</h3>
+  <summary *ngFor="let expr of group.data" [entity]="expr | summary: 'expression'"></summary>
+  <p class="empty-msg" *ngIf="group.data.length < 1">nothing to show</p>
+</div>

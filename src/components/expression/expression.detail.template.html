@@ -77,11 +77,7 @@
     </section>
 
     <section class="recommendation-cont">
-      <div *ngFor="let group of recommendation">
-        <h3>{{group.label}}</h3>
-        <summary *ngFor="let expr of group.data" [entity]="expr | summary: 'expression'"></summary>
-        <p class="empty-msg" *ngIf="group.data.length < 1">nothing to show</p>
-      </div>
+      <recommendation [seed]="expression.uri"></recommendation>
     </section>
   </div>
 </article>

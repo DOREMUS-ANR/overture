@@ -61,7 +61,7 @@ Build
 
 Run
 
-    docker run -d -p 5050:3333 --restart=unless-stopped --name doremus_overture doremus/overture
+    docker run -d -p 5050:3333 --restart=unless-stopped --name doremus_overture doremus/overture -v /var/www/overture.doremus.org/data:/data -v /var/run/docker.sock:/var/run/docker.sock
     docker logs doremus_overture
 
 Stop

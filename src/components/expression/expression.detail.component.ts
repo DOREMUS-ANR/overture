@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {ExpressionService} from './expression.service';
-import {SharedService} from '../../services/sharedService.service';
+import { Component } from '@angular/core';
+import { ExpressionService } from './expression.service';
+import { SharedService } from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Title }     from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 
 const defaultOverviewPic = '/static/img/bg/generic-score.jpg';
 const organizBase = 'http://data.doremus.org/organization/';
@@ -52,6 +52,9 @@ export class ExpressionDetailComponent {
 
         this.expressionService.get(id).subscribe(exp => {
           this.expression = exp;
+          this.expression.id = id;
+          this.expression.uri = 'http://data.doremus.org/expression/' + id;
+
           this.expression.composerId = this.expression.composerUri.map(c => c.replace('http://data.doremus.org/artist/', ''));
           this.titleService.setTitle(exp.title[0]);
 
@@ -87,12 +90,6 @@ export class ExpressionDetailComponent {
           this.error = true;
           console.error(err);
         });
-        // retrieve recommendations
-        this.expressionService.recommend(id)
-          .then((res) => this.recommendation = res, (err) => {
-            this.error = true;
-            console.error(err);
-          });
 
         // FIXME discover why this is not propagated to sharedService
         this.sharedService.sharchBarVisible = false;
@@ -106,7 +103,7 @@ export class ExpressionDetailComponent {
 
   getSource(source) {
     // workaround redomi
-    if(!source) source = 'http://data.doremus.org/organization/Radio_France';
+    if (!source) source = 'http://data.doremus.org/organization/Radio_France';
     if (Array.isArray(source)) source = source[0];
 
     if (!source.startsWith(organizBase)) return null;

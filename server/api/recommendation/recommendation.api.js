@@ -1,6 +1,18 @@
 import Sparql from '../../commons/sparql';
+import {
+  APP_PATH
+} from '../../config/constants';
 import async from 'async';
+import fs from 'fs';
+import path from 'path';
+import tsv from 'tsv';
+import Docker from 'dockerode';
 
+const docker = new Docker({
+  socketPath: '/var/run/docker.sock'
+});
+
+const SCORING_PATH = APP_PATH.SCORING_FILES;
 var sparql = new Sparql();
 
 function sendStandardError(res, err) {
@@ -12,7 +24,7 @@ function sendStandardError(res, err) {
   });
 }
 
-function packResults(res, label) {
+function packResults(res) {
   'use strict';
 
   let data = (res && res.results && res.results.bindings) || [];
@@ -28,10 +40,43 @@ function packResults(res, label) {
     d.id = /[^/]*$/.exec(d.expression)[0];
   }
 
-  return {
-    data,
-    label
-  };
+  return data;
+}
+
+const properties = {
+  0: 'key',
+  1: 'genre',
+  2: 'casting',
+  3: 'composer',
+  combined: 'combined'
+};
+const TSV_HEADER = 'uri\tscore\n';
+
+function getShortInfo(uri, lang, callback) {
+  'use strict';
+  sparql.loadQuery('expression.recommendation', {
+      uri,
+      lang
+    })
+    .then(results => callback(null, packResults(results)[0]))
+    .catch(err => callback(err));
+}
+
+function callRecommenderFor(expression) {
+  'use strict';
+
+  if (fs.existsSync(path.join(SCORING_PATH, `${expression}_combined.tsv`)))
+    return Promise.resolve();
+
+  return docker.run('doremus/recommender', `python -m recommend --expression http://data.doremus.org/expression/${expression}`.split(' '), process.stdout, {
+    VolumesFrom: ['recinst0'],
+    Tty: false
+  }).then((container) => {
+    console.log(container.output.StatusCode);
+    return container.remove();
+  }).then(() => {
+    console.log('container removed');
+  });
 }
 
 var nRecPerTipe = 2;
@@ -39,43 +84,75 @@ export default class RecommendationController {
 
   static query(req, res) {
     let expression = req.params.id;
-    async.parallel([
-      function(callback) {
-        sparql.loadQuery('expression.recommendation.genre', {
-            uri: `http://data.doremus.org/expression/${expression}`,
-            lang: req.query.lang || 'en',
-            limit: req.query.limit || nRecPerTipe,
-            nocache: true
-          })
-          .then(results => callback(null, packResults(results, 'of the same genre')))
-          .catch(err => callback(err));
-      },
-      function(callback) {
-        sparql.loadQuery('expression.recommendation.composer', {
-            uri: `http://data.doremus.org/expression/${expression}`,
-            lang: req.query.lang || 'en',
-            limit: req.query.limit || nRecPerTipe,
-            nocache: true
-          })
-          .then(results => callback(null, packResults(results, 'of the same composer')))
-          .catch(err => callback(err));
-      },
-      function(callback) {
-        sparql.loadQuery('expression.recommendation.mop', {
-            uri: `http://data.doremus.org/expression/${expression}`,
-            lang: req.query.lang || 'en',
-            limit: req.query.limit || nRecPerTipe
-          })
-          .then(results => callback(null, packResults(results, 'with the same instruments')))
-          .catch(err => callback(err));
-      }
-    ], function(err, results) {
-      if (err) {
-        sendStandardError(res, err);
-      }
-      res.json(results);
-    });
+    console.log('Getting recommendation for', expression);
+    // docker run -v /Users/pasquale/git/recommender/recommending/data:/data -v /Users/pasquale/git/recommender/recommending/features:/features -v /Users/pasquale/git/recommender/recommending/emb:/emb --name recinst0 doremus/recommender python -m recommend --expression http://data.doremus.org/expression/7ce787df-e214-3d9b-a023-5439a7816d94
+
+    callRecommenderFor(expression)
+      .then(() => {
+        async.map(Object.keys(properties), (k, callback) => {
+          let tsvFile = path.join(SCORING_PATH, `${expression}_${k}.tsv`);
+          fs.readFile(tsvFile, 'utf8', (err, data) => {
+            if (err) return callback(err);
+
+            let scores = tsv.parse(TSV_HEADER + data)
+              .slice(0, req.query.limit || nRecPerTipe)
+              .filter(s => s.score > 0);
+            async.map(scores,
+              (s, cb) => getShortInfo(s.uri, req.query.lang || 'en', cb),
+              (err, data) => {
+                let p = properties[k];
+                callback(null, {
+                  label: p === 'combined' ? p : 'with the same ' + p,
+                  property: p,
+                  data
+                });
+              });
+          });
+
+        }, (err, data) => {
+          if (err) return sendStandardError(res, err);
+
+          res.json(data);
+        });
+      }).catch(sendStandardError);
+
+    // old
+    // async.parallel([
+    //   function(callback) {
+    //     sparql.loadQuery('expression.recommendation.genre', {
+    //         uri: `http://data.doremus.org/expression/${expression}`,
+    //         lang: req.query.lang || 'en',
+    //         limit: req.query.limit || nRecPerTipe,
+    //         nocache: true
+    //       })
+    //       .then(results => callback(null, packResults(results, 'of the same genre')))
+    //       .catch(err => callback(err));
+    //   },
+    //   function(callback) {
+    //     sparql.loadQuery('expression.recommendation.composer', {
+    //         uri: `http://data.doremus.org/expression/${expression}`,
+    //         lang: req.query.lang || 'en',
+    //         limit: req.query.limit || nRecPerTipe,
+    //         nocache: true
+    //       })
+    //       .then(results => callback(null, packResults(results, 'of the same composer')))
+    //       .catch(err => callback(err));
+    //   },
+    //   function(callback) {
+    //     sparql.loadQuery('expression.recommendation.mop', {
+    //         uri: `http://data.doremus.org/expression/${expression}`,
+    //         lang: req.query.lang || 'en',
+    //         limit: req.query.limit || nRecPerTipe
+    //       })
+    //       .then(results => callback(null, packResults(results, 'with the same instruments')))
+    //       .catch(err => callback(err));
+    //   }
+    // ], function(err, results) {
+    //   if (err) {
+    //     sendStandardError(res, err);
+    //   }
+    //   res.json(results);
+    // });
 
   }
-
 }
