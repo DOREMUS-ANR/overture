@@ -52,25 +52,25 @@ export class ExpressionService {
         let eventsData = _processResult(res[1]);
         let events = {};
         eventsData.forEach((e) => {
-            e.id = e.event;
-            // init array for the current category if it does not exist
-            if (!events[e.class]) events[e.class] = [];
-            // retrieve event with the same id
-            let evt = events[e.class].find(evt => evt.id == e.id);
-            if (!evt) {
-              evt = {};
-              events[e.class].push(evt);
-            };
+          e.id = e.event;
+          // init array for the current category if it does not exist
+          if (!events[e.class]) events[e.class] = [];
+          // retrieve event with the same id
+          let evt = events[e.class].find(evt => evt.id == e.id);
+          if (!evt) {
+            evt = {};
+            events[e.class].push(evt);
+          };
 
-            Object.assign(evt, e);
-            if (!evt.activities) evt.activities = [];
+          Object.assign(evt, e);
+          if (!evt.activities) evt.activities = [];
 
-            evt.activities.push({
-              actor: e.actorName || e.actor,
-              function: e.function,
-              mop: e.mop
-            });
+          evt.activities.push({
+            actor: e.actorName || e.actor,
+            function: e.function,
+            mop: e.mop
           });
+        });
 
         for (let key of Object.keys(events))
           events[key].sort((a, b) => a.time >= b.time ? 1 : -1);

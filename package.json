@@ -17,7 +17,6 @@
     "babel-preset-stage-0": "^6.24.1",
     "body-parser": "^1.17.2",
     "core-js": "^2.5.1",
-    "dockerode": "^2.5.0",
     "es6-promise": "^4.1.1",
     "es6-shim": "^0.35.3",
     "express": "^4.15.4",
@@ -29,6 +28,7 @@
     "node-cache": "^4.1.1",
     "node-monkey": "^1.0.1",
     "node-noop": "^1.0.0",
+    "python-shell": "^0.4.0",
     "reflect-metadata": "0.1.10",
     "sparql-client2": "^0.2.0",
     "tsv": "^0.2.0"

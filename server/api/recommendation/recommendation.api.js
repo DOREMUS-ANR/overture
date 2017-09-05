@@ -6,13 +6,10 @@ import async from 'async';
 import fs from 'fs';
 import path from 'path';
 import tsv from 'tsv';
-import Docker from 'dockerode';
+import PythonShell from 'python-shell';
 
-const docker = new Docker({
-  socketPath: '/var/run/docker.sock'
-});
-
-const SCORING_PATH = APP_PATH.SCORING_FILES;
+const RECOMMENDING_PATH = APP_PATH.RECOMMENDING_PATH;
+const SCORING_PATH = RECOMMENDING_PATH + '/data/scoring';
 var sparql = new Sparql();
 
 function sendStandardError(res, err) {
@@ -67,15 +64,20 @@ function callRecommenderFor(expression) {
 
   if (fs.existsSync(path.join(SCORING_PATH, `${expression}_combined.tsv`)))
     return Promise.resolve();
-
-  return docker.run('doremus/recommender', `python -m recommend --expression http://data.doremus.org/expression/${expression}`.split(' '), process.stdout, {
-    VolumesFrom: ['recinst0'],
-    Tty: false
-  }).then((container) => {
-    console.log(container.output.StatusCode);
-    return container.remove();
-  }).then(() => {
-    console.log('container removed');
+    console.log(RECOMMENDING_PATH);
+  let options = {
+    pythonPath: 'python3',
+    scriptPath: RECOMMENDING_PATH,
+    args: ['-exp', `http://data.doremus.org/expression/${expression}`]
+  };
+  return new Promise((resolve, reject) => {
+    PythonShell.run('recommend.py', options, (err, results) =>{
+      if (err) {
+        console.log(err);
+        return reject(err);
+      }
+      resolve(results);
+    });
   });
 }
 
