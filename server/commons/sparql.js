@@ -4,7 +4,7 @@ import SparqlClient from 'sparql-client2';
 import Cache from './cache';
 import {
   EXT_URI
-} from '../config/constants';
+} from '../../config/constants';
 
 const doremusEndpoint = EXT_URI.SPARQL_ENDPOINT;
 const queryFolder = 'server/commons/queries';

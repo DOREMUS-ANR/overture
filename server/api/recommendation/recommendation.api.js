@@ -1,7 +1,7 @@
 import Sparql from '../../commons/sparql';
 import {
   APP_PATH
-} from '../../config/constants';
+} from '../../../config/constants';
 import async from 'async';
 import fs from 'fs';
 import path from 'path';
@@ -66,7 +66,7 @@ function callRecommenderFor(expression) {
     return Promise.resolve();
     console.log(RECOMMENDING_PATH);
   let options = {
-    pythonPath: 'python3',
+    pythonPath: '/python3',
     scriptPath: RECOMMENDING_PATH,
     args: ['-exp', `http://data.doremus.org/expression/${expression}`]
   };

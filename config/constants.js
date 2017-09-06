@@ -3,5 +3,6 @@ export const APP_PATH = {
   RECOMMENDING_PATH: (process.env.NODE_ENV === 'production') ? '/recommending' : '/Users/pasquale/git/recommender/recommending'
 };
 export const EXT_URI = {
-  SPARQL_ENDPOINT: 'http://data.doremus.org/sparql'
+  SPARQL_ENDPOINT: 'http://data.doremus.org/sparql',
+  RECOMMENDER: 'recommender:5000'
 };

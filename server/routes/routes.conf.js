@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import contentLength from 'express-content-length-validator';
 import helmet from 'helmet';
 import path from 'path';
-import {APP_PATH} from '../config/constants';
+import {APP_PATH} from '../../config/constants';
 import ApiRouter from './api.router';
 
 export default class RouteConfig {
