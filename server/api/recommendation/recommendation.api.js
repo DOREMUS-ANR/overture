@@ -1,16 +1,19 @@
 import Sparql from '../../commons/sparql';
 import {
-  APP_PATH
+  APP_PATH,
+  EXT_URI
 } from '../../../config/constants';
 import async from 'async';
 import fs from 'fs';
 import path from 'path';
 import tsv from 'tsv';
-import PythonShell from 'python-shell';
+import getJSON from 'get-json';
+import NodeCache from 'node-cache';
 
-const RECOMMENDING_PATH = APP_PATH.RECOMMENDING_PATH;
-const SCORING_PATH = RECOMMENDING_PATH + '/data/scoring';
-var sparql = new Sparql();
+const SCORING_PATH = APP_PATH.RECOMMENDING_PATH + '/data/scoring';
+const RECOMMENDER = EXT_URI.RECOMMENDER;
+const sparql = new Sparql();
+const cache = new NodeCache();
 
 function sendStandardError(res, err) {
   'use strict';
@@ -62,23 +65,12 @@ function getShortInfo(uri, lang, callback) {
 function callRecommenderFor(expression) {
   'use strict';
 
-  if (fs.existsSync(path.join(SCORING_PATH, `${expression}_combined.tsv`)))
-    return Promise.resolve();
-    console.log(RECOMMENDING_PATH);
-  let options = {
-    pythonPath: '/python3',
-    scriptPath: RECOMMENDING_PATH,
-    args: ['-exp', `http://data.doremus.org/expression/${expression}`]
-  };
-  return new Promise((resolve, reject) => {
-    PythonShell.run('recommend.py', options, (err, results) =>{
-      if (err) {
-        console.log(err);
-        return reject(err);
-      }
-      resolve(results);
-    });
-  });
+  let cached = cache.get(expression);
+  if (cached) return Promise.resolve(cached);
+
+  console.log(`${RECOMMENDER}/expression/${expression}`);
+  return getJSON(`${RECOMMENDER}/expression/${expression}`)
+    .then(() => cache.set(expression, true));
 }
 
 var nRecPerTipe = 2;
@@ -94,6 +86,7 @@ export default class RecommendationController {
         async.map(Object.keys(properties), (k, callback) => {
           let tsvFile = path.join(SCORING_PATH, `${expression}_${k}.tsv`);
           fs.readFile(tsvFile, 'utf8', (err, data) => {
+            console.log(k, data);
             if (err) return callback(err);
 
             let scores = tsv.parse(TSV_HEADER + data)
@@ -113,7 +106,6 @@ export default class RecommendationController {
 
         }, (err, data) => {
           if (err) return sendStandardError(res, err);
-
           res.json(data);
         });
       }).catch(sendStandardError);

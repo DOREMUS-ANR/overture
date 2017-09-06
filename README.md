@@ -61,7 +61,7 @@ Build
 
 Run
 
-    docker run -d -p 5050:3333 --restart=unless-stopped  -v /var/nodejs/overture/config:/config -v /var/docker/doremus/recommender/recommending:/recommender -v /usr/bin/python3:/python3 -v /usr/bin/java:/java --name doremus_overture doremus/overture
+    docker run -d -p 5050:3333 --restart=unless-stopped  -v /var/nodejs/overture/config:/config -v /var/docker/doremus/recommender/recommending:/recommender --name doremus_overture doremus/overture
 
 Stop
 

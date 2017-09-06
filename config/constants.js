@@ -1,8 +1,10 @@
+const prod = (process.env.NODE_ENV === 'production');
+
 export const APP_PATH = {
-  CLIENT_FILES: (process.env.NODE_ENV === 'production') ? '/dist' : '/src',
-  RECOMMENDING_PATH: (process.env.NODE_ENV === 'production') ? '/recommending' : '/Users/pasquale/git/recommender/recommending'
+  CLIENT_FILES: prod ? '/dist' : '/src',
+  RECOMMENDING_PATH: prod ? '/recommending' : '/Users/pasquale/git/recommender/recommending'
 };
 export const EXT_URI = {
   SPARQL_ENDPOINT: 'http://data.doremus.org/sparql',
-  RECOMMENDER: 'recommender:5000'
+  RECOMMENDER: prod ? 'http://recommender:5000' : 'http://localhost:5000'
 };

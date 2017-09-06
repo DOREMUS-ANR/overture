@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { ExpressionService } from './expression.service';
 
 @Component({
@@ -14,7 +14,13 @@ export class RecommendationComponent {
 
   constructor(private expressionService: ExpressionService) { };
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges) {
+    if (!changes.seed) return;
+
+    this.loading = true;
+    this.error = false;
+    this.recommendation = null;
+
     let id = this.seed.replace('http://data.doremus.org/expression/', '');
     // retrieve recommendations
     this.expressionService.recommend(id)
@@ -26,5 +32,6 @@ export class RecommendationComponent {
         this.error = true;
         console.error(err);
       });
+
   }
 }
