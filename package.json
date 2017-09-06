@@ -21,7 +21,7 @@
     "es6-shim": "^0.35.3",
     "express": "^4.15.4",
     "express-content-length-validator": "1.0.0",
-    "get-json": "git+https://github.com/pasqlisena/get-json.git",
+    "get-json22": "^1.0.0",
     "hammerjs": "^2.0.8",
     "helmet": "^3.8.1",
     "moment": "^2.18.1",

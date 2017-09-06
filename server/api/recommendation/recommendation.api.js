@@ -7,7 +7,7 @@ import async from 'async';
 import fs from 'fs';
 import path from 'path';
 import tsv from 'tsv';
-import getJSON from 'get-json';
+import getJSON from 'get-json22';
 import NodeCache from 'node-cache';
 
 const SCORING_PATH = APP_PATH.RECOMMENDING_PATH + '/data/scoring';
