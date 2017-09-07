@@ -1,16 +1,11 @@
 import Sparql from '../../commons/sparql';
 import {
-  APP_PATH,
   EXT_URI
 } from '../../../config/constants';
 import async from 'async';
-import fs from 'fs';
-import path from 'path';
-import tsv from 'tsv';
 import getJSON from 'get-json22';
 import NodeCache from 'node-cache';
 
-const SCORING_PATH = APP_PATH.RECOMMENDING_PATH + '/data/scoring';
 const RECOMMENDER = EXT_URI.RECOMMENDER;
 const sparql = new Sparql();
 const cache = new NodeCache();
@@ -50,7 +45,6 @@ const properties = {
   3: 'composer',
   combined: 'combined'
 };
-const TSV_HEADER = 'uri\tscore\n';
 
 function getShortInfo(uri, lang, callback) {
   'use strict';
@@ -68,9 +62,11 @@ function callRecommenderFor(expression) {
   let cached = cache.get(expression);
   if (cached) return Promise.resolve(cached);
 
-  console.log(`${RECOMMENDER}/expression/${expression}`);
   return getJSON(`${RECOMMENDER}/expression/${expression}`)
-    .then(() => cache.set(expression, true));
+    .then((result) => {
+      cache.set(expression, result);
+      return result;
+    });
 }
 
 var nRecPerTipe = 2;
@@ -82,71 +78,26 @@ export default class RecommendationController {
     // docker run -v /Users/pasquale/git/recommender/recommending/data:/data -v /Users/pasquale/git/recommender/recommending/features:/features -v /Users/pasquale/git/recommender/recommending/emb:/emb --name recinst0 doremus/recommender python -m recommend --expression http://data.doremus.org/expression/7ce787df-e214-3d9b-a023-5439a7816d94
 
     callRecommenderFor(expression)
-      .then(() => {
-        async.map(Object.keys(properties), (k, callback) => {
-          let tsvFile = path.join(SCORING_PATH, `${expression}_${k}.tsv`);
-          fs.readFile(tsvFile, 'utf8', (err, data) => {
-            console.log(k, data);
-            if (err) return callback(err);
-
-            let scores = tsv.parse(TSV_HEADER + data)
-              .slice(0, req.query.limit || nRecPerTipe)
-              .filter(s => s.score > 0);
-            async.map(scores,
-              (s, cb) => getShortInfo(s.uri, req.query.lang || 'en', cb),
-              (err, data) => {
-                let p = properties[k];
-                callback(null, {
-                  label: p === 'combined' ? p : 'with the same ' + p,
-                  property: p,
-                  data
-                });
+      .then((rec) => {
+        async.map(rec, (r, callback) => {
+          let code = r.code;
+          let scores = r.recommendation
+            .slice(0, req.query.limit || nRecPerTipe)
+            .filter(s => s.score > 0);
+          async.map(scores,
+            (s, cb) => getShortInfo(s.uri, req.query.lang || 'en', cb),
+            (err, data) => {
+              let p = properties[code];
+              callback(null, {
+                label: p === 'combined' ? p : 'with the same ' + p,
+                property: p,
+                data
               });
-          });
-
+            });
         }, (err, data) => {
           if (err) return sendStandardError(res, err);
           res.json(data);
         });
       }).catch(sendStandardError);
-
-    // old
-    // async.parallel([
-    //   function(callback) {
-    //     sparql.loadQuery('expression.recommendation.genre', {
-    //         uri: `http://data.doremus.org/expression/${expression}`,
-    //         lang: req.query.lang || 'en',
-    //         limit: req.query.limit || nRecPerTipe,
-    //         nocache: true
-    //       })
-    //       .then(results => callback(null, packResults(results, 'of the same genre')))
-    //       .catch(err => callback(err));
-    //   },
-    //   function(callback) {
-    //     sparql.loadQuery('expression.recommendation.composer', {
-    //         uri: `http://data.doremus.org/expression/${expression}`,
-    //         lang: req.query.lang || 'en',
-    //         limit: req.query.limit || nRecPerTipe,
-    //         nocache: true
-    //       })
-    //       .then(results => callback(null, packResults(results, 'of the same composer')))
-    //       .catch(err => callback(err));
-    //   },
-    //   function(callback) {
-    //     sparql.loadQuery('expression.recommendation.mop', {
-    //         uri: `http://data.doremus.org/expression/${expression}`,
-    //         lang: req.query.lang || 'en',
-    //         limit: req.query.limit || nRecPerTipe
-    //       })
-    //       .then(results => callback(null, packResults(results, 'with the same instruments')))
-    //       .catch(err => callback(err));
-    //   }
-    // ], function(err, results) {
-    //   if (err) {
-    //     sendStandardError(res, err);
-    //   }
-    //   res.json(results);
-    // });
-
   }
 }

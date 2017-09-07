@@ -61,7 +61,7 @@ Build
 
 Run
 
-    docker run -d -p 5050:3333 --restart=unless-stopped  -v /Users/pasquale/git/overture/config:/config -v /Users/pasquale/git/recommender/recommending:/recommending --name doremus_overture doremus/overture
+    docker run -d -p 5050:3333 --restart=unless-stopped  -v /var/nodejs/overture/config:/config --network doremus --name doremus_overture doremus/overture
 
 Stop
 
