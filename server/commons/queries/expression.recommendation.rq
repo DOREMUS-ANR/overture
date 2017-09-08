@@ -10,7 +10,6 @@ SELECT
   (SAMPLE(?catalogue) AS ?catalogue)
 WHERE {
     %%uri%% a efrbroo:F22_Self-Contained_Expression ;
-            mus:U12_has_genre ?genre;
             mus:U70_has_title | ecrm:P102_has_title ?title .
     OPTIONAL { %%uri%% mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
 
