@@ -16,7 +16,7 @@ WHERE {
   ?event a ?class;
       ecrm:P3_has_note ?note.
 
-  OPTIONAL { ?event ecrm:P4_has_time-span / ecrm:P79_beginning_is_qualified_by ?time . }
+  OPTIONAL { ?event ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?time . }
   OPTIONAL { ?event ecrm:P7_took_place_at ?place }
   OPTIONAL {
     ?event ecrm:P9_consists_of ?activity .

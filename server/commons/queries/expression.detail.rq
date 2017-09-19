@@ -38,14 +38,14 @@ WHERE {
       %%uri%%  mus:U4_had_princeps_publication ?publicationEvent .
       ?publicationEvent ecrm:P3_has_note ?publicationEventNote .
       OPTIONAL {
-        ?publicationEvent ecrm:P4_has_time-span / ecrm:P79_beginning_is_qualified_by ?publicationStart .
+        ?publicationEvent ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?publicationStart .
       }
     }
     OPTIONAL{
       %%uri%% mus:U5_had_premiere ?premiere .
       ?premiere ecrm:P3_has_note ?premiereNote.
       OPTIONAL {
-        ?premiere ecrm:P4_has_time-span / ecrm:P79_beginning_is_qualified_by ?premiereStart .
+        ?premiere ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?premiereStart .
       }
     }
     OPTIONAL{
@@ -61,14 +61,11 @@ WHERE {
         }
         OPTIONAL { ?composerUri foaf:depiction ?composerPic }
         { SELECT ?composerUri sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?composer
-          WHERE { ?composerUri rdfs:label | ecrm:P131_is_identified_by ?composer }
+          WHERE { ?composerUri rdfs:label ?composer }
         }
       }
       OPTIONAL {
-        ?expCreation ecrm:P4_has_time-span ?creationTimeSpan.
-        ?creationTimeSpan ecrm:P80_end_is_qualified_by | ecrm:P81_ongoing_through ?creationEnd ;
-                      ecrm:P79_beginning_is_qualified_by | ecrm:P81_ongoing_through ?creationStart
+        ?expCreation ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?creationStart
       }
     }
-    FILTER (str(?composer) != "Radio France")
 }
