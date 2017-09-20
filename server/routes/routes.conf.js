@@ -3,15 +3,29 @@ import bodyParser from 'body-parser';
 import contentLength from 'express-content-length-validator';
 import helmet from 'helmet';
 import path from 'path';
-import {APP_PATH} from '../../config/constants';
+import 'zone.js/dist/zone-node';
+import 'reflect-metadata';
+import * as ngUniversal from '@nguniversal/express-engine';
+
+import {
+  APP_PATH
+} from '../../config/constants';
 import ApiRouter from './api.router';
+
+const _root = process.cwd();
+const appServer = require(path.join(_root, 'dist-server', 'main.bundle'));
 
 export default class RouteConfig {
   static init(app, express) {
-    let _root = process.cwd();
+    /* Configure Angular Express engine */
+    app.engine('html', ngUniversal.ngExpressEngine({
+      bootstrap: appServer.AppServerModuleNgFactory
+    }));
+    app.set('view engine', 'html');
+    app.set('views', 'dist');
 
     app.use('/api', ApiRouter);
-
+    //
     app.use('/lib', express.static(_root + '/node_modules'));
     app.use('/static', express.static(_root + APP_PATH.CLIENT_FILES));
     app.use('/', express.static(_root + APP_PATH.CLIENT_FILES));
@@ -21,7 +35,14 @@ export default class RouteConfig {
       let accept = req.headers.accept;
       if (accept && accept.includes('text/html')) {
         // client responsability
-        res.sendFile(path.join(process.cwd(), APP_PATH.CLIENT_FILES, 'index.html'));
+        res.render('index', {
+          req,
+          res,
+          providers: [{
+            provide: 'serverUrl',
+            useValue: `${req.protocol}://${req.get('host')}`
+          }]
+        });
       } else {
         res.status(404).send('404 not found');
       }

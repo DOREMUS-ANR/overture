@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, RequestOptions } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Globals } from '../../app.globals';
 
 import 'rxjs/add/operator/toPromise';
@@ -8,15 +8,15 @@ import 'rxjs/add/operator/toPromise';
 export class SearchService {
   private limit = 12;
 
-  constructor(private http: Http, private globals: Globals) { }
+  constructor(private http: HttpClient, private globals: Globals) { }
 
   query(input = {}, offset?: number) {
-    let search = `lang=${Globals.lang}`;
-    if (offset) search += '&offset=' + offset;
+    let params = new HttpParams().set('lang', Globals.lang);
+    if (offset) params = params.set('offset', offset + '');
 
-    return this.http.get(`/api/search/${input}`, new RequestOptions({ search }))
+    return this.http.get<any>(`/api/search/${input}`, params)
       .toPromise().then(res => {
-        let data = res.json();
+        let data = res;
 
         for (let d of data) {
           d.id = /[^/]*$/.exec(d.expression)[0];

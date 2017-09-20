@@ -27,7 +27,8 @@ export class SearchComponent {
 
   constructor(private _vocabularyService: VocabularyService, private globals: Globals, private route: ActivatedRoute) {
     this._vocabularyService.get('key')
-      .then(voc => {
+      .subscribe(voc => {
+        console.log('aaa')
         this.itemsKey = voc.map((item) => ({
           value: item.uri.value,
           label: item.label.value
@@ -36,7 +37,7 @@ export class SearchComponent {
       }, error => console.error('Error: ' + error));
 
     this._vocabularyService.get('iaml/genre')
-      .then(voc => {
+      .subscribe(voc => {
         this.itemsGenre = voc.map((item) => ({
           value: item.uri.value,
           label: item.label.value
@@ -45,7 +46,7 @@ export class SearchComponent {
       }, error => console.error('Error: ' + error));
 
     this._vocabularyService.get('iaml/mop')
-      .then(voc => {
+      .subscribe(voc => {
         this.itemsMop = voc.map((item) => ({
           value: item.uri.value,
           label: item.label.value

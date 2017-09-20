@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs/Rx";
-import { Http, RequestOptions } from '@angular/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Globals } from '../../app.globals';
 
 import 'rxjs/add/operator/toPromise';
@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 export class ArtistService {
   private limit = 21;
 
-  constructor(private http: Http, private globals: Globals) { }
+  constructor(private http: HttpClient, private globals: Globals) { }
 
   query(filter = {}, offset?: number) {
     let filterOptions = "";
@@ -26,19 +26,20 @@ export class ArtistService {
     let search = 'lim=' + this.limit + filterOptions;
     if (offset) search += '&offset=' + offset;
 
-    return this.http.get("/api/artist", new RequestOptions({ search }))
-      .map(res => res.json());
+    return this.http.get("/api/artist", {
+      params: new HttpParams({ fromString: search })
+    });
   }
 
   get(id): Observable<any> {
     if (!id) return null;
 
-    let search = `lang=${Globals.lang}`;
+    let params = new HttpParams().set('lang', Globals.lang);
     return Observable.forkJoin(
-      this.http.get(`/api/artist/${id}`, new RequestOptions({ search })),
+      this.http.get(`/api/artist/${id}`, params)
       // this.http.get(`/api/expression/${id}/realisations`, new RequestOptions({ search }))
     )
-      .map(res => res[0].json());
+      .map(res => res[0]);
     //       let expression = _mergeData(_processResult(res[0]));
     //       let eventsData = _processResult(res[1]);
     //       let events = {};

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from "rxjs/Rx";
-import { Http, RequestOptions } from '@angular/http';
 import { Globals } from '../../app.globals';
 
 import 'rxjs/add/operator/toPromise';
@@ -12,7 +12,7 @@ export class ExpressionService {
 
   private limit = 12;
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   query(filter = {}, offset?: number): Observable<any[]> {
     let filterOptions = "";
@@ -29,24 +29,25 @@ export class ExpressionService {
     if (offset) search += '&offset=' + offset;
     else this.expressions = [];
 
-    return this.http.get("/api/expression", new RequestOptions({ search }))
-      .map(res => {
-        let data = _processResult(res);
+    return this.http.get("/api/expression", {
+      params: new HttpParams({ fromString: search })
+    }).map(res => {
+      let data = _processResult(res);
 
-        for (let d of data)
-          d.id = /[^/]*$/.exec(d.expression)[0];
+      for (let d of data)
+        d.id = /[^/]*$/.exec(d.expression)[0];
 
-        return data;
-      });
+      return data;
+    });
   }
 
   get(id): Observable<any> {
     if (!id) return null;
 
-    let search = `lang=${Globals.lang}`;
+    let params = new HttpParams().set('lang', Globals.lang);
     return Observable.forkJoin(
-      this.http.get(`/api/expression/${id}`, new RequestOptions({ search })),
-      this.http.get(`/api/expression/${id}/realisations`, new RequestOptions({ search })))
+      this.http.get(`/api/expression/${id}`, params),
+      this.http.get(`/api/expression/${id}/realisations`, params))
       .map(res => {
         let expression = _mergeData(_processResult(res[0]));
         let eventsData = _processResult(res[1]);
@@ -75,7 +76,6 @@ export class ExpressionService {
         for (let key of Object.keys(events))
           events[key].sort((a, b) => a.time >= b.time ? 1 : -1);
 
-        console.log(events)
         expression.events = events;
         return expression;
       });
@@ -84,10 +84,10 @@ export class ExpressionService {
   recommend(id) {
     if (!id) return Promise.resolve(null);
 
-    let search = `lang=${Globals.lang}`;
-    return this.http.get(`/api/recommendation/${id}`, new RequestOptions({ search }))
+    let params = new HttpParams().set('lang', Globals.lang);
+    return this.http.get(`/api/recommendation/${id}`, params)
       .toPromise().then(res => {
-        let data = res.json();
+        let data =  res;
         console.log(data);
         return data;
       });
@@ -113,7 +113,7 @@ function _mergeData(data): any {
 }
 
 function _processResult(res) {
-  let bindings = res.json().results.bindings;
+  let bindings = res.results.bindings;
   bindings.forEach(b => {
     Object.keys(b).forEach(prop => {
       b[prop] = b[prop].value;

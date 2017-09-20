@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from "rxjs/Rx";
-import { Http, RequestOptions } from '@angular/http';
 import { Globals } from '../../app.globals';
-
-import 'rxjs/add/operator/toPromise';
 
 let vocabularies = {};
 
@@ -11,18 +9,19 @@ let vocabularies = {};
 export class VocabularyService {
   private limit = 12;
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
-  get(id) {
-    if (!id) return Promise.resolve(null);
+  get(id): Observable<any> {
+    if (!id) return Observable.of(null);
+
     let cache = vocabularies[id];
-    if (cache) return Promise.resolve(cache);
+    if (cache) return Observable.of(cache);
 
-    let search = `lang=${Globals.lang}`;
-    return this.http.get(`/api/vocabulary/${id.replace(/\//g, '-')}`, new RequestOptions({ search }))
-      .toPromise().then(res => {
-        let data = res.json();
-        data = data.results && data.results.bindings;
+    let params = new HttpParams().set('lang', Globals.lang);
+    return this.http.get<any>(`/api/vocabulary/${id.replace(/\//g, '-')}`, params)
+      .map(res => {
+        let data = res && res.results && res.bindings;
+
         vocabularies[id] = data;
         return data.sort((a, b) => a.label.value.toLowerCase() > b.label.value.toLowerCase() ? 1 : -1);
       });

@@ -2,6 +2,8 @@
 
 <loading *ngIf="querying"></loading>
 <article *ngIf="artist" vocab="http://schema.org/" typeof="Person" [attr.about]="artist['@id']" class="artist-detail">
+  <jsonld *ngIf="artist" [object]="artist"></jsonld>
+
   <section class="overview">
     <div [ngStyle]="{'background-image': 'url('+ (artist.image || overviewPic) +')'}" class="bg"></div>
     <div class="overview-cont">

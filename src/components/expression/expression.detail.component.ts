@@ -41,9 +41,7 @@ export class ExpressionDetailComponent {
     private route: ActivatedRoute) {
 
     this.sharedService = sharedService;
-  }
 
-  ngOnInit() {
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
 
@@ -94,10 +92,13 @@ export class ExpressionDetailComponent {
           console.error(err);
         });
 
-        // FIXME discover why this is not propagated to sharedService
-        this.sharedService.sharchBarVisible = false;
       }
     });
+  }
+
+  ngOnInit() {
+    // FIXME discover why this is not propagated to sharedService
+    this.sharedService.sharchBarVisible = false;
   }
 
   isNode(a) {
