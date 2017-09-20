@@ -20,10 +20,9 @@ export class VocabularyService {
     let params = new HttpParams().set('lang', Globals.lang);
     return this.http.get<any>(`/api/vocabulary/${id.replace(/\//g, '-')}`, params)
       .map(res => {
-        let data = res && res.results && res.bindings;
-
+        let data = res.results.bindings;
         vocabularies[id] = data;
-        return data.sort((a, b) => a.label.value.toLowerCase() > b.label.value.toLowerCase() ? 1 : -1);
+        return data
       });
   }
 

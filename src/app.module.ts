@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MaterialModule, MdSelectModule } from '@angular/material';
+import { MaterialModule, MdButtonModule, MdSelectModule } from '@angular/material';
 import { MomentModule } from 'angular2-moment';
 import { SelectModule } from 'ng-select';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -57,7 +57,8 @@ import { WipComponent } from './components/wip/wip.component';
     BrowserModule.withServerTransition({ appId: 'overture' }),
     BrowserAnimationsModule, FormsModule, HttpClientModule,
     routing, JsonLdModule,
-    MaterialModule, MdSelectModule, MomentModule,
+    MaterialModule,
+    MomentModule,
     InfiniteScrollModule, SelectModule
   ],
   declarations: [AppComponent, KeysPipe, SummaryPipe, JsonLDvalPipe,

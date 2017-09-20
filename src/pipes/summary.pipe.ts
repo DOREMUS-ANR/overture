@@ -22,7 +22,7 @@ export class SummaryPipe implements PipeTransform {
           link: ['/expression', id],
           title: value.title || value.name,
           super: author,
-          small: value.catalogue,
+          small: value.alternativeHeadline,
           image: value.image
         }
       case 'event':

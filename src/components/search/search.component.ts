@@ -1,8 +1,8 @@
-import {Component, Output, EventEmitter} from '@angular/core';
-import {QueryService} from "../../services/queries.service";
-import {VocabularyService} from './vocabulary.service';
-import {Globals } from '../../app.globals';
-import {ActivatedRoute} from '@angular/router';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { QueryService } from "../../services/queries.service";
+import { VocabularyService } from './vocabulary.service';
+import { Globals } from '../../app.globals';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -28,12 +28,10 @@ export class SearchComponent {
   constructor(private _vocabularyService: VocabularyService, private globals: Globals, private route: ActivatedRoute) {
     this._vocabularyService.get('key')
       .subscribe(voc => {
-        console.log('aaa')
         this.itemsKey = voc.map((item) => ({
           value: item.uri.value,
           label: item.label.value
         }));
-        setTimeout(() => this._loadFilter(), 0);
       }, error => console.error('Error: ' + error));
 
     this._vocabularyService.get('genre')
@@ -42,7 +40,6 @@ export class SearchComponent {
           value: item.uri.value,
           label: item.label.value
         }));
-        setTimeout(() => this._loadFilter(), 0);
       }, error => console.error('Error: ' + error));
 
     this._vocabularyService.get('mop')
@@ -51,7 +48,6 @@ export class SearchComponent {
           value: item.uri.value,
           label: item.label.value
         }));
-        setTimeout(() => this._loadFilter(), 0);
       }, error => console.error('Error: ' + error));
   }
 
@@ -60,10 +56,28 @@ export class SearchComponent {
   }
 
   private _loadFilter() {
-    Object.assign(this.filter, this.route.queryParams['value'])
+    console.log('aaaa')
+    let params = this.route.queryParams['value'];
+    Object.keys(params).forEach(p => {
+      let v = params[p];
+      console.log(p, v);
+
+      if (Array.isArray(this.filter[p])) {
+        if (Array.isArray(v))
+          this.filter[p].push(...v)
+        else this.filter[p].push(v)
+      }
+      else this.filter = v
+    });
+  }
+
+  emptyFilter(f: string) {
+    this.filter[f] = Array.isArray(this.filter[f]) ? [] : null;
+    this.changeFilter(null);
   }
 
   changeFilter(event: any) {
+    console.log('paaaaa')
     debounce(() => {
       this.onFilterChanged.emit(this.filter);
     }, 500)();

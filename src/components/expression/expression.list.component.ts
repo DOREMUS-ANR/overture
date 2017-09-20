@@ -1,7 +1,7 @@
-import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
-import {Router, ActivatedRoute, NavigationStart} from '@angular/router';
-import {Globals } from '../../app.globals';
-import {ExpressionService} from './expression.service';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
+import { Globals } from '../../app.globals';
+import { ExpressionService } from './expression.service';
 
 @Component({
   moduleId: module.id,
@@ -72,10 +72,12 @@ export class ExpressionListComponent {
     if (this.scrollInProgress || !this.items) return;
     this.scrollInProgress = true;
 
-    this._expressionService.query(this.filter, this.items.length).subscribe(res => {
-      this.scrollInProgress = false;
-      this.items.push(...res);
-    }, error => console.error('Error: ' + error));
+    this._expressionService.query(this.filter, this.items.length)
+      .subscribe(res => {
+        this.scrollInProgress = false;
+        let list = res['@graph'];
+        this.items.push(...list);
+      }, error => console.error('Error: ' + error));
   }
 
   myIdChange(event) {

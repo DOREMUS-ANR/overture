@@ -7,5 +7,5 @@ WHERE {
     ?something %%prop%% ?uri .
     ?uri skos:prefLabel ?prefLabel
 }
-GROUP BY ?uri ?prefLabel
-ORDER BY (COUNT(?something))
+GROUP BY ?uri
+ORDER BY DESC(COUNT(?something))

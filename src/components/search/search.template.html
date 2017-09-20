@@ -10,18 +10,38 @@
     </md-input-container>
 
     <div class="field select">
-      <label>Musical key</label>
-      <ng-select [(ngModel)]="filter.key" name="filter.key" (selected)="changeFilter($event)" (deselected)="changeFilter($event)" placeholder="all" [options]="itemsKey" [allowClear]="true" highlightColor="#c62c24"></ng-select>
+      <md-select placeholder="Musical key" [(ngModel)]="filter.key" name="filter.key" (ngModelChange)="changeFilter($event)">
+        <md-option *ngFor="let item of itemsKey" [value]="item.value">
+          {{item.label}}
+        </md-option>
+      </md-select>
+      <button md-icon-button class="close-btn" [hidden]="!filter.key" (click)="emptyFilter('key')">
+        <md-icon class="md-16" aria-label="reset">close</md-icon>
+      </button>
+
     </div>
 
     <div class="field select">
-      <label>Genre</label>
-      <ng-select [(ngModel)]="filter.genre" name="filter.genre" (selected)="changeFilter($event)" (deselected)="changeFilter($event)" placeholder="all" [options]="itemsGenre" [allowClear]="true" highlightColor="#c62c24"></ng-select>
+      <md-select placeholder="Genre" [(ngModel)]="filter.genre" name="filter.genre" (ngModelChange)="changeFilter($event)">
+        <md-option *ngFor="let item of itemsGenre" [value]="item.value">
+          {{item.label}}
+        </md-option>
+      </md-select>
+      <button md-icon-button class="close-btn" [hidden]="!filter.genre" (click)="emptyFilter('genre')">
+        <md-icon class="md-16" aria-label="reset">close</md-icon>
+      </button>
     </div>
 
     <div class="field select long">
-      <label>Instruments</label>
-      <ng-select [(ngModel)]="filter.mop" name="filter.mop" (selected)="changeFilter($event)" (deselected)="changeFilter($event)" placeholder="all" multiple="true" [options]="itemsMop" [allowClear]="true" highlightColor="#c62c24"></ng-select>
+      <md-select placeholder="Instruments" [(ngModel)]="filter.mop" name="filter.mop" (ngModelChange)="changeFilter($event)" multiple="true">
+        <md-option *ngFor="let item of itemsMop" [value]="item.value">
+          {{item.label}}
+        </md-option>
+      </md-select>
+      <button md-icon-button class="close-btn" [hidden]="!filter.mop.length" (click)="emptyFilter('mop')">
+        <md-icon class="md-16" aria-label="reset">close</md-icon>
+      </button>
+
     </div>
 
   </form>
