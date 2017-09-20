@@ -1,6 +1,6 @@
 SELECT DISTINCT
   ?artist as ?uri
-  sql:BEST_LANGMATCH(?label, '%%lang%%, en;q=0.9, ru-Latn;q=0.2, el-Latn;q=0.2*;q=0.1', 'en') AS ?label
+  sql:BEST_LANGMATCH(?label, '%%lang%%', 'en') AS ?label
   ?birth
   ?death
   ?pic

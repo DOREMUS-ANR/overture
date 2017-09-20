@@ -63,7 +63,7 @@ export default class SearchController {
 
     sparql.loadQuery('expression.fullsearch', {
         input: inputRegex,
-        lang: req.query.lang || 'en'
+        lang: req.query.lang
       })
       .then(results => {
         let bindings = _processResult(results);

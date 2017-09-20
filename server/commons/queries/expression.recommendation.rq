@@ -5,8 +5,8 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT
   ?expression
-  sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?title
-  sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?composer
+  sql:BEST_LANGMATCH(?title, '%%lang%%', 'en') AS ?title
+  sql:BEST_LANGMATCH(?composer, '%%lang%%', 'en') AS ?composer
   (SAMPLE(?catalogue) AS ?catalogue)
 WHERE {
     %%uri%% a efrbroo:F22_Self-Contained_Expression ;

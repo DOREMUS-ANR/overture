@@ -56,7 +56,6 @@ export class SearchComponent {
   }
 
   private _loadFilter() {
-    console.log('aaaa')
     let params = this.route.queryParams['value'];
     Object.keys(params).forEach(p => {
       let v = params[p];
@@ -77,7 +76,6 @@ export class SearchComponent {
   }
 
   changeFilter(event: any) {
-    console.log('paaaaa')
     debounce(() => {
       this.onFilterChanged.emit(this.filter);
     }, 500)();

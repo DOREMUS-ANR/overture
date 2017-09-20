@@ -16,7 +16,7 @@ export default class ExpressionController {
   static get(req, res) {
     sparql.loadQuery('expression.detail', {
         uri: `<http://data.doremus.org/expression/${req.params.id}>`,
-        lang: req.query.lang || 'en'
+        lang: req.query.lang
       })
       .then(results => res.json(results))
       .catch(err => sendStandardError(res, err));
@@ -25,7 +25,7 @@ export default class ExpressionController {
   static getRealisations(req, res) {
     sparql.loadQuery('expression.realisation', {
         uri: `<http://data.doremus.org/expression/${req.params.id}>`,
-        lang: req.query.lang || 'en'
+        lang: req.query.lang
       })
       .then(results => res.json(results))
       .catch(err => sendStandardError(res, err));
@@ -33,9 +33,9 @@ export default class ExpressionController {
 
   static query(req, res) {
     let opt = Object.assign({
-      lim: 20,
-      lang: 'en'
+      lim: 20
     }, req.query);
+
     sparql.loadQuery('expression.list', opt)
       .then(r => {
         try {

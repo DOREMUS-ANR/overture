@@ -85,7 +85,7 @@ export default class RecommendationController {
             .slice(0, req.query.limit || nRecPerTipe)
             .filter(s => s.score > 0);
           async.map(scores,
-            (s, cb) => getShortInfo(s.uri, req.query.lang || 'en', cb),
+            (s, cb) => getShortInfo(s.uri, req.query.lang, cb),
             (err, data) => {
               let p = properties[code];
               callback(null, {

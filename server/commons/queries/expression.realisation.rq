@@ -22,13 +22,13 @@ WHERE {
     ?event ecrm:P9_consists_of ?activity .
     ?activity ecrm:P14_carried_out_by ?actor .
     OPTIONAL {
-    { SELECT ?actor sql:BEST_LANGMATCH(?actorName, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?actorName
+    { SELECT ?actor sql:BEST_LANGMATCH(?actorName, '%%lang%%', 'en') as ?actorName
       WHERE { ?actor foaf:name ?actorName }
     } }
     OPTIONAL { ?activity mus:U35_foresees_function_of_type ?function }
     OPTIONAL {
       ?activity mus:U1_used_medium_of_performance ?mopURI
-      OPTIONAL {{ SELECT ?mopURI sql:BEST_LANGMATCH(?mop, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop
+      OPTIONAL {{ SELECT ?mopURI sql:BEST_LANGMATCH(?mop, '%%lang%%', 'en') as ?mop
         WHERE { ?mopURI skos:prefLabel | ecrm:P1_is_identified_by ?mop }
       }}
     }

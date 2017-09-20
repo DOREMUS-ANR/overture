@@ -16,6 +16,7 @@ export class SummaryPipe implements PipeTransform {
         let author = value.composer || value.author;
         if (author['@type'] == 'Role') author = author.composer || author.author;
         if (author.name) author = author.name;
+        if (author['@value']) author = author['@value'];
 
         return {
           id,

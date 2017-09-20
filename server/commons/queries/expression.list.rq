@@ -4,8 +4,8 @@ PREFIX mus: <http://data.doremus.org/ontology#>
 
 SELECT DISTINCT
   ?expression AS ?id
-  sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?name
-  sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?composer
+  sql:BEST_LANGMATCH(?title, '%%lang%%', 'en') AS ?name
+  sql:BEST_LANGMATCH(?composer, '%%lang%%', 'en') AS ?composer
   (SAMPLE(?catalogue) AS ?alternativeHeadline)
   (SAMPLE(?pic) as ?image)
 WHERE {

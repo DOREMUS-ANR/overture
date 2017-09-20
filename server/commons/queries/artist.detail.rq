@@ -1,4 +1,14 @@
-SELECT DISTINCT *
+SELECT DISTINCT
+  ?uri
+  sql:BEST_LANGMATCH(?label, '%%lang%%', 'en') AS ?label
+  ?names
+  ?birth
+  ?death
+  ?pic
+  ?comment
+  ?sameAs
+  ?wikipedia
+
 WHERE {
   ?uri a ecrm:E21_Person ;
          rdfs:label ?label ;

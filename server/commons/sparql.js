@@ -39,6 +39,8 @@ export default class Sparql {
     if (!queryId) {
       throw Error('The name of the query to load is required');
     }
+    if (!opt.lang)
+      opt.lang = 'en;q=0.9, ru-Latn;q=0.2, grm-Latn;q=0.2, el-Latn;q=0.2 *;q=0.1';
 
     let _file = path.join(queryFolder, queryId + '.rq');
 

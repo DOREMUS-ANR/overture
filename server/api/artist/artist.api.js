@@ -63,7 +63,7 @@ export default class ArtistController {
     async.map(['artist.detail', 'artist.works'], (rq, callback) => {
       sparql.loadQuery(rq, {
           uri: artistUri,
-          lang: req.query.lang || 'en'
+          lang: req.query.lang
         })
         .then(results => {
           let data = results.results.bindings;
