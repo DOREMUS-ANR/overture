@@ -14,7 +14,7 @@ export class SummaryComponent {
 class Entity {
   title: string
   small: string
-  pic: string
+  image: string
   link: string
   super: number
 }

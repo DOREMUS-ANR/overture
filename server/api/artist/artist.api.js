@@ -117,6 +117,8 @@ export default class ArtistController {
             '@type': type,
             name: w.title && w.title.value
           };
+          if(w.pic) obj.image = w.pic.value;
+
           obj[prop] = {
             '@type': 'Role',
             'roleName': role,

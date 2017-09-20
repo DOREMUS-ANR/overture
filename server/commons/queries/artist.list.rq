@@ -8,8 +8,8 @@ WHERE {
   ?artist a ecrm:E21_Person ;
          rdfs:label ?label .
   OPTIONAL { ?artist foaf:depiction ?pic }
-  OPTIONAL { ?artist ecrm:P98i_was_born ?birth }
-  OPTIONAL { ?artist ecrm:P100i_died_in ?death }
+  OPTIONAL { ?artist schema:birthDate ?birth }
+  OPTIONAL { ?artist schema:deathDate ?death }
 
   # involved at least in one activity
   ?activity ecrm:P14_carried_out_by ?artist .

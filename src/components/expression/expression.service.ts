@@ -31,13 +31,6 @@ export class ExpressionService {
 
     return this.http.get("/api/expression", {
       params: new HttpParams({ fromString: search })
-    }).map(res => {
-      let data = _processResult(res);
-
-      for (let d of data)
-        d.id = /[^/]*$/.exec(d.expression)[0];
-
-      return data;
     });
   }
 

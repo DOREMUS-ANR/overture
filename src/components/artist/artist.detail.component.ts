@@ -42,7 +42,6 @@ export class ArtistDetailComponent {
 
         this.artist = graph.splice(0, 1)[0];
         this.artist['@context'] = 'http://schema.org';
-        console.log(this.artist);
         this.compositions = graph.filter(c => c['@type'] ==='MusicComposition');
         this.performances = graph.filter(c => c['@type'] ==='MusicEvent');
 

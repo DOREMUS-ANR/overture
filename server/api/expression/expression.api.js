@@ -32,13 +32,36 @@ export default class ExpressionController {
   }
 
   static query(req, res) {
-    console.log(req.query);
     let opt = Object.assign({
       lim: 20,
       lang: 'en'
     }, req.query);
     sparql.loadQuery('expression.list', opt)
-      .then(results => res.json(results))
+      .then(r => {
+        try {
+          let data = r.results.bindings
+            .map(exp => {
+              let mc = {
+                '@type': 'MusicComposition'
+              };
+              Object.keys(exp).forEach(p => {
+                let v = exp[p].value;
+                p = ((p === 'id') ? '@' : '') + p;
+                mc[p] = v;
+              });
+              return mc;
+            });
+
+          res.json({
+            '@context': 'http://schema.org/',
+            '@id': 'http://overture.doremus.org' + req.originalUrl,
+            'generatedAt': (new Date()).toISOString(),
+            '@graph': data
+          });
+        } catch (e) {
+          res.json([]);
+        }
+      })
       .catch(err => sendStandardError(res, err));
   }
 

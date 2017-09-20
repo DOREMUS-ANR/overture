@@ -36,7 +36,7 @@ export class SearchComponent {
         setTimeout(() => this._loadFilter(), 0);
       }, error => console.error('Error: ' + error));
 
-    this._vocabularyService.get('iaml/genre')
+    this._vocabularyService.get('genre')
       .subscribe(voc => {
         this.itemsGenre = voc.map((item) => ({
           value: item.uri.value,
@@ -45,7 +45,7 @@ export class SearchComponent {
         setTimeout(() => this._loadFilter(), 0);
       }, error => console.error('Error: ' + error));
 
-    this._vocabularyService.get('iaml/mop')
+    this._vocabularyService.get('mop')
       .subscribe(voc => {
         this.itemsMop = voc.map((item) => ({
           value: item.uri.value,

@@ -51,7 +51,7 @@ export class ExpressionListComponent {
 
     this._expressionService.query(this.filter).subscribe(
       res => {
-        this.items = res;
+        this.items = res['@graph'];
         this.querying = false;
       },
       error => {

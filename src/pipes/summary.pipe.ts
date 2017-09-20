@@ -22,7 +22,8 @@ export class SummaryPipe implements PipeTransform {
           link: ['/expression', id],
           title: value.title || value.name,
           super: author,
-          small: value.catalogue
+          small: value.catalogue,
+          image: value.image
         }
       case 'event':
       case 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation':

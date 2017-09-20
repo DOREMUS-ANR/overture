@@ -3,22 +3,18 @@ PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX mus: <http://data.doremus.org/ontology#>
 
 SELECT DISTINCT
-  ?expression
-  sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?title
+  ?expression AS ?id
+  sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?name
   sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') AS ?composer
-  (SAMPLE(?catalogue) AS ?catalogue)
-
+  (SAMPLE(?catalogue) AS ?alternativeHeadline)
+  (SAMPLE(?pic) as ?image)
 WHERE {
   ?expression mus:U70_has_title | ecrm:P102_has_title ?title .
   OPTIONAL{
-    {
-      ?expCreation efrbroo:R17_created ?expression ;
-        ecrm:P9_consists_of / ecrm:P14_carried_out_by / rdfs:label ?composer .
-    } UNION
-    {
-      ?expCreation efrbroo:R17_created ?expression ;
-        ecrm:P14_carried_out_by / ecrm:P131_is_identified_by ?composer .
-    }
+    ?expCreation efrbroo:R17_created ?expression ;
+      ecrm:P9_consists_of / ecrm:P14_carried_out_by ?c.
+    ?c rdfs:label ?composer .
+    OPTIONAL {?c foaf:depiction ?pic}
   }
   OPTIONAL { ?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
 
@@ -53,5 +49,4 @@ WHERE {
     LIMIT %%lim%%
     OFFSET %%offset%%
   }
-  FILTER (str(?composer) != "Radio France")
 }

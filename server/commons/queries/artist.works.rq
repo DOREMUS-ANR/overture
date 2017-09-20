@@ -1,5 +1,6 @@
-SELECT DISTINCT ?artist, ?role, ?roleLabel, ?event, ?expression, ?classExpr, ?title
+SELECT DISTINCT ?artist, ?role, ?roleLabel, ?event, ?expression, ?classExpr, ?title, ?pic
 WHERE {
+  OPTIONAL { %%uri%% foaf:depiction ?pic }
 
   ?activity ecrm:P14_carried_out_by %%uri%%.
   OPTIONAL {{
