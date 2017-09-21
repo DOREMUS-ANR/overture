@@ -61,12 +61,12 @@ Build
 
 Run
 
-    docker run -d -p 5050:3333 --restart=unless-stopped  -v /var/nodejs/overture/config:/config --network doremus --name doremus_overture doremus/overture
+    docker run -d -p 5050:3333 --restart=unless-stopped  -v /var/nodejs/overture/config:/config --network doremus --name overture doremus/overture
 
 Stop
 
-    docker stop doremus_overture
-    docker rm doremus_overture ##remove from available containers
+    docker stop overture
+    docker rm overture ##remove from available containers
     docker rmi doremus/overture ##remove from images
 
 [1]: https://drive.google.com/file/d/0B_nxZpGQv9GKZmpKRGl2dmRENGc/view

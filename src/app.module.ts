@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MaterialModule, MdButtonModule, MdSelectModule } from '@angular/material';
 import { MomentModule } from 'angular2-moment';
-import { SelectModule } from 'ng-select';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from './components/app.component';
@@ -59,7 +58,7 @@ import { WipComponent } from './components/wip/wip.component';
     routing, JsonLdModule,
     MaterialModule,
     MomentModule,
-    InfiniteScrollModule, SelectModule
+    InfiniteScrollModule
   ],
   declarations: [AppComponent, KeysPipe, SummaryPipe, JsonLDvalPipe,
     HomeComponent, SearchResultsComponent,
