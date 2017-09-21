@@ -1,5 +1,8 @@
 const prod = (process.env.NODE_ENV === 'production');
 
+
+export const HOST = prod ? 'overture.doremus.org' : null;
+
 export const APP_PATH = {
   CLIENT_FILES: prod ? '/dist' : '/src',
   RECOMMENDING_PATH: prod ? '/recommending' : '/Users/pasquale/git/recommender/recommending'

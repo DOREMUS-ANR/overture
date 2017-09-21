@@ -8,7 +8,7 @@ import 'reflect-metadata';
 import * as ngUniversal from '@nguniversal/express-engine';
 
 import {
-  APP_PATH
+  APP_PATH, HOST
 } from '../../config/constants';
 import ApiRouter from './api.router';
 
@@ -44,7 +44,7 @@ export default class RouteConfig {
           res,
           providers: [{
             provide: 'serverUrl',
-            useValue: `${req.protocol}://${req.get('host')}`
+            useValue: `${req.protocol}://${HOST || req.get('host')}`
           }]
         });
       } else {
