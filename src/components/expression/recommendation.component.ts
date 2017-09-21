@@ -1,5 +1,6 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, Inject, PLATFORM_ID } from '@angular/core';
 import { ExpressionService } from './expression.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   moduleId: module.id,
@@ -12,7 +13,7 @@ export class RecommendationComponent {
   loading: boolean = true;
   error: boolean = false;
 
-  constructor(private expressionService: ExpressionService) { };
+  constructor(private expressionService: ExpressionService, @Inject(PLATFORM_ID) private platformId: Object) { };
 
   ngOnChanges(changes: SimpleChanges) {
     if (!changes.seed) return;
@@ -22,16 +23,20 @@ export class RecommendationComponent {
     this.recommendation = null;
 
     let id = this.seed.replace('http://data.doremus.org/expression/', '');
-    // retrieve recommendations
-    this.expressionService.recommend(id)
-      .then((res) => {
-        this.loading = false;
-        this.recommendation = res.filter(r => r.data.length);
-      }, (err) => {
-        this.loading = false;
-        this.error = true;
-        console.error(err);
-      });
 
+    if (isPlatformBrowser(this.platformId)) {
+
+      // retrieve recommendations
+      this.expressionService.recommend(id)
+        .then((res) => {
+          this.loading = false;
+          this.recommendation = res.filter(r => r.data.length);
+        }, (err) => {
+          this.loading = false;
+          this.error = true;
+          console.error(err);
+        });
+    }
   }
+
 }

@@ -1,5 +1,4 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { QueryService } from "../../services/queries.service";
 import { VocabularyService } from './vocabulary.service';
 import { Globals } from '../../app.globals';
 import { ActivatedRoute } from '@angular/router';

@@ -29,11 +29,12 @@ export default class RouteConfig {
     app.use('/static', express.static(_root + APP_PATH.CLIENT_FILES));
 
 
-    app.use('/api', ApiRouter);
     app.use('/', express.static(_root + APP_PATH.CLIENT_FILES));
 
     // TODO 404 page
     app.use(morgan('dev'));
+    app.use('/api', ApiRouter);
+
     app.get('*', (req, res) => {
       let accept = req.headers.accept;
       if (accept && accept.includes('text/html')) {
