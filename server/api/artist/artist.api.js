@@ -111,7 +111,6 @@ export default class ArtistController {
             default:
               prop = (type === 'MusicComposition') ? 'author' : 'performer';
           }
-          console.log(w);
           let obj = {
             '@id': uri,
             '@type': type,

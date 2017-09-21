@@ -24,13 +24,16 @@ export default class RouteConfig {
     app.set('view engine', 'html');
     app.set('views', 'dist');
 
-    app.use('/api', ApiRouter);
-    //
+
     app.use('/lib', express.static(_root + '/node_modules'));
     app.use('/static', express.static(_root + APP_PATH.CLIENT_FILES));
+
+
+    app.use('/api', ApiRouter);
     app.use('/', express.static(_root + APP_PATH.CLIENT_FILES));
 
     // TODO 404 page
+    app.use(morgan('dev'));
     app.get('*', (req, res) => {
       let accept = req.headers.accept;
       if (accept && accept.includes('text/html')) {
@@ -50,7 +53,6 @@ export default class RouteConfig {
 
 
     app.use(bodyParser.json());
-    app.use(morgan('dev'));
     app.use(contentLength.validateMax({
       max: 999
     }));
