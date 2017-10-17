@@ -1,0 +1,4 @@
+SELECT sql:BEST_LANGMATCH(?label, '%%lang%%', 'en') AS ?label
+WHERE {
+  %%uri%% rdfs:label | skos:prefLabel ?label
+}

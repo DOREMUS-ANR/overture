@@ -4,6 +4,8 @@ SELECT DISTINCT
   ?names
   ?birth
   ?death
+  ?birthPlace
+  ?deathPlace
   ?pic
   ?comment
   ?sameAs
@@ -15,6 +17,8 @@ WHERE {
          foaf:name ?names .
   OPTIONAL { ?uri schema:birthDate ?birth }
   OPTIONAL { ?uri schema:deathDate ?death }
+  OPTIONAL { ?uri dbpprop:birthPlace ?birthPlace }
+  OPTIONAL { ?uri dbpprop:deathPlace ?deathPlace }
   OPTIONAL { ?uri foaf:depiction ?pic }
   OPTIONAL { ?uri rdfs:comment ?comment }
   OPTIONAL { ?uri owl:sameAs ?sameAs }

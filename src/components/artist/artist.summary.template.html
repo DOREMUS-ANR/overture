@@ -1,15 +1,11 @@
-<!-- <div class="entity-summary" [routerLink]="entity.link">
-  <img md-card-avatar [src]="entity.pic || 'static/img/defPicExpr.png'">
-  <p class="composer"><span *ngIf="entity.super != 0">{{entity.super}}</span></p>
-  <h3>{{entity.title}}<small class="catalogue">{{entity.small}}</small></h3>
-</div> -->
 <article vocab="http://schema.org/" typeof="Person" [attr.about]="artist['@id']" [routerLink]="artist.link">
   <div class="artist-round">
     <img property="image" md-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
   </div>
   <h3 property="name">{{artist.name | jsonLDval }}</h3>
+  <p *ngIf="artist.description" class="dates">{{artist.description}}</p>
   <p *ngIf="artist.birthDate" class="dates">
-    <span property="birthDate">{{artist.birthDate}}</span>
+    <span property="birthDate">{{artist.birthDate | slice:0:4}}</span>
     <span> - </span>
     <span property="deathDate">{{artist.deathDate || '...'}}</span>
   </p>

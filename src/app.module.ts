@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MaterialModule, MdButtonModule, MdSelectModule } from '@angular/material';
-import { MomentModule } from 'angular2-moment';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from './components/app.component';
@@ -18,6 +17,7 @@ import { Globals } from './app.globals';
 import { KeysPipe } from './pipes/keys.pipe';
 import { SummaryPipe } from './pipes/summary.pipe';
 import { JsonLDvalPipe } from './pipes/jsonLDval.pipe';
+import { StripDbpediaPipe } from './pipes/strip_dbpedia.pipe';
 
 
 import { JsonLdModule } from './jsonld/jsonld.module';
@@ -36,6 +36,7 @@ import { ArtistComponent } from './components/artist/artist.component';
 import { ArtistListComponent } from './components/artist/artist.list.component';
 import { ArtistDetailComponent } from './components/artist/artist.detail.component';
 import { ArtistSummaryComponent } from './components/artist/artist.summary.component';
+import { ArtistRecommendationComponent } from './components/artist/artist.recommendation.component';
 
 import { ScoreTabComponent } from './components/score-tab/score-tab.component';
 
@@ -57,18 +58,17 @@ import { WipComponent } from './components/wip/wip.component';
     BrowserAnimationsModule, FormsModule, HttpClientModule,
     routing, JsonLdModule,
     MaterialModule,
-    MomentModule,
     InfiniteScrollModule
   ],
-  declarations: [AppComponent, KeysPipe, SummaryPipe, JsonLDvalPipe,
+  declarations: [AppComponent, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe,
     HomeComponent, SearchResultsComponent,
     ErrorComponent, LoadingComponent, TimelineComponent,
     ScoreTabComponent,
-    ArtistComponent, ArtistListComponent, ArtistDetailComponent, ArtistSummaryComponent,
+    ArtistComponent, ArtistListComponent, ArtistDetailComponent, ArtistSummaryComponent, ArtistRecommendationComponent,
     ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, RecommendationComponent, SummaryComponent,
     WipComponent, TopNavComponent, SearchComponent
   ],
   bootstrap: [AppComponent],
-  providers: [SharedService, Globals, KeysPipe, SummaryPipe, JsonLDvalPipe, Title]
+  providers: [SharedService, Globals, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe, Title]
 })
 export class AppModule { }

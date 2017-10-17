@@ -1,0 +1,11 @@
+SELECT DISTINCT
+  sql:BEST_LANGMATCH(?label, '%%lang%%', 'en') AS ?label
+  SAMPLE(?birth) as ?birth
+  SAMPLE(?death) as ?death
+  SAMPLE(?pic) as ?pic
+WHERE {
+  %%uri%% rdfs:label ?label .
+  OPTIONAL { %%uri%% foaf:depiction ?pic }
+  OPTIONAL { %%uri%% schema:birthDate ?birth }
+  OPTIONAL { %%uri%% schema:deathDate ?death }
+}

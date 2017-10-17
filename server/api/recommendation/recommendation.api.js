@@ -1,4 +1,5 @@
 import Sparql from '../../commons/sparql';
+import ArtistController from '../artist/artist.api.js';
 import {
   EXT_URI
 } from '../../../config/constants';
@@ -56,15 +57,36 @@ function getShortInfo(uri, lang, callback) {
     .catch(err => callback(err));
 }
 
-function callRecommenderFor(expression) {
+function getArtistInfo(uri, lang, callback) {
   'use strict';
+  sparql.loadQuery('artist.recommendation', {
+      uri,
+      lang
+    })
+    .then(results => {
+      let _r = results.results.bindings;
+      if (!_r.length) return callback();
+      callback(null, ArtistController.toSchemaOrg(_r[0]));
+    }).catch(err => callback(err));
+}
 
-  let cached = cache.get(expression);
+function getLabel(uri, lang, callback) {
+  'use strict';
+  sparql.loadQuery('label', {
+      uri,
+      lang
+    })
+    .then(results => callback(null, results.results.bindings[0].label.value))
+    .catch(err => callback(err));
+}
+
+function callRecommenderFor(id, type = 'expression') {
+  let cached = cache.get(type + id);
   if (cached) return Promise.resolve(cached);
 
-  return getJSON(`${RECOMMENDER}/expression/${expression}`)
+  return getJSON(`${RECOMMENDER}/${type}/${id}`)
     .then((result) => {
-      cache.set(expression, result);
+      cache.set(type + id, result);
       return result;
     });
 }
@@ -75,8 +97,6 @@ export default class RecommendationController {
   static query(req, res) {
     let expression = req.params.id;
     console.log('Getting recommendation for', expression);
-    // docker run -v /Users/pasquale/git/recommender/recommending/data:/data -v /Users/pasquale/git/recommender/recommending/features:/features -v /Users/pasquale/git/recommender/recommending/emb:/emb --name recinst0 doremus/recommender python -m recommend --expression http://data.doremus.org/expression/7ce787df-e214-3d9b-a023-5439a7816d94
-
     callRecommenderFor(expression)
       .then((rec) => {
         async.map(rec, (r, callback) => {
@@ -97,6 +117,57 @@ export default class RecommendationController {
         }, (err, data) => {
           if (err) return sendStandardError(res, err);
           res.json(data);
+        });
+      }).catch(sendStandardError);
+  }
+
+  static queryArtists(req, res) {
+    let artist = req.params.id;
+    console.log('Getting recommendation for artist', artist);
+
+    callRecommenderFor(artist, 'artist')
+      .then((rec) => {
+        async.map(rec, (r, callback) => {
+          getArtistInfo(r.uri, req.query.lang, (err, a) => {
+            Object.keys(a).forEach(k => r[k] = a[k]);
+            let description = [];
+            for (let w of r.why) {
+              if (w.feature === 'period') {
+                if (w.score > 0.9998)
+                  description.push({
+                    text: `same period (${w.values})`,
+                    score: 1
+                  });
+                else
+                  description.push({
+                    text: `similar period (${w.values})`,
+                    score: 0.9998
+                  });
+              } else {
+                if (w.score > 0.9999)
+                  description.push({
+                    text: `${w.feature}: ${w.values[0]}, ${w.values[1]}`,
+                    uris: [w.values[0], w.values[1]],
+                    score: w.score
+                  });
+              }
+            }
+            description.sort((a, b) => b.score - a.score);
+            r['@id'] = r.uri;
+            r.description = description.slice(0, 3);
+            async.each(r.description, (d, cbD) => {
+              if (!d.uris) return cbD();
+              async.eachSeries(d.uris, (u, cbU) => {
+                getLabel(u, req.query.lang, (err, label) => {
+                  d.text = d.text.replace(u, label);
+                  cbU();
+                });
+              }, cbD);
+            }, callback);
+          });
+        }, (err) => {
+          if (err) return sendStandardError(res, err);
+          res.json(rec);
         });
       }).catch(sendStandardError);
   }

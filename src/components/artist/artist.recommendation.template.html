@@ -1,0 +1,8 @@
+<loading *ngIf="loading">computing similar artists</loading>
+<error-msg class="small" *ngIf="error"></error-msg>
+
+<div *ngIf="!loading && !error">
+  <h2>Similar Artists</h2>
+  <artist *ngFor="let a of recommendation" [artist]="a"></artist>
+  <p class="empty-msg" *ngIf="recommendation.length < 1">nothing to show</p>
+</div>

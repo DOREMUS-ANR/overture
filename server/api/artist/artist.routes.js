@@ -1,6 +1,6 @@
 import ArtistController from './artist.api';
 
-export default class ExpressionRoutes {
+export default class ArtistRoutes {
   static init(router) {
     //artist detail
     router.get('/artist/:id', ArtistController.get);

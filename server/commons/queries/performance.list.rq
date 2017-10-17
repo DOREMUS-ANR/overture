@@ -1,0 +1,15 @@
+SELECT DISTINCT *
+WHERE {
+  ?id a efrbroo:F31_Performance ;
+         rdfs:label ?name;
+         ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?startDate ;
+         ecrm:P4_has_time-span / time:hasEnd / time:inXSDDate ?endDate .
+  OPTIONAL {
+    ?id ecrm:P7_took_place_at ?location_id
+    OPTIONAL {
+      ?location_id rdfs:label ?location_name
+    }
+  }
+}
+LIMIT %%lim%%
+OFFSET %%offset%%

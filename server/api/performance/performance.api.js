@@ -10,8 +10,6 @@ const schemaOrgMapping = {
   names: 'additionalName',
   birth: 'birthDate',
   death: 'deathDate',
-  birthPlace: 'birthPlace',
-  deathPlace: 'deathPlace',
   comment: 'description',
   wikipedia: 'mainEntityOfPage',
   sameAs: 'sameAs'
@@ -26,6 +24,22 @@ function sendStandardError(res, err) {
   });
 }
 
+function padProp(p) {
+  'use strict';
+  return ((p === 'id') ? '@' : '') + p;
+}
+
+function setTo(obj, p, v) {
+  'use strict';
+  if (p.includes('_')) {
+    let [parent, children] = p.split('_', 2);
+    if (!obj[parent]) obj[parent] = {};
+    setTo(obj[parent], children, v);
+    return;
+  }
+  obj[padProp(p)] = v;
+}
+
 function complexCompare(a, b) {
   'use strict';
   return a === b || JSON.stringify(a) === JSON.stringify(b);
@@ -34,7 +48,7 @@ function complexCompare(a, b) {
 function toSchemaOrg(a) {
   'use strict';
   let artist = {
-    '@type': 'Person'
+    '@type': 'MusicEvent'
   };
 
   for (let p in a) {
@@ -57,7 +71,7 @@ function toSchemaOrg(a) {
   return artist;
 }
 
-export default class ArtistController {
+export default class PerformanceController {
 
   static get(req, res) {
     let artistUri = `http://data.doremus.org/artist/${req.params.id}`;
@@ -150,25 +164,32 @@ export default class ArtistController {
   static query(req, res) {
     console.log(req.query);
     let opt = Object.assign({
-      lim: 40,
+      lim: 20,
       lang: 'en'
     }, req.query);
-    sparql.loadQuery('artist.list', opt)
-      .then(results => {
-        let data = results.results.bindings;
-        let artists = data.map(toSchemaOrg);
+    sparql.loadQuery('performance.list', opt)
+      .then(r => {
+        let data = r.results.bindings
+          .map(exp => {
+            let mc = {
+              '@type': 'MusicEvent'
+            };
+
+            Object.keys(exp).forEach(p => {
+              let v = exp[p].value;
+              setTo(mc, p, v);
+            });
+            return mc;
+          });
+
         return res.json({
           '@context': 'http://schema.org/',
           '@id': 'http://overture.doremus.org' + req.originalUrl,
           'generatedAt': (new Date()).toISOString(),
-          '@graph': artists
+          '@graph': data
         });
       })
       .catch(err => sendStandardError(res, err));
-  }
-
-  static toSchemaOrg(artist){
-    return toSchemaOrg(artist);
   }
 
 }

@@ -11,6 +11,11 @@ function sendStandardError(res, err) {
   });
 }
 
+function padProp(p) {
+  'use strict';
+  p = ((p === 'id') ? '@' : '') + p;
+}
+
 export default class ExpressionController {
 
   static get(req, res) {
@@ -46,9 +51,9 @@ export default class ExpressionController {
               };
               Object.keys(exp).forEach(p => {
                 let v = exp[p].value;
-                p = ((p === 'id') ? '@' : '') + p;
-                mc[p] = v;
+                  mc[padProp(p)] = v;
               });
+
               return mc;
             });
 
