@@ -52,7 +52,6 @@ export class ArtistListComponent {
     this._artistService.query(this.filter).subscribe(
       res => {
         this.items = res['@graph'];
-        this.items.forEach(a => a.link = [a['@id'].replace('http://data.doremus.org/artist/', '')])
         this.querying = false;
       },
       error => {

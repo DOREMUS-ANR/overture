@@ -595,5 +595,33 @@ button.long
   &:hover
     background lighten(grayMedium,35)
 
+.main.flexy
+  +above('m')
+    display flex
+    justify-content space-between
+  > section
+    flex 60
+    +above('m')
+      padding-right 2em
+  .recommendation-cont
+    flex 30
+
+#artist-recommendation
+  +below('s')
+    text-align center
+  artist
+    +above('l')
+      display block
+      width auto
+      text-align left
+      margin 0 0 2em
+      .artist-round
+        float left
+        margin-right 1em
+      h3
+        margin-top .4em
+      p
+        margin-bottom .4em
+
 
 @import "./top-nav"

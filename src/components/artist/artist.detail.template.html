@@ -1,6 +1,6 @@
 <error-msg *ngIf="error"></error-msg>
-
 <loading *ngIf="querying"></loading>
+
 <article *ngIf="artist" vocab="http://schema.org/" typeof="Person" [attr.about]="artist['@id']" class="artist-detail">
   <jsonld *ngIf="artist" [object]="artist"></jsonld>
 
@@ -16,7 +16,7 @@
         <p class="other-title" property="additionalName" [innerHTML]="artist.additionalName| jsonLDval: ['lang','array']"></p>
 
         <div class="note" property="description">
-          <p [outerHTML]="artist.description | jsonLDval : 'lang'"></p>
+          <p [innerHTML]="artist.description | jsonLDval : 'lang'"></p>
         </div>
 
       </div>
@@ -34,25 +34,21 @@
             <span *ngIf="artist.birthPlace">
               <a href="{{artist.birthPlace}}" rel="external" target="blank">{{artist.birthPlace | stripDbpedia }}</a>,
             </span>
-            <span>{{artist.birthDate | date}}</span>
+            <span>{{artist.birthDate}}</span>
           </div>
           <div *ngIf="artist.deathDate">
             <label>Death</label>
             <span *ngIf="artist.deathPlace">
               <a href="{{artist.deathPlace}}" rel="external" target="blank">{{artist.birthPlace | stripDbpedia }}</a>,
             </span>
-            <span>{{artist.deathDate | date}}</span>
+            <span>{{artist.deathDate}}</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="main info">
-    <section class="recommendation-cont">
-      <artist-recommendation [seed]="artist['@id']"></artist-recommendation>
-    </section>
-
+  <div class="main info flexy">
     <section id="compositions">
       <h2><strong>{{compositions.length}}</strong> Expressions as composer</h2>
       <div class="card-list">
@@ -72,6 +68,10 @@
       </div>
     </div>
   </section> -->
+
+    <section class="recommendation-cont" >
+      <artist-recommendation [seed]="artist['@id']" id="artist-recommendation"></artist-recommendation>
+    </section>
 
   </div>
 

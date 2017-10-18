@@ -84,7 +84,7 @@ function callRecommenderFor(id, type = 'expression') {
   let cached = cache.get(type + id);
   if (cached) return Promise.resolve(cached);
 
-  return getJSON(`${RECOMMENDER}/${type}/${id}`)
+  return getJSON(`${RECOMMENDER}/${type}/${id}?n=3`)
     .then((result) => {
       cache.set(type + id, result);
       return result;
