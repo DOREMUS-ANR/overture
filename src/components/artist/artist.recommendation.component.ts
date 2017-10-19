@@ -24,20 +24,20 @@ export class ArtistRecommendationComponent {
 
     let id = this.seed.replace('http://data.doremus.org/artist/', '');
 
-    // if (isPlatformBrowser(this.platformId)) {
+    if (isPlatformBrowser(this.platformId)) {
 
       // retrieve recommendations
       this.artistService.recommend(id)
         .then((res) => {
           this.loading = false;
-          res.forEach(a=> a.description = a.description.map(d=>d.text).join('\n'))
+          res.forEach(a => a.description = a.description.map(d => d.text).join('\n'))
           this.recommendation = res;
         }, (err) => {
           this.loading = false;
           this.error = true;
           console.error(err);
         });
-    // }
+    }
   }
 
 }

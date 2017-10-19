@@ -69,7 +69,7 @@
     </div>
   </section> -->
 
-    <section class="recommendation-cont" >
+    <section class="recommendation-cont" *ngIf="artist">
       <artist-recommendation [seed]="artist['@id']" id="artist-recommendation"></artist-recommendation>
     </section>
 

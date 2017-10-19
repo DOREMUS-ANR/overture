@@ -23,9 +23,8 @@ export class ArtistDetailComponent {
 
   constructor(private titleService: Title,
     private artistService: ArtistService,
-    private route: ActivatedRoute, private jsonLDpipe: JsonLDvalPipe) { }
+    private route: ActivatedRoute, private jsonLDpipe: JsonLDvalPipe) {
 
-  ngOnInit() {
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
 
