@@ -36,7 +36,7 @@ export class ArtistService {
 
     let params = new HttpParams().set('lang', Globals.lang);
     return Observable.forkJoin(
-      this.http.get(`/api/artist/${id}`, params)
+      this.http.get(`/api/artist/${id}`, {params})
       // this.http.get(`/api/expression/${id}/realisations`, new RequestOptions({ search }))
     ).map(res => res[0]);
   }
@@ -45,7 +45,7 @@ export class ArtistService {
     if (!id) return Promise.resolve(null);
 
     let params = new HttpParams().set('lang', Globals.lang);
-    return this.http.get(`/api/recommendation/artist/${id}`, params)
+    return this.http.get(`/api/recommendation/artist/${id}`, {params})
       .toPromise().then(res => {
         let data = res;
         console.log(data);

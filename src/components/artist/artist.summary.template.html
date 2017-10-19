@@ -1,6 +1,6 @@
 <article vocab="http://schema.org/" typeof="Person" [attr.about]="artist['@id']" [routerLink]="['/artist',artist.link]">
   <div class="artist-round">
-    <img property="image" md-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
+    <img property="image" mat-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
   </div>
   <h3 property="name">{{artist.name | jsonLDval }}</h3>
   <p *ngIf="artist.description" class="description">{{artist.description}}</p>

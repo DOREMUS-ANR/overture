@@ -1,48 +1,48 @@
 <div class="searchbox">
   <form class="main">
 
-    <md-input-container class="field">
-      <input mdInput placeholder="Title" [(ngModel)]="filter.title" name="title" (ngModelChange)="changeFilter($event)" />
-    </md-input-container>
+    <mat-form-field class="field">
+      <input matInput placeholder="Title" [(ngModel)]="filter.title" name="title" (ngModelChange)="changeFilter($event)" />
+    </mat-form-field>
 
-    <md-input-container class="field">
-      <input mdInput placeholder="Composer" [(ngModel)]="filter.composer" name="composer" (ngModelChange)="changeFilter($event)" />
-    </md-input-container>
+    <mat-form-field class="field">
+      <input matInput placeholder="Composer" [(ngModel)]="filter.composer" name="composer" (ngModelChange)="changeFilter($event)" />
+    </mat-form-field>
 
-    <div class="field select">
-      <md-select placeholder="Musical key" [(ngModel)]="filter.key" name="filter.key" (ngModelChange)="changeFilter($event)">
-        <md-option *ngFor="let item of itemsKey" [value]="item.value">
+    <mat-form-field class="field select" *ngIf="itemsKey">
+      <mat-select placeholder="Musical key" [(ngModel)]="filter.key" name="filter.key" (ngModelChange)="changeFilter($event)">
+        <mat-option *ngFor="let item of itemsKey" [value]="item.value">
           {{item.label}}
-        </md-option>
-      </md-select>
-      <button md-icon-button class="close-btn" [hidden]="!filter.key" (click)="emptyFilter('key')">
-        <md-icon class="md-16" aria-label="reset">close</md-icon>
+        </mat-option>
+      </mat-select>
+      <button mat-icon-button class="close-btn" [hidden]="!filter.key" (click)="emptyFilter('key')">
+        <mat-icon class="md-16" aria-label="reset">close</mat-icon>
       </button>
 
-    </div>
+    </mat-form-field>
 
-    <div class="field select">
-      <md-select placeholder="Genre" [(ngModel)]="filter.genre" name="filter.genre" (ngModelChange)="changeFilter($event)">
-        <md-option *ngFor="let item of itemsGenre" [value]="item.value">
+    <mat-form-field class="field select" *ngIf="itemsGenre">
+      <mat-select placeholder="Genre" [(ngModel)]="filter.genre" name="filter.genre" (ngModelChange)="changeFilter($event)">
+        <mat-option *ngFor="let item of itemsGenre" [value]="item.value">
           {{item.label}}
-        </md-option>
-      </md-select>
-      <button md-icon-button class="close-btn" [hidden]="!filter.genre" (click)="emptyFilter('genre')">
-        <md-icon class="md-16" aria-label="reset">close</md-icon>
+        </mat-option>
+      </mat-select>
+      <button mat-icon-button class="close-btn" [hidden]="!filter.genre" (click)="emptyFilter('genre')">
+        <mat-icon class="md-16" aria-label="reset">close</mat-icon>
       </button>
-    </div>
+    </mat-form-field>
 
-    <div class="field select long">
-      <md-select placeholder="Instruments" [(ngModel)]="filter.mop" name="filter.mop" (ngModelChange)="changeFilter($event)" multiple="true">
-        <md-option *ngFor="let item of itemsMop" [value]="item.value">
+    <mat-form-field class="field select long" *ngIf="itemsMop">
+      <mat-select placeholder="Instruments" [(ngModel)]="filter.mop" name="filter.mop" (ngModelChange)="changeFilter($event)" multiple="true">
+        <mat-option *ngFor="let item of itemsMop" [value]="item.value">
           {{item.label}}
-        </md-option>
-      </md-select>
-      <button md-icon-button class="close-btn" [hidden]="!filter.mop.length" (click)="emptyFilter('mop')">
-        <md-icon class="md-16" aria-label="reset">close</md-icon>
+        </mat-option>
+      </mat-select>
+      <button mat-icon-button class="close-btn" [hidden]="!filter.mop.length" (click)="emptyFilter('mop')">
+        <mat-icon class="md-16" aria-label="reset">close</mat-icon>
       </button>
 
-    </div>
+    </mat-form-field>
 
   </form>
 </div>

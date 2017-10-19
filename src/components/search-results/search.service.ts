@@ -14,7 +14,7 @@ export class SearchService {
     let params = new HttpParams().set('lang', Globals.lang);
     if (offset) params = params.set('offset', offset + '');
 
-    return this.http.get<any>(`/api/search/${input}`, params)
+    return this.http.get<any>(`/api/search/${input}`, {params})
       .toPromise().then(res => {
         let data = res;
 

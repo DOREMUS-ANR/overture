@@ -18,9 +18,10 @@ export class VocabularyService {
     if (cache) return Observable.of(cache);
 
     let params = new HttpParams().set('lang', Globals.lang);
-    return this.http.get<any>(`/api/vocabulary/${id.replace(/\//g, '-')}`, params)
+    return this.http.get<any>(`/api/vocabulary/${id.replace(/\//g, '-')}`, {params})
       .map(res => {
         let data = res.results.bindings;
+        console.log(data)
         vocabularies[id] = data;
         return data
       });

@@ -96,7 +96,7 @@ export default class RecommendationController {
 
   static query(req, res) {
     let expression = req.params.id;
-    console.log('Getting recommendation for', expression);
+    console.log('Getting recommendation for expression ', expression);
     callRecommenderFor(expression)
       .then((rec) => {
         async.map(rec, (r, callback) => {
@@ -111,7 +111,7 @@ export default class RecommendationController {
               callback(null, {
                 label: p === 'combined' ? p : 'with the same ' + p,
                 property: p,
-                data
+                data: data.filter(x => !!x)
               });
             });
         }, (err, data) => {

@@ -13,7 +13,8 @@ function sendStandardError(res, err) {
 
 function padProp(p) {
   'use strict';
-  p = ((p === 'id') ? '@' : '') + p;
+  let pre = ((p === 'id') ? '@' : '');
+  return pre + p;
 }
 
 export default class ExpressionController {

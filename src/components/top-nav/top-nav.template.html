@@ -1,6 +1,6 @@
 <div class="top-nav">
-  <button md-icon-button id="openNav" (click)="openNav()">
-    <md-icon class="mdi mdi-dots-vertical"></md-icon>
+  <button mat-icon-button id="openNav" (click)="openNav()">
+    <mat-icon class="mdi mdi-dots-vertical"></mat-icon>
   </button>
 
   <span class="flex-span"></span>
@@ -11,8 +11,8 @@
 
   <nav class="navigation" [ngClass]="{'open': showNav}">
     <div class="close-nav">
-      <button md-icon-button disableRipple id="closeNav" (click)="closeNav()">
-        <md-icon class="mdi mdi-close"></md-icon>
+      <button mat-icon-button disableRipple id="closeNav" (click)="closeNav()">
+        <mat-icon class="mdi mdi-close"></mat-icon>
       </button>
     </div>
 
@@ -21,8 +21,8 @@
 
   <span class="flex-span"></span>
 
-  <button md-icon-button disableRipple id="openSearch" class="light" (click)="openSearch()">
-    <md-icon class="mdi mdi-magnify"></md-icon>
+  <button mat-icon-button disableRipple id="openSearch" class="light" (click)="openSearch()">
+    <mat-icon class="mdi mdi-magnify"></mat-icon>
   </button>
 
   <div class="search-bar" [ngClass]="{'open': showSearch}">
@@ -30,8 +30,8 @@
       <input #fullSearchInput type="search" class="fullSearch" placeholder="Search for something (i.e. Sonata, Mozart, ...)" [(ngModel)]="searchInput" name="search" on-focusout="closeSearch()" required />
     </form>
 
-    <button md-icon-button disableRipple id="openSearch" (click)="closeSearch()">
-      <md-icon class="mdi mdi-close"></md-icon>
+    <button mat-icon-button disableRipple id="openSearch" (click)="closeSearch()">
+      <mat-icon class="mdi mdi-close"></mat-icon>
     </button>
 
   </div>

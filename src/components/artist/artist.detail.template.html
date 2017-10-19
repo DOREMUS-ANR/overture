@@ -9,7 +9,7 @@
     <div class="overview-cont">
       <div class="title-cont">
         <div class="artist-round">
-          <img property="image" md-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
+          <img property="image" mat-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
         </div>
 
         <h1 class="title" property="name" [innerHTML]="artist.name | jsonLDval: 'lang'"></h1>

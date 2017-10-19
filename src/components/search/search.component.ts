@@ -65,7 +65,7 @@ export class SearchComponent {
           this.filter[p].push(...v)
         else this.filter[p].push(v)
       }
-      else this.filter = v
+      else this.filter[p] = v
     });
   }
 
