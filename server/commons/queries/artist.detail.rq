@@ -13,7 +13,7 @@ SELECT DISTINCT
 
 WHERE {
   ?uri a ecrm:E21_Person ;
-         rdfs:label ?label ;
+         rdfs:label | foaf:name ?label ;
          foaf:name ?names .
   OPTIONAL { ?uri schema:birthDate ?birth }
   OPTIONAL { ?uri schema:deathDate ?death }
