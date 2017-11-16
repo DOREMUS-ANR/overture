@@ -7,7 +7,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class ExpressionService {
+export class PerformanceService {
   expressions: any[];
 
   private limit = 12;
@@ -39,8 +39,8 @@ export class ExpressionService {
 
     let params = new HttpParams().set('lang', Globals.lang);
     return Observable.forkJoin(
-      this.http.get(`/api/expression/${id}`, { params }),
-      this.http.get(`/api/expression/${id}/realisations`, { params }))
+      this.http.get(`/api/expression/${id}`, {params}),
+      this.http.get(`/api/expression/${id}/realisations`, {params}))
       .map(res => {
         let expression = _mergeData(_processResult(res[0]));
         let eventsData = _processResult(res[1]);
@@ -66,13 +66,9 @@ export class ExpressionService {
           });
         });
 
-        for (let evtType of Object.keys(events)) {
-          events[evtType].sort((a, b) => a.time >= b.time ? 1 : -1);
-          events[evtType].forEach(e => {
-            if (!e.activities[0].actor)
-              delete e.activities
-          });
-        }
+        for (let key of Object.keys(events))
+          events[key].sort((a, b) => a.time >= b.time ? 1 : -1);
+
         expression.events = events;
         return expression;
       });
@@ -82,13 +78,14 @@ export class ExpressionService {
     if (!id) return Promise.resolve(null);
 
     let params = new HttpParams().set('lang', Globals.lang);
-    return this.http.get(`/api/recommendation/${id}`, { params })
+    return this.http.get(`/api/recommendation/${id}`, {params})
       .toPromise().then(res => {
-        let data = res;
+        let data =  res;
         console.log(data);
         return data;
       });
   }
+
 }
 
 function _mergeData(data): any {

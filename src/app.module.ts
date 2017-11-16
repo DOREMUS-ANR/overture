@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule} from '@angular/material';
+import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from './components/app.component';
@@ -44,6 +44,9 @@ import { ExpressionComponent } from './components/expression/expression.componen
 import { ExpressionListComponent } from './components/expression/expression.list.component';
 import { ExpressionDetailComponent } from './components/expression/expression.detail.component';
 
+import { PerformanceComponent } from './components/performance/performance.component';
+import { PerformanceListComponent } from './components/performance/performance.list.component';
+
 import { RecommendationComponent } from './components/expression/recommendation.component';
 import { SummaryComponent } from './components/summary/summary.component';
 
@@ -65,7 +68,9 @@ import { WipComponent } from './components/wip/wip.component';
     ErrorComponent, LoadingComponent, TimelineComponent,
     ScoreTabComponent,
     ArtistComponent, ArtistListComponent, ArtistDetailComponent, ArtistSummaryComponent, ArtistRecommendationComponent,
-    ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, RecommendationComponent, SummaryComponent,
+    ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, RecommendationComponent,
+    PerformanceComponent, PerformanceListComponent,
+    SummaryComponent,
     WipComponent, TopNavComponent, SearchComponent
   ],
   bootstrap: [AppComponent],

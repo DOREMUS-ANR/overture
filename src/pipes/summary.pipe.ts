@@ -6,7 +6,7 @@ import * as moment from 'moment';
 @Pipe({ name: 'summary' })
 export class SummaryPipe implements PipeTransform {
   transform(value, eclass: string): any {
-    if(!value) return null;
+    if (!value) return null;
 
     switch (eclass) {
       case 'expression':
@@ -34,22 +34,21 @@ export class SummaryPipe implements PipeTransform {
         if (perf && !Array.isArray(perf)) perf = [perf];
 
         return {
-          super: `${value.time ? moment(value.time).year() : ''}${separator(value)}${toActorList(value.activities || perf)}`,
-          title: value.place ? `Performance at ${value.place}` : 'Performance'
+          super: `${value.time ? moment(value.time).year() : ''}${separator(value)}${value.place || value.placeURI || ''}`,
+          title: value.title || (value.activities ? toActorList(value.activities || perf) : 'Performance'),
+          image: 'static/img/performance_placeholder.png'
         }
       case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
         return {
-          super: `${value.time ? moment(value.time).year() : ''}${separator(value)}${toActorList(value.activities)}`,
-          title: value.place ? `Publication at ${value.place}` : 'Publication'
+          super: `${value.time ? moment(value.time).year() : ''}${separator(value)}${value.place || value.placeURI || ''}`,
+          title: value.title || (value.activities ? toActorList(value.activities || perf) : 'Publication')
         }
-
     }
-
   }
 }
 
 function separator(value) {
-  return value.time && value.activities ? ', ' : '';
+  return value.time && value.placeURI ? ', ' : '';
 }
 function toActorList(activities = []) {
   return activities.map(a => {

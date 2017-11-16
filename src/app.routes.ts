@@ -2,26 +2,28 @@ import { Routes, RouterModule } from '@angular/router';
 import { Component } from '@angular/core';
 
 // components
-import {HomeComponent} from './components/home/home.component';
-import {SearchResultsComponent} from './components/search-results/search-results.component';
+import { HomeComponent } from './components/home/home.component';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
 
-import {ArtistComponent} from './components/artist/artist.component';
-import {ArtistListComponent} from './components/artist/artist.list.component';
-import {ArtistDetailComponent} from './components/artist/artist.detail.component';
+import { ArtistComponent } from './components/artist/artist.component';
+import { ArtistListComponent } from './components/artist/artist.list.component';
+import { ArtistDetailComponent } from './components/artist/artist.detail.component';
 
-import {ScoreTabComponent} from './components/score-tab/score-tab.component';
+import { ScoreTabComponent } from './components/score-tab/score-tab.component';
 
-import {ExpressionComponent} from './components/expression/expression.component';
-import {ExpressionListComponent} from './components/expression/expression.list.component';
-import {ExpressionDetailComponent} from './components/expression/expression.detail.component';
+import { ExpressionComponent } from './components/expression/expression.component';
+import { ExpressionListComponent } from './components/expression/expression.list.component';
+import { ExpressionDetailComponent } from './components/expression/expression.detail.component';
 
-import {WipComponent} from './components/wip/wip.component';
+import { PerformanceComponent } from './components/performance/performance.component';
+import { PerformanceListComponent } from './components/performance/performance.list.component';
+
+import { WipComponent } from './components/wip/wip.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'search/:input', component: SearchResultsComponent, data: { title: 'Search' } },
-  { path: 'performance', component: WipComponent, data: { title: 'Performances' } },
-  { path: 'recording', component: WipComponent, data: { title: 'Recording' }},
+  { path: 'recording', component: WipComponent, data: { title: 'Recording' } },
   { path: 'score', component: ScoreTabComponent, data: { title: 'Scores' } },
   {
     path: 'artist', component: ArtistComponent,
@@ -35,6 +37,12 @@ const appRoutes: Routes = [
     children: [
       { path: ':id', component: ExpressionDetailComponent },
       { path: '', component: ExpressionListComponent, data: { title: 'Expressions' } }
+    ]
+  },
+  {
+    path: 'performance', component: PerformanceComponent,
+    children: [
+      { path: '', component: PerformanceListComponent, data: { title: 'Performances' } }
     ]
   },
   { path: 'wip', component: WipComponent },

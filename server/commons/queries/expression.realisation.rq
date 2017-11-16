@@ -2,22 +2,22 @@ PREFIX mus: <http://data.doremus.org/ontology#>
 PREFIX ecrm: <http://erlangen-crm.org/current/>
 PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX geonames: <http://www.geonames.org/ontology#>
 
 SELECT DISTINCT *
 WHERE {
-  # performances
-  { ?event efrbroo:R25_performed ?realizedExpression }
-  UNION
-  # publications
-  { ?event efrbroo:R24_created ?realizedExpression }
+  ?event efrbroo:R24_created | efrbroo:R17_created ?realizedExpression .
+  ?realizedExpression ecrm:P165_incorporates | mus:U54_is_performed_expression_of %%uri%% .
 
-  ?realizedExpression ecrm:P165_incorporates %%uri%% .
+  ?event a ?class.
 
-  ?event a ?class;
-      ecrm:P3_has_note ?note.
+  OPTIONAL { ?event ecrm:P3_has_note ?note. }
 
+  OPTIONAL { ?realizedExpression mus:U70_has_title ?title . }
   OPTIONAL { ?event ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?time . }
-  OPTIONAL { ?event ecrm:P7_took_place_at ?place }
+  OPTIONAL { ?event ecrm:P7_took_place_at ?placeURI
+    OPTIONAL { ?placeURI ecrm:P87_is_identified_by | rdfs:label | geonames:name ?place }
+  }
   OPTIONAL {
     ?event ecrm:P9_consists_of ?activity .
     ?activity ecrm:P14_carried_out_by ?actor .
