@@ -36,16 +36,21 @@ export class ArtistService {
 
     let params = new HttpParams().set('lang', Globals.lang);
     return Observable.forkJoin(
-      this.http.get(`/api/artist/${id}`, {params})
+      this.http.get(`/api/artist/${id}`, { params })
       // this.http.get(`/api/expression/${id}/realisations`, new RequestOptions({ search }))
     ).map(res => res[0]);
   }
 
-  recommend(id) {
+  recommend(id, n = 3, weights: number[], explain = true) {
     if (!id) return Promise.resolve(null);
 
-    let params = new HttpParams().set('lang', Globals.lang);
-    return this.http.get(`/api/recommendation/artist/${id}`, {params})
+    let params = new HttpParams()
+      .set('lang', Globals.lang)
+      .set('n', n.toString())
+      .set('explain', explain + '');
+
+    if(weights) params = params.set('w', weights.join(','));
+    return this.http.get(`/api/recommendation/artist/${id}`, { params })
       .toPromise().then(res => {
         let data = res;
         console.log(data);

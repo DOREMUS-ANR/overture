@@ -1,8 +1,24 @@
-<loading *ngIf="loading">computing similar artists</loading>
-<error-msg class="small" *ngIf="error"></error-msg>
-
-<div *ngIf="!loading && !error">
+<div>
+  <button mat-raised-button color="primary" *ngIf="big" (click)="toogleView()">To Artist Info</button>
   <h2>Similar Artists</h2>
-  <artist *ngFor="let a of recommendation" [artist]="a"></artist>
-  <p class="empty-msg" *ngIf="recommendation.length < 1">nothing to show</p>
+  <div *ngIf="big" class="sliders-cont">
+    <span>SET WEIGHTS:</span>
+    <div *ngFor="let weight of getWeightsAsArray()">
+      <label>{{weight.label}}</label>
+      <mat-slider min="1" max="100" step="1" value="1" thumb-label="true" color="primary" [(ngModel)]="weights[weight.id].w"></mat-slider>
+    </div>
+    <button mat-raised-button (click)="refresh()">
+        <mat-icon aria-label="refresh">cached</mat-icon>
+    </button>
+  </div>
+
+  <loading *ngIf="loading">computing similar artists</loading>
+
+  <error-msg class="small" *ngIf="error"></error-msg>
+
+  <div *ngIf="!loading && !error">
+    <artist *ngFor="let a of recommendation" [artist]="a"></artist>
+    <p class="empty-msg" *ngIf="recommendation.length < 1">nothing to show</p>
+  </div>
+  <button mat-raised-button color="primary" class="full-width" *ngIf="!big" (click)="toogleView()">MORE</button>
 </div>

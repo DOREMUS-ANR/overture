@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Title }     from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { ArtistService } from './artist.service';
 import { JsonLDvalPipe } from '../../pipes/jsonLDval.pipe';
 
@@ -18,6 +18,7 @@ export class ArtistDetailComponent {
   compositionShown = 4;
   performances: [any];
   sameAs: any;
+  artistrec: boolean = false;
 
   overviewPic: string = 'img/pianist.jpg';
 
@@ -41,8 +42,8 @@ export class ArtistDetailComponent {
 
         this.artist = graph.splice(0, 1)[0];
         this.artist['@context'] = 'http://schema.org';
-        this.compositions = graph.filter(c => c['@type'] ==='MusicComposition');
-        this.performances = graph.filter(c => c['@type'] ==='MusicEvent');
+        this.compositions = graph.filter(c => c['@type'] === 'MusicComposition');
+        this.performances = graph.filter(c => c['@type'] === 'MusicEvent');
 
         this.sameAs = this.artist.sameAs || [];
         if (!Array.isArray(this.sameAs)) this.sameAs = [this.sameAs];

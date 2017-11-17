@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges, Inject, PLATFORM_ID } from '@angular/core';
 import { ArtistService } from './artist.service';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -9,6 +9,17 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class ArtistRecommendationComponent {
   @Input() seed: string;
+  @Input() n: number;
+  @Input() big: boolean = false;
+  @Output() bigChange = new EventEmitter<boolean>();
+  weights = {
+    period: { id: 'period', label: 'Period', w: 1 },
+    key: { id: 'key', label: 'Key', w: 1 },
+    genre: { id: 'genre', label: 'Genre', w: 1 },
+    casting: { id: 'casting', label: 'Casting', w: 1 },
+    mop: { id: 'mop', label: 'Played MoP', w: 1 }
+  }
+
   recommendation: [any];
   loading: boolean = true;
   error: boolean = false;
@@ -17,7 +28,19 @@ export class ArtistRecommendationComponent {
 
   ngOnChanges(changes: SimpleChanges) {
     if (!changes.seed) return;
+    this.callRecommender();
+  }
 
+  getWeightsAsArray(): any[] {
+    return Object.keys(this.weights)
+      .map(k => this.weights[k]);
+  }
+
+  getWeightsAsInts(): number[] {
+    return this.getWeightsAsArray().map(o => o.w);
+  }
+
+  private callRecommender() {
     this.loading = true;
     this.error = false;
     this.recommendation = null;
@@ -25,9 +48,8 @@ export class ArtistRecommendationComponent {
     let id = this.seed.replace('http://data.doremus.org/artist/', '');
 
     if (isPlatformBrowser(this.platformId)) {
-
       // retrieve recommendations
-      this.artistService.recommend(id)
+      this.artistService.recommend(id, this.n, this.getWeightsAsInts(), this.big)
         .then((res) => {
           this.loading = false;
           res.forEach(a => a.description = a.description.map(d => d.text).join('\n'))
@@ -38,6 +60,17 @@ export class ArtistRecommendationComponent {
           console.error(err);
         });
     }
+
+  }
+
+  refresh() {
+    console.log(this.getWeightsAsInts())
+    this.callRecommender();
+  }
+
+  toogleView() {
+    this.big = !this.big;
+    this.bigChange.emit(this.big);
   }
 
 }

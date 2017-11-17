@@ -48,7 +48,7 @@
     </div>
   </section>
 
-  <div class="main info flexy">
+  <div class="main info flexy" *ngIf="!artistrec">
     <section id="compositions">
       <h2><strong>{{compositions.length}}</strong> Expressions as composer</h2>
       <div class="card-list">
@@ -70,9 +70,13 @@
   </section> -->
 
     <section class="recommendation-cont" *ngIf="artist">
-      <artist-recommendation [seed]="artist['@id']" id="artist-recommendation"></artist-recommendation>
+      <artist-recommendation [seed]="artist['@id']" id="artist-recommendation" [(big)]="artistrec"></artist-recommendation>
     </section>
 
+  </div>
+
+  <div class="main info" *ngIf="artistrec">
+    <artist-recommendation [seed]="artist['@id']" [n]="7" [(big)]="artistrec"></artist-recommendation>
   </div>
 
 </article>

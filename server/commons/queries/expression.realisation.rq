@@ -6,6 +6,8 @@ PREFIX geonames: <http://www.geonames.org/ontology#>
 
 SELECT DISTINCT *
 WHERE {
+  VALUES ?class {mus:M42_Performed_Expression_Creation efrbroo:F30_Publication_Event}
+
   ?event efrbroo:R24_created | efrbroo:R17_created ?realizedExpression .
   ?realizedExpression ecrm:P165_incorporates | mus:U54_is_performed_expression_of %%uri%% .
 

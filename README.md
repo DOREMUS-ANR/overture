@@ -63,6 +63,8 @@ Run
 
     docker run -d -p 5050:3333 --restart=unless-stopped  -v /var/nodejs/overture/config:/config --network doremus --name overture doremus/overture
 
+    <!-- docker run -d -p 5050:3333 --restart=unless-stopped  -v /Users/pasquale/git/overture/config:/config --network doremus --name overture doremus/overture -->
+
 Stop
 
     docker stop overture

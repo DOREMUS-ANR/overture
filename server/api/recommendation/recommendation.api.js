@@ -80,11 +80,19 @@ function getLabel(uri, lang, callback) {
     .catch(err => callback(err));
 }
 
-function callRecommenderFor(id, type = 'expression') {
-  let cached = cache.get(type + id);
+const DEFAULT_QUERY = {
+  n: 3
+};
+
+function callRecommenderFor(id, type = 'expression', query = DEFAULT_QUERY) {
+  let cached = cache.get(type + id + JSON.stringify(query));
   if (cached) return Promise.resolve(cached);
 
-  return getJSON(`${RECOMMENDER}/${type}/${id}?n=3`)
+  let q = 'n=' + (query.n || 3);
+  if (query.w) q += '&w=' + query.w;
+  if (query.explain ) q += '&explain=' + query.explain;
+
+  return getJSON(`${RECOMMENDER}/${type}/${id}?${q}`)
     .then((result) => {
       cache.set(type + id, result);
       return result;
@@ -125,7 +133,7 @@ export default class RecommendationController {
     let artist = req.params.id;
     console.log('Getting recommendation for artist', artist);
 
-    callRecommenderFor(artist, 'artist')
+    callRecommenderFor(artist, 'artist', req.query)
       .then((rec) => {
         async.map(rec, (r, callback) => {
           getArtistInfo(r.uri, req.query.lang, (err, a) => {
