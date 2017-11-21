@@ -9,15 +9,18 @@ const organizBase = 'http://data.doremus.org/organization/';
 const institutions = {
   Philharmonie_de_Paris: {
     label: 'Philharmonie de Paris',
-    img: '/static/img/logos/philharmonie.png'
+    img: '/static/img/logos/philharmonie.png',
+    uri: 'https://philharmoniedeparis.fr'
   },
   BnF: {
     label: 'BnF',
-    img: '/static/img/logos/bnf.png'
+    img: '/static/img/logos/bnf.png',
+    uri: 'http://catalogue.bnf.fr/'
   },
   Radio_France: {
     label: 'Radio France',
-    img: '/static/img/logos/radiofrance.flat.png'
+    img: '/static/img/logos/radiofrance.flat.png',
+    uri: 'http://www.radiofrance.fr/'
   }
 }
 @Component({
@@ -106,14 +109,19 @@ export class ExpressionDetailComponent {
   }
 
   getSource(source) {
-    // workaround redomi
-    if (!source) source = 'http://data.doremus.org/organization/Radio_France';
-    if (Array.isArray(source)) source = source[0];
-
-    if (!source.startsWith(organizBase)) return null;
-
-    let inst = source.replace(organizBase, '');
-    return institutions[inst];
+    let s = source[0].replace('http://data.doremus.org/', '');
+    let org = null;
+    switch (s) {
+      case 'bnf':
+        org = `BnF`; break;
+      case 'philharmonie':
+      case 'euterpe':
+        org = `Philharmonie_de_Paris`; break;
+      case 'redomi':
+      case 'itema3':
+        org = `Radio_France`; break;
+    }
+    return institutions[org];
   }
 
   class2Label(cls: string) {

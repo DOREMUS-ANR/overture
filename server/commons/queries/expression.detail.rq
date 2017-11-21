@@ -6,50 +6,50 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 
 SELECT DISTINCT *
 WHERE {
-    %%uri%% a efrbroo:F22_Self-Contained_Expression ;
+  GRAPH ?source {
+    VALUES ?expression { %%uri%% }
+
+    ?expression a efrbroo:F22_Self-Contained_Expression ;
             mus:U70_has_title | ecrm:P102_has_title ?title .
+    OPTIONAL {  ?expression owl:sameAs ?sourceLink   }
+    OPTIONAL {  ?expression ecrm:P3_has_note ?note   }
     OPTIONAL {
-    %%uri%% owl:sameAs ?sourceLink ;
-      prov:wasDerivedFrom / prov:wasAttributedTo ?source .
-    }
-    OPTIONAL{%%uri%% ecrm:P3_has_note ?note .}
-    OPTIONAL {
-      %%uri%% mus:U13_has_casting ?castingURI .
+      ?expression mus:U13_has_casting ?castingURI .
       ?castingURI mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance_of_type ?mopURI .
       { SELECT ?mopURI sql:BEST_LANGMATCH(?mop, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop
         WHERE { ?mopURI skos:prefLabel | ecrm:P1_is_identified_by ?mop }
       }
     }
     OPTIONAL{
-      %%uri%% mus:U12_has_genre ?genreURI .
+      ?expression mus:U12_has_genre ?genreURI .
       { SELECT ?genreURI sql:BEST_LANGMATCH(?genre, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?genre
         WHERE { ?genreURI skos:prefLabel | ecrm:P1_is_identified_by ?genre }
       }
     }
-    OPTIONAL{%%uri%% mus:U17_has_opus_statement / ecrm:P3_has_note ?opus}
-    OPTIONAL{%%uri%% mus:U10_has_order_number ?order .}
-    OPTIONAL{%%uri%% mus:U11_has_key ?keyURI .
+    OPTIONAL{?expression mus:U17_has_opus_statement / ecrm:P3_has_note ?opus}
+    OPTIONAL{?expression mus:U10_has_order_number ?order .}
+    OPTIONAL{?expression mus:U11_has_key ?keyURI .
       { SELECT ?keyURI sql:BEST_LANGMATCH(?key, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?key
         WHERE { ?keyURI skos:prefLabel | ecrm:P1_is_identified_by ?key }
       }
     }
-    OPTIONAL{%%uri%% mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
+    OPTIONAL{?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
     OPTIONAL{
-      %%uri%%  mus:U4_had_princeps_publication ?publicationEvent .
+      ?expression  mus:U4_had_princeps_publication ?publicationEvent .
       ?publicationEvent ecrm:P3_has_note ?publicationEventNote .
       OPTIONAL {
         ?publicationEvent ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?publicationStart .
       }
     }
     OPTIONAL{
-      %%uri%% mus:U5_had_premiere ?premiere .
+      ?expression mus:U5_had_premiere ?premiere .
       ?premiere ecrm:P3_has_note ?premiereNote.
       OPTIONAL {
         ?premiere ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?premiereStart .
       }
     }
     OPTIONAL{
-      ?expCreation efrbroo:R17_created %%uri%% .
+      ?expCreation efrbroo:R17_created ?expression .
       OPTIONAL {
         ?expCreation ecrm:P9_consists_of ?activity .
         ?activity ecrm:P14_carried_out_by  ?composerUri ;
@@ -63,4 +63,5 @@ WHERE {
         ?expCreation ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?creationStart
       }
     }
+  }
 }

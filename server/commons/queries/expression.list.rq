@@ -8,45 +8,41 @@ SELECT DISTINCT
   sql:BEST_LANGMATCH(?composer, '%%lang%%', 'en') AS ?composer
   (SAMPLE(?catalogue) AS ?alternativeHeadline)
   (SAMPLE(?pic) as ?image)
+  ?source as ?sourceOrganization
 WHERE {
-  ?expression mus:U70_has_title | ecrm:P102_has_title ?title .
-  OPTIONAL{
-    ?expCreation efrbroo:R17_created ?expression ;
-      ecrm:P9_consists_of / ecrm:P14_carried_out_by ?c.
-    ?c rdfs:label | foaf:name ?composer .
-    OPTIONAL {?c foaf:depiction ?pic}
-  }
-  OPTIONAL { ?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
-
-  {
-    SELECT DISTINCT ?expression
-    WHERE {
-      ?expression a efrbroo:F22_Self-Contained_Expression ;
-              $if{key} mus:U11_has_key %%key%%; $end
-              $if{genre} mus:U12_has_genre %%genre%%; $end
-              mus:U70_has_title | ecrm:P102_has_title ?title .
-
-      $if{mop}
-        ?expression mus:U13_has_casting ?casting.
-        { ?casting mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance_of_type %%mop%% }
-        UNION
-        { ?casting mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance_of_type / skos:broader %%mop%% }
-      $end
-
-      OPTIONAL{
-        {
-          ?expCreation efrbroo:R17_created ?expression ;
-            ecrm:P9_consists_of / ecrm:P14_carried_out_by / foaf:name ?composer .
-        } UNION
-        {
-          ?expCreation efrbroo:R17_created ?expression ;
-            ecrm:P14_carried_out_by / ecrm:P131_is_identified_by ?composer .
-        }
-      }
-      $if{title} FILTER (regex(str(?title),'%%title%%', 'i')) $end
-      $if{composer} FILTER (regex(str(?composer),'%%composer%%', 'i')) $end
+  GRAPH ?source {
+    ?expression mus:U70_has_title | ecrm:P102_has_title ?title .
+    OPTIONAL{
+      ?expCreation efrbroo:R17_created ?expression ;
+        ecrm:P9_consists_of / ecrm:P14_carried_out_by ?c.
+      ?c rdfs:label | foaf:name ?composer .
+      OPTIONAL {?c foaf:depiction ?pic}
     }
-    LIMIT %%lim%%
-    OFFSET %%offset%%
+    OPTIONAL { ?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
+    {
+      SELECT DISTINCT ?expression
+      WHERE {
+        ?expression a efrbroo:F22_Self-Contained_Expression ;
+                $if{key} mus:U11_has_key %%key%%; $end
+                $if{genre} mus:U12_has_genre %%genre%%; $end
+                mus:U70_has_title | ecrm:P102_has_title ?title .
+
+        $if{mop}
+          ?expression mus:U13_has_casting ?casting.
+          { ?casting mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance_of_type %%mop%% }
+          UNION
+          { ?casting mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance_of_type / skos:broader %%mop%% }
+        $end
+
+        OPTIONAL {
+            ?expCreation efrbroo:R17_created ?expression ;
+              ecrm:P9_consists_of / ecrm:P14_carried_out_by / foaf:name ?composer .
+        }
+        $if{title} FILTER (regex(str(?title),'%%title%%', 'i')) $end
+        $if{composer} FILTER (regex(str(?composer),'%%composer%%', 'i')) $end
+      }
+      LIMIT %%lim%%
+      OFFSET %%offset%%
+    }
   }
 }

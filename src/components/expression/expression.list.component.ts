@@ -19,6 +19,7 @@ export class ExpressionListComponent {
   error: boolean = false;
 
   scrollInProgress = false;
+  freezeScroll = true;
 
   constructor(
     private _expressionService: ExpressionService,
@@ -48,6 +49,7 @@ export class ExpressionListComponent {
     // if (this.querying) return false;
     this.querying = true;
     this.error = false;
+    this.freezeScroll = false;
 
     this._expressionService.query(this.filter).subscribe(
       res => {
@@ -69,14 +71,16 @@ export class ExpressionListComponent {
   }
 
   onScroll() {
-    if (this.scrollInProgress || !this.items) return;
+    if (this.freezeScroll || this.scrollInProgress || !this.items) return;
     this.scrollInProgress = true;
 
     this._expressionService.query(this.filter, this.items.length)
       .subscribe(res => {
         this.scrollInProgress = false;
         let list = res['@graph'];
-        this.items.push(...list);
+        if(list.length)
+          this.items.push(...list);
+        else this.freezeScroll = true;
       }, error => console.error('Error: ' + error));
   }
 

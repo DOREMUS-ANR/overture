@@ -12,9 +12,7 @@
           <a [routerLink]="['/artist/', expression.composerId[i]]" *ngFor="let composer of expression.composer; let i = index">{{composer}}</a>
         </p>
         <h1 class="title" *ngIf="expression.title">{{expression.title[0]}}</h1>
-        <p class="other-title">
-          {{expression.title.slice(1).join(' | ')}}
-        </p>
+        <p class="other-title">{{expression.title.slice(1).join(' | ')}}</p>
 
         <div class="note">
           <p *ngFor="let note of expression.note">{{note}}</p>
@@ -24,7 +22,7 @@
 
       <div class="info-cont">
         <div class="sources">
-          <a href='{{expression.sourceLink || "http://www.radiofrance.fr/"}}' rel="external" target="blank" class="source">
+          <a href='{{ expression.sourceLink || getSource(expression.source).uri }}' rel="external" target="blank" class="source">
             <img src='{{getSource(expression.source).img}}' alt='{{getSource(expression.source).label}}' title="data from {{getSource(expression.source).label}}" />
           </a>
         </div>
@@ -77,7 +75,7 @@
     </section>
 
     <section class="recommendation-cont">
-      <!-- <recommendation [seed]="expression.uri"></recommendation> -->
+      <recommendation [seed]="expression.uri"></recommendation>
     </section>
   </div>
 </article>
