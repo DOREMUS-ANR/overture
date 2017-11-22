@@ -4,6 +4,9 @@ import { SharedService } from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
+const PERFORMANCE = 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation';
+const PUBLICATION = 'http://erlangen-crm.org/efrbroo/F30_Publication_Event';
+
 const defaultOverviewPic = '/static/img/bg/generic-score.jpg';
 const organizBase = 'http://data.doremus.org/organization/';
 const institutions = {
@@ -56,11 +59,7 @@ export class ExpressionDetailComponent {
           this.expression.id = id;
           this.expression.uri = 'http://data.doremus.org/expression/' + id;
 
-          if (this.expression.composerUri)
-            this.expression.composerId = this.expression.composerUri.map(
-              c => c.replace('http://data.doremus.org/artist/', '')
-            );
-          this.titleService.setTitle(exp.title[0]);
+          this.titleService.setTitle(exp.name);
 
           console.log(this.expression);
           this.querying = false;
@@ -68,27 +67,31 @@ export class ExpressionDetailComponent {
 
           // prepare dates for timeline
           this.dates = [];
-          if (this.expression.creationStart)
+          if (this.expression.dateCreated)
             this.dates.push({
               type: 'creation',
-              agent: this.expression.composer,
-              date: this.expression.creationStart
+              agent: this.getProp('composer', true).map(c => c.label),
+              date: this.expression.dateCreated
             });
-          if (this.expression.premiere)
+
+          let premiere = this.expression.events[PERFORMANCE].find(ev => ev.isPremiere);
+          if (premiere)
             this.dates.push({
               type: 'premiere',
-              description: this.expression.premiereNote,
-              date: this.expression.premiereStart
+              description: premiere.note,
+              date: premiere.time
             });
-          if (this.expression.publicationEvent)
+
+          let princepsPub = this.expression.events[PUBLICATION].find(ev => ev.isPrincepsPub);
+          if (princepsPub)
             this.dates.push({
               type: 'publication',
-              description: this.expression.publicationEventNote,
-              date: this.expression.publicationStart
+              description: princepsPub.note,
+              date: princepsPub.time
             });
 
-          this.overviewPic = this.expression.composerPic || defaultOverviewPic;
-
+          let firstComposer = this.getProp('composer', true)[0];
+          this.overviewPic = (firstComposer && firstComposer.pic) || defaultOverviewPic;
         }, (err) => {
           this.querying = false;
           this.error = true;
@@ -109,7 +112,7 @@ export class ExpressionDetailComponent {
   }
 
   getSource(source) {
-    let s = source[0].replace('http://data.doremus.org/', '');
+    let s = source.replace('http://data.doremus.org/', '');
     let org = null;
     switch (s) {
       case 'bnf':
@@ -122,6 +125,16 @@ export class ExpressionDetailComponent {
         org = `Radio_France`; break;
     }
     return institutions[org];
+  }
+
+  getProp(prop, asArray: boolean = false) {
+    let v = this.expression[prop];
+    if (asArray && !Array.isArray(v)) return [v];
+    return v;
+  }
+  getId(prop) {
+    let uri = prop ? this.expression[prop].uri : this.expression.uri;
+    return uri.split('/').slice(-1)[0];
   }
 
   class2Label(cls: string) {

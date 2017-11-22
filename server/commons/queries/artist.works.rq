@@ -1,29 +1,27 @@
-SELECT DISTINCT ?artist, ?role, ?roleLabel, ?event, ?expression, ?classExpr, ?title, ?pic
+SELECT DISTINCT ?artist, ?role, ?roleLabel, ?event, ?expression, ?classExpr, ?title, ?pic, ?source
 WHERE {
-  OPTIONAL { %%uri%% foaf:depiction ?pic }
+  GRAPH ?source {
+    OPTIONAL { %%uri%% foaf:depiction ?pic }
 
-  ?activity ecrm:P14_carried_out_by %%uri%%.
-  OPTIONAL {{
-    ?activity mus:U31_had_function_of_type ?role .
-  } UNION {
-    ?activity mus:U35_foresees_function_of_type ?role .
-  } UNION {
-    ?activity mus:U1_used_medium_of_performance ?role .
-    { SELECT ?role sql:BEST_LANGMATCH(?roleLabel, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?roleLabel
-      WHERE { ?role skos:prefLabel ?roleLabel }
+    ?activity ecrm:P14_carried_out_by %%uri%%.
+    OPTIONAL {
+      ?activity mus:U31_had_function_of_type | mus:U35_foresees_function_of_type | mus:U1_used_medium_of_performance ?role .
+      { SELECT ?role sql:BEST_LANGMATCH(?roleLabel, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?roleLabel
+        WHERE { ?role skos:prefLabel ?roleLabel }
+      }
     }
-  }}
 
-  ?event ecrm:P9_consists_of ?activity ;
-     efrbroo:R17_created ?expression .
+    ?event ecrm:P9_consists_of ?activity ;
+       efrbroo:R17_created ?expression .
 
-  ?expression a ?classExpr.
+    ?expression a ?classExpr.
 
-  OPTIONAL {
-    { SELECT ?expression sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?title
-      WHERE { ?expression mus:U70_has_title | ecrm:P102_has_title ?title }
+    OPTIONAL {
+      { SELECT ?expression sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?title
+        WHERE { ?expression mus:U70_has_title | ecrm:P102_has_title ?title }
+      }
     }
+
+    BIND(%%uri%% AS ?artist)
   }
-
-  BIND(%%uri%% AS ?artist)
 }

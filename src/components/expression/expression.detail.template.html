@@ -9,20 +9,23 @@
     <div class="overview-cont">
       <div class="title-cont">
         <p class="composer">
-          <a [routerLink]="['/artist/', expression.composerId[i]]" *ngFor="let composer of expression.composer; let i = index">{{composer}}</a>
+          <a [routerLink]="['/artist/', getId('composer')]" *ngFor="let composer of getProp('composer', true)">{{composer.label}}</a>
         </p>
-        <h1 class="title" *ngIf="expression.title">{{expression.title[0]}}</h1>
-        <p class="other-title">{{expression.title.slice(1).join(' | ')}}</p>
+        <h1 class="title" *ngIf="expression.name">
+          {{expression.name}}
+          <small *ngIf="expression.order">{{expression.order}}</small>
+        </h1>
+        <p class="other-title" [innerHTML]="expression.alternateName | jsonLDval: ['lang','array']"></p>
 
         <div class="note">
-          <p *ngFor="let note of expression.note">{{note}}</p>
+          <p [innerHTML]="expression.description | jsonLDval: ['lang','array']"></p>
         </div>
 
       </div>
 
       <div class="info-cont">
         <div class="sources">
-          <a href='{{ expression.sourceLink || getSource(expression.source).uri }}' rel="external" target="blank" class="source">
+          <a href='{{ expression.sameAs || getSource(expression.source).uri }}' rel="external" target="blank" class="source">
             <img src='{{getSource(expression.source).img}}' alt='{{getSource(expression.source).label}}' title="data from {{getSource(expression.source).label}}" />
           </a>
         </div>
@@ -30,14 +33,14 @@
 
           <div *ngIf="expression.key">
             <label>Key</label>
-            <span *ngFor="let key of expression.key; let i = index">
-              <a [routerLink]="['/expression']" [queryParams]="{ key: expression.keyURI[i]}">{{key}}</a>
+            <span *ngFor="let key of getProp('key', true)">
+              <a [routerLink]="['/expression']" [queryParams]="{ key: key.uri }">{{key.label}}</a>
             </span>
           </div>
           <div *ngIf="expression.genre">
             <label>Genre</label>
-            <span *ngFor="let genre of expression.genre; let i = index">
-              <a [routerLink]="['/expression']" [queryParams]="{ genre: expression.genreURI[i]}">{{genre}}</a>
+            <span *ngFor="let genre of getProp('genre', true)">
+              <a [routerLink]="['/expression']" [queryParams]="{ genre: genre.uri}">{{genre.label}}</a>
             </span>
           </div>
           <div *ngIf="expression.opus">
@@ -48,11 +51,14 @@
             <label>Catalog</label>
             <span>{{expression.catalogue}}</span>
           </div>
-          <div *ngIf="expression.castingURI">
+
+          <div *ngIf="expression.mop">
             <label>Casting</label>
             <ul style="list-style-type: none; margin: 0; padding: 0">
-              <li *ngFor="let mop of expression.mop; let i = index" class="instr icon-right-dir">
-                <a [routerLink]="['/expression']" [queryParams]="{ mop: expression.mopURI[i]}">{{mop}}</a>
+              <li *ngFor="let mop of getProp('mop', true)" class="instr icon-right-dir">
+                <a [routerLink]="['/expression']" [queryParams]="{ mop: mop.uri}">{{mop.label}}</a>
+                <span *ngIf="mop.quantity">({{mop.quantity}})</span>
+                <strong *ngIf="mop.responsibility">{{mop.responsibility}}</strong>
               </li>
             </ul>
           </div>

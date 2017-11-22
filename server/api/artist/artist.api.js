@@ -14,7 +14,8 @@ const schemaOrgMapping = {
   deathPlace: 'deathPlace',
   comment: 'description',
   wikipedia: 'mainEntityOfPage',
-  sameAs: 'sameAs'
+  sameAs: 'sameAs',
+  source: 'sourceOrganization'
 };
 
 function sendStandardError(res, err) {
@@ -123,7 +124,8 @@ export default class ArtistController {
           let obj = {
             '@id': uri,
             '@type': type,
-            name: w.title && w.title.value
+            name: w.title && w.title.value,
+            sourceOrganization: w.source.value
           };
           if (w.pic) obj.image = w.pic.value;
 

@@ -20,5 +20,5 @@
     <artist *ngFor="let a of recommendation" [artist]="a"></artist>
     <p class="empty-msg" *ngIf="recommendation.length < 1">nothing to show</p>
   </div>
-  <button mat-raised-button color="primary" class="full-width" *ngIf="!big" (click)="toogleView()">MORE</button>
+  <button mat-raised-button color="primary" class="full-width" *ngIf="!big" (click)="toogleView()">EXPLAIN</button>
 </div>

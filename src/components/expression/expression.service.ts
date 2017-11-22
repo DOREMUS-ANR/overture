@@ -42,7 +42,8 @@ export class ExpressionService {
       this.http.get(`/api/expression/${id}`, { params }),
       this.http.get(`/api/expression/${id}/realisations`, { params }))
       .map(res => {
-        let expression = _mergeData(_processResult(res[0]));
+        let expression = res[0];
+
         let eventsData = _processResult(res[1]);
         let events = {};
         eventsData.forEach((e) => {
@@ -71,9 +72,12 @@ export class ExpressionService {
           events[evtType].forEach(e => {
             if (!e.activities[0].actor)
               delete e.activities
+
+            e.isPremiere = !!parseInt(e.isPremiere);
+            e.isPrincepsPub = !!parseInt(e.isPrincepsPub);
           });
         }
-        expression.events = events;
+        expression = Object.assign(expression, { events });
         return expression;
       });
   }
