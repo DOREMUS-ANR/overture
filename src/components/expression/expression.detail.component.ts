@@ -74,7 +74,8 @@ export class ExpressionDetailComponent {
               date: this.expression.dateCreated
             });
 
-          let premiere = this.expression.events[PERFORMANCE].find(ev => ev.isPremiere);
+          let perfs = this.expression.events[PERFORMANCE];
+          let premiere = perfs && perfs.find(ev => ev.isPremiere);
           if (premiere)
             this.dates.push({
               type: 'premiere',
@@ -82,7 +83,8 @@ export class ExpressionDetailComponent {
               date: premiere.time
             });
 
-          let princepsPub = this.expression.events[PUBLICATION].find(ev => ev.isPrincepsPub);
+          let pubs = this.expression.events[PUBLICATION];
+          let princepsPub = pubs && pubs.find(ev => ev.isPrincepsPub);
           if (princepsPub)
             this.dates.push({
               type: 'publication',
@@ -129,12 +131,14 @@ export class ExpressionDetailComponent {
 
   getProp(prop, asArray: boolean = false) {
     let v = this.expression[prop];
+    if (!asArray && !v) return [];
     if (asArray && !Array.isArray(v)) return [v];
     return v;
   }
   getId(prop) {
-    let uri = prop ? this.expression[prop].uri : this.expression.uri;
-    return uri.split('/').slice(-1)[0];
+    let x = prop ? this.expression[prop] : this.expression;
+    if (!x) return null;
+    return x.uri.split('/').slice(-1)[0];
   }
 
   class2Label(cls: string) {

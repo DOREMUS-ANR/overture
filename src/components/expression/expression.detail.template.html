@@ -8,7 +8,7 @@
     <div [ngStyle]="{'background-image': 'url('+overviewPic+')'}" class="bg"></div>
     <div class="overview-cont">
       <div class="title-cont">
-        <p class="composer">
+        <p class="composer" *ngIf="expression.composer">
           <a [routerLink]="['/artist/', getId('composer')]" *ngFor="let composer of getProp('composer', true)">{{composer.label}}</a>
         </p>
         <h1 class="title" *ngIf="expression.name">
