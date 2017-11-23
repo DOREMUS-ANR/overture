@@ -37,4 +37,5 @@ class Entity {
   image: string
   link: string
   super: number
+  source: string
 }
