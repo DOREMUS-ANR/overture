@@ -129,13 +129,18 @@ export default class ArtistController {
           };
           if (w.pic) obj.image = w.pic.value;
 
+          if (w.date) {
+            let dateProp = (type === 'MusicComposition') ? 'dateCreated' : 'startDate';
+            obj[dateProp] = w.date.value;
+          }
+
           obj[prop] = {
             '@type': 'Role',
             'roleName': role,
           };
           obj[prop][prop] = {
             '@id': artist['@id'],
-            name: artist.name
+            name: artist.name[0] || artist.name
           };
           return obj;
         });
@@ -169,7 +174,7 @@ export default class ArtistController {
       .catch(err => sendStandardError(res, err));
   }
 
-  static toSchemaOrg(artist){
+  static toSchemaOrg(artist) {
     return toSchemaOrg(artist);
   }
 

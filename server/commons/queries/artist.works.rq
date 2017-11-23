@@ -1,4 +1,4 @@
-SELECT DISTINCT ?artist, ?role, ?roleLabel, ?event, ?expression, ?classExpr, ?title, ?pic, ?source
+SELECT DISTINCT ?date, ?artist, ?role, ?roleLabel, ?event, ?expression, ?classExpr, ?title, ?pic, ?source
 WHERE {
   GRAPH ?source {
     OPTIONAL { %%uri%% foaf:depiction ?pic }
@@ -7,12 +7,12 @@ WHERE {
     OPTIONAL {
       ?activity mus:U31_had_function_of_type | mus:U35_foresees_function_of_type | mus:U1_used_medium_of_performance ?role .
       { SELECT ?role sql:BEST_LANGMATCH(?roleLabel, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?roleLabel
-        WHERE { ?role skos:prefLabel ?roleLabel }
-      }
+        WHERE { ?role skos:prefLabel ?roleLabel }}
     }
 
     ?event ecrm:P9_consists_of ?activity ;
        efrbroo:R17_created ?expression .
+    OPTIONAL { ?event ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?date }
 
     ?expression a ?classExpr.
 

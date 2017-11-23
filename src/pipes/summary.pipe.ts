@@ -7,7 +7,7 @@ import * as moment from 'moment';
 export class SummaryPipe implements PipeTransform {
   transform(value, eclass: string): any {
     if (!value) return null;
-
+    let date;
     switch (eclass) {
       case 'expression':
       case 'MusicComposition':
@@ -18,11 +18,13 @@ export class SummaryPipe implements PipeTransform {
         if (author.name) author = author.name;
         if (author['@value']) author = author['@value'];
 
+        date = value.dateCreated ? value.dateCreated + ', ' : '';
+
         return {
           id,
           link: ['/expression', id],
           title: value.title || value.name,
-          super: author,
+          super: date + author,
           small: value.alternativeHeadline,
           image: value.image,
           source: value.sourceOrganization
@@ -34,8 +36,15 @@ export class SummaryPipe implements PipeTransform {
         let perf = value.performer;
         if (perf && !Array.isArray(perf)) perf = [perf];
 
+        if (value.time)
+          date = moment(value.time).year();
+        if (value.startDate)
+          date = value.startDate;
+
+        date = date ? date + ', ' : '';
+
         return {
-          super: `${value.time ? moment(value.time).year() : ''}${separator(value)}${value.place || value.placeURI || ''}`,
+          super: date + (value.place || value.placeURI || ''),
           title: value.title || (value.activities ? toActorList(value.activities || perf) : 'Performance'),
           image: 'static/img/performance_placeholder.png'
         }
