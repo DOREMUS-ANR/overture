@@ -50,7 +50,8 @@ export class TimelineComponent {
     this.dates.sort((a, b) => {
       if (!a.time) return 1;
       if (!b.time) return -1;
-      return a.time.start - b.time.start;
+      return a.time - b.time;
     });
+    console.log(this.dates.map(d=>d.time))
   }
 }
