@@ -140,7 +140,7 @@ export default class ArtistController {
           };
           obj[prop][prop] = {
             '@id': artist['@id'],
-            name: artist.name[0] || artist.name
+            name: Array.isArray(artist) ? artist.name[0] : artist.name
           };
           return obj;
         });
