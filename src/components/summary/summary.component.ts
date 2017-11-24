@@ -38,4 +38,5 @@ class Entity {
   link: string
   super: number
   source: string
+  tag: string
 }

@@ -13,7 +13,10 @@
         </p>
         <h1 class="title" *ngIf="expression.name">
           {{expression.name}}
-          <small *ngIf="expression.order">{{expression.order}}</small>
+          <small *ngIf="expression.order">
+            <span *ngIf="startsWithNum(expression.order)">n. </span>
+            {{expression.order}}
+          </small>
         </h1>
         <p class="other-title" [innerHTML]="expression.alternateName | jsonLDval: ['lang','array']"></p>
 

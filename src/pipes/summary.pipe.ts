@@ -36,22 +36,27 @@ export class SummaryPipe implements PipeTransform {
         let perf = value.performer;
         if (perf && !Array.isArray(perf)) perf = [perf];
 
-        if (value.time)
-          date = moment(value.time).year();
-        if (value.startDate)
-          date = value.startDate;
-
+        if (value.time) date = moment(value.time).year();
+        if (value.startDate) date = value.startDate;
         date = date ? date + ', ' : '';
+
+        let title = value.title;
+        if (!title) {
+          title = 'Performance'
+          if (value.activities) title += ' by ' + toActorList(value.activities)
+        }
 
         return {
           super: date + (value.place || value.placeURI || ''),
-          title: value.title || (value.activities ? toActorList(value.activities || perf) : 'Performance'),
-          image: 'static/img/performance_placeholder.png'
+          title: title,
+          image: 'static/img/performance_placeholder.png',
+          tag: value.isPremiere ? 'premiere' : null
         }
       case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
         return {
           super: `${value.time ? moment(value.time).year() : ''}${separator(value)}${value.place || value.placeURI || ''}`,
-          title: value.title || (value.activities ? toActorList(value.activities || perf) : 'Publication')
+          title: value.title || (value.activities ? toActorList(value.activities || perf) : 'Publication'),
+          tag: value.isPrincepsPub ? 'princeps publication' : null
         }
     }
   }

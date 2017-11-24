@@ -135,6 +135,7 @@ export class ExpressionDetailComponent {
     if (asArray && !Array.isArray(v)) return [v];
     return v;
   }
+
   getId(prop) {
     let x = prop ? this.expression[prop] : this.expression;
     if (!x) return null;
@@ -152,4 +153,7 @@ export class ExpressionDetailComponent {
     }
   }
 
+  startsWithNum(what) {
+    return parseInt(what[0]) != NaN;
+  }
 }
