@@ -38,7 +38,7 @@
     "helmet": "^3.9.0",
     "moment": "^2.19.2",
     "morgan": "^1.9.0",
-    "ngx-infinite-scroll": "^0.6.1",
+    "ngx-infinite-scroll": "^0.8.0",
     "node-cache": "^4.1.1",
     "node-monkey": "^1.0.1",
     "node-noop": "^1.0.0",
@@ -47,7 +47,7 @@
     "rxjs": "^5.5.2",
     "sparql-client2": "^0.2.0",
     "tsv": "^0.2.0",
-    "typescript": "^2.6.1",
+    "typescript": "2.6.2",
     "zone.js": "^0.8.18"
   },
   "devDependencies": {
@@ -64,7 +64,7 @@
     "mdi": "^2.0.46",
     "nib": "^1.1.2",
     "require-dir": "^0.3.2",
-    "rupture": "^0.6.2",
+    "rupture": "^0.7.1",
     "stylus": "^0.54.5"
   },
   "repository": {

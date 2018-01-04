@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from "rxjs/Rx";
+import { Observable } from 'rxjs/Observable';
 import { Globals } from '../../app.globals';
 
 import 'rxjs/add/operator/toPromise';
@@ -87,11 +87,7 @@ export class ExpressionService {
 
     let params = new HttpParams().set('lang', Globals.lang);
     return this.http.get(`/api/recommendation/${id}`, { params })
-      .toPromise().then(res => {
-        let data = res;
-        console.log(data);
-        return data;
-      });
+      .toPromise();
   }
 }
 

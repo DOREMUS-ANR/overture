@@ -13,7 +13,7 @@ export class RecommendationComponent {
   loading: boolean = true;
   error: boolean = false;
 
-  constructor(private expressionService: ExpressionService, @Inject(PLATFORM_ID) private platformId: Object) { };
+  constructor(private expressionService: ExpressionService, @Inject(PLATFORM_ID) private platformId: string) { };
 
   ngOnChanges(changes: SimpleChanges) {
     if (!changes.seed) return;
@@ -25,17 +25,17 @@ export class RecommendationComponent {
     let id = this.seed.replace('http://data.doremus.org/expression/', '');
 
     if (isPlatformBrowser(this.platformId)) {
-
       // retrieve recommendations
-      this.expressionService.recommend(id)
-        .then((res) => {
-          this.loading = false;
-          this.recommendation = res.filter(r => r.data.length);
-        }, (err) => {
-          this.loading = false;
-          this.error = true;
-          console.error(err);
-        });
+
+        this.expressionService.recommend(id)
+          .then(res => {
+            this.loading = false;
+            this.recommendation = res.filter(r => r.data.length);
+          }).catch(err => {
+            this.loading = false;
+            this.error = true;
+            console.error(err);
+          });
     }
   }
 
