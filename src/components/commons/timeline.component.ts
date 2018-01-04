@@ -52,6 +52,5 @@ export class TimelineComponent {
       if (!b.time) return -1;
       return a.time - b.time;
     });
-    console.log(this.dates.map(d=>d.time))
   }
 }

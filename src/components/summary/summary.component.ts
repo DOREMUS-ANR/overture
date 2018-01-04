@@ -26,6 +26,8 @@ export class SummaryComponent {
       case 'itema3':
         return `${LOGOS_FOLDER}/radiofrance.png`;
       default:
+        if (source.startsWith('http://catalogue.bnf.fr/'))
+          return `${LOGOS_FOLDER}/bnf.png`;
         return null;
     }
   }
