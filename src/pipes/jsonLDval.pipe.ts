@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import bestLang from 'bestlang';
+import * as bestLang from 'bestlang';
 import { Globals } from '../app.globals';
 
 var supportedLanguages = [Globals.lang, 'en', 'ru-Latn', 'el-Latn'];
