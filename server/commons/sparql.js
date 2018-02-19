@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs-extra';
 import path from 'path';
 import SparqlClient from 'sparql-client2';
 import Cache from './cache';
@@ -9,11 +9,12 @@ import {
 const doremusEndpoint = EXT_URI.SPARQL_ENDPOINT;
 const queryFolder = 'server/commons/queries';
 
+const IF_REGEX = /\$if{(.+)}((.|\n)+?)\$end/g;
+
 function uriWrap(v) {
   'use strict';
-  if (typeof v === 'string' && v.startsWith('http:')) {
+  if (typeof v === 'string' && v.startsWith('http:'))
     return `<${v}>`;
-  }
   return v;
 }
 
@@ -36,48 +37,41 @@ export default class Sparql {
   }
 
   loadQuery(queryId, opt = {}) {
-    if (!queryId) {
+    if (!queryId)
       throw Error('The name of the query to load is required');
-    }
+
     if (!opt.lang)
       opt.lang = 'en;q=0.9, ru-Latn;q=0.2, grm-Latn;q=0.2, el-Latn;q=0.2 *;q=0.1';
 
     let _file = path.join(queryFolder, queryId + '.rq');
 
-    return new Promise((resolve, reject) => {
-      if (!opt.offset) {
-        opt.offset = 0;
-      }
+    opt.offset = opt.offset || 0;
 
-      this.cache.get(queryId, opt).then(resolve, () => {
-        fs.readFile(_file, 'utf8', (err, query) => {
-          if (err) {
-            return reject(err);
-          }
-
+    return this.cache.get(queryId, opt).then(data => {
+      if (data) return data;
+      return fs.readFile(_file, 'utf8')
+        .then(query => {
           // find and solve the $if statements
-          let ifRegex = /\$if{(.+)}((.|\n)+?)\$end/g;
-          query = query.replace(ifRegex, (match, condition, content) => {
-            if (opt[condition]) {
-              return content;
-            }
-            return '';
-          });
+          query = query.replace(IF_REGEX,
+            (match, condition, content) => opt[condition] ? content : '');
 
           // replace params in query
           for (let param in opt) {
             let regex = new RegExp(`%%${param}%%`, 'g');
             let value = opt[param];
-            if (!Array.isArray(value)) {
+            if (!Array.isArray(value))
               value = [value];
-            }
+
             value = value.map(uriWrap);
             query = query.replace(regex, value);
           }
           console.log(`*** SPARQL QUERY ${queryId} ***`);
-          resolve(this.execute(query).then(res => this.cache.set(queryId, opt, res)));
+          return this.execute(query);
+        }).then(res => {
+          this.cache.set(queryId, opt, res);
+          return res;
         });
-      });
+
     });
   }
 

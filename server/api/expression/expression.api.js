@@ -114,31 +114,26 @@ export default class ExpressionController {
 
     sparql.loadQuery('expression.list', opt)
       .then(r => {
-        try {
-          let data = r.results.bindings
-            .map(exp => {
-              let mc = {
-                '@type': 'MusicComposition'
-              };
-              Object.keys(exp).forEach(p => {
-                let v = exp[p].value;
-                mc[padProp(p)] = v;
-              });
-
-              return mc;
+        let data = r.results.bindings
+          .map(exp => {
+            let mc = {
+              '@type': 'MusicComposition'
+            };
+            Object.keys(exp).forEach(p => {
+              let v = exp[p].value;
+              mc[padProp(p)] = v;
             });
 
-          res.json({
-            '@context': 'http://schema.org/',
-            '@id': 'http://overture.doremus.org' + req.originalUrl,
-            'generatedAt': (new Date()).toISOString(),
-            '@graph': data
+            return mc;
           });
-        } catch (e) {
-          res.json([]);
-        }
-      })
-      .catch(err => sendStandardError(res, err));
+
+        res.json({
+          '@context': 'http://schema.org/',
+          '@id': 'http://overture.doremus.org' + req.originalUrl,
+          'generatedAt': (new Date()).toISOString(),
+          '@graph': data
+        });
+      }).catch(err => sendStandardError(res, err));
   }
 
 }

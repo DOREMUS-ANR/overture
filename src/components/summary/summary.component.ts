@@ -14,12 +14,15 @@ export class SummaryComponent {
   getSourceImage(source: String) {
     if (!source) return null;
 
-    let s = source.replace('http://data.doremus.org/', '');
+    let s = source.toLowerCase()
+      .replace(/http:\/\/data\.doremus\.org\/(organization\/)?/, '');
 
     switch (s) {
       case 'bnf':
+      case 'bnf':
         return `${LOGOS_FOLDER}/bnf.png`;
       case 'philharmonie':
+      case 'philharmonie_de_paris':
       case 'euterpe':
         return `${LOGOS_FOLDER}/philharmonie.png`;
       case 'redomi':

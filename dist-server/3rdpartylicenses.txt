@@ -1,8 +1,8 @@
-@angular/material@5.0.3
+@angular/material@5.2.1
 MIT
 The MIT License
 
-Copyright (c) 2017 Google LLC.
+Copyright (c) 2018 Google LLC.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

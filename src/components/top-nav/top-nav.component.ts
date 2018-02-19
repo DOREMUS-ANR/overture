@@ -14,7 +14,7 @@ export class TopNavComponent {
   showNav: boolean = false;
   searchInput: string;
 
-  routes: [any] = [
+  routes = [
     {
       name: 'expression',
       label: 'Expressions'

@@ -2,6 +2,12 @@ import { Component, Input, Output, EventEmitter, SimpleChanges, Inject, PLATFORM
 import { ArtistService } from './artist.service';
 import { isPlatformBrowser } from '@angular/common';
 
+
+function toDescr(input) {
+  if (input == null) return null;
+  return input.map(d => d.text).join('\n')
+}
+
 @Component({
   moduleId: module.id,
   selector: 'artist-recommendation',
@@ -52,7 +58,7 @@ export class ArtistRecommendationComponent {
       this.artistService.recommend(id, this.n, this.getWeightsAsInts(), this.big)
         .then((res) => {
           this.loading = false;
-          res.forEach(a => a.description = a.description.map(d => d.text).join('\n'))
+          res.forEach(a => a.description = toDescr(a.description))
           this.recommendation = res;
         }, (err) => {
           this.loading = false;

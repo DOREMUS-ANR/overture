@@ -13,10 +13,10 @@ export default class Cache {
   }
 
   get(api, params) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       let key = api + '?' + JSON.stringify(params);
       this.cache.get(key, (err, data) => {
-        return (err || !data) ? reject() : resolve(data);
+        resolve(data);
       });
     });
   }

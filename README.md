@@ -53,7 +53,7 @@ Run production mode (Windows)
 
 Install dependency:
 
-    docker build -t jplu/node github.com/jplu/docker-node
+    docker build -t jplu/node github.com/pasqLisena/docker-node
 
 Build
 
@@ -63,7 +63,7 @@ Run
 
     docker run -d -p 5050:3333 --restart=unless-stopped  -v /var/nodejs/overture/config:/config --network doremus --name overture doremus/overture
 
-    <!-- docker run -d -p 5050:3333 --restart=unless-stopped  -v /Users/pasquale/git/overture/config:/config --network doremus --name overture doremus/overture -->
+    <!-- docker run -d -p 5050:3333 -v /Users/pasquale/git/overture/config:/config --network doremus --name overture doremus/overture -->
 
 Stop
 

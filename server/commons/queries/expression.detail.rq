@@ -7,7 +7,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 SELECT DISTINCT
   ?expression,
   ?source,
-  ?name,
+  sql:BEST_LANGMATCH(?name, '%%lang%%', 'en') AS ?name,
   ?alternateName,
   ?sameAs,
   ?description,
@@ -27,47 +27,49 @@ SELECT DISTINCT
   ?composer_label,
   ?dateCreated
 WHERE {
-  GRAPH ?source {
-    VALUES ?expression { %%uri%% }
+  VALUES ?expression { %%uri%% }
 
-    ?expression a efrbroo:F22_Self-Contained_Expression ;
-                mus:U70_has_title | ecrm:P102_has_title ?alternateName .
-    { SELECT DISTINCT ?expression,
-        sql:BEST_LANGMATCH(?names, '%%lang%%', 'en') AS ?name
-      WHERE { ?expression mus:U70_has_title | ecrm:P102_has_title ?names } GROUP BY ?expression }
-    OPTIONAL { ?expression owl:sameAs ?sameAs }
-    OPTIONAL { ?expression ecrm:P3_has_note ?description }
+  ?expression a efrbroo:F22_Self-Contained_Expression ;
+              rdfs:label ?name .
+
+  OPTIONAL {
+    ?titleProp rdfs:subPropertyOf dc:title .
+    ?expression ?titleProp ?alternateName .
+  }
+
+  OPTIONAL { ?expression prov:wasDerivedFrom / prov:wasAttributedTo ?source}
+  OPTIONAL { ?expression owl:sameAs ?sameAs }
+  OPTIONAL { ?expression ecrm:P3_has_note ?description }
+  OPTIONAL {
+    ?expression mus:U13_has_casting / mus:U23_has_casting_detail ?castingDet.
+    ?castingDet mus:U2_foresees_use_of_medium_of_performance_of_type ?mop_uri .
+    OPTIONAL { ?castingDet mus:U30_foresees_quantity_of_mop ?mop_quantity }
+    OPTIONAL { ?castingDet mus:U36_foresees_responsibility_of_type ?mop_responsibility }
+    { SELECT ?mop_uri sql:BEST_LANGMATCH(?mop, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop_label
+      WHERE { ?mop_uri skos:prefLabel | ecrm:P1_is_identified_by ?mop } }
+  }
+  OPTIONAL{
+    ?expression mus:U12_has_genre ?genre_uri .
+    { SELECT ?genre_uri sql:BEST_LANGMATCH(?genre, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?genre_label
+      WHERE { ?genre_uri skos:prefLabel | ecrm:P1_is_identified_by ?genre } }
+  }
+  OPTIONAL{?expression mus:U17_has_opus_statement / ecrm:P3_has_note ?opus}
+  OPTIONAL{?expression mus:U10_has_order_number ?order }
+  OPTIONAL{?expression mus:U11_has_key ?key_uri .
+    { SELECT ?key_uri sql:BEST_LANGMATCH(?key, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?key_label
+      WHERE { ?key_uri skos:prefLabel | ecrm:P1_is_identified_by ?key }  }
+  }
+  OPTIONAL{?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
+  OPTIONAL{
+    ?expCreation efrbroo:R17_created ?expression .
     OPTIONAL {
-      ?expression mus:U13_has_casting / mus:U23_has_casting_detail ?castingDet.
-      ?castingDet mus:U2_foresees_use_of_medium_of_performance_of_type ?mop_uri .
-      OPTIONAL { ?castingDet mus:U30_foresees_quantity_of_mop ?mop_quantity }
-      OPTIONAL { ?castingDet mus:U36_foresees_responsibility_of_type ?mop_responsibility }
-      { SELECT ?mop_uri sql:BEST_LANGMATCH(?mop, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop_label
-        WHERE { ?mop_uri skos:prefLabel | ecrm:P1_is_identified_by ?mop } }
+      ?expCreation ecrm:P9_consists_of ?activity .
+      ?activity ecrm:P14_carried_out_by ?composer_uri ;
+        mus:U31_had_function_of_type <http://data.doremus.org/vocabulary/function/composer>.
+      OPTIONAL { ?composer_uri foaf:depiction ?composer_pic }
+      { SELECT ?composer_uri sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?composer_label
+        WHERE { ?composer_uri rdfs:label | foaf:name ?composer } }
     }
-    OPTIONAL{
-      ?expression mus:U12_has_genre ?genre_uri .
-      { SELECT ?genre_uri sql:BEST_LANGMATCH(?genre, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?genre_label
-        WHERE { ?genre_uri skos:prefLabel | ecrm:P1_is_identified_by ?genre } }
-    }
-    OPTIONAL{?expression mus:U17_has_opus_statement / ecrm:P3_has_note ?opus}
-    OPTIONAL{?expression mus:U10_has_order_number ?order }
-    OPTIONAL{?expression mus:U11_has_key ?key_uri .
-      { SELECT ?key_uri sql:BEST_LANGMATCH(?key, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?key_label
-        WHERE { ?key_uri skos:prefLabel | ecrm:P1_is_identified_by ?key }  }
-    }
-    OPTIONAL{?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
-    OPTIONAL{
-      ?expCreation efrbroo:R17_created ?expression .
-      OPTIONAL {
-        ?expCreation ecrm:P9_consists_of ?activity .
-        ?activity ecrm:P14_carried_out_by ?composer_uri ;
-                  mus:U31_had_function_of_type "compositeur"@fr .
-        OPTIONAL { ?composer_uri foaf:depiction ?composer_pic }
-        { SELECT ?composer_uri sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?composer_label
-          WHERE { ?composer_uri rdfs:label | foaf:name ?composer } }
-      }
-      OPTIONAL { ?expCreation ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?dateCreated }
-    }
+    OPTIONAL { ?expCreation ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?dateCreated }
   }
 }

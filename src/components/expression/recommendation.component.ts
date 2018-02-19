@@ -30,7 +30,7 @@ export class RecommendationComponent {
         this.expressionService.recommend(id)
           .then(res => {
             this.loading = false;
-            this.recommendation = res.filter(r => r.data.length);
+            this.recommendation = res;
           }).catch(err => {
             this.loading = false;
             this.error = true;
