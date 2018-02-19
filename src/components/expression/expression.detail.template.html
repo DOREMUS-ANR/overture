@@ -35,28 +35,28 @@
         <div class="info-card">
 
           <div *ngIf="expression.key">
-            <label>Key</label>
+            <label>{{'Musical key'|translate}}</label>
             <span *ngFor="let key of getProp('key', true)">
               <a [routerLink]="['/expression']" [queryParams]="{ key: key.uri }">{{key.label}}</a>
             </span>
           </div>
           <div *ngIf="expression.genre">
-            <label>Genre</label>
+            <label>{{'Genre'|translate}}</label>
             <span *ngFor="let genre of getProp('genre', true)">
               <a [routerLink]="['/expression']" [queryParams]="{ genre: genre.uri}">{{genre.label}}</a>
             </span>
           </div>
           <div *ngIf="expression.opus">
-            <label>Opus</label>
+            <label>{{'Opus'|translate}}</label>
             <span>{{expression.opus}}</span>
           </div>
           <div *ngIf="expression.catalogue">
-            <label>Catalog</label>
+            <label>{{'Catalogue'|translate}}</label>
             <span>{{expression.catalogue}}</span>
           </div>
 
           <div *ngIf="expression.mop">
-            <label>Casting</label>
+            <label>{{'Casting'|translate}}</label>
             <ul style="list-style-type: none; margin: 0; padding: 0">
               <li *ngFor="let mop of getProp('mop', true)" class="instr icon-right-dir">
                 <a [routerLink]="['/expression']" [queryParams]="{ mop: mop.uri}">{{mop.label}}</a>

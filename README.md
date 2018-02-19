@@ -74,3 +74,7 @@ Stop
 [1]: https://drive.google.com/file/d/0B_nxZpGQv9GKZmpKRGl2dmRENGc/view
 [2]: https://www.w3.org/TR/sparql11-query/
 [3]: https://www.w3.org/TR/rdf11-concepts/
+
+
+<!-- ng xi18n  --i18nFormat=xmb --locale fr --outputPath src/locale --out
+File messages.fr.xmb -->

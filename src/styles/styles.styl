@@ -93,7 +93,7 @@ my-app
     +above('m')
       display flex
       flex-flow space-between
-    div
+    > div
       flex 1 1
       &:not(:first-child)
         +below('m')
@@ -518,7 +518,7 @@ timeline
       img
         max-width 3em
         max-height 2em
-        filter invert() brightness(100)
+        filter invert(1) brightness(100)
         vertical-align middle
     .info-card
       margin-top 1em
@@ -621,5 +621,8 @@ button.long
   font-variant: small-caps;
   background: grayLight
   padding 0 .3em
+
+.uppercase
+  text-transform uppercase
 
 @import "./top-nav"

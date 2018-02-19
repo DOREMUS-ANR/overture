@@ -2,10 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule} from '@angular/material';
+import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule } from '@angular/material';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { AppComponent } from './components/app.component';
 
@@ -54,6 +56,10 @@ import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { SearchComponent } from './components/search/search.component';
 import { WipComponent } from './components/wip/wip.component';
 
+// AoT requires an exported function for factories
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './static/locale/', '.json');
+}
 
 @NgModule({
   imports: [
@@ -61,7 +67,14 @@ import { WipComponent } from './components/wip/wip.component';
     BrowserAnimationsModule, FormsModule, HttpClientModule,
     routing, JsonLdModule,
     MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    })
   ],
   declarations: [AppComponent, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe,
     HomeComponent, SearchResultsComponent,

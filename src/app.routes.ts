@@ -23,24 +23,24 @@ import { WipComponent } from './components/wip/wip.component';
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'search/:input', component: SearchResultsComponent, data: { title: 'Search' } },
-  { path: 'recording', component: WipComponent, data: { title: 'Recording' } },
-  { path: 'score', component: ScoreTabComponent, data: { title: 'Scores' } },
+  { path: 'recording', component: WipComponent, data: { title: 'nav.recording' } },
+  { path: 'score', component: ScoreTabComponent, data: { title: 'nav.score' } },
   {
     path: 'artist', component: ArtistComponent,
     children: [
       { path: ':id', component: ArtistDetailComponent },
-      { path: '', component: ArtistListComponent, data: { title: 'Artists' } }
+      { path: '', component: ArtistListComponent, data: { title: 'nav.artist' } }
     ]
   },
   {
     path: 'expression', component: ExpressionComponent,
     children: [
       { path: ':id', component: ExpressionDetailComponent },
-      { path: '', component: ExpressionListComponent, data: { title: 'Expressions' } }
+      { path: '', component: ExpressionListComponent, data: { title: 'nav.expression' } }
     ]
   },
   {
-    path: 'performance', component: WipComponent
+    path: 'performance', component: WipComponent, data: { title: 'nav.performance' }
   },
   // {
   //   path: 'performance', component: PerformanceComponent,

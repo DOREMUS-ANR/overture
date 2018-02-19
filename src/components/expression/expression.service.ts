@@ -25,7 +25,7 @@ export class ExpressionService {
         filterOptions += `&${k}=${v}`
     });
 
-    let search = 'lim=' + this.limit + filterOptions;
+    let search = `lim=${this.limit}&lang=${Globals.lang}` + filterOptions;
     if (offset) search += '&offset=' + offset;
     else this.expressions = [];
 
@@ -43,6 +43,8 @@ export class ExpressionService {
       this.http.get(`/api/expression/${id}/realisations`, { params }))
       .map(res => {
         let expression = res[0];
+        if (Array.isArray(expression['name']))
+          expression['name'] = expression['name'][0];
 
         let eventsData = _processResult(res[1]);
         let events = {};

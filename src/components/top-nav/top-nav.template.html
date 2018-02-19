@@ -16,7 +16,7 @@
       </button>
     </div>
 
-    <a *ngFor="let r of routes" [routerLink]="r.name" [routerLinkActive]="'active'" (click)="closeNav()">{{r.label}}</a>
+    <a *ngFor="let r of routes" [routerLink]="r" [routerLinkActive]="'active'" (click)="closeNav()">{{'nav.'+ r | translate}}</a>
   </nav>
 
   <span class="flex-span"></span>

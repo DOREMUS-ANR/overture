@@ -30,14 +30,14 @@
         <div class="info-card">
 
           <div *ngIf="artist.birthDate">
-            <label>Birth</label>
+            <label>{{'birth'|translate}}</label>
             <span *ngIf="artist.birthPlace">
               <a href="{{artist.birthPlace}}" rel="external" target="blank">{{artist.birthPlace | stripDbpedia }}</a>,
             </span>
             <span>{{artist.birthDate}}</span>
           </div>
           <div *ngIf="artist.deathDate">
-            <label>Death</label>
+            <label>{{'death'|translate}}</label>
             <span *ngIf="artist.deathPlace">
               <a href="{{artist.deathPlace}}" rel="external" target="blank">{{artist.birthPlace | stripDbpedia }}</a>,
             </span>
@@ -50,12 +50,12 @@
 
   <div class="main info flexy" *ngIf="!artistrec">
     <section id="compositions">
-      <h2><strong>{{compositions.length}}</strong> Expressions as composer</h2>
+      <h2><strong>{{compositions.length}}</strong> {{'nav.expression'|translate}} {{'as'|translate}} {{'Composer'|translate}}</h2>
       <div class="card-list">
         <div *ngFor="let a of compositions; let i = index">
           <summary [entity]="a | summary: a['@type']" *ngIf="i<compositionShown" [eclass]="a['@type']"></summary>
         </div>
-        <button class="long" (click)="compositionShown= compositionShown+ 10">Show More</button>
+        <button class="long" (click)="compositionShown= compositionShown+ 10">{{'show more'|translate}}</button>
       </div>
     </section>
 

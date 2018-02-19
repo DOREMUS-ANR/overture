@@ -1,5 +1,5 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
@@ -14,23 +14,7 @@ export class TopNavComponent {
   showNav: boolean = false;
   searchInput: string;
 
-  routes = [
-    {
-      name: 'expression',
-      label: 'Expressions'
-    }, {
-      name: 'performance',
-      label: 'Performances'
-    }, {
-      name: 'recording',
-      label: 'Recordings'
-    }, {
-      name: 'score',
-      label: 'Scores'
-    }, {
-      name: 'artist',
-      label: 'Artists'
-    }];
+  routes = ['expression', 'performance', 'recording', 'score', 'artist'];
 
   constructor(private router: Router) { }
 

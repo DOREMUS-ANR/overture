@@ -1,10 +1,10 @@
 <div>
-  <button mat-raised-button color="primary" *ngIf="big" (click)="toogleView()">To Artist Info</button>
-  <h2>Similar Artists</h2>
+  <button mat-raised-button color="primary" *ngIf="big" (click)="toogleView()">{{'back-to-artist'|translate}}</button>
+  <h2>{{'rec.artist.heading'|translate}}</h2>
   <div *ngIf="big" class="sliders-cont">
-    <span>SET WEIGHTS:</span>
+    <span>{{'set weights'|translate}}:</span>
     <div *ngFor="let weight of getWeightsAsArray()">
-      <label>{{weight.label}}</label>
+      <label>{{weight.label|translate}}</label>
       <mat-slider min="1" max="100" step="1" value="1" thumb-label="true" color="primary" [(ngModel)]="weights[weight.id].w"></mat-slider>
     </div>
     <button mat-raised-button (click)="refresh()">
@@ -12,7 +12,7 @@
     </button>
   </div>
 
-  <loading *ngIf="loading">computing similar artists</loading>
+  <loading *ngIf="loading">{{'rec.loading'|translate}}</loading>
 
   <error-msg class="small" *ngIf="error"></error-msg>
 
@@ -20,5 +20,5 @@
     <artist *ngFor="let a of recommendation" [artist]="a"></artist>
     <p class="empty-msg" *ngIf="recommendation.length < 1">nothing to show</p>
   </div>
-  <button mat-raised-button color="primary" class="full-width" *ngIf="!big" (click)="toogleView()">EXPLAIN</button>
+  <button mat-raised-button color="primary" class="full-width uppercase" *ngIf="!big" (click)="toogleView()">{{'explain'|translate}}</button>
 </div>

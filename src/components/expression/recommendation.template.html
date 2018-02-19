@@ -1,5 +1,5 @@
-<h2>Similar works</h2>
-<loading *ngIf="loading">computing recommendation</loading>
+<h2>{{'rec.works.heading'|translate}}</h2>
+<loading *ngIf="loading">{{'rec.loading'|translate}}</loading>
 <error-msg class="small" *ngIf="error"></error-msg>
 
 <div *ngIf="!loading">

@@ -35,8 +35,17 @@
       <a href="http://www.doremus.org" rel="external" target="_blank">ABOUT</a>
       <!-- TODO credit popup -->
       <a href="https://github.com/DOREMUS-ANR/overture/graphs/contributors" rel="external" target="_blank">CREDITS</a>
+
     </div>
     <div class="projLogoCont">
+      <div>
+        <mat-form-field>
+          <mat-select placeholder="Language" [(value)]="curLang" (selectionChange)="onLangChange()">
+            <mat-option value="en">English</mat-option>
+            <mat-option value="fr">Français</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <a class="logo-link" href="http://www.doremus.org" rel="external" target="_blank">
         <img src="/static/img/logos/doremus.logo.png" />
       </a>

@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {Router, ActivatedRoute, NavigationEnd} from '@angular/router';
-import {Globals} from '../../app.globals';
-import {SearchService} from './search.service';
+import { Component } from '@angular/core';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Globals } from '../../app.globals';
+import { SearchService } from './search.service';
 
 @Component({
   moduleId: module.id,
@@ -18,22 +18,17 @@ export class SearchResultsComponent {
   constructor(
     private _searchService: SearchService,
     private router: Router, private globals: Globals, private route: ActivatedRoute) {
-
     this.globals = globals;
 
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd && val.url.startsWith('/search')) {
         this.querying = true;
         this.error = false;
-
       }
 
       if (val instanceof NavigationEnd && val.url.startsWith('/search'))
         this.search();
     });
-
-
-
   }
 
   search() {
@@ -42,18 +37,16 @@ export class SearchResultsComponent {
     this.querying = true;
     this.error = false;
 
-    this._searchService.query(this.input).then(
-      res => {
+    this._searchService.query(this.input)
+      .then(res => {
         this.items = res;
         console.log(res)
         this.querying = false;
-      },
-      error => {
+      }).catch(error => {
         console.error('Error: ' + error);
         this.querying = false;
         this.error = true;
-      }
-    );
+      });
 
   }
 }
