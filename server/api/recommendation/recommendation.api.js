@@ -94,7 +94,7 @@ const DEFAULT_QUERY = {
 function callRecommenderFor(id, type = 'expression', query = DEFAULT_QUERY) {
   let cached = cache.get(type + id + JSON.stringify(query));
   if (cached) return Promise.resolve(cached);
-
+  console.log(query);
   let q = 'n=' + (query.n || 3);
   if (query.w) q += '&w=' + query.w;
   if (query.explain) q += '&explain=' + query.explain;
@@ -156,7 +156,7 @@ export default class RecommendationController {
   static query(req, res) {
     let expression = req.params.id;
     console.log('Getting recommendation for expression ', expression);
-    callRecommenderFor(expression)
+    callRecommenderFor(expression,'expression', req.query)
       .then((rec) => {
         async.map(rec, (r, callback) => {
           getExpressionInfo(r.uri, req.query.lang)

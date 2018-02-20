@@ -3,18 +3,20 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { Globals } from '../app.globals';
+import { isPlatformBrowser } from '@angular/common';
 
 const headerOpacityThreshold = 300;
 
-if (!localStorage) {
-  var localStorage = {
+var localStorage;
+if (!isPlatformBrowser(this.platformId))
+  localStorage = {
     _data: {},
     setItem: function(id, val) { return this._data[id] = String(val); },
     getItem: function(id) { return this._data.hasOwnProperty(id) ? this._data[id] : undefined; },
     removeItem: function(id) { return delete this._data[id]; },
     clear: function() { return this._data = {}; }
   };
-}
+else  localStorage = window.localStorage;
 
 @Component({
   moduleId: module.id,

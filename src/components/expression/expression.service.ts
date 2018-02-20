@@ -87,7 +87,8 @@ export class ExpressionService {
   recommend(id) {
     if (!id) return Promise.resolve(null);
 
-    let params = new HttpParams().set('lang', Globals.lang);
+    let params = new HttpParams().set('lang', Globals.lang)
+      .set('explain', 'false');
     return this.http.get(`/api/recommendation/${id}`, { params })
       .toPromise();
   }

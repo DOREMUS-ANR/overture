@@ -24,19 +24,19 @@ export class RecommendationComponent {
 
     let id = this.seed.replace('http://data.doremus.org/expression/', '');
 
-    if (isPlatformBrowser(this.platformId)) {
-      // retrieve recommendations
+    if (!isPlatformBrowser(this.platformId)) return;
 
-        this.expressionService.recommend(id)
-          .then(res => {
-            this.loading = false;
-            this.recommendation = res;
-          }).catch(err => {
-            this.loading = false;
-            this.error = true;
-            console.error(err);
-          });
-    }
+    // retrieve recommendations
+    this.expressionService.recommend(id)
+      .then(res => {
+        this.loading = false;
+        this.recommendation = res;
+      }).catch(err => {
+        this.loading = false;
+        this.error = true;
+        console.error(err);
+      });
+
   }
 
 }
