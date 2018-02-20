@@ -145,6 +145,10 @@ SOFTWARE.
 MIT
 MIT
 
+@ngx-translate/core@9.1.1
+MIT
+MIT
+
 hammerjs@2.0.8
 MIT
 The MIT License (MIT)

@@ -14,19 +14,18 @@ export class SummaryPipe implements PipeTransform {
         let id = value.id || value['@id'].replace('http://data.doremus.org/expression/', '')
 
         let author = value.composer || value.author;
+        let image = value.image || author.image;
         if (author['@type'] == 'Role') author = author.composer || author.author;
         if (author.name) author = author.name;
-        if (author['@value']) author = author['@value'];
-
         date = value.dateCreated ? value.dateCreated + ', ' : '';
 
         return {
           id,
           link: ['/expression', id],
-          title: value.title || value.name,
-          super: date + author,
+          title: extractValue(value.title || value.name),
+          super: date + extractValue(author),
           small: value.alternativeHeadline,
-          image: value.image,
+          image,
           source: value.sourceOrganization
         }
       case 'event':
@@ -65,6 +64,12 @@ export class SummaryPipe implements PipeTransform {
 function separator(value) {
   return value.time && value.placeURI ? ', ' : '';
 }
+
+function extractValue(input){
+  if(!input || !input['@value']) return input;
+  return input['@value'];
+}
+
 function toActorList(activities = []) {
   return activities.map(a => {
     let p = a && a.actor;

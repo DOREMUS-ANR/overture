@@ -52,16 +52,6 @@ const properties = {
   combined: 'combined'
 };
 
-function getShortInfo(uri, lang, callback) {
-  'use strict';
-  sparql.loadQuery('expression.recommendation', {
-      uri,
-      lang
-    })
-    .then(results => callback(null, packResults(results)[0]))
-    .catch(err => callback(err));
-}
-
 function getArtistInfo(uri, lang) {
   'use strict';
   return sparql.loadQuery('artist.recommendation', {

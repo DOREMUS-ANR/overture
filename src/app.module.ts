@@ -58,7 +58,7 @@ import { WipComponent } from './components/wip/wip.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './static/locale/', '.json');
+  return new TranslateHttpLoader(http, '/static/locale/', '.json');
 }
 
 @NgModule({

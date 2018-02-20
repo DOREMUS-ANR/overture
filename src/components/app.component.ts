@@ -6,6 +6,16 @@ import { Globals } from '../app.globals';
 
 const headerOpacityThreshold = 300;
 
+if (!localStorage) {
+  var localStorage = {
+    _data: {},
+    setItem: function(id, val) { return this._data[id] = String(val); },
+    getItem: function(id) { return this._data.hasOwnProperty(id) ? this._data[id] : undefined; },
+    removeItem: function(id) { return delete this._data[id]; },
+    clear: function() { return this._data = {}; }
+  };
+}
+
 @Component({
   moduleId: module.id,
   selector: 'my-app',
@@ -64,7 +74,7 @@ export class AppComponent {
     this.headerOpacity = headerOpacity > 1 ? 1 : headerOpacity;
   }
 
-  onLangChange(evt) {
+  onLangChange() {
     localStorage.setItem('lang', this.curLang);
     location.reload();
   }

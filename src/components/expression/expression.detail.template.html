@@ -27,7 +27,7 @@
       </div>
 
       <div class="info-cont">
-        <div class="sources">
+        <div class="sources" *ngIf="expression.source">
           <a href='{{ expression.sameAs || getSource(expression.source).uri }}' rel="external" target="blank" class="source">
             <img src='{{getSource(expression.source).img}}' alt='{{getSource(expression.source).label}}' title="data from {{getSource(expression.source).label}}" />
           </a>

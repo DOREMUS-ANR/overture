@@ -8,6 +8,7 @@
       "outDir": "dist",
       "assets": [
         "font",
+        "locale",
         "img",
         "styles/*.css"
       ],

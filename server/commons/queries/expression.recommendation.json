@@ -5,10 +5,15 @@
     "@id": "?expression",
     "name": "$rdfs:label$required$sample",
     "alternateName": "$mus:U16_has_catalogue_statement/rdfs:label",
-    "composer": "?composer$sample"
+    "composer": {
+      "@type": "Person",
+      "@id": "?composer$sample",
+      "name": "$rdfs:label$required$sample",
+      "image": "$foaf:depiction"
+    }
   }],
   "$where": [
     "?expression a efrbroo:F22_Self-Contained_Expression",
-    "OPTIONAL { ?expCreation efrbroo:R17_created ?expression; ecrm:P9_consists_of [ mus:U31_had_function_of_type <http://data.doremus.org/vocabulary/function/composer> ; ecrm:P14_carried_out_by / rdfs:label ?composer ]}"
+    "OPTIONAL { ?expCreation efrbroo:R17_created ?expression; ecrm:P9_consists_of [ mus:U31_had_function_of_type <http://data.doremus.org/vocabulary/function/composer> ; ecrm:P14_carried_out_by ?composer ]}"
   ]
 }
