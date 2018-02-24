@@ -117,13 +117,14 @@ export class ExpressionDetailComponent {
     let s = source
       .replace('http://data.doremus.org/', '')
       .replace('organization/', '');
-
+    console.log(s)
     let org = null;
     switch (s) {
       case 'bnf':
       case 'BnF':
         org = `BnF`; break;
       case 'philharmonie':
+      case 'Philharmonie_de_Paris':
       case 'euterpe':
         org = `Philharmonie_de_Paris`; break;
       case 'redomi':

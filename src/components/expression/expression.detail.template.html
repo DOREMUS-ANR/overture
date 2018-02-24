@@ -33,9 +33,9 @@
           </a>
         </div>
         <div class="info-card">
-
           <div *ngIf="expression.key">
             <label>{{'Musical key'|translate}}</label>
+
             <span *ngFor="let key of getProp('key', true)">
               <a [routerLink]="['/expression']" [queryParams]="{ key: key.uri }">{{key.label}}</a>
             </span>
