@@ -1,15 +1,9 @@
 import Sparql from '../../commons/sparql';
+import {
+  sendStandardError
+} from '../../commons/utils';
 
 var sparql = new Sparql();
-
-function sendStandardError(res, err) {
-  'use strict';
-  console.error('error ', err.message);
-  res.status(500).send({
-    code: 500,
-    message: err.message
-  });
-}
 
 function padProp(p) {
   'use strict';
@@ -93,7 +87,16 @@ export default class ExpressionController {
       })
       .then(r => {
         let data = r.results.bindings;
-        res.json(array2obj(data, 'expression'));
+        let expression = array2obj(data, 'expression');
+
+        if (!Array.isArray(expression.alternateName))
+          expression.alternateName = [expression.alternateName];
+
+        expression.alternateName = expression.alternateName
+          .filter(a => a['@language'] || a !== expression.name);
+
+
+        res.json(expression);
       })
       .catch(err => sendStandardError(res, err));
   }

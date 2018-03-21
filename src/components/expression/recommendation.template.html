@@ -2,7 +2,7 @@
 <loading *ngIf="loading">{{'rec.loading'|translate}}</loading>
 <error-msg class="small" *ngIf="error"></error-msg>
 
-<div *ngIf="!loading">
+<div *ngIf="!loading && !error">
   <summary *ngFor="let expr of recommendation" [entity]="expr | summary: 'MusicComposition'"></summary>
   <p class="empty-msg" *ngIf="recommendation.length < 1">nothing to show</p>
 </div>

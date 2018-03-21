@@ -8,22 +8,13 @@ import getJSON from 'get-json22';
 import jsonfile from 'jsonfile';
 import NodeCache from 'node-cache';
 import sparqlTransformer from 'sparql-transformer';
+import {sendStandardError} from '../../commons/utils';
 
 
 const RECOMMENDER = EXT_URI.RECOMMENDER;
 const sparql = new Sparql();
 const cache = new NodeCache();
 
-function sendStandardError(res, err) {
-  'use strict';
-  let m = err && err.message;
-  m = m || err;
-  console.error('error ', m);
-  res.status(500).send({
-    code: 500,
-    message: m
-  });
-}
 
 function packResults(res) {
   'use strict';

@@ -5,7 +5,7 @@ WHERE {
 
   ?activity ecrm:P14_carried_out_by ?artist.
   OPTIONAL {
-    ?activity mus:U31_had_function_of_type | mus:U35_foresees_function_of_type | mus:U1_used_medium_of_performance ?role .
+    ?activity mus:U31_had_function | mus:U35_foresees_function | mus:U1_used_medium_of_performance ?role .
     { SELECT ?role sql:BEST_LANGMATCH(?roleLabel, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?roleLabel
       WHERE { ?role skos:prefLabel ?roleLabel }}
   }
@@ -15,11 +15,9 @@ WHERE {
   OPTIONAL { ?event ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?date }
 
   ?expression a ?classExpr;
-    prov:wasDerivedFrom ?source.
+    prov:wasDerivedFrom / prov:wasAttributedTo ?source.
 
-  OPTIONAL {
-    { SELECT ?expression sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?title
-      WHERE { ?expression mus:U70_has_title | ecrm:P102_has_title ?title }
-    }
+  { SELECT ?expression sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?title
+    WHERE { ?expression rdfs:label ?title . }
   }
 }

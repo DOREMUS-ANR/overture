@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ArtistService } from './artist.service';
 import { JsonLDvalPipe } from '../../pipes/jsonLDval.pipe';
 
@@ -24,7 +24,8 @@ export class ArtistDetailComponent {
 
   constructor(private titleService: Title,
     private artistService: ArtistService,
-    private route: ActivatedRoute, private jsonLDpipe: JsonLDvalPipe) {
+    private route: ActivatedRoute, private jsonLDpipe: JsonLDvalPipe,
+    private _sanitizer: DomSanitizer) {
 
     this.route.params.forEach((params: Params) => {
       let id = params['id'];
@@ -57,6 +58,11 @@ export class ArtistDetailComponent {
         this.error = false;
       });
     });
+  }
+
+  safePic(input) {
+    let uri = encodeURI(input);
+    return this._sanitizer.bypassSecurityTrustStyle(`url('${uri}')`);
   }
 }
 
@@ -98,4 +104,5 @@ function toSource(input) {
     img,
     label
   }
+
 }

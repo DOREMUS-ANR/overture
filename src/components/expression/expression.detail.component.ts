@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ExpressionService } from './expression.service';
 import { SharedService } from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Title } from '@angular/platform-browser';
+import { DomSanitizer, Title } from '@angular/platform-browser';
 
 const PERFORMANCE = 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation';
 const PUBLICATION = 'http://erlangen-crm.org/efrbroo/F30_Publication_Event';
@@ -44,7 +44,7 @@ export class ExpressionDetailComponent {
   constructor(private titleService: Title,
     sharedService: SharedService,
     private expressionService: ExpressionService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private _sanitizer: DomSanitizer) {
 
     this.sharedService = sharedService;
 
@@ -91,7 +91,6 @@ export class ExpressionDetailComponent {
               description: princepsPub.note,
               date: princepsPub.time
             });
-
           let firstComposer = this.getProp('composer', true)[0];
           this.overviewPic = (firstComposer && firstComposer.pic) || defaultOverviewPic;
         }, (err) => {
@@ -117,7 +116,7 @@ export class ExpressionDetailComponent {
     let s = source
       .replace('http://data.doremus.org/', '')
       .replace('organization/', '');
-    console.log(s)
+    // console.log(s)
     let org = null;
     switch (s) {
       case 'bnf':
@@ -136,15 +135,13 @@ export class ExpressionDetailComponent {
 
   getProp(prop, asArray: boolean = false) {
     let v = this.expression[prop];
-    if (!asArray && !v) return [];
+    if (!v) return asArray ? [] : null;
     if (asArray && !Array.isArray(v)) return [v];
     return v;
   }
 
-  getId(prop) {
-    let x = prop ? this.expression[prop] : this.expression;
-    if (!x) return null;
-    return x.uri.split('/').slice(-1)[0];
+  getId(uri) {
+    return uri.split('/').slice(-1)[0];
   }
 
   class2Label(cls: string) {
@@ -160,5 +157,10 @@ export class ExpressionDetailComponent {
 
   startsWithNum(what) {
     return parseInt(what[0]) != NaN;
+  }
+
+  safePic(input) {
+    let uri = encodeURI(input);
+    return this._sanitizer.bypassSecurityTrustStyle(`url('${uri}')`);
   }
 }

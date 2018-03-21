@@ -1,6 +1,7 @@
 PREFIX ecrm: <http://erlangen-crm.org/current/>
 PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX mus: <http://data.doremus.org/ontology#>
+PREFIX function: <http://data.doremus.org/vocabulary/function/>
 
 SELECT DISTINCT
   ?expression AS ?id
@@ -10,34 +11,39 @@ SELECT DISTINCT
   (SAMPLE(?pic) as ?image)
   ?source as ?sourceOrganization
 WHERE {
-  ?expression mus:U70_has_title | ecrm:P102_has_title ?title .
-  OPTIONAL {?expression prov:wasDerivedFrom / prov:wasAttributedTo ?source}
-  OPTIONAL{
+  ?expression rdfs:label ?title .
+
+  OPTIONAL { ?expression prov:wasDerivedFrom / prov:wasAttributedTo ?source }
+  OPTIONAL {
     ?expCreation efrbroo:R17_created ?expression ;
-      ecrm:P9_consists_of / ecrm:P14_carried_out_by ?c.
-    ?c rdfs:label | foaf:name ?composer .
+      ecrm:P9_consists_of [
+          mus:U31_had_function function:composer ;
+          ecrm:P14_carried_out_by ?c ] .
+    ?c rdfs:label ?composer .
     OPTIONAL {?c foaf:depiction ?pic}
   }
   OPTIONAL { ?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
-  {
+    {
     SELECT DISTINCT ?expression
     WHERE {
+      VALUES ?titleProp { mus:U70_has_original_title ecrm:P102_has_title mus:U71_has_uniform_title mus:U68_has_variant_title }
+
       ?expression a efrbroo:F22_Self-Contained_Expression ;
               $if{key} mus:U11_has_key %%key%%; $end
-              $if{genre} mus:U12_has_genre %%genre%%; $end
-              mus:U70_has_title | ecrm:P102_has_title ?title .
+              $if{genre} mus:U12_has_genre / skos:exactMatch* %%genre%%; $end
+              ?titleProp ?title .
 
       $if{mop}
         ?expression mus:U13_has_casting ?casting.
-        { ?casting mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance_of_type %%mop%% }
+        { ?casting mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance / skos:exactMatch* %%mop%% }
         UNION
-        { ?casting mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance_of_type / skos:broader %%mop%% }
+        { ?casting mus:U23_has_casting_detail / mus:U2_foresees_use_of_medium_of_performance / skos:broader %%mop%% }
       $end
 
       OPTIONAL {
           ?expCreation efrbroo:R17_created ?expression ;
             ecrm:P9_consists_of [
-              mus:U31_had_function_of_type <http://data.doremus.org/vocabulary/function/composer> ;
+              mus:U31_had_function function:composer;
               ecrm:P14_carried_out_by / foaf:name ?composer
             ]
       }

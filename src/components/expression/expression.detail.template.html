@@ -5,11 +5,11 @@
 
 <article *ngIf="expression" class="expression-detail">
   <section class="overview">
-    <div [ngStyle]="{'background-image': 'url('+overviewPic+')'}" class="bg"></div>
+    <div [style.background-image]="safePic(overviewPic)" class="bg"></div>
     <div class="overview-cont">
       <div class="title-cont">
         <p class="composer" *ngIf="expression.composer">
-          <a [routerLink]="['/artist/', getId('composer')]" *ngFor="let composer of getProp('composer', true)">{{composer.label}}</a>
+          <a [routerLink]="['/artist/', getId(composer.uri)]" *ngFor="let composer of getProp('composer', true)">{{composer.label}}</a>
         </p>
         <h1 class="title" *ngIf="expression.name">
           {{expression.name}}

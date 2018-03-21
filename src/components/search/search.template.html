@@ -11,7 +11,7 @@
 
     <mat-form-field class="field select" *ngIf="itemsKey">
       <mat-select placeholder="{{'Musical key'|translate}}" [(ngModel)]="filter.key" name="filter.key" (ngModelChange)="changeFilter($event)">
-        <mat-option *ngFor="let item of itemsKey" [value]="item.value">
+        <mat-option *ngFor="let item of itemsKey | async" [value]="item.uri">
           {{item.label}}
         </mat-option>
       </mat-select>
@@ -23,7 +23,7 @@
 
     <mat-form-field class="field select" *ngIf="itemsGenre">
       <mat-select placeholder="{{'Genre'|translate}}" [(ngModel)]="filter.genre" name="filter.genre" (ngModelChange)="changeFilter($event)">
-        <mat-option *ngFor="let item of itemsGenre" [value]="item.value">
+        <mat-option *ngFor="let item of itemsGenre | async" [value]="item.uri">
           {{item.label}}
         </mat-option>
       </mat-select>
@@ -34,7 +34,7 @@
 
     <mat-form-field class="field select long" *ngIf="itemsMop">
       <mat-select placeholder="{{'Instruments'|translate}}" [(ngModel)]="filter.mop" name="filter.mop" (ngModelChange)="changeFilter($event)" multiple="true">
-        <mat-option *ngFor="let item of itemsMop" [value]="item.value">
+        <mat-option *ngFor="let item of itemsMop | async" [value]="item.uri">
           {{item.label}}
         </mat-option>
       </mat-select>

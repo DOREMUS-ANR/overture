@@ -1,0 +1,11 @@
+SELECT DISTINCT
+ ?uri
+ sql:BEST_LANGMATCH(?prefLabel, '%%lang%%, en;q=0.9, en-gb;q=0.8, *;q=0.1', 'en') as ?label
+ (group_concat(?matches, ';') as ?matches)
+WHERE {
+    VALUES ?ns {?namespace}
+    ?uri skos:prefLabel ?prefLabel ;
+         skos:topConceptOf | skos:inScheme ?ns .
+    OPTIONAL { ?uri skos:exactMatch ?matches }
+}
+GROUP BY ?uri

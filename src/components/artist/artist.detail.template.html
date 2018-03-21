@@ -5,7 +5,7 @@
   <jsonld *ngIf="artist" [object]="artist"></jsonld>
 
   <section class="overview">
-    <div [ngStyle]="{'background-image': 'url('+ (artist.image || overviewPic) +')'}" class="bg"></div>
+    <div [style.background-image]="safePic(artist.image || overviewPic)" class="bg"></div>
     <div class="overview-cont">
       <div class="title-cont">
         <div class="artist-round">

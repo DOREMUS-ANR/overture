@@ -42,9 +42,9 @@ WHERE {
   OPTIONAL { ?expression ecrm:P3_has_note ?description }
   OPTIONAL {
     ?expression mus:U13_has_casting / mus:U23_has_casting_detail ?castingDet.
-    ?castingDet mus:U2_foresees_use_of_medium_of_performance_of_type ?mop_uri .
+    ?castingDet mus:U2_foresees_use_of_medium_of_performance ?mop_uri .
     OPTIONAL { ?castingDet mus:U30_foresees_quantity_of_mop ?mop_quantity }
-    OPTIONAL { ?castingDet mus:U36_foresees_responsibility_of_type ?mop_responsibility }
+    OPTIONAL { ?castingDet mus:U36_foresees_responsibility ?mop_responsibility }
     { SELECT ?mop_uri sql:BEST_LANGMATCH(?mop, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop_label
       WHERE { ?mop_uri skos:prefLabel | ecrm:P1_is_identified_by ?mop } }
   }
@@ -65,7 +65,7 @@ WHERE {
     OPTIONAL {
       ?expCreation ecrm:P9_consists_of ?activity .
       ?activity ecrm:P14_carried_out_by ?composer_uri ;
-        mus:U31_had_function_of_type <http://data.doremus.org/vocabulary/function/composer>.
+        mus:U31_had_function <http://data.doremus.org/vocabulary/function/composer>.
       OPTIONAL { ?composer_uri foaf:depiction ?composer_pic }
       { SELECT ?composer_uri sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?composer_label
         WHERE { ?composer_uri rdfs:label | foaf:name ?composer } }

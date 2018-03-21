@@ -18,7 +18,8 @@ WHERE {
 
   OPTIONAL { ?event ecrm:P3_has_note ?note. }
 
-  OPTIONAL { ?realizedExpression mus:U70_has_title ?title . }
+  OPTIONAL { ?realizedExpression rdfs:label ?title . }
+
   OPTIONAL { ?event ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?time . }
   OPTIONAL { ?event ecrm:P7_took_place_at ?placeURI
     OPTIONAL { ?placeURI ecrm:P87_is_identified_by | rdfs:label | geonames:name ?place }
@@ -30,7 +31,7 @@ WHERE {
     { SELECT ?actor sql:BEST_LANGMATCH(?actorName, '%%lang%%', 'en') as ?actorName
       WHERE { ?actor foaf:name ?actorName }
     } }
-    OPTIONAL { ?activity mus:U35_foresees_function_of_type ?function }
+    OPTIONAL { ?activity mus:U35_foresees_function ?function }
     OPTIONAL {
       ?activity mus:U1_used_medium_of_performance ?mopURI
       OPTIONAL {{ SELECT ?mopURI sql:BEST_LANGMATCH(?mop, '%%lang%%', 'en') as ?mop

@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { VocabularyService } from './vocabulary.service';
 import { Globals } from '../../app.globals';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from "rxjs/Rx";
 
 @Component({
   moduleId: module.id,
@@ -20,34 +21,14 @@ export class SearchComponent {
     composer: null
   };
 
-  itemsKey: Object[];
-  itemsGenre: Object[];
-  itemsMop: Object[];
+  itemsKey: Observable<Array<any>>;
+  itemsGenre: Observable<Array<any>>;
+  itemsMop: Observable<Array<any>>;
 
   constructor(private _vocabularyService: VocabularyService, private globals: Globals, private route: ActivatedRoute) {
-    this._vocabularyService.get('key')
-      .subscribe(voc => {
-        this.itemsKey = voc.map((item) => ({
-          value: item.uri.value,
-          label: item.label.value
-        }));
-      }, error => console.error('Error: ' + error));
-
-    this._vocabularyService.get('genre')
-      .subscribe(voc => {
-        this.itemsGenre = voc.map((item) => ({
-          value: item.uri.value,
-          label: item.label.value
-        }));
-      }, error => console.error('Error: ' + error));
-
-    this._vocabularyService.get('mop')
-      .subscribe(voc => {
-        this.itemsMop = voc.map((item) => ({
-          value: item.uri.value,
-          label: item.label.value
-        }));
-      }, error => console.error('Error: ' + error));
+    this.itemsKey = this._vocabularyService.get('key');
+    this.itemsGenre = this._vocabularyService.get('genre');
+    this.itemsMop = this._vocabularyService.get('mop');
   }
 
   ngOnInit() {

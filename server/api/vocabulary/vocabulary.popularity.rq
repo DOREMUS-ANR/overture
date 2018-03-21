@@ -1,0 +1,8 @@
+SELECT DISTINCT
+ ?uri
+ count(distinct ?something) as ?popularity
+WHERE {
+    ?something ?prop / skos:exactMatch* ?uri .
+    ?uri skos:topConceptOf | skos:inScheme []
+}
+GROUP BY ?uri
