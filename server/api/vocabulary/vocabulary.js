@@ -72,7 +72,7 @@ export default class Vocabulary {
         for (let d of structureData) {
           let lemma = new Lemma(d.uri.value, d.label.value, lang, d.matches.value.split(';'));
           this.lemmata[lemma.uri] = lemma;
-          for (let u in lemma.alternateUris)
+          for (let u of lemma.alternateUris)
             this.lemmata[u] = lemma;
         }
         for (let d of otherData) {
