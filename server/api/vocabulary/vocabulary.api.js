@@ -1,4 +1,4 @@
-import Vocabulary from './Vocabulary';
+import Vocabulary from './vocabulary';
 import {
   sendStandardError
 } from '../../commons/utils';
