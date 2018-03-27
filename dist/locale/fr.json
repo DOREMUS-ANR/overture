@@ -18,7 +18,7 @@
   "close": "fermer",
   "rec.artist.heading": "Artistes similaires",
   "rec.works.heading": "Œuvres similaires",
-  "rec.loading": "recommendation en cours",
+  "rec.loading": "Recommandation en cours",
   "as": "comme",
   "show more": "montrer plus",
   "explain": "expliquez-moi",
@@ -27,6 +27,8 @@
   "back-to-artist": "aux informations de l'artiste",
   "set weights": "régler les poids",
   "Played MoP": "Instrument joué",
+  "Period": "Période",
   "whatsnew": "Nouveauté",
-  "home.whatsnew": "Overture est maintenant bilingue! Choisissez votre langue dans le footer"
+  "home.whatsnew": "Overture est maintenant bilingue! Choisissez votre langue dans le footer",
+  "explain": "Paramétrer la similarité"
 }

@@ -8,8 +8,9 @@ import getJSON from 'get-json22';
 import jsonfile from 'jsonfile';
 import NodeCache from 'node-cache';
 import sparqlTransformer from 'sparql-transformer';
-import {sendStandardError} from '../../commons/utils';
-
+import {
+  sendStandardError
+} from '../../commons/utils';
 
 const RECOMMENDER = EXT_URI.RECOMMENDER;
 const sparql = new Sparql();
@@ -28,9 +29,8 @@ function packResults(res) {
   });
 
   // extract uuid from URI
-  for (let d of data) {
+  for (let d of data)
     d.id = /[^/]*$/.exec(d.expression)[0];
-  }
 
   return data;
 }
@@ -83,18 +83,12 @@ const DEFAULT_QUERY = {
 };
 
 function callRecommenderFor(id, type = 'expression', query = DEFAULT_QUERY) {
-  let cached = cache.get(type + id + JSON.stringify(query));
-  if (cached) return Promise.resolve(cached);
   console.log(query);
   let q = 'n=' + (query.n || 3);
   if (query.w) q += '&w=' + query.w;
   if (query.explain) q += '&explain=' + query.explain;
 
-  return getJSON(`${RECOMMENDER}/${type}/${id}?${q}`)
-    .then((result) => {
-      cache.set(type + id, result);
-      return result;
-    });
+  return getJSON(`${RECOMMENDER}/${type}/${id}?${q}`);
 }
 
 function why2description(w) {
@@ -123,7 +117,7 @@ function postProcessRec(r, lang) {
   'use strict';
   return new Promise((resolve, reject) => {
     r['@id'] = r.uri;
-    if(!r.why) resolve(r);
+    if (!r.why) resolve(r);
     let description = r.why.map(why2description);
     description.sort((a, b) => b.score - a.score);
     r.description = description.slice(0, 3);
@@ -146,8 +140,12 @@ function postProcessRec(r, lang) {
 export default class RecommendationController {
   static query(req, res) {
     let expression = req.params.id;
+
+    let cached = cache.get('expression' + expression);
+    if (cached) return res.json(cached);
+
     console.log('Getting recommendation for expression ', expression);
-    callRecommenderFor(expression,'expression', req.query)
+    callRecommenderFor(expression, 'expression', req.query)
       .then((rec) => {
         async.map(rec, (r, callback) => {
           getExpressionInfo(r.uri, req.query.lang)
@@ -160,6 +158,7 @@ export default class RecommendationController {
             .then(d => callback(null, d));
         }, (err, data) => {
           if (err) return sendStandardError(res, err);
+          cache.set('expression' + expression, data);
           res.json(data);
         });
       }).catch(err => sendStandardError(res, err));
@@ -167,6 +166,10 @@ export default class RecommendationController {
 
   static queryArtists(req, res) {
     let artist = req.params.id;
+
+    let cached = cache.get('artist' + artist);
+    if (cached) return res.json(cached);
+
     console.log('Getting recommendation for artist', artist);
 
     callRecommenderFor(artist, 'artist', req.query)
@@ -180,6 +183,7 @@ export default class RecommendationController {
             }).then(d => callback(null, d));
         }, (err) => {
           if (err) return sendStandardError(res, err);
+          cache.set('artist' + artist, rec);
           res.json(rec);
         });
       }).catch(err => sendStandardError(res, err));

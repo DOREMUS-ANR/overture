@@ -39,7 +39,7 @@
           <div *ngIf="artist.deathDate">
             <label>{{'death'|translate}}</label>
             <span *ngIf="artist.deathPlace">
-              <a href="{{artist.deathPlace}}" rel="external" target="blank">{{artist.birthPlace | stripDbpedia }}</a>,
+              <a href="{{artist.deathPlace}}" rel="external" target="blank">{{artist.deathPlace | stripDbpedia }}</a>,
             </span>
             <span>{{artist.deathDate}}</span>
           </div>
