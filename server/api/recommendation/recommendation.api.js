@@ -141,7 +141,7 @@ export default class RecommendationController {
   static query(req, res) {
     let expression = req.params.id;
 
-    let cached = cache.get('expression' + expression + req.query);
+    let cached = cache.get('expression' + expression + JSON.stringify(req.query));
     if (cached) return res.json(cached);
 
     console.log('Getting recommendation for expression ', expression);
@@ -158,7 +158,7 @@ export default class RecommendationController {
             .then(d => callback(null, d));
         }, (err, data) => {
           if (err) return sendStandardError(res, err);
-          cache.set('expression' + expression + req.query, data);
+          cache.set('expression' + expression + JSON.stringify(req.query), data);
           res.json(data);
         });
       }).catch(err => sendStandardError(res, err));
@@ -167,7 +167,7 @@ export default class RecommendationController {
   static queryArtists(req, res) {
     let artist = req.params.id;
 
-    let cached = cache.get('artist' + artist + req.query);
+    let cached = cache.get('artist' + artist + JSON.stringify(req.query));
     if (cached) return res.json(cached);
 
     console.log('Getting recommendation for artist', artist);
@@ -183,7 +183,7 @@ export default class RecommendationController {
             }).then(d => callback(null, d));
         }, (err) => {
           if (err) return sendStandardError(res, err);
-          cache.set('artist' + artist + req.query, rec);
+          cache.set('artist' + artist + JSON.stringify(req.query), rec);
           res.json(rec);
         });
       }).catch(err => sendStandardError(res, err));

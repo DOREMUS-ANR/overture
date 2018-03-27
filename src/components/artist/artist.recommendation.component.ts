@@ -19,12 +19,15 @@ export class ArtistRecommendationComponent {
   @Input() big: boolean = false;
   @Output() bigChange = new EventEmitter<boolean>();
   weights = {
+    mop: { id: 'mop', label: 'Played MoP', w: 1 },
     period: { id: 'period', label: 'Period', w: 1 },
-    key: { id: 'key', label: 'Key', w: 1 },
-    genre: { id: 'genre', label: 'Genre', w: 1 },
     casting: { id: 'casting', label: 'Casting', w: 1 },
-    mop: { id: 'mop', label: 'Played MoP', w: 1 }
+    function: { id: 'function', label: 'Function', w: 1 },
+    genre: { id: 'genre', label: 'Genre', w: 1 },
+    key: { id: 'key', label: 'Key', w: 1 },
   }
+//   mop birth_date death_date casting function genre key
+// 3 1 1 3 3 3 3
 
   recommendation: [any];
   loading: boolean = true;
