@@ -37,16 +37,22 @@ export class SummaryPipe implements PipeTransform {
 
         if (value.time) date = moment(value.time).year();
         if (value.startDate) date = value.startDate;
-        date = date ? date + ', ' : '';
+
+        let _super =  [];
+        if (date) _super.push(date)
+        if(value.place || value.placeURI)
+          _super.push(value.place || value.placeURI)
 
         let title = value.title;
         if (!title) {
           title = 'Performance'
           if (value.activities) title += ' by ' + toActorList(value.activities)
+          else if(value.actorName)  title += ' by ' + value.actorName
         }
 
+
         return {
-          super: date + (value.place || value.placeURI || ''),
+          super: _super.join(', '),
           title: title,
           image: 'static/img/performance_placeholder.png',
           tag: value.isPremiere ? 'premiere' : null

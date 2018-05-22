@@ -1,0 +1,628 @@
+@import 'rupture'
+
+/* global imports */
+@import './dep/fonts';
+@import '../../../node_modules/material-shadows/material-shadows'
+@import './dep/vars';
+@import './dep/material-theme';
+
+/* global styles */
+
+*
+  box-sizing border-box
+
+h1, h2, h3, h4, h5
+  font-family Roboto, sans-serif
+  font-weight normal
+
+h1
+  font-size 2.5em
+h2
+  font-weight lighter
+
+[hidden]
+  display none !important
+
+body
+  margin auto
+  display block
+  background grayLight
+  color grayDark
+  font-family Roboto, sans-serif
+  line-height normal
+  font-size 14px
+
+a
+  color main
+  transition color .3s materialBezier
+  &:hover, &:focus
+    color lighten(main, 10)
+
+a[href]
+  cursor pointer
+
+my-app
+  display flex
+  flex-flow column nowrap
+  min-height 100vh
+
+.header
+  width 100%
+  padding 0
+  margin 0
+  z-index 9998
+  position fixed
+  top 0
+  left 0
+  background alpha(#000, .15)
+  &:after //line
+    content: ''
+    border-bottom 1px solid #fff
+    display block
+    width 100%
+    height 1px
+
+  > .bg //background
+    box-shadow 0px 0px 2px rgba(51, 102, 153, 0.5)
+    position absolute
+    z-index 0
+
+    background main
+    top 0
+    left 0
+    width 100%
+    height 100%
+
+  > *
+    position relative
+    z-index 1
+  a
+    text-transform uppercase
+    color #fff
+    text-decoration none
+    &:hover
+      color #fff
+
+#appFooter
+  box-shadow inset 0 9px 16px -12px grayDark
+  padding 4em 3em
+  background darken(grayLight, 10)
+  .footerCont
+    margin auto
+    max-width pageWidthLimit
+    +above('m')
+      display flex
+      flex-flow space-between
+    > div
+      flex 1 1
+      &:not(:first-child)
+        +below('m')
+          margin 1em auto
+        +above('m')
+          border-left 1px solid grayMedium
+          padding-left 1.3em
+          margin-left 1.3em
+    .projLogoCont
+      +below('m')
+        width 7em
+        max-width 100%
+      +above('m')
+        flex 0 1 9em
+    .data-sources
+      list-style none
+      padding 0
+      li
+        display inline-block
+        margin 0 .5em
+      .logo-link
+        display inline-block
+        height 5em
+
+    a.logo-link
+      opacity .4
+      display block
+      text-decoration none
+      width 100%
+      height 100%
+      transition opacity .3s materialBezier
+      img
+        max-width 100%
+        max-height 100%
+        filter saturate(0%)
+        -webkit-filter saturate(0%)
+        transition all .3s materialBezier
+      &:hover
+        opacity 1
+        filter none
+        img
+          filter saturate(100%)
+          -webkit-filter saturate(100%)
+
+.fullLogo
+  display inline-block
+  position relative
+
+  font-size 1.5em
+  line-height 1.6em
+  letter-spacing .1em
+  text-transform uppercase
+
+  padding-left 2em
+  height 1.6em
+
+  background url(../img/logos/overture.logo.png) left center no-repeat
+  background-size 1.9em
+  font-family Raleway, sans-serif
+  &:hover, &:focus
+    text-decoration none
+    text-shadow 0 0 2px #fff
+  &:after
+    content "by DOREMUS.org"
+    font-variant small-caps
+    position absolute
+    display block
+    font-size .3em
+    line-height 1em
+    right 0
+    bottom 0
+    letter-spacing normal
+
+.aside
+  z-index 9999
+
+my-app
+  > router-outlet + ng-component
+    flex 1 0 auto
+    height auto
+
+.main
+  margin 9px auto
+  max-width 100%
+  width pageWidthLimit
+
+.btn-primary
+  background-color #e7892b
+  border-color #d47c24
+  &:hover, &:focus
+    background-color #d47c24 !important
+    border-color #d47c24 !important
+    box-shadow none
+
+.selected
+  background-color #CFD8DC !important
+  color white
+
+
+.workSubDetail
+  margin 0 0 2em 0
+  list-style-type none
+  padding 0
+  width 100%
+  display flex
+  flex-flow row wrap
+
+.workSubDetail li
+  flex 1
+  width auto
+  cursor pointer
+  left 0
+  background-color #EEE
+  margin .5em
+  padding .3em 0
+  height 1.6em
+  border-radius 4px
+
+.workSubDetail li:hover
+  color #607D8B
+  background-color #DDD
+  left .1em
+
+.workSubDetail li.selected:hover
+  background-color #BBD8DC !important
+  color white
+
+.workSubDetail .badge
+  display inline-block
+  font-size small
+  color white
+  padding 0.8em 0.7em 0 0.7em
+  background-color #607D8B
+  line-height 1em
+  position relative
+  left -1px
+  top -4px
+  height 1.8em
+  margin-right .8em
+  border-radius 4px 0 0 4px
+  width auto
+
+.card
+  background #fff
+  z-depth(1)
+  padding 2em
+
+.flex-span
+  flex 1 1
+
+button.light
+  color #fff
+.wip
+  display flex
+  flex-flow column nowrap
+  align-items center
+.wip-img
+  margin-top 10px
+  width 140px
+  height auto
+  flex 1 0 auto
+.wip-text
+  font-family Roboto, sans-serif
+  font-weight 300
+  padding-top 10px
+  text-align center
+  width 300px
+  font-size 3.5em
+  color grayDark
+  flex 1 0 auto
+
+/* component-specific styles */
+/* TODO consider about load it on needed */
+.infinite-list
+  padding 10px
+  display flex
+  width 100%
+  flex-wrap wrap
+  justify-content space-between
+  > *
+    flex 1
+
+
+top-info, work-tab, performance-tab, recording-tab, score-tab, person-tab, wip
+  display flex
+  flex-flow row wrap
+  justify-content center
+  width 100%
+
+@import 'dep/tabs'
+@import 'dep/loading';
+
+
+.field.select
+  position relative
+  &.long
+    width 30em
+
+error-msg
+  margin 4em auto 0
+  width 600px
+  &.small
+    width auto
+    margin 1em
+    font-size .7em
+  h1
+    padding-top 1em
+    font-weight: bold
+    font-size: 4em
+  h3
+    color #000
+    margin-top 0
+  img
+    float: left;
+    opacity: .7
+    height 15em
+
+.card-list
+  z-depth(2)
+  background #fff
+
+.entity-summary
+  clearfix()
+  padding 1em .5em
+  border-bottom 1px solid grayLight
+  outline none
+  &[ng-reflect-router-link]
+    cursor pointer
+    &:hover
+      background #F4F4F4
+  img
+    width 3.5em
+    height 3.5em
+    margin 0 1em
+    object-fit cover
+    object-position center center
+    float left
+  .composer
+    opacity .4
+    margin 0
+    font-weight 400
+    color grayDark
+    margin-bottom .5em
+    min-height .6em
+  .catalogue
+    margin .3em
+  .source
+    float right
+    object-fit contain
+    width 2em
+    height 2em
+    opacity .5
+
+  h3
+    color grayDark
+    font-size 1em
+    font-weight 400
+    margin 0
+
+.bearing
+  height headerHeight
+  background main
+  width 100%
+
+
+timeline
+  ul
+    list-style none
+    position relative
+    padding 0
+    margin 0 1em
+    &:before //vertical line
+      content ''
+      display block
+      position absolute
+
+      top 0
+      left 5.3em
+
+      width 2px
+      height 100%
+      background alpha(grayDark, .4)
+    li
+      margin-bottom 3em
+    time
+      display inline-block
+      vertical-align middle
+      line-height 1.3em
+      color alpha(grayDark, .4)
+      font-weight bold
+      font-size 1.4em
+      width 5em
+      text-align right
+      &:after // circle
+        content ''
+        display inline-block
+        vertical-align text-top
+        margin 0 .5em
+
+        width 1.3em
+        height 1.3em
+
+        border-radius 50%
+        border 2px solid main
+        background grayLight
+
+        position relative
+        z-index 3
+
+    label
+      display inline-block
+      vertical-align middle
+      margin 0
+      font-weight 400
+      max-width calc(100% - 10em)
+      small
+        display block
+        opacity .7
+
+.overview
+  @extend .first-content
+  background darken(main, 3)
+  color white
+  position relative
+  overflow hidden
+  &:before
+    content ''
+    background url(/static/img/bg/detail-overview-bg.png) center center no-repeat
+    background-size 100em
+
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    z-index 1
+
+  // final 'triangle' of the overview
+  &:after
+    content ''
+    background grayLight
+
+    position absolute
+    left 0
+    height 8em
+    width 115%
+    z-index 1
+    transform rotate(-3deg) translateX(-2em) translateY(-4em)
+    box-shadow 0 -15px 25px -14px grayDark
+
+  .bg
+    position absolute
+    top 0
+    left 0
+    height 100%
+    width 100%
+    z-index 1
+    opacity .4
+
+    background transparent center 20% no-repeat
+    background-size cover
+
+  .overview-cont
+    +above('m')
+      display flex
+      justify-content space-between
+
+    padding 3em 2em
+    max-width pageWidthLimit
+    margin auto
+    position relative
+    z-index 2
+
+    .composer
+      font 200 1.3em Roboto, sans-serif
+      margin 0
+      opacity .8
+      a
+        color #fff
+        text-decoration none
+        margin-right 1em
+    .title
+      color white
+      font-weight 400
+      margin .1em 0 0
+      small
+        font-size .5em
+
+    .artist-round
+      float left
+      margin-right 1em
+      border 1px solid grayLight
+
+    .other-title
+      font-weight 200
+      opacity .8
+      margin-top .2em
+
+    .note
+      opacity .9
+      font-weight 400
+      margin 2em 0 1em
+      p
+        margin 0
+
+  .title-cont
+    flex 60
+    padding-right 1em
+    margin-bottom 2em
+
+  .info-cont
+    flex 30
+    position relative
+    .sources
+      text-align right
+    .source
+      opacity .7
+      padding 0 .5em
+      text-decoration none
+      display inline-block
+      vertical-align middle
+      img
+        max-width 3em
+        max-height 2em
+        filter invert(1) brightness(100)
+        vertical-align middle
+    .info-card
+      margin-top 1em
+      background white
+      color black
+      padding 2em
+      min-height 16em
+      z-depth(3)
+
+      label
+        font-weight 400
+        text-transform uppercase
+        color main
+        font-size .8em
+        display block
+        margin 0
+      span
+        margin-right .3em
+        display inline-block
+      a
+        color black
+        text-transform capitalize
+        text-decoration underline
+      > div
+        margin-bottom 1em
+        display block
+
+small.lang
+  opacity .8
+  font-variant small-caps
+  margin .3em
+
+.artist-round
+  margin auto
+  border-radius 50%
+  height artistRoundDim
+  width artistRoundDim
+  overflow hidden
+  text-align center
+  background main
+  img
+    width 100%
+    height 100%
+    object-fit cover
+
+button.long
+  display block
+  border none
+  background lighten(grayMedium,40)
+  width 100%
+  text-transform uppercase
+  text-align center
+  font-size .9em
+  padding .8em
+  cursor pointer
+  transition background 200ms ease-in-out
+  &:hover
+    background lighten(grayMedium,35)
+
+.main.flexy
+  +above('m')
+    display flex
+    justify-content space-between
+  > section
+    flex 60
+    +above('m')
+      padding-right 2em
+  .recommendation-cont
+    flex 30
+
+#artist-recommendation
+  +below('s')
+    text-align center
+  artist
+    +above('l')
+      display block
+      width auto
+      text-align left
+      margin 0 0 2em
+      .artist-round
+        float left
+        margin-right 1em
+      h3
+        margin-top .4em
+      p
+        margin-bottom .4em
+
+.full-width
+  width 100%
+
+.sliders-cont
+  > div
+    display inline-block
+    margin 0 1em
+    label
+      display block
+      text-align center
+
+.tag
+  font-variant: small-caps;
+  background: grayLight
+  padding 0 .3em
+
+.uppercase
+  text-transform uppercase
+
+@import "./top-nav"

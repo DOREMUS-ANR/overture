@@ -64,7 +64,8 @@ function getExpressionInfo(uri, lang) {
     'expression': uri
   };
   return sparqlTransformer(query, {
-    endpoint: 'http://data.doremus.org/sparql'
+    endpoint: 'http://data.doremus.org/sparql',
+    debug:true
   });
 }
 

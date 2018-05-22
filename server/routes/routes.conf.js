@@ -6,20 +6,25 @@ import path from 'path';
 import 'zone.js/dist/zone-node';
 import 'reflect-metadata';
 import * as ngUniversal from '@nguniversal/express-engine';
+import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 import {
-  APP_PATH, HOST
+  APP_PATH,
+  HOST
 } from '../../config/constants';
 import ApiRouter from './api.router';
 
 const _root = process.cwd();
-const appServer = require(path.join(_root, 'dist-server', 'main.bundle'));
+const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require(path.join(_root, 'dist-server', 'main'));
 
 export default class RouteConfig {
   static init(app, express) {
     /* Configure Angular Express engine */
     app.engine('html', ngUniversal.ngExpressEngine({
-      bootstrap: appServer.AppServerModuleNgFactory
+      bootstrap: AppServerModuleNgFactory,
+      providers: [
+        provideModuleMap(LAZY_MODULE_MAP)
+      ]
     }));
     app.set('view engine', 'html');
     app.set('views', 'dist');

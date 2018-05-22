@@ -29,7 +29,7 @@ WHERE {
     ?activity ecrm:P14_carried_out_by ?actor .
     OPTIONAL {
     { SELECT ?actor sql:BEST_LANGMATCH(?actorName, '%%lang%%', 'en') as ?actorName
-      WHERE { ?actor foaf:name ?actorName }
+      WHERE { ?actor rdfs:label ?actorName }
     } }
     OPTIONAL { ?activity mus:U35_foresees_function ?function }
     OPTIONAL {

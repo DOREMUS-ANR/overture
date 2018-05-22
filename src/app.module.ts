@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { PLATFORM_ID, APP_ID, Inject, NgModule } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -64,7 +66,8 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({ appId: 'overture' }),
-    BrowserAnimationsModule, FormsModule, HttpClientModule,
+    BrowserAnimationsModule,
+    FormsModule, HttpClientModule,
     routing, JsonLdModule,
     MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule,
     InfiniteScrollModule,
@@ -89,4 +92,13 @@ export function createTranslateLoader(http: HttpClient) {
   bootstrap: [AppComponent],
   providers: [SharedService, Globals, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe, Title]
 })
-export class AppModule { }
+
+export class AppModule {
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(APP_ID) private appId: string) {
+    const platform = isPlatformBrowser(platformId) ?
+      'in the browser' : 'on the server';
+    console.log(`Running ${platform} with appId=${appId}`);
+  }
+}
