@@ -66,12 +66,12 @@ export default class PPLiveRecommender {
     let id = req.params.id,
       type = req.params.type;
 
-    var seed, rr;
+    var seed;
     sparqlTransformer({
         proto: {
           id: '?id',
-          'pp_id': '$dc:identifier$required$var:pp_id',
-          works: '$efrbroo:R66_included_performed_version_of$required$sample'
+          'pp_id': '$dc:identifier|dct:identifier$required$var:pp_id',
+          works: '$efrbroo:R66_included_performed_version_of$sample'
         },
         '$where': [
           `?id a ${TYPE_MAP[type]}`
@@ -81,13 +81,12 @@ export default class PPLiveRecommender {
         },
         '$limit': 1
       }, {
-        endpoint: 'http://data.doremus.org/sparql'
+        endpoint: 'http://data.doremus.org/sparql',
+        debug: true
       }).then(rs => {
-        rr = rs;
         let doremusUri = rs[0].id;
-        let works = rs[0].works || {
-          id: doremusUri
-        };
+        let works = rs[0].works || doremusUri;
+
         // for now 1 use the first work as seed
         seed = Array.isArray(works) ? works[0] : works;
         let _seed = seed.substring(seed.lastIndexOf('/'));
@@ -105,7 +104,6 @@ export default class PPLiveRecommender {
       })
       .then(results =>
         res.json({
-          rr,
           seed,
           results
         }));
