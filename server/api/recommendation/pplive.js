@@ -34,12 +34,25 @@ function recs2obj(rec, key = 'similar') {
   }).then(result => result[0]);
 }
 
+function reduceToTrackSet(results, n) {
+  'use strict';
+  var merged = results.item.reduce((acc, x) => {
+    acc[x.id] = Object.assign(acc[x.id] || {}, x);
+    return acc;
+  }, {});
+  results.item = Object.values(merged).slice(0, n);
+  return results;
+}
+
 function recNpack(_seed, n, focus) {
   'use strict';
-  let _focus = '';
-  if (focus) _focus = '&focus=' + focus;
-  return getJSON(`${RECOMMENDER}/expression${_seed}?target=pp${n}${_focus}`)
-    .then(r => packGroup(r, focus));
+
+  let _n = n ? _n = '&n=' + (n * 3) : '';
+  let _focus = focus ? _focus = '&focus=' + focus : '';
+
+  return getJSON(`${RECOMMENDER}/expression${_seed}?target=pp${_n}${_focus}`)
+    .then(r => packGroup(r, focus))
+    .then(r => reduceToTrackSet(r, n));
 }
 
 
@@ -94,8 +107,8 @@ export default class PPLiveRecommender {
         seed = Array.isArray(works) ? works[0] : works;
         let _seed = seed.substring(seed.lastIndexOf('/'));
 
-        var n = '';
-        if (req.query.n) n = '&n=' + req.query.n;
+        var n = req.query.n;
+
         return Promise.all([
           recNpack(_seed, n),
           recNpack(_seed, n, 'genre'),
