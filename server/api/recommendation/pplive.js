@@ -10,31 +10,7 @@ const TYPE_MAP = {
   'work': 'efrbroo:F22_Self-Contained_Expression'
 };
 
-function recs2obj(rec, key = 'similar') {
-  return sparqlTransformer({
-    proto: [{
-      id: '?id',
-      // track: '$efrbroo:R66_included_performed_version_of',
-      match: key,
-      score: rec.score + '',
-      trackSet: {
-        '@type': 'VideoObject',
-        id: '?vo$required',
-        pp_id: '$dct:identifier$required'
-      }
-    }],
-    '$where': ['?vo mus:U51_is_partial_or_full_recording_of / mus:U54_is_performed_expression_of ?id'],
-    '$values': {
-      'id': rec.uri
-    },
-    '$limit': 1
-  }, {
-    endpoint: 'http://data.doremus.org/sparql',
-    debug: true
-  }).then(result => result[0]);
-}
-
-function reduceToTrackSet(results, id, n) {
+function reduceToTrackSet(results, id) {
   'use strict';
   var merged = results.item.reduce((acc, x) => {
     acc[x.id] = Object.assign(acc[x.id] || {}, x);
@@ -43,7 +19,7 @@ function reduceToTrackSet(results, id, n) {
 
   delete merged[id];
 
-  results.item = Object.values(merged).slice(0, n);
+  results.item = Object.values(merged);
   return results;
 }
 
@@ -55,32 +31,51 @@ function recNpack(_seed, id, n, focus) {
 
   return getJSON(`${RECOMMENDER}/expression${_seed}?target=pp${_n}${_focus}`)
     .then(r => packGroup(r, focus))
-    .then(r => reduceToTrackSet(r, id, n));
+    .then(r => reduceToTrackSet(r, id));
 }
 
 
 function packGroup(recs, focus) {
   'use strict';
-  let _promises = recs.map(x => recs2obj(x, focus));
-  return Promise.all(_promises)
-    .then(results => {
-      return {
-        match: results[0].match,
-        item: results.map(r => ({
-          work: r.id,
-          score: parseFloat(r.score),
-          '@type': 'VideoObject',
-          id: r.trackSet && r.trackSet.pp_id,
-          'doremus_uri': r.trackSet && r.trackSet.id
-        }))
-      };
-    });
+
+  let scores = {};
+  for (let r of recs) scores[r.uri] = r.score;
+
+  return sparqlTransformer({
+    proto: [{
+      'work': '?id',
+      '@type': 'VideoObject',
+      doremus_uri: '?vo$required',
+      id: '?ppid$required'
+    }],
+    '$where': [
+      '?vo mus:U51_is_partial_or_full_recording_of / mus:U54_is_performed_expression_of ?id',
+      '?vo dct:identifier ?ppid'
+    ],
+    '$values': {
+      'id': recs.map(r => '<' + r.uri + '>')
+    }
+  }, {
+    endpoint: 'http://data.doremus.org/sparql',
+    // debug: true
+  }).then(results => {
+    for (let r of results) {
+      let w = Array.isArray(r.work) ? r.work[0] : r.work;
+      r.score = parseFloat(scores[w]);
+    }
+
+    return {
+      match: focus || 'similar',
+      item: results
+    };
+  });
 }
 
 export default class PPLiveRecommender {
   static recommend(req, res) {
     let id = req.params.id,
       type = req.params.type;
+    var n = req.query.n;
 
     var seed;
     sparqlTransformer({
@@ -98,7 +93,7 @@ export default class PPLiveRecommender {
         '$limit': 1
       }, {
         endpoint: 'http://data.doremus.org/sparql',
-        debug: true
+        // debug: true
       }).then(rs => {
         if (!rs[0])
           throw Error(`id ${id} for type ${type.toUpperCase()} not found`);
@@ -110,8 +105,6 @@ export default class PPLiveRecommender {
         seed = Array.isArray(works) ? works[0] : works;
         let _seed = seed.substring(seed.lastIndexOf('/'));
 
-        var n = req.query.n;
-
         return Promise.all([
           recNpack(_seed, id, n),
           recNpack(_seed, id, n, 'genre'),
@@ -121,12 +114,53 @@ export default class PPLiveRecommender {
           recNpack(_seed, id, n, 'surprise'),
         ]);
       })
-      .then(results =>
+      .then(results => {
+        let toChange = true;
+        let loop = 0;
+        while (toChange) {
+          console.log(`LOOP ` + ++loop);
+          toChange = false;
+          if (loop > 20) break;
+          if (!n) n = 4;
+          pairs(results).forEach(pair => {
+            let a = pair[0],
+              b = pair[1];
+
+            let isx = intersect(
+              a.item.slice(0,n).map(x => x.id),
+              b.item.slice(0,n).map(x => x.id)
+            );
+            if (isx.length) {
+              toChange = true;
+              console.log(a.match, b.match);
+            } else return;
+
+            for (let item of isx) {
+              let itemA = a.item.find(x => x.id === item);
+              let itemB = b.item.find(x => x.id === item);
+
+              if (a.item.length <= n)
+                b.item.removeObject(itemB);
+              else if (b.item.length <= n)
+                a.item.removeObject(itemA);
+              else if (itemB.score > itemA.score)
+                a.item.removeObject(itemA);
+              else b.item.removeObject(itemB);
+            }
+          });
+        }
+
+        results.forEach(x=>{
+          x.item = x.item.slice(0,n);
+        });
+
         res.json({
           seed,
           results
-        }))
+        });
+      })
       .catch(e => {
+        console.error(e);
         res.status(500);
         res.json({
           'error': e.message
@@ -134,3 +168,24 @@ export default class PPLiveRecommender {
       });
   }
 }
+
+const intersect = (a, b, ...rest) => {
+  if (rest.length === 0)
+    return [...new Set(a)].filter(x => new Set(b).has(x));
+  return intersect(a, intersect(b, ...rest));
+};
+
+function pairs(arr) {
+  var res = [],
+    l = arr.length;
+  for (var i = 0; i < l; ++i)
+    for (var j = i + 1; j < l; ++j)
+      res.push([arr[i], arr[j]]);
+  return res;
+}
+
+Array.prototype.removeObject = function(object) {
+  'use strict';
+  var index = this.indexOf(object);
+  if (index > -1) this.splice(index, 1);
+};
