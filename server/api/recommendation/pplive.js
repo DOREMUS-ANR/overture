@@ -39,7 +39,7 @@ function recNpack(_seed, n, focus) {
   let _focus = '';
   if (focus) _focus = '&focus=' + focus;
   return getJSON(`${RECOMMENDER}/expression${_seed}?target=pp${n}${_focus}`)
-    .then(r=>packGroup(r, focus));
+    .then(r => packGroup(r, focus));
 }
 
 
@@ -84,6 +84,9 @@ export default class PPLiveRecommender {
         endpoint: 'http://data.doremus.org/sparql',
         debug: true
       }).then(rs => {
+        if (!rs[0])
+          throw Error(`id ${id} for type ${type.toUpperCase()} not found`);
+
         let doremusUri = rs[0].id;
         let works = rs[0].works || doremusUri;
 
@@ -106,6 +109,12 @@ export default class PPLiveRecommender {
         res.json({
           seed,
           results
-        }));
+        }))
+      .catch(e => {
+        res.status(500);
+        res.json({
+          'error': e.message
+        });
+      });
   }
 }
