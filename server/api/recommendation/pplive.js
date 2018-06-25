@@ -34,17 +34,20 @@ function recs2obj(rec, key = 'similar') {
   }).then(result => result[0]);
 }
 
-function reduceToTrackSet(results, n) {
+function reduceToTrackSet(results, id, n) {
   'use strict';
   var merged = results.item.reduce((acc, x) => {
     acc[x.id] = Object.assign(acc[x.id] || {}, x);
     return acc;
   }, {});
+
+  delete merged[id];
+
   results.item = Object.values(merged).slice(0, n);
   return results;
 }
 
-function recNpack(_seed, n, focus) {
+function recNpack(_seed, id, n, focus) {
   'use strict';
 
   let _n = n ? _n = '&n=' + (n * 3) : '';
@@ -52,7 +55,7 @@ function recNpack(_seed, n, focus) {
 
   return getJSON(`${RECOMMENDER}/expression${_seed}?target=pp${_n}${_focus}`)
     .then(r => packGroup(r, focus))
-    .then(r => reduceToTrackSet(r, n));
+    .then(r => reduceToTrackSet(r, id, n));
 }
 
 
@@ -67,7 +70,7 @@ function packGroup(recs, focus) {
           work: r.id,
           score: parseFloat(r.score),
           '@type': 'VideoObject',
-          id: r.trackSet && r.trackSet['pp_id'],
+          id: r.trackSet && r.trackSet.pp_id,
           'doremus_uri': r.trackSet && r.trackSet.id
         }))
       };
@@ -110,12 +113,12 @@ export default class PPLiveRecommender {
         var n = req.query.n;
 
         return Promise.all([
-          recNpack(_seed, n),
-          recNpack(_seed, n, 'genre'),
-          recNpack(_seed, n, 'period'),
-          recNpack(_seed, n, 'composer'),
-          recNpack(_seed, n, 'casting'),
-          recNpack(_seed, n, 'surprise'),
+          recNpack(_seed, id, n),
+          recNpack(_seed, id, n, 'genre'),
+          recNpack(_seed, id, n, 'period'),
+          recNpack(_seed, id, n, 'composer'),
+          recNpack(_seed, id, n, 'casting'),
+          recNpack(_seed, id, n, 'surprise'),
         ]);
       })
       .then(results =>
