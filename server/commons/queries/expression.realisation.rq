@@ -11,10 +11,14 @@ WHERE {
 
   ?event a ?class;
         efrbroo:R24_created | efrbroo:R17_created ?realizedExpression .
-  ?realizedExpression ecrm:P165_incorporates | mus:U54_is_performed_expression_of ?expression .
+  {
+    ?realizedExpression ecrm:P165_incorporates | mus:U54_is_performed_expression_of ?expression .
+  } UNION {
+    ?expression mus:U4_had_princeps_publication | mus:U5_had_premiere / ecrm:P9_consists_of  ?event
+  }
 
-  BIND( EXISTS { [] mus:U5_had_premiere / ecrm:P9_consists_of ?event } as ?isPremiere )
-  BIND( EXISTS { [] mus:U4_had_princeps_publication ?event } as ?isPrincepsPub )
+  BIND( EXISTS { ?expression mus:U5_had_premiere / ecrm:P9_consists_of ?event } as ?isPremiere )
+  BIND( EXISTS { ?expression mus:U4_had_princeps_publication ?event } as ?isPrincepsPub )
 
   OPTIONAL { ?event ecrm:P3_has_note ?note. }
 
