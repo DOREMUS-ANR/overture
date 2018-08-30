@@ -50,7 +50,7 @@ function packGroup(recs, focus) {
     }],
     '$where': [
       '?vo mus:U51_is_partial_or_full_recording_of / mus:U54_is_performed_expression_of ?id',
-      '?vo dct:identifier ?ppid'
+      '?vo dc:identifier ?ppid'
     ],
     '$values': {
       'id': recs.map(r => '<' + r.uri + '>')
@@ -81,7 +81,7 @@ export default class PPLiveRecommender {
     sparqlTransformer({
         proto: {
           id: '?id',
-          'pp_id': '$dc:identifier|dct:identifier$required$var:pp_id',
+          'pp_id': '$dc:identifier$required$var:pp_id',
           works: '$efrbroo:R66_included_performed_version_of$sample'
         },
         '$where': [
@@ -93,7 +93,7 @@ export default class PPLiveRecommender {
         '$limit': 1
       }, {
         endpoint: 'http://data.doremus.org/sparql',
-        // debug: true
+        debug: true
       }).then(rs => {
         if (!rs[0])
           throw Error(`id ${id} for type ${type.toUpperCase()} not found`);
