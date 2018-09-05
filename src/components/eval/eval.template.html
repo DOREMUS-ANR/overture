@@ -1,0 +1,26 @@
+<div class="bearing"></div>
+<div class="main">
+  <h1>Recommendation Evaluation</h1>
+
+  <h2>Step 1#</h2>
+
+  <p>
+    Given the seed work:
+  </p>
+  <summary *ngIf="expression" [entity]="expression | summary: 'expression'" [eclass]="'expression'"></summary>
+
+  <p>
+    Please order the following recommended works:
+  </p>
+
+  <loading *ngIf="loading">{{'rec.loading'|translate}}</loading>
+  <error-msg class="small" *ngIf="error"></error-msg>
+
+  <div *ngIf="!loading && !error">
+    <div class="sort-eval" dnd-sortable-container [sortableData]="recommendation">
+      <summary *ngFor="let expr of recommendation; let i = index" dnd-sortable [sortableIndex]="i" [entity]="expr | summary: 'MusicComposition'"></summary>
+    </div>
+
+    <p class="empty-msg" *ngIf="recommendation.length < 1">nothing to show</p>
+  </div>
+</div>

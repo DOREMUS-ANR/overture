@@ -14,9 +14,10 @@ export class SummaryPipe implements PipeTransform {
         let id = value.id || value['@id'].replace('http://data.doremus.org/expression/', '')
 
         let author = value.composer || value.author;
-        let image = value.image || author.image;
+        let image = value.image || author.image || author.pic;
         if (author['@type'] == 'Role') author = author.composer || author.author;
         if (author.name) author = author.name;
+        if (author.label) author = author.label;
         date = value.dateCreated ? value.dateCreated + ', ' : '';
 
         return {

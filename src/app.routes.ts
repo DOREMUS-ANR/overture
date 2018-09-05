@@ -19,6 +19,7 @@ import { PerformanceComponent } from './components/performance/performance.compo
 import { PerformanceListComponent } from './components/performance/performance.list.component';
 
 import { WipComponent } from './components/wip/wip.component';
+import { EvaluationComponent } from './components/eval/eval.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -48,6 +49,7 @@ const appRoutes: Routes = [
   //     { path: '', component: PerformanceListComponent, data: { title: 'Performances' } }
   //   ]
   // },
+  { path: 'evaluation', component: EvaluationComponent},
   { path: 'wip', component: WipComponent },
   { path: '**', component: HomeComponent }
 ]

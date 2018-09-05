@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import { forkJoin } from 'rxjs/observable/forkJoin'
+
 import { Globals } from '../../app.globals';
 
 import 'rxjs/add/operator/toPromise';
@@ -38,7 +40,7 @@ export class ExpressionService {
     if (!id) return null;
 
     let params = new HttpParams().set('lang', Globals.lang);
-    return Observable.forkJoin(
+    return forkJoin(
       this.http.get(`/api/expression/${id}`, { params }),
       this.http.get(`/api/expression/${id}/realisations`, { params }))
       .map(res => {

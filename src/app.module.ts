@@ -10,6 +10,7 @@ import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, M
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { DndModule } from 'ng2-dnd';
 
 import { AppComponent } from './components/app.component';
 
@@ -57,6 +58,7 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { TopNavComponent } from './components/top-nav/top-nav.component';
 import { SearchComponent } from './components/search/search.component';
 import { WipComponent } from './components/wip/wip.component';
+import { EvaluationComponent } from './components/eval/eval.component';
 
 // AoT requires an exported function for factories
 export function createTranslateLoader(http: HttpClient) {
@@ -71,6 +73,7 @@ export function createTranslateLoader(http: HttpClient) {
     routing, JsonLdModule,
     MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule,
     InfiniteScrollModule,
+    DndModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -87,7 +90,7 @@ export function createTranslateLoader(http: HttpClient) {
     ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, RecommendationComponent,
     PerformanceComponent, PerformanceListComponent,
     SummaryComponent,
-    WipComponent, TopNavComponent, SearchComponent
+    WipComponent, EvaluationComponent, TopNavComponent, SearchComponent
   ],
   bootstrap: [AppComponent],
   providers: [SharedService, Globals, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe, Title]
