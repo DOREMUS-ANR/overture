@@ -1,0 +1,11 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "Person",
+    "@id": "?id",
+    "name": "$rdfs:label$required$bestlang",
+    "birthDate": "$schema:birthDate",
+    "deathDate": "$schema:deathDate",
+    "image": "$foaf:depiction"
+  }]
+}

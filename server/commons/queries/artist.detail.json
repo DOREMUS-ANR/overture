@@ -1,0 +1,17 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "Person",
+    "@id": "?id",
+    "name": "$rdfs:label$required$bestlang",
+    "alternateNames": "$foaf:name$required",
+    "birthDate": "$schema:birthDate",
+    "deathDate": "$schema:deathDate",
+    "birthPlace": "$dbpprop:birthPlace",
+    "deathPlace": "$dbpprop:deathPlace",
+    "image": "$foaf:depiction",
+    "description": "$rdfs:comment",
+    "mainEntityOfPage": "$foaf:isPrimaryTopicOf",
+    "sameAs": "$owl:sameAs"
+  }]
+}

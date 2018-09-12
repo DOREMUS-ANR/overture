@@ -1,0 +1,14 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "Person",
+    "@id": "?id"
+  }],
+  "$where": [
+    "?id a ecrm:E21_Person",
+    "?id rdfs:label []",
+    "?activity ecrm:P14_carried_out_by ?id"
+  ],
+  "$groupby": "?id",
+  "$orderby": "desc(COUNT(?activity))"
+}

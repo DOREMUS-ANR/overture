@@ -1,7 +1,16 @@
 import async from 'async';
 import Sparql from '../../commons/sparql';
+import sparqlTransformer from 'sparql-transformer';
+import Cache from '../../commons/cache';
+import jsonfile from 'jsonfile';
+import clone from 'clone';
 
+const cache = new Cache();
 var sparql = new Sparql();
+
+const LIST_QUERY = jsonfile.readFileSync('server/commons/queries/artist.list.json');
+const DETAIL_LIGHT_QUERY = jsonfile.readFileSync('server/commons/queries/artist.detail.light.json');
+const DETAIL_QUERY = jsonfile.readFileSync('server/commons/queries/artist.detail.json');
 
 const schemaOrgMapping = {
   uri: '@id',
@@ -30,6 +39,15 @@ function sendStandardError(res, err) {
 function complexCompare(a, b) {
   'use strict';
   return a === b || JSON.stringify(a) === JSON.stringify(b);
+}
+
+function sampleDate(dateArray) {
+  'use strict';
+  if (!Array.isArray(dateArray)) return dateArray;
+  if (dateArray.length === 0) return null;
+  if (dateArray.length === 1) return dateArray[0];
+
+  return dateArray.sort((a, b) => b.length - a.length)[0];
 }
 
 function toSchemaOrg(a) {
@@ -156,24 +174,56 @@ export default class ArtistController {
 
   static query(req, res) {
     console.log(req.query);
+    let results;
     let opt = Object.assign({
       lim: 40,
       lang: 'en'
     }, req.query);
-    sparql.loadQuery('artist.list', opt)
-      .then(results => {
-        let data = results.results.bindings;
-        let artists = data.map(toSchemaOrg);
-        return res.json({
-          '@context': 'http://schema.org/',
-          '@id': 'http://overture.doremus.org' + req.originalUrl,
-          'generatedAt': (new Date()).toISOString(),
-          '@graph': artists
-        });
-      })
-      .catch(err => sendStandardError(res, err));
+
+    cache.get('artist.list', opt)
+      .then(data => {
+        if (data) return res.json(data);
+
+        let query = clone(LIST_QUERY);
+        query.$limit = opt.lim;
+        query.$offset = opt.offset;
+        sparqlTransformer(query, {
+            endpoint: 'http://data.doremus.org/sparql'
+          }).then(_results => {
+            results = _results;
+
+            let promises = results['@graph'].map(x => x['@id'])
+              .map(id => ArtistController.getDetail(id, opt.lang, true));
+            return Promise.all(promises);
+          }).then(details => {
+            results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+            results.generatedAt = (new Date()).toISOString();
+            results['@graph'] = details.map(x => x['@graph'][0]);
+            cache.set('artist.list', opt, results);
+            res.json(results);
+          })
+          .catch(err => sendStandardError(res, err));
+      }).catch(err => sendStandardError(res, err));
   }
 
+  static getDetail(artistUri, lang, light = false) {
+    let query = clone(light ? DETAIL_LIGHT_QUERY : DETAIL_QUERY);
+    query.$lang = lang;
+    query.$values = {
+      'id': artistUri
+    };
+
+    return sparqlTransformer(query, {
+      endpoint: 'http://data.doremus.org/sparql'
+    }).then(result => {
+      result['@graph'][0].birthDate = sampleDate(result['@graph'][0].birthDate);
+      result['@graph'][0].deathDate = sampleDate(result['@graph'][0].deathDate);
+      cache.set('artist.detail' + light ? '.light' : '', {
+        lang
+      }, result);
+      return result;
+    });
+  }
   static toSchemaOrg(artist) {
     return toSchemaOrg(artist);
   }
