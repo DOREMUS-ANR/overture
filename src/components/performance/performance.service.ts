@@ -29,7 +29,7 @@ export class PerformanceService {
     if (offset) search += '&offset=' + offset;
     else this.expressions = [];
 
-    return this.http.get("/api/expression", {
+    return this.http.get("/api/performance", {
       params: new HttpParams({ fromString: search })
     });
   }

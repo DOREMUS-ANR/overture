@@ -65,7 +65,6 @@ export default class PerfomanceController {
 
   static query(req, res) {
     console.log(req.query);
-    let results;
     let opt = Object.assign({
       lim: 40,
       lang: 'en'
@@ -76,6 +75,19 @@ export default class PerfomanceController {
         if (data) return res.json(data);
 
         let query = clone(LIST_QUERY);
+        query.$filter = [];
+
+        if (opt.year) {
+          let y = parseInt(opt.year);
+          if (!isNaN(y))
+            query.$filter = [
+              `?date >= "${y}"^^xsd:gYear`,
+              `?date < "${y+1}"^^xsd:gYear`
+            ];
+        }
+        if (opt.place)
+          query.$filter.push(`(regex(str(?place),'${opt.place.replace(/[àáèéëíìòóùúçč]/g, '.{1,2}')}', 'i'))`);
+
         query.$limit = opt.lim;
         query.$offset = opt.offset;
         query.$lang = opt.lang;

@@ -41,14 +41,11 @@ const appRoutes: Routes = [
     ]
   },
   {
-    path: 'performance', component: WipComponent, data: { title: 'nav.performance' }
+    path: 'performance', component: PerformanceComponent,
+    children: [
+      { path: '', component: PerformanceListComponent, data: { title: 'Performances' } }
+    ]
   },
-  // {
-  //   path: 'performance', component: PerformanceComponent,
-  //   children: [
-  //     { path: '', component: PerformanceListComponent, data: { title: 'Performances' } }
-  //   ]
-  // },
   { path: 'evaluation', component: EvaluationComponent},
   { path: 'wip', component: WipComponent },
   { path: '**', component: HomeComponent }

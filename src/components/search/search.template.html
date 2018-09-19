@@ -1,15 +1,22 @@
 <div class="searchbox">
   <form class="main">
+    <mat-form-field class="field" *ngIf="toBeShown('year')">
+      <input matInput pattern="\d{4}" placeholder="{{'Year'|translate}}" [(ngModel)]="filter.year" name="year" (ngModelChange)="changeFilter($event)" />
+    </mat-form-field>
 
-    <mat-form-field class="field">
+    <mat-form-field class="field" *ngIf="toBeShown('place')">
+      <input matInput placeholder="{{'Place'|translate}}" [(ngModel)]="filter.place" name="place" (ngModelChange)="changeFilter($event)" />
+    </mat-form-field>
+
+    <mat-form-field class="field" *ngIf="toBeShown('title')">
       <input matInput placeholder="{{'Title'|translate}}" [(ngModel)]="filter.title" name="title" (ngModelChange)="changeFilter($event)" />
     </mat-form-field>
 
-    <mat-form-field class="field">
+    <mat-form-field class="field" *ngIf="toBeShown('composer')">
       <input matInput placeholder="{{'Composer'|translate}}" [(ngModel)]="filter.composer" name="composer" (ngModelChange)="changeFilter($event)" />
     </mat-form-field>
 
-    <mat-form-field class="field select" *ngIf="itemsKey">
+    <mat-form-field class="field select" *ngIf="itemsKey && toBeShown('key')">
       <mat-select placeholder="{{'Musical key'|translate}}" [(ngModel)]="filter.key" name="filter.key" (ngModelChange)="changeFilter($event)">
         <mat-option *ngFor="let item of itemsKey | async" [value]="item.uri">
           {{item.label}}
@@ -21,7 +28,7 @@
 
     </mat-form-field>
 
-    <mat-form-field class="field select" *ngIf="itemsGenre">
+    <mat-form-field class="field select" *ngIf="itemsGenre && toBeShown('genre')">
       <mat-select placeholder="{{'Genre'|translate}}" [(ngModel)]="filter.genre" name="filter.genre" (ngModelChange)="changeFilter($event)">
         <mat-option *ngFor="let item of itemsGenre | async" [value]="item.uri">
           {{item.label}}
@@ -32,7 +39,7 @@
       </button>
     </mat-form-field>
 
-    <mat-form-field class="field select long" *ngIf="itemsMop">
+    <mat-form-field class="field select long" *ngIf="itemsMop && toBeShown('mop')">
       <mat-select placeholder="{{'Instruments'|translate}}" [(ngModel)]="filter.mop" name="filter.mop" (ngModelChange)="changeFilter($event)" multiple="true">
         <mat-option *ngFor="let item of itemsMop | async" [value]="item.uri">
           {{item.label}}

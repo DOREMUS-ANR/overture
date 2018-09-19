@@ -7,11 +7,11 @@ import * as moment from 'moment';
 export class SummaryPipe implements PipeTransform {
   transform(value, eclass: string): any {
     if (!value) return null;
-    let date;
+    var date, id;
     switch (eclass) {
       case 'expression':
       case 'MusicComposition':
-        let id = value.id || value['@id'].replace('http://data.doremus.org/expression/', '')
+        id = value.id || value['@id'].replace('http://data.doremus.org/expression/', '')
 
         let author = value.composer || value.author;
         let image = value.image || author.image || author.pic;
@@ -33,28 +33,31 @@ export class SummaryPipe implements PipeTransform {
       case 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation':
       case 'http://erlangen-crm.org/efrbroo/F31_Performance':
       case 'MusicEvent':
+        id = value.id || value['@id'].replace('http://data.doremus.org/performance/', '')
+
         let perf = value.performer;
         if (perf && !Array.isArray(perf)) perf = [perf];
 
         if (value.time) date = moment(value.time).year();
         if (value.startDate) date = value.startDate;
 
-        let _super =  [];
+        let _super = [];
         if (date) _super.push(date)
-        if(value.place || value.placeURI)
-          _super.push(value.place || value.placeURI)
+        let _loc = value.place || value.placeURI ||
+          (value.location && value.location.name);
+        if (_loc) _super.push(_loc)
 
-        let title = value.title;
+        let title = value.title || value.name;
         if (!title) {
           title = 'Performance'
           if (value.activities) title += ' by ' + toActorList(value.activities)
-          else if(value.actorName)  title += ' by ' + value.actorName
+          else if (value.actorName) title += ' by ' + value.actorName
         }
-
 
         return {
           super: _super.join(', '),
           title: title,
+          link: ['/performance', id],
           image: 'static/img/performance_placeholder.png',
           tag: value.isPremiere ? 'premiere' : null
         }
@@ -72,8 +75,8 @@ function separator(value) {
   return value.time && value.placeURI ? ', ' : '';
 }
 
-function extractValue(input){
-  if(!input || !input['@value']) return input;
+function extractValue(input) {
+  if (!input || !input['@value']) return input;
   return input['@value'];
 }
 

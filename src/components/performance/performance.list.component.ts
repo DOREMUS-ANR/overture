@@ -19,9 +19,10 @@ export class PerformanceListComponent {
   error: boolean = false;
 
   scrollInProgress = false;
+  disableScroll: boolean = false;
 
   constructor(
-    private _expressionService: PerformanceService,
+    private _performanceService: PerformanceService,
     private router: Router, private globals: Globals, private route: ActivatedRoute) {
     this.globals = globals;
   }
@@ -49,7 +50,7 @@ export class PerformanceListComponent {
     this.querying = true;
     this.error = false;
 
-    this._expressionService.query(this.filter).subscribe(
+    this._performanceService.query(this.filter).subscribe(
       res => {
         this.items = res['@graph'];
         this.querying = false;
@@ -63,19 +64,22 @@ export class PerformanceListComponent {
   }
 
   onFilterChanged(filter = {}) {
-    this.router.navigate(['/expression'], {
+    this.disableScroll = false;
+
+    this.router.navigate(['/performance'], {
       queryParams: filter
     });
   }
 
   onScroll() {
-    if (this.scrollInProgress || !this.items) return;
+    if (this.disableScroll || this.scrollInProgress || !this.items) return;
     this.scrollInProgress = true;
 
-    this._expressionService.query(this.filter, this.items.length)
+    this._performanceService.query(this.filter, this.items.length)
       .subscribe(res => {
         this.scrollInProgress = false;
         let list = res['@graph'];
+        if (!list.length) this.disableScroll = true;
         this.items.push(...list);
       }, error => console.error('Error: ' + error));
   }

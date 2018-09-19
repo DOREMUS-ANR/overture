@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { VocabularyService } from './vocabulary.service';
 import { Globals } from '../../app.globals';
 import { ActivatedRoute } from '@angular/router';
@@ -12,13 +12,15 @@ import { Observable } from "rxjs/Rx";
   providers: [VocabularyService, Globals]
 })
 export class SearchComponent {
+  @Input() context: string = 'expression';
   @Output() onFilterChanged = new EventEmitter();
   filter = {
     mop: [],
     genre: null,
     key: null,
     title: null,
-    composer: null
+    composer: null,
+    year: null
   };
 
   itemsKey: Observable<Array<any>>;
@@ -55,10 +57,26 @@ export class SearchComponent {
     this.changeFilter(null);
   }
 
-  changeFilter(event: any) {
+  changeFilter(_event: any) {
+    if (this.filter.year && !this.filter.year.match(/\d{4}/)) return;
     debounce(() => {
       this.onFilterChanged.emit(this.filter);
     }, 500)();
+  }
+
+  toBeShown(x: string) {
+    switch (x) {
+      case 'title':
+      case 'composer':
+      case 'key':
+      case 'mop':
+      case 'genre':
+        return this.context == 'expression';
+      case 'year':
+      case 'place':
+        return this.context == 'performance';
+      default: return false;
+    }
   }
 }
 
