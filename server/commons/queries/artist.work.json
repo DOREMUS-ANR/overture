@@ -1,0 +1,19 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "MusicComposition",
+    "@id": "?id",
+    "name": "$rdfs:label$required$bestlang",
+    "alternateName": "$mus:U16_has_catalogue_statement/rdfs:label",
+    "dateCreated": "?date",
+    "author": {
+      "@id": "?activity",
+      "@type": "Role",
+      "author": "$ecrm:P14_carried_out_by$required$var:author",
+      "description": "$mus:U31_had_function/skos:prefLabel$required$bestlang"
+    }
+  }],
+  "$where": [
+    "?event ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date; ecrm:P9_consists_of ?activity ; efrbroo:R17_created ?id"
+  ]
+}

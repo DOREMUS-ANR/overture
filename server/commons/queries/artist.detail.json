@@ -4,14 +4,14 @@
     "@type": "Person",
     "@id": "?id",
     "name": "$rdfs:label$required$bestlang",
-    "alternateNames": "$foaf:name$required",
+    "additionalName": "$foaf:name$required",
     "birthDate": "$schema:birthDate",
     "deathDate": "$schema:deathDate",
-    "birthPlace": "$dbpprop:birthPlace",
-    "deathPlace": "$dbpprop:deathPlace",
+    "birthPlace": "$dbpprop:birthPlace/rdfs:label",
+    "deathPlace": "$dbpprop:deathPlace/rdfs:label",
     "image": "$foaf:depiction",
-    "description": "$rdfs:comment",
-    "mainEntityOfPage": "$foaf:isPrimaryTopicOf",
+    "description": "$rdfs:comment$bestlang",
+    "mainEntityOfPage": "$foaf:isPrimaryTopicOf$sample",
     "sameAs": "$owl:sameAs"
   }]
 }

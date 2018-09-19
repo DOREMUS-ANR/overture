@@ -9,8 +9,7 @@
     <div class="overview-cont">
       <div class="title-cont">
         <div class="artist-round">
-          <img property="image" mat-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
-        </div>
+          <img property="image" mat-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'"></div>
 
         <h1 class="title" property="name" [innerHTML]="artist.name | jsonLDval: 'lang'"></h1>
         <p class="other-title" property="additionalName" [innerHTML]="artist.additionalName| jsonLDval: ['lang','array']"></p>
@@ -31,16 +30,12 @@
 
           <div *ngIf="artist.birthDate">
             <label>{{'birth'|translate}}</label>
-            <span *ngIf="artist.birthPlace">
-              <a href="{{artist.birthPlace}}" rel="external" target="blank">{{artist.birthPlace | stripDbpedia }}</a>,
-            </span>
+            <span *ngIf="artist.birthPlace">{{artist.birthPlace}},</span>
             <span>{{artist.birthDate}}</span>
           </div>
           <div *ngIf="artist.deathDate">
             <label>{{'death'|translate}}</label>
-            <span *ngIf="artist.deathPlace">
-              <a href="{{artist.deathPlace}}" rel="external" target="blank">{{artist.deathPlace | stripDbpedia }}</a>,
-            </span>
+            <span *ngIf="artist.deathPlace">{{artist.deathPlace}},</span>
             <span>{{artist.deathDate}}</span>
           </div>
         </div>
@@ -49,25 +44,36 @@
   </section>
 
   <div class="main info flexy" *ngIf="!artistrec">
-    <section id="compositions">
-      <h2><strong>{{compositions.length}}</strong> {{'nav.expression'|translate}} {{'as'|translate}} {{'Composer'|translate}}</h2>
-      <div class="card-list">
-        <div *ngFor="let a of compositions; let i = index">
-          <summary [entity]="a | summary: a['@type']" *ngIf="i<compositionShown" [eclass]="a['@type']"></summary>
+    <section id="f">
+      <div *ngFor="let f of functionList">
+        <h2>
+        <strong>{{getByFunction(f).length}}</strong>
+         {{'nav.expression'|translate}} {{'as'|translate}} {{f}}</h2>
+
+        <div class="card-list">
+          <div *ngFor="let a of getByFunction(f)|slice:0:functions[f] let i = index">
+            <summary [entity]="a | summary: a['@type']" [eclass]="a['@type']"></summary>
+          </div>
+          <button  *ngIf="functions[f] < getByFunction(f).length" class="long" (click)="functions[f] = functions[f] + 10">{{'show more'|translate}}</button>
         </div>
-        <button class="long" (click)="compositionShown= compositionShown+ 10">{{'show more'|translate}}</button>
       </div>
     </section>
 
-    <!-- TODO title to performances -->
-    <!-- <section id="performances">
-    <h2><strong>{{performances.length}}</strong> Performances as performer</h2>
-    <div class="card-list">
-      <div *ngFor="let a of performances; let i = index">
-        <summary [entity]="a | summary: a['@type']" *ngIf="i<4" [eclass]="a['@type']"></summary>
+    <section id="f">
+      <div *ngFor="let f of pFunctionList">
+
+        <h2>
+        <strong>{{getByFunction(f, true).length}}</strong>
+         {{'nav.performance'|translate}} {{'as'|translate}} {{f}}</h2>
+
+        <div class="card-list">
+          <div *ngFor="let a of getByFunction(f, true)|slice:0:pFunctions[f] let i = index">
+            <summary [entity]="a | summary: a['@type']" [eclass]="a['@type']"></summary>
+          </div>
+          <button *ngIf="pFunctions[f] < getByFunction(f, true).length" class="long" (click)="pFunctions[f] = pFunctions[f] + 10">{{'show more'|translate}}</button>
+        </div>
       </div>
-    </div>
-  </section> -->
+    </section>
 
     <section class="recommendation-cont" *ngIf="artist">
       <artist-recommendation [seed]="artist['@id']" id="artist-recommendation" [(big)]="artistrec"></artist-recommendation>

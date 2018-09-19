@@ -1,0 +1,21 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "MusicEvent",
+    "@id": "?id",
+    "name": "$rdfs:label$bestlang",
+    "description": "$rdfs:comment$bestlang",
+    "workPerformed": "$efrbroo:R66_included_performed_version_of/rdfs:label$sample",
+    "startDate": "?date",
+    "performer": {
+      "@id": "$ecrm:P9_consists_of*$required",
+      "@type": "Role",
+      "performer": "$ecrm:P14_carried_out_by$required$var:author",
+      "description": "$mus:U31_had_function|mus:U1_used_medium_of_performance/skos:prefLabel$bestlang"
+    }
+  }],
+  "$where": [
+    "?id a efrbroo:F31_Performance",
+    "OPTIONAL{?id ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date}"
+  ]
+}

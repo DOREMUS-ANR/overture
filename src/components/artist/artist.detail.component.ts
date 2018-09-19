@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ArtistService } from './artist.service';
 import { JsonLDvalPipe } from '../../pipes/jsonLDval.pipe';
+import { Globals } from '../../app.globals';
 
 @Component({
   moduleId: module.id,
@@ -11,11 +12,14 @@ import { JsonLDvalPipe } from '../../pipes/jsonLDval.pipe';
 })
 
 export class ArtistDetailComponent {
+  pFunctionList: Set<string>;
+  pFunctions: {};
+  functionList: Set<string>;
+  functions: any;
   querying: boolean;
   error: boolean = false;
   artist: any;
   compositions: [any];
-  compositionShown = 4;
   performances: [any];
   sameAs: any;
   artistrec: boolean = false;
@@ -41,11 +45,7 @@ export class ArtistDetailComponent {
           return;
         }
 
-        this.artist = graph.splice(0, 1)[0];
-        this.artist['@context'] = 'http://schema.org';
-        this.compositions = graph.filter(c => c['@type'] === 'MusicComposition');
-        this.performances = graph.filter(c => c['@type'] === 'MusicEvent');
-
+        this.artist = graph[0];
         this.sameAs = this.artist.sameAs || [];
         if (!Array.isArray(this.sameAs)) this.sameAs = [this.sameAs];
         if (this.artist.mainEntityOfPage) this.sameAs.push(this.artist.mainEntityOfPage);
@@ -57,9 +57,48 @@ export class ArtistDetailComponent {
         this.querying = false;
         this.error = false;
       });
+
+      this.artistService.worksOf(id).subscribe(a => {
+        let graph = a['@graph'];
+        if (!graph) {
+          this.querying = false;
+          this.error = true;
+          return;
+        }
+
+        this.compositions = graph;
+        this.functions = {};
+        this.functionList = new Set<string>(graph.map(x => x.author.description));
+        this.functionList.forEach(fc => this.functions[fc] = 5)
+        this.error = false;
+      });
+
+      this.artistService.performancesOf(id).subscribe(a => {
+        let graph = a['@graph'];
+        if (!graph) {
+          this.querying = false;
+          this.error = true;
+          return;
+        }
+
+        this.performances = graph;
+        this.performances.filter(x => !x.performer.description)
+          .forEach(x => x.performer.description =
+            Globals.lang.startsWith("fr") ? "interprète" : "performer");
+        this.pFunctions = {};
+        this.pFunctionList = new Set<string>(graph.map(x => x.performer.description));
+        this.pFunctionList.forEach(fc => this.pFunctions[fc] = 5)
+        this.error = false;
+      });
+
+
     });
   }
-
+  getByFunction(f, isPerformance = false) {
+    let list = isPerformance ? this.performances : this.compositions;
+    let prop = isPerformance ? 'performer' : 'author';
+    return list.filter(x => x[prop].description == f);
+  }
   safePic(input) {
     let uri = encodeURI(input);
     return this._sanitizer.bypassSecurityTrustStyle(`url('${uri}')`);
