@@ -1,19 +1,15 @@
-import async from 'async';
-import Sparql from '../../commons/sparql';
+import sparqlTransformer from 'sparql-transformer';
+import Cache from '../../commons/cache';
+import jsonfile from 'jsonfile';
+import clone from 'clone';
 
-var sparql = new Sparql();
+const cache = new Cache();
 
-const schemaOrgMapping = {
-  uri: '@id',
-  label: 'name',
-  pic: 'image',
-  names: 'additionalName',
-  birth: 'birthDate',
-  death: 'deathDate',
-  comment: 'description',
-  wikipedia: 'mainEntityOfPage',
-  sameAs: 'sameAs'
-};
+const LIST_QUERY = jsonfile.readFileSync('server/queries/performance.list.json');
+// const DETAIL_LIGHT_QUERY = jsonfile.readFileSync('server/commons/queries/artist.detail.light.json');
+// const DETAIL_QUERY = jsonfile.readFileSync('server/commons/queries/artist.detail.json');
+// const WORKS_QUERY = jsonfile.readFileSync('server/commons/queries/artist.work.json');
+// const PERFORMANCE_QUERY = jsonfile.readFileSync('server/commons/queries/artist.performance.json');
 
 function sendStandardError(res, err) {
   'use strict';
@@ -24,172 +20,104 @@ function sendStandardError(res, err) {
   });
 }
 
-function padProp(p) {
+function sampleDate(dateArray) {
   'use strict';
-  return ((p === 'id') ? '@' : '') + p;
+  if (!Array.isArray(dateArray)) return dateArray;
+  if (dateArray.length === 0) return null;
+  if (dateArray.length === 1) return dateArray[0];
+
+  return dateArray.sort((a, b) => b.length - a.length)[0];
 }
 
-function setTo(obj, p, v) {
-  'use strict';
-  if (p.includes('_')) {
-    let [parent, children] = p.split('_', 2);
-    if (!obj[parent]) obj[parent] = {};
-    setTo(obj[parent], children, v);
-    return;
-  }
-  obj[padProp(p)] = v;
-}
-
-function complexCompare(a, b) {
-  'use strict';
-  return a === b || JSON.stringify(a) === JSON.stringify(b);
-}
-
-function toSchemaOrg(a) {
-  'use strict';
-  let artist = {
-    '@type': 'MusicEvent'
-  };
-
-  for (let p in a) {
-    let m = schemaOrgMapping[p];
-    if (m) {
-      let x = a[p];
-      let val = x && x.value;
-      let lang = x['xml:lang'];
-      if (lang)
-        artist[m] = {
-          '@value': val,
-          '@language': lang
-        };
-      else
-        artist[m] = val;
-    } else
-      console.log(`Not mapped prop: ` + p);
-  }
-
-  return artist;
-}
-
-export default class PerformanceController {
-
+export default class PerfomanceController {
   static get(req, res) {
-    let artistUri = `http://data.doremus.org/artist/${req.params.id}`;
-
-    async.map(['artist.detail', 'artist.works'], (rq, callback) => {
-      sparql.loadQuery(rq, {
-          uri: artistUri,
-          lang: req.query.lang
-        })
-        .then(results => {
-          let data = results.results.bindings;
-          callback(null, data);
-        }).catch(err => sendStandardError(res, err));
-
-    }, (err, data) => {
-      if (err) return sendStandardError(res, err);
-      let artists = data[0].map(toSchemaOrg);
-
-      let artist = artists.reduce((acc, cur) => {
-        // merge rows
-        for (let p in cur) {
-          if (!acc[p]) acc[p] = cur[p];
-          else if (complexCompare(acc[p], cur[p]))
-            continue;
-          else if (!Array.isArray(acc[p]))
-            acc[p] = [acc[p], cur[p]];
-          else if (!acc[p].find(a => complexCompare(a, cur[p])))
-            acc[p].push(cur[p]);
-        }
-        return acc;
-      }, {});
-
-      for (let dateProp of ['birthDate', 'deathDate']) {
-        let a = artist[dateProp];
-        if (!Array.isArray(a)) continue;
-        // keep the most specific one
-        artist[dateProp] = a.sort().reverse()[0];
-      }
-
-      let works = data[1]
-        .filter(d => d.classExpr.value !== 'http://www.w3.org/ns/prov#Entity')
-        .map(w => {
-          let uri, type, prop;
-          let role = w.roleLabel ? w.roleLabel.value : (w.role && w.role.value);
-
-          switch (w.classExpr.value) {
-            case 'http://data.doremus.org/ontology#M43_Performed_Expression':
-              uri = w.event.value;
-              type = 'MusicEvent';
-              break;
-            case 'http://erlangen-crm.org/efrbroo/F22_Self-Contained_Expression':
-              uri = w.expression.value;
-              type = 'MusicComposition';
-          }
-
-          switch (role) {
-            case 'compositeur':
-              prop = 'composer';
-              break;
-            default:
-              prop = (type === 'MusicComposition') ? 'author' : 'performer';
-          }
-          let obj = {
-            '@id': uri,
-            '@type': type,
-            name: w.title && w.title.value
-          };
-          if (w.pic) obj.image = w.pic.value;
-
-          obj[prop] = {
-            '@type': 'Role',
-            'roleName': role,
-          };
-          obj[prop][prop] = {
-            '@id': artist['@id'],
-            name: artist.name
-          };
-          return obj;
-        });
-
-      return res.json({
-        '@context': 'http://schema.org/',
-        '@id': 'http://overture.doremus.org' + req.originalUrl,
-        'generatedAt': (new Date()).toISOString(),
-        '@graph': [artist, ...works]
-      });
-    });
+    // let uri = `http://data.doremus.org/performance/${req.params.id}`;
+    // let opt = {
+    //   lang: req.query.lang || 'en'
+    // };
+    //
+    // ArtistController.getDetail(artistUri, opt.lang)
+    //   .then(results => {
+    //
+    //     // remove dbpedia duplicates
+    //     let dbpedia = results['@graph'][0].sameAs
+    //       .filter(x => x.includes('dbpedia'));
+    //     while (dbpedia.length > 1) {
+    //       let index = results['@graph'][0].sameAs.indexOf(dbpedia[0]);
+    //       results['@graph'][0].sameAs.splice(index, 1);
+    //       dbpedia.splice(0, 1);
+    //     }
+    //
+    //     // remove main name from additionalName
+    //     let addNames = results['@graph'][0].additionalName;
+    //     if (!Array.isArray(addNames))
+    //       results['@graph'][0].additionalName = null;
+    //     else {
+    //       let x = addNames.indexOf(results['@graph'][0].name);
+    //       if (x >= 0) results['@graph'][0].additionalName.splice(x, 1);
+    //     }
+    //
+    //     results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+    //     results.generatedAt = (new Date()).toISOString();
+    //     res.json(results);
+    //   }).catch(err => sendStandardError(res, err));
   }
 
   static query(req, res) {
     console.log(req.query);
+    let results;
     let opt = Object.assign({
-      lim: 20,
+      lim: 40,
       lang: 'en'
     }, req.query);
-    sparql.loadQuery('performance.list', opt)
-      .then(r => {
-        let data = r.results.bindings
-          .map(exp => {
-            let mc = {
-              '@type': 'MusicEvent'
-            };
 
-            Object.keys(exp).forEach(p => {
-              let v = exp[p].value;
-              setTo(mc, p, v);
-            });
-            return mc;
-          });
+    cache.get('performance.list', opt)
+      .then(data => {
+        if (data) return res.json(data);
 
-        return res.json({
-          '@context': 'http://schema.org/',
-          '@id': 'http://overture.doremus.org' + req.originalUrl,
-          'generatedAt': (new Date()).toISOString(),
-          '@graph': data
-        });
-      })
-      .catch(err => sendStandardError(res, err));
+        let query = clone(LIST_QUERY);
+        query.$limit = opt.lim;
+        query.$offset = opt.offset;
+        query.$lang = opt.lang;
+
+        sparqlTransformer(query, {
+            endpoint: 'http://data.doremus.org/sparql',
+            debug: true
+          }).then(results => {
+            results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+            results.generatedAt = (new Date()).toISOString();
+            cache.set('artist.list', opt, results);
+            res.json(results);
+          })
+          .catch(err => sendStandardError(res, err));
+      }).catch(err => sendStandardError(res, err));
   }
 
+  // static getDetail(artistUri, lang = 'en', light = false) {
+  //   let opt = {
+  //     lang
+  //   };
+  //   let cacheId = 'artist.detail' + light ? '.light' : '';
+  //
+  //   return cache.get('artist.detail', opt)
+  //     .then(data => {
+  //       if (data) return data;
+  //
+  //       let query = clone(light ? DETAIL_LIGHT_QUERY : DETAIL_QUERY);
+  //
+  //       query.$lang = lang;
+  //       query.$values = {
+  //         'id': artistUri
+  //       };
+  //
+  //       return sparqlTransformer(query, {
+  //         endpoint: 'http://data.doremus.org/sparql'
+  //       }).then(result => {
+  //         result['@graph'][0].birthDate = sampleDate(result['@graph'][0].birthDate);
+  //         result['@graph'][0].deathDate = sampleDate(result['@graph'][0].deathDate);
+  //         cache.set(cacheId, opt, result);
+  //         return result;
+  //       });
+  //     });
+  // }
 }

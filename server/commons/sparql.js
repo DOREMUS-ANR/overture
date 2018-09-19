@@ -7,7 +7,7 @@ import {
 } from '../../config/constants';
 
 const doremusEndpoint = EXT_URI.SPARQL_ENDPOINT;
-const queryFolder = 'server/commons/queries';
+const queryFolder = 'server/queries';
 
 const IF_REGEX = /\$if{(.+)}((.|\n)+?)\$end/g;
 
