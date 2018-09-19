@@ -89,12 +89,12 @@ export default class ExpressionController {
         let data = r.results.bindings;
         let expression = array2obj(data, 'expression');
 
-        if (!Array.isArray(expression.alternateName))
-          expression.alternateName = [expression.alternateName];
-
-        expression.alternateName = expression.alternateName
-          .filter(a => a['@language'] || a !== expression.name);
-
+        if (expression.alternateName) {
+          if (!Array.isArray(expression.alternateName))
+            expression.alternateName = [expression.alternateName];
+          expression.alternateName = expression.alternateName
+            .filter(a => a['@language'] || a !== expression.name);
+        }
 
         res.json(expression);
       })
