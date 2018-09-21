@@ -16,5 +16,6 @@
   "$where": [
     "?id a efrbroo:F22_Self-Contained_Expression",
     "?event ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date; ecrm:P9_consists_of ?activity ; efrbroo:R17_created ?id"
-  ]
+  ],
+  "$orderby" : "?date"
 }

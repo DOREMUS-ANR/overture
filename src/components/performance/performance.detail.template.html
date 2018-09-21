@@ -8,8 +8,10 @@
     <div [style.background-image]="safePic(overviewPic)" class="bg"></div>
     <div class="overview-cont">
       <div class="title-cont">
-        <h1 class="title">{{(performance.name || 'Performance') | translate}}</h1>
+        <h1 class="title" *ngIf="performance.name">{{performance.name | jsonLDval}}</h1>
+        <h1 class="title" *ngIf="!performance.name">{{'Performance' | translate}}</h1>
         <p class="other-title" [innerHTML]="performance.additionalType"></p>
+        <p class="other-title" [innerHTML]="performance.alternateName| jsonLDval: ['lang','array']"></p>
 
         <div class="note">
           <p [innerHTML]="performance.description | jsonLDval: ['lang','array']"></p>
@@ -40,13 +42,13 @@
 
   <div class="main info flexy">
     <section id="works" *ngIf="performance.workPerformed">
-        <h2>{{'Performed works'|translate}}</h2>
+      <h2>{{'Performed works'|translate}}</h2>
 
-        <div class="card-list">
-          <div *ngFor="let a of performance.workPerformed">
-            <summary [entity]="a | summary: a['@type']" [eclass]="a['@type']"></summary>
-          </div>
+      <div class="card-list">
+        <div *ngFor="let a of performance.workPerformed">
+          <summary [entity]="a | summary: a['@type']" [eclass]="a['@type']"></summary>
         </div>
+      </div>
     </section>
 
     <section>

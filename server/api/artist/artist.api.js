@@ -51,12 +51,14 @@ export default class ArtistController {
         }
 
         // remove main name from additionalName
-        let addNames = results['@graph'][0].additionalName;
-        if (!Array.isArray(addNames))
-          results['@graph'][0].additionalName = null;
+        let addNames = mainObj.additionalName;
+        if (!addNames) {
+          // do nothing
+        } else if (!Array.isArray(addNames))
+          mainObj.additionalName = null;
         else {
-          let x = addNames.indexOf(results['@graph'][0].name);
-          if (x >= 0) results['@graph'][0].additionalName.splice(x, 1);
+          let x = addNames.indexOf(mainObj.name);
+          if (x >= 0) mainObj.additionalName.splice(x, 1);
         }
 
         results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
@@ -96,6 +98,10 @@ export default class ArtistController {
 
 
             result['@graph'].forEach(x => {
+              if (!x.name && x.alternateName) {
+                x.name = x.alternateName;
+                delete x.alternateName;
+              }
               x.image = pic;
               x.performer.performer = name;
               if (!x.description) delete x.description;
@@ -211,8 +217,11 @@ export default class ArtistController {
         return sparqlTransformer(query, {
           endpoint: 'http://data.doremus.org/sparql'
         }).then(result => {
-          result['@graph'][0].birthDate = sampleDate(result['@graph'][0].birthDate);
-          result['@graph'][0].deathDate = sampleDate(result['@graph'][0].deathDate);
+          let mainItem = result['@graph'][0];
+          if (mainItem.birthDate)
+            mainItem.birthDate = sampleDate(mainItem.birthDate);
+          if (mainItem.deathDate)
+            mainItem.deathDate = sampleDate(mainItem.deathDate);
           cache.set(cacheId, opt, result);
           return result;
         });

@@ -4,7 +4,7 @@
     "@type": "Person",
     "@id": "?id",
     "name": "$rdfs:label$required$bestlang",
-    "additionalName": "$foaf:name$required",
+    "additionalName": "$foaf:name",
     "birthDate": "$schema:birthDate",
     "deathDate": "$schema:deathDate",
     "birthPlace": "$dbpprop:birthPlace/rdfs:label",

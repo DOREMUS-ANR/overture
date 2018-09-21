@@ -43,7 +43,7 @@ export class SummaryPipe implements PipeTransform {
         let _loc = value.location && value.location.name;
         if (_loc) _super.push(_loc['@value'] || _loc)
 
-        let title = value.name;
+        let title = value.name || value.alternateName;
         if (!title) {
           title = 'Performance'
           if (value.activities) title += ' by ' + toActorList(value.activities)

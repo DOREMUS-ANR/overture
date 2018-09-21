@@ -56,7 +56,10 @@ export class PerformanceDetailComponent {
           this.performance = exp['@graph'][0];
           this.performance.uri = 'http://data.doremus.org/performance/' + id;
 
-          this.titleService.setTitle(this.performance.name);
+          let name = this.performance.name || this.performance.alternateName;
+          name == name['@value'] || name;
+          this.performance.name = name;
+          this.titleService.setTitle(name);
 
           console.log(this.performance);
           this.querying = false;

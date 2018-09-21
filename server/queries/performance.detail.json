@@ -5,6 +5,7 @@
     "@id": "?id",
     "additionalType": "$ecrm:P2_has_type",
     "name": "$rdfs:label$bestlang",
+    "alternateName": "?pub",
     "description": "$rdfs:comment",
     "startDate": "?date",
     "location": {
@@ -16,6 +17,7 @@
   }],
   "$where": [
     "?id a efrbroo:F31_Performance",
-    "OPTIONAL{?id ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date}"
+    "OPTIONAL{?id ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date}",
+    "OPTIONAL{?id ecrm:P9_consists_of/ efrbroo:R17_created ?perfExpr. [] mus:U55_incorporates_performed_expression ?perfExpr; rdfs:label ?pub}"
   ]
 }
