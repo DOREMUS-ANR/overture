@@ -11,7 +11,7 @@
       "@id": "$ecrm:P9_consists_of*$required",
       "@type": "Role",
       "performer": "$ecrm:P14_carried_out_by$required$var:author",
-      "description": "$mus:U31_had_function|mus:U1_used_medium_of_performance/skos:prefLabel$bestlang"
+      "description": "$(mus:U31_had_function|mus:U1_used_medium_of_performance)/skos:prefLabel$bestlang"
     }
   }],
   "$where": [

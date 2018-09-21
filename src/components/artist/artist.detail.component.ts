@@ -68,8 +68,13 @@ export class ArtistDetailComponent {
 
         this.compositions = graph;
         this.functions = {};
-        this.functionList = new Set<string>(graph.map(x => x.author.description));
-        this.functionList.forEach(fc => this.functions[fc] = 5)
+        this.functionList = new Set<string>(graph.map(x => {
+          let d = x.author.description;
+          return d['@value'] || d;
+        }));
+        if (!this.functionList.size)
+          this.functionList = null;
+        else this.functionList.forEach(fc => this.functions[fc] = 5)
         this.error = false;
       });
 
@@ -82,12 +87,23 @@ export class ArtistDetailComponent {
         }
 
         this.performances = graph;
+
         this.performances.filter(x => !x.performer.description)
           .forEach(x => x.performer.description =
             Globals.lang.startsWith("fr") ? "interprète" : "performer");
+        this.performances.forEach(x => {
+          if (x.performer.description['@value'])
+            x.performer.description['@value'] = x.performer.description['@value'].toLowerCase()
+          else
+            x.performer.description = x.performer.description.toLowerCase();
+        });
         this.pFunctions = {};
-        this.pFunctionList = new Set<string>(graph.map(x => x.performer.description));
-        this.pFunctionList.forEach(fc => this.pFunctions[fc] = 5)
+        this.pFunctionList = new Set<string>(graph.map(x => {
+          let d = x.performer.description;
+          return d['@value'] || d;
+        }));
+        if (!this.pFunctionList.size) this.pFunctionList = null;
+        else this.pFunctionList.forEach(fc => this.pFunctions[fc] = 5)
         this.error = false;
       });
 
@@ -97,7 +113,8 @@ export class ArtistDetailComponent {
   getByFunction(f, isPerformance = false) {
     let list = isPerformance ? this.performances : this.compositions;
     let prop = isPerformance ? 'performer' : 'author';
-    return list.filter(x => x[prop].description == f);
+    return list.filter(x => x[prop].description)
+      .filter(x => x[prop].description == f || x[prop].description['@value'] == f);
   }
   safePic(input) {
     let uri = encodeURI(input);

@@ -51,6 +51,7 @@ import { ExpressionDetailComponent } from './components/expression/expression.de
 
 import { PerformanceComponent } from './components/performance/performance.component';
 import { PerformanceListComponent } from './components/performance/performance.list.component';
+import { PerformanceDetailComponent } from './components/performance/performance.detail.component';
 
 import { RecommendationComponent } from './components/expression/recommendation.component';
 import { SummaryComponent } from './components/summary/summary.component';
@@ -88,7 +89,7 @@ export function createTranslateLoader(http: HttpClient) {
     ScoreTabComponent,
     ArtistComponent, ArtistListComponent, ArtistDetailComponent, ArtistSummaryComponent, ArtistRecommendationComponent,
     ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, RecommendationComponent,
-    PerformanceComponent, PerformanceListComponent,
+    PerformanceComponent, PerformanceListComponent, PerformanceDetailComponent,
     SummaryComponent,
     WipComponent, EvaluationComponent, TopNavComponent, SearchComponent
   ],

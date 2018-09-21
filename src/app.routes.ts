@@ -17,6 +17,7 @@ import { ExpressionDetailComponent } from './components/expression/expression.de
 
 import { PerformanceComponent } from './components/performance/performance.component';
 import { PerformanceListComponent } from './components/performance/performance.list.component';
+import { PerformanceDetailComponent } from './components/performance/performance.detail.component';
 
 import { WipComponent } from './components/wip/wip.component';
 import { EvaluationComponent } from './components/eval/eval.component';
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
   {
     path: 'performance', component: PerformanceComponent,
     children: [
-      { path: '', component: PerformanceListComponent, data: { title: 'Performances' } }
+      { path: ':id', component: PerformanceDetailComponent },
+      { path: '', component: PerformanceListComponent, data: { title: 'nav.performance' } }
     ]
   },
   { path: 'evaluation', component: EvaluationComponent},

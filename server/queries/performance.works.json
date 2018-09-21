@@ -1,0 +1,26 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "MusicComposition",
+    "@id": "?id",
+    "name": "$rdfs:label$required$bestlang",
+    "alternateName": "$mus:U16_has_catalogue_statement/rdfs:label",
+    "dateCreated": "?date",
+    "composer": {
+      "@id": "?activity",
+      "@type": "Role",
+      "composer": {
+        "@type": "Person",
+        "@id": "$ecrm:P14_carried_out_by$required",
+        "name": "$rdfs:label$required$bestlang",
+        "image": "$foaf:depiction$sample"
+      },
+      "description": "$mus:U31_had_function$required$var:function"
+    }
+  }],
+  "$where": [
+    "?performance a efrbroo:F31_Performance; efrbroo:R66_included_performed_version_of ?id",
+    "?event ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date; ecrm:P9_consists_of ?activity ; efrbroo:R17_created ?id"
+  ],
+  "$filter": "?function = <http://data.doremus.org/vocabulary/function/composer>"
+}

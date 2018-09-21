@@ -1,0 +1,57 @@
+<div class="bearing" *ngIf="!performance"></div>
+<error-msg *ngIf="error"></error-msg>
+
+<loading *ngIf="querying"></loading>
+
+<article *ngIf="performance" class="expression-detail">
+  <section class="overview">
+    <div [style.background-image]="safePic(overviewPic)" class="bg"></div>
+    <div class="overview-cont">
+      <div class="title-cont">
+        <h1 class="title" *ngIf="performance.name">{{performance.name}}</h1>
+        <p class="other-title" [innerHTML]="performance.additionalType"></p>
+
+        <div class="note">
+          <p [innerHTML]="performance.description | jsonLDval: ['lang','array']"></p>
+        </div>
+
+      </div>
+
+      <div class="info-cont">
+        <div class="sources" *ngIf="performance.source">
+          <a href='{{ performance.sameAs || getSource(performance.source).uri }}' rel="external" target="blank" class="source">
+            <img src='{{getSource(performance.source).img}}' alt='{{getSource(performance.source).label}}' title="data from {{getSource(performance.source).label}}" />
+          </a>
+        </div>
+        <div class="info-card">
+          <div *ngIf="performance.startDate">
+            <label>{{'Date'|translate}}</label>
+            <span>{{performance.startDate}}</span>
+          </div>
+          <div *ngIf="performance.location">
+            <label>{{'Place'|translate}}</label>
+            <a [routerLink]="['/performance']" [queryParams]="{ place: performance.location.name }">{{performance.location.name}}</a>
+            <span *ngIf="performance.location.containedInPlace">, {{performance.location.containedInPlace}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="main info flexy">
+    <section id="works" *ngIf="performance.workPerformed">
+        <h2>{{'Performed works'|translate}}</h2>
+
+        <div class="card-list">
+          <div *ngFor="let a of performance.workPerformed">
+            <summary [entity]="a | summary: a['@type']" [eclass]="a['@type']"></summary>
+          </div>
+        </div>
+    </section>
+
+    <section>
+      <h2>{{'Cast'|translate}}</h2>
+      <artist *ngFor="let artist of performers" [artist]="artist"></artist>
+    </section>
+  </div>
+</article>

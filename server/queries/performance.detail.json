@@ -1,0 +1,21 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "MusicEvent",
+    "@id": "?id",
+    "additionalType": "$ecrm:P2_has_type",
+    "name": "$rdfs:label$required$bestlang",
+    "description": "$rdfs:comment",
+    "startDate": "?date",
+    "location": {
+      "@type": "Place",
+      "@id": "$ecrm:P7_took_place_at",
+      "name": "$rdfs:label$required$bestlang$var:place",
+      "containedInPlace": "$ecrm:P89_falls_within*/geonames:countryCode"
+    }
+  }],
+  "$where": [
+    "?id a efrbroo:F31_Performance",
+    "OPTIONAL{?id ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date}"
+  ]
+}

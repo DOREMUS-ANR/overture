@@ -22,6 +22,7 @@ function sendStandardError(res, err) {
 
 function sampleDate(dateArray) {
   'use strict';
+  if (!dateArray) return null;
   if (!Array.isArray(dateArray)) return dateArray;
   if (dateArray.length === 0) return null;
   if (dateArray.length === 1) return dateArray[0];
@@ -39,12 +40,13 @@ export default class ArtistController {
     ArtistController.getDetail(artistUri, opt.lang)
       .then(results => {
 
+        let mainObj = results['@graph'][0];
         // remove dbpedia duplicates
-        let dbpedia = results['@graph'][0].sameAs
+        let dbpedia = mainObj.sameAs && mainObj.sameAs
           .filter(x => x.includes('dbpedia'));
-        while (dbpedia.length > 1) {
-          let index = results['@graph'][0].sameAs.indexOf(dbpedia[0]);
-          results['@graph'][0].sameAs.splice(index, 1);
+        while (dbpedia && dbpedia.length > 1) {
+          let index = mainObj.sameAs.indexOf(dbpedia[0]);
+          mainObj.sameAs.splice(index, 1);
           dbpedia.splice(0, 1);
         }
 
@@ -91,14 +93,12 @@ export default class ArtistController {
             let result = resultArray[0];
             let pic = resultArray[1]['@graph'][0].image;
             let name = resultArray[1]['@graph'][0].name;
+
+
             result['@graph'].forEach(x => {
               x.image = pic;
               x.performer.performer = name;
-              if (!x.name) delete x.name;
               if (!x.description) delete x.description;
-              if (x.performer.description['@value'])
-                x.performer.description = x.performer.description['@value'];
-              if (!x.performer.description) delete x.performer.description;
             });
 
             result['@id'] = 'http://overture.doremus.org' + req.originalUrl;
@@ -192,6 +192,7 @@ export default class ArtistController {
 
   static getDetail(artistUri, lang = 'en', light = false) {
     let opt = {
+      artistUri,
       lang
     };
     let cacheId = 'artist.detail' + light ? '.light' : '';

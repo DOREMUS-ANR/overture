@@ -6,10 +6,9 @@ import clone from 'clone';
 const cache = new Cache();
 
 const LIST_QUERY = jsonfile.readFileSync('server/queries/performance.list.json');
-// const DETAIL_LIGHT_QUERY = jsonfile.readFileSync('server/commons/queries/artist.detail.light.json');
-// const DETAIL_QUERY = jsonfile.readFileSync('server/commons/queries/artist.detail.json');
-// const WORKS_QUERY = jsonfile.readFileSync('server/commons/queries/artist.work.json');
-// const PERFORMANCE_QUERY = jsonfile.readFileSync('server/commons/queries/artist.performance.json');
+const DETAIL_QUERY = jsonfile.readFileSync('server/queries/performance.detail.json');
+const ARTISTS_QUERY = jsonfile.readFileSync('server/queries/performance.artists.json');
+const WORKS_QUERY = jsonfile.readFileSync('server/queries/performance.works.json');
 
 function sendStandardError(res, err) {
   'use strict';
@@ -20,47 +19,34 @@ function sendStandardError(res, err) {
   });
 }
 
-function sampleDate(dateArray) {
-  'use strict';
-  if (!Array.isArray(dateArray)) return dateArray;
-  if (dateArray.length === 0) return null;
-  if (dateArray.length === 1) return dateArray[0];
-
-  return dateArray.sort((a, b) => b.length - a.length)[0];
-}
-
 export default class PerfomanceController {
   static get(req, res) {
-    // let uri = `http://data.doremus.org/performance/${req.params.id}`;
-    // let opt = {
-    //   lang: req.query.lang || 'en'
-    // };
-    //
-    // ArtistController.getDetail(artistUri, opt.lang)
-    //   .then(results => {
-    //
-    //     // remove dbpedia duplicates
-    //     let dbpedia = results['@graph'][0].sameAs
-    //       .filter(x => x.includes('dbpedia'));
-    //     while (dbpedia.length > 1) {
-    //       let index = results['@graph'][0].sameAs.indexOf(dbpedia[0]);
-    //       results['@graph'][0].sameAs.splice(index, 1);
-    //       dbpedia.splice(0, 1);
-    //     }
-    //
-    //     // remove main name from additionalName
-    //     let addNames = results['@graph'][0].additionalName;
-    //     if (!Array.isArray(addNames))
-    //       results['@graph'][0].additionalName = null;
-    //     else {
-    //       let x = addNames.indexOf(results['@graph'][0].name);
-    //       if (x >= 0) results['@graph'][0].additionalName.splice(x, 1);
-    //     }
-    //
-    //     results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
-    //     results.generatedAt = (new Date()).toISOString();
-    //     res.json(results);
-    //   }).catch(err => sendStandardError(res, err));
+    let uri = `http://data.doremus.org/performance/${req.params.id}`;
+    let opt = {
+      lang: req.query.lang || 'en'
+    };
+
+    Promise.all([
+        PerfomanceController.getDetail(uri, opt.lang),
+        PerfomanceController.getArtists(uri, opt.lang),
+        PerfomanceController.getWorks(uri, opt.lang)
+      ])
+      .then(r => {
+        let [results, pfs, works] = r;
+        console.log(results, pfs);
+        pfs = pfs['@graph'][0].performer;
+        if (pfs) {
+          console.log(pfs);
+          if (!Array.isArray(pfs)) pfs = [pfs];
+          pfs.map(p => p.performer)
+            .forEach(p => p['@type'] = p['@type'].includes('Person') ? 'Person' : 'PerformingGroup');
+          results['@graph'][0].performer = pfs;
+        }
+        results['@graph'][0].workPerformed = works['@graph'];
+        results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+        results.generatedAt = (new Date()).toISOString();
+        res.json(results);
+      }).catch(err => sendStandardError(res, err));
   }
 
   static query(req, res) {
@@ -105,31 +91,86 @@ export default class PerfomanceController {
       }).catch(err => sendStandardError(res, err));
   }
 
-  // static getDetail(artistUri, lang = 'en', light = false) {
-  //   let opt = {
-  //     lang
-  //   };
-  //   let cacheId = 'artist.detail' + light ? '.light' : '';
-  //
-  //   return cache.get('artist.detail', opt)
-  //     .then(data => {
-  //       if (data) return data;
-  //
-  //       let query = clone(light ? DETAIL_LIGHT_QUERY : DETAIL_QUERY);
-  //
-  //       query.$lang = lang;
-  //       query.$values = {
-  //         'id': artistUri
-  //       };
-  //
-  //       return sparqlTransformer(query, {
-  //         endpoint: 'http://data.doremus.org/sparql'
-  //       }).then(result => {
-  //         result['@graph'][0].birthDate = sampleDate(result['@graph'][0].birthDate);
-  //         result['@graph'][0].deathDate = sampleDate(result['@graph'][0].deathDate);
-  //         cache.set(cacheId, opt, result);
-  //         return result;
-  //       });
-  //     });
-  // }
+  static getDetail(uri, lang = 'en') {
+    let opt = {
+      uri,
+      lang
+    };
+    let cacheId = 'performance.detail';
+
+    return cache.get(cacheId, opt)
+      .then(data => {
+        if (data) return data;
+
+        let query = clone(DETAIL_QUERY);
+
+        query.$lang = lang;
+        query.$values = {
+          'id': uri
+        };
+
+        return sparqlTransformer(query, {
+          endpoint: 'http://data.doremus.org/sparql',
+          debug: true
+        }).then(result => {
+          cache.set(cacheId, opt, result);
+          return result;
+        });
+      });
+  }
+  static getWorks(uri, lang = 'en') {
+    let opt = {
+      uri,
+      lang
+    };
+    let cacheId = 'performance.works';
+
+    return cache.get(cacheId, opt)
+      .then(data => {
+        if (data) return data;
+
+        let query = clone(WORKS_QUERY);
+
+        query.$lang = lang;
+        query.$values = {
+          'performance': uri
+        };
+
+        return sparqlTransformer(query, {
+          endpoint: 'http://data.doremus.org/sparql',
+          debug: true
+        }).then(result => {
+          cache.set(cacheId, opt, result);
+          return result;
+        });
+      });
+  }
+
+  static getArtists(uri, lang = 'en') {
+    let opt = {
+      uri,
+      lang
+    };
+    let cacheId = 'performance.artists';
+
+    return cache.get(cacheId, opt)
+      .then(data => {
+        if (data) return data;
+
+        let query = clone(ARTISTS_QUERY);
+
+        query.$lang = lang;
+        query.$values = {
+          'id': uri
+        };
+
+        return sparqlTransformer(query, {
+          endpoint: 'http://data.doremus.org/sparql',
+          debug: true
+        }).then(result => {
+          cache.set(cacheId, opt, result);
+          return result;
+        });
+      });
+  }
 }

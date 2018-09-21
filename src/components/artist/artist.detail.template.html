@@ -44,11 +44,11 @@
   </section>
 
   <div class="main info flexy" *ngIf="!artistrec">
-    <section id="f">
+    <section id="works" *ngIf="functionList">
       <div *ngFor="let f of functionList">
         <h2>
         <strong>{{getByFunction(f).length}}</strong>
-         {{'nav.expression'|translate}} {{'as'|translate}} {{f}}</h2>
+         {{'nav.expression'|translate}} {{'as'|translate}} {{f|jsonLDval}}</h2>
 
         <div class="card-list">
           <div *ngFor="let a of getByFunction(f)|slice:0:functions[f] let i = index">
@@ -59,9 +59,8 @@
       </div>
     </section>
 
-    <section id="f">
+    <section id="performances" *ngIf="pFunctionList">
       <div *ngFor="let f of pFunctionList">
-
         <h2>
         <strong>{{getByFunction(f, true).length}}</strong>
          {{'nav.performance'|translate}} {{'as'|translate}} {{f}}</h2>

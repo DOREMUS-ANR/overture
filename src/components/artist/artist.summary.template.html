@@ -3,7 +3,7 @@
     <img property="image" mat-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
   </div>
   <h3 property="name">{{artist.name | jsonLDval }}</h3>
-  <!-- <p *ngIf="artist.description" class="description">{{artist.description}}</p> -->
+  <p *ngIf="!artist.birthDate && artist.description" class="description">{{artist.description | jsonLDval}}</p>
   <p *ngIf="artist.birthDate" class="dates">
     <span property="birthDate">{{artist.birthDate | slice:0:4}}</span>
     <span> - </span>
