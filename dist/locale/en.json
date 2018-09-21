@@ -16,5 +16,7 @@
   "set weights": "set weights",
   "whatsnew": "What's new",
   "home.whatsnew": "Overture is now bilingual! Set your language in the footer",
-  "explain": "similarity settings"
+  "explain": "similarity settings",
+  "MusicEvent": "Performance(s)",
+  "PublicationEvent": "Publication(s)"
 }
