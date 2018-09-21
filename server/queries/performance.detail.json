@@ -4,7 +4,7 @@
     "@type": "MusicEvent",
     "@id": "?id",
     "additionalType": "$ecrm:P2_has_type",
-    "name": "$rdfs:label$required$bestlang",
+    "name": "$rdfs:label$bestlang",
     "description": "$rdfs:comment",
     "startDate": "?date",
     "location": {

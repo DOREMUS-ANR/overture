@@ -16,7 +16,6 @@ export class SummaryPipe implements PipeTransform {
         let author = value.composer || value.author;
         if (author['@type'] == 'Role') author = author.composer || author.author;
         let image = value.image || author.image || author.pic;
-        console.log(value, author, image)
         if (author.name) author = author.name;
         if (author.label) author = author.label;
         date = value.dateCreated ? value.dateCreated + ', ' : '';
@@ -31,24 +30,20 @@ export class SummaryPipe implements PipeTransform {
           source: value.sourceOrganization
         }
       case 'event':
-      case 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation':
-      case 'http://erlangen-crm.org/efrbroo/F31_Performance':
       case 'MusicEvent':
-        id = value.id || value['@id'].replace('http://data.doremus.org/performance/', '')
+        id = value['@id'].replace('http://data.doremus.org/performance/', '')
 
         let perf = value.performer;
         if (perf && !Array.isArray(perf)) perf = [perf];
 
-        if (value.time) date = moment(value.time).year();
         if (value.startDate) date = value.startDate;
 
         let _super = [];
         if (date) _super.push(date)
-        let _loc = value.place || value.placeURI ||
-          (value.location && value.location.name);
-        if (_loc) _super.push(_loc)
+        let _loc = value.location && value.location.name;
+        if (_loc) _super.push(_loc['@value'] || _loc)
 
-        let title = value.title || value.name;
+        let title = value.name;
         if (!title) {
           title = 'Performance'
           if (value.activities) title += ' by ' + toActorList(value.activities)
@@ -57,17 +52,22 @@ export class SummaryPipe implements PipeTransform {
 
         return {
           super: _super.join(', '),
-          title: title,
+          title,
           link: ['/performance', id],
           image: 'static/img/performance_placeholder.png',
-          tag: value.isPremiere ? 'premiere' : null
+          tag: value.firstPerformance ? 'premiere' : null
         }
-      case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
+      case 'PublicationEvent':
+        id = value['@id'].replace('http://data.doremus.org/publication/', '')
+
         return {
-          super: `${value.time ? moment(value.time).year() : ''}${separator(value)}${value.place || value.placeURI || ''}`,
-          title: value.title || (value.activities ? toActorList(value.activities || perf) : 'Publication'),
-          tag: value.isPrincepsPub ? 'princeps publication' : null
+          link: ['/publication', id],
+          super: `${value.date ? moment(value.date).year() : ''}${separator(value)}${(value.location && value.location.name) || ''}`,
+          title: value.name || value.description || 'Publication',
+          tag: value.firstPublication ? 'princeps publication' : null
         }
+      default:
+        console.log("I should not arrive here.", eclass, value)
     }
   }
 }

@@ -1,9 +1,15 @@
+import sparqlTransformer from 'sparql-transformer';
+import jsonfile from 'jsonfile';
+import clone from 'clone';
 import Sparql from '../../commons/sparql';
 import {
   sendStandardError
 } from '../../commons/utils';
 
 var sparql = new Sparql();
+
+const PERFORMANCE_QUERY = jsonfile.readFileSync('server/queries/expression.performance.json');
+const PUBLICATION_QUERY = jsonfile.readFileSync('server/queries/expression.publication.json');
 
 function padProp(p) {
   'use strict';
@@ -102,12 +108,40 @@ export default class ExpressionController {
   }
 
   static getRealisations(req, res) {
-    sparql.loadQuery('expression.realisation', {
-        uri: `<http://data.doremus.org/expression/${req.params.id}>`,
-        lang: req.query.lang
-      })
-      .then(results => res.json(results))
-      .catch(err => sendStandardError(res, err));
+    let queryPe = clone(PERFORMANCE_QUERY);
+    let queryPu = clone(PUBLICATION_QUERY);
+    for (let query of [queryPe, queryPu]) {
+      query.$lang = req.query.lang || 'en';
+      query.$values = {
+        'expression': `<http://data.doremus.org/expression/${req.params.id}>`
+      };
+    }
+
+    let promisePe = sparqlTransformer(queryPe, {
+      endpoint: 'http://data.doremus.org/sparql',
+      debug: true
+    });
+    let promisePu = sparqlTransformer(queryPu, {
+      endpoint: 'http://data.doremus.org/sparql',
+      debug: true
+    });
+
+    return Promise.all([promisePe, promisePu])
+      .then(promResults => {
+        let [pe, pu] = promResults;
+        let graph = pe['@graph'].concat(pu['@graph']);
+        graph.forEach(x => {
+          if (!x.name) delete x.name;
+        });
+        let results = {
+          '@context': 'http://schema.org',
+          '@graph': graph,
+          '@id': 'http://overture.doremus.org' + req.originalUrl,
+          generatedAt: (new Date()).toISOString()
+        };
+
+        res.json(results);
+      }).catch(err => sendStandardError(res, err));
   }
 
   static query(req, res) {
@@ -126,7 +160,6 @@ export default class ExpressionController {
               let v = exp[p].value;
               mc[padProp(p)] = v;
             });
-
             return mc;
           });
 

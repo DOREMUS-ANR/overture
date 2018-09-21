@@ -19,7 +19,7 @@
     }
   }],
   "$where": [
-    "?performance a efrbroo:F31_Performance; efrbroo:R66_included_performed_version_of ?id",
+    "?performance a efrbroo:F31_Performance; ecrm:P9_consists_of/efrbroo:R17_created/mus:U54_is_performed_expression_of ?id",
     "?event ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date; ecrm:P9_consists_of ?activity ; efrbroo:R17_created ?id"
   ],
   "$filter": "?function = <http://data.doremus.org/vocabulary/function/composer>"

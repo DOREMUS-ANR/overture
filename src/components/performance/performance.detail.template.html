@@ -8,7 +8,7 @@
     <div [style.background-image]="safePic(overviewPic)" class="bg"></div>
     <div class="overview-cont">
       <div class="title-cont">
-        <h1 class="title" *ngIf="performance.name">{{performance.name}}</h1>
+        <h1 class="title">{{(performance.name || 'Performance') | translate}}</h1>
         <p class="other-title" [innerHTML]="performance.additionalType"></p>
 
         <div class="note">
@@ -30,7 +30,7 @@
           </div>
           <div *ngIf="performance.location">
             <label>{{'Place'|translate}}</label>
-            <a [routerLink]="['/performance']" [queryParams]="{ place: performance.location.name }">{{performance.location.name}}</a>
+            <a [routerLink]="['/performance']" [queryParams]="{ place: performance.location.name['@value'] || performance.location.name }">{{performance.location.name | jsonLDval}}</a>
             <span *ngIf="performance.location.containedInPlace">, {{performance.location.containedInPlace}}</span>
           </div>
         </div>

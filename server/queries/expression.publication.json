@@ -1,0 +1,23 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "PublicationEvent",
+    "@id": "?id",
+    "name": "$rdfs:label$bestlang",
+    "description": "$rdfs:comment$bestlang",
+    "startDate": "?date",
+    "firstPublication": "?isPremiere",
+    "publishedBy": "$ecrm:P9_consists_of/ecrm:P14_carried_out_by/rdfs:label$sample",
+    "location": {
+      "@type": "Place",
+      "@id": "$ecrm:P7_took_place_at",
+      "name": "$rdfs:label$required$bestlang$var:place"
+    }
+  }],
+  "$where": [
+    "?id a efrbroo:F30_Publication_Event; efrbroo:R24_created/ecrm:P165_incorporates ?expression",
+    "OPTIONAL{?id ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date}",
+    "BIND( EXISTS { ?expression mus:U4_had_princeps_publication ?id } as ?isPremiere )"
+  ],
+  "$orderby": "?date"
+}

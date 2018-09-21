@@ -3,7 +3,7 @@
   <img mat-card-avatar [src]="entity.image || 'static/img/work.png'">
   <p class="composer"><span *ngIf="entity.super != 0">{{entity.super}}</span></p>
   <h3>
-    {{entity.title}}
+    {{entity.title | jsonLDval}}
     <small class="catalogue">{{entity.small}}</small>
     <span class="tag" *ngIf="entity.tag">{{entity.tag}}</span>
   </h3>

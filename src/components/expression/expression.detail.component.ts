@@ -4,8 +4,8 @@ import { SharedService } from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 
-const PERFORMANCE = 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation';
-const PUBLICATION = 'http://erlangen-crm.org/efrbroo/F30_Publication_Event';
+const PERFORMANCE = 'MusicEvent';
+const PUBLICATION = 'PublicationEvent';
 
 const defaultOverviewPic = '/static/img/bg/generic-score.jpg';
 const organizBase = 'http://data.doremus.org/organization/';
@@ -75,21 +75,21 @@ export class ExpressionDetailComponent {
             });
 
           let perfs = this.expression.events[PERFORMANCE];
-          let premiere = perfs && perfs.find(ev => ev.isPremiere);
+          let premiere = perfs && perfs.find(ev => ev.firstPerformance);
           if (premiere)
             this.dates.push({
               type: 'premiere',
               description: premiere.note,
-              date: premiere.time
+              date: premiere.startDate
             });
 
           let pubs = this.expression.events[PUBLICATION];
-          let princepsPub = pubs && pubs.find(ev => ev.isPrincepsPub);
+          let princepsPub = pubs && pubs.find(ev => ev.firstPublication);
           if (princepsPub)
             this.dates.push({
               type: 'publication',
               description: princepsPub.note,
-              date: princepsPub.time
+              date: princepsPub.startDate
             });
           let firstComposer = this.getProp('composer', true)[0];
           this.overviewPic = (firstComposer && firstComposer.pic) || defaultOverviewPic;
@@ -142,17 +142,6 @@ export class ExpressionDetailComponent {
 
   getId(uri) {
     return uri.split('/').slice(-1)[0];
-  }
-
-  class2Label(cls: string) {
-    switch (cls) {
-      case 'http://erlangen-crm.org/efrbroo/F31_Performance':
-      case 'http://data.doremus.org/ontology#M42_Performed_Expression_Creation':
-        return 'Performance';
-      case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
-        return 'Publication'
-      default: return cls;
-    }
   }
 
   startsWithNum(what) {

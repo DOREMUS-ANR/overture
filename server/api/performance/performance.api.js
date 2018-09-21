@@ -2,6 +2,9 @@ import sparqlTransformer from 'sparql-transformer';
 import Cache from '../../commons/cache';
 import jsonfile from 'jsonfile';
 import clone from 'clone';
+import {
+  sendStandardError
+} from '../../commons/utils';
 
 const cache = new Cache();
 
@@ -9,15 +12,6 @@ const LIST_QUERY = jsonfile.readFileSync('server/queries/performance.list.json')
 const DETAIL_QUERY = jsonfile.readFileSync('server/queries/performance.detail.json');
 const ARTISTS_QUERY = jsonfile.readFileSync('server/queries/performance.artists.json');
 const WORKS_QUERY = jsonfile.readFileSync('server/queries/performance.works.json');
-
-function sendStandardError(res, err) {
-  'use strict';
-  console.error('error ', err.message);
-  res.status(500).send({
-    code: 500,
-    message: err.message
-  });
-}
 
 export default class PerfomanceController {
   static get(req, res) {
@@ -71,8 +65,13 @@ export default class PerfomanceController {
               `?date < "${y+1}"^^xsd:gYear`
             ];
         }
-        if (opt.place)
-          query.$filter.push(`(regex(str(?place),'${opt.place.replace(/[àáèéëíìòóùúçč]/g, '.{1,2}')}', 'i'))`);
+        if (opt.place) {
+          query['@graph'][0].location['@id'] += '$required';
+
+          query.$where.push('?id ecrm:P7_took_place_at/ecrm:P89_falls_within*/rdfs:label ?plc');
+          query.$filter.push(`(regex(str(?plc),'${opt.place.replace(/[àáèéëíìòóùúçč]/g, '.{1,2}')}', 'i'))`);
+
+        }
 
         query.$limit = opt.lim;
         query.$offset = opt.offset;

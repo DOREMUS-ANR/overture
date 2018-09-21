@@ -32,5 +32,9 @@
   "whatsnew": "Nouveauté",
   "home.whatsnew": "Overture est maintenant bilingue! Choisissez votre langue dans le footer",
   "explain": "Paramétrer la similarité",
-  "Year": "An"
+  "Year": "An",
+  "MusicEvent": "Exécution(s)",
+  "PublicationEvent": "Publication(s)",
+  "Performed works" : "Œuvres exécutée",
+  "Performance" : "Exécution"
 }
