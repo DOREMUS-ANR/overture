@@ -10,6 +10,7 @@ var sparql = new Sparql();
 
 const PERFORMANCE_QUERY = jsonfile.readFileSync('server/queries/expression.performance.json');
 const PUBLICATION_QUERY = jsonfile.readFileSync('server/queries/expression.publication.json');
+const LIST_QUERY = jsonfile.readFileSync('server/queries/expression.list.json');
 
 function padProp(p) {
   'use strict';
@@ -87,8 +88,9 @@ function array2obj(input, mergeKey, splitOn = '_') {
 export default class ExpressionController {
 
   static get(req, res) {
+    let uri = `<http://data.doremus.org/expression/${req.params.id}>`;
     sparql.loadQuery('expression.detail', {
-        uri: `<http://data.doremus.org/expression/${req.params.id}>`,
+        uri,
         lang: req.query.lang
       })
       .then(r => {
@@ -102,7 +104,27 @@ export default class ExpressionController {
             .filter(a => a['@language'] || a !== expression.name);
         }
 
-        res.json(expression);
+        if (!expression.derivation)
+          return Promise.resolve(expression);
+
+        let query = clone(LIST_QUERY);
+        query.$lang = req.query.lang || 'en';
+        query.$where.push(`?work efrbroo:R9_is_realised_in ${uri}`);
+        query.$where.push('?work efrbroo:R2_is_derivative_of / efrbroo:R9_is_realised_in ?id');
+
+        return sparqlTransformer(query, {
+          endpoint: 'http://data.doremus.org/sparql',
+          debug: true
+        }).then(der => {
+          console.log(der);
+          expression.derivativeOf = der['@graph'][0];
+          return expression;
+        });
+      })
+      .then(result => {
+        result['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+        result.generatedAt = (new Date()).toISOString();
+        res.json(result);
       })
       .catch(err => sendStandardError(res, err));
   }

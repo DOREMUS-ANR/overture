@@ -5,7 +5,7 @@ PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 
 SELECT DISTINCT
-  ?expression,
+  # ?expression,
   ?source,
   sql:BEST_LANGMATCH(?name, '%%lang%%', 'en') AS ?name,
   ?alternateName,
@@ -25,13 +25,18 @@ SELECT DISTINCT
   ?composer_uri,
   ?composer_pic,
   ?composer_label,
-  ?dateCreated
+  ?dateCreated,
+  ?derivation
 WHERE {
   VALUES ?expression { %%uri%% }
 
   ?expression a efrbroo:F22_Self-Contained_Expression ;
               rdfs:label ?name .
-
+  ?work efrbroo:R9_is_realised_in ?expression.
+  OPTIONAL {?work mus:U47_has_derivation_type ?derivation_uri ; efrbroo:R2_is_derivative_of ?derivativeOf
+    {  SELECT ?derivation_uri sql:BEST_LANGMATCH(?derivation, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?derivation
+        WHERE { ?derivation_uri skos:prefLabel ?derivation }}
+  }
   OPTIONAL {
     ?titleProp rdfs:subPropertyOf dc:title .
     ?expression ?titleProp ?alternateName .

@@ -24,6 +24,13 @@
           <p [innerHTML]="expression.description | jsonLDval: ['lang','array']"></p>
         </div>
 
+        <div class="derivation-cont" *ngIf="expression.derivativeOf">
+          <span>{{'Derivative of'|translate}}</span>
+          <div class="card-list">
+            <summary [entity]="expression.derivativeOf | summary: 'expression'" [eclass]="'expression'"></summary>
+          </div>
+
+        </div>
       </div>
 
       <div class="info-cont">
@@ -33,6 +40,10 @@
           </a>
         </div>
         <div class="info-card">
+          <div *ngIf="expression.derivation">
+            <label>{{'Derivation'|translate}}</label>
+            <span>{{expression.derivation}}</span>
+          </div>
           <div *ngIf="expression.key">
             <label>{{'Musical key'|translate}}</label>
 

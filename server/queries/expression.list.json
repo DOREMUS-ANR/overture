@@ -1,0 +1,23 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "MusicComposition",
+    "@id": "?id",
+    "name": "$rdfs:label$required$bestlang",
+    "alternativeHeadline": "$mus:U16_has_catalogue_statement/rdfs:label",
+    "dateCreated": "?date",
+    "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
+    "composer": {
+      "@id": "?composer$required",
+      "@type": "Person",
+      "name": "$rdfs:label$required$bestlang",
+      "image": "$foaf:depiction$sample"
+    }
+  }],
+  "$where": [
+    "?id a efrbroo:F22_Self-Contained_Expression",
+    "OPTIONAL{?event ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date}", "?event ecrm:P9_consists_of ?activity ; efrbroo:R17_created ?id",
+    "?activity mus:U31_had_function <http://data.doremus.org/vocabulary/function/composer>; ecrm:P14_carried_out_by ?composer"
+  ],
+  "$orderby": "?date"
+}

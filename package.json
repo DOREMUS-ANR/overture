@@ -1,6 +1,6 @@
 {
   "name": "overture",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Exploring music data in DOREMUS",
   "main": "index.js",
   "scripts": {

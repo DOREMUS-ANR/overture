@@ -10,8 +10,14 @@ SELECT DISTINCT
   (SAMPLE(?catalogue) AS ?alternativeHeadline)
   (SAMPLE(?pic) as ?image)
   ?source as ?sourceOrganization
+  ?derivation
 WHERE {
   ?expression rdfs:label ?title .
+  ?work efrbroo:R9_is_realised_in ?expression.
+  OPTIONAL {?work mus:U47_has_derivation_type ?derivation_uri ; efrbroo:R2_is_derivative_of ?derivativeOf
+    {  SELECT ?derivation_uri sql:BEST_LANGMATCH(?derivation, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?derivation
+        WHERE { ?derivation_uri skos:prefLabel ?derivation }}
+  }
 
   OPTIONAL { ?expression prov:wasDerivedFrom / prov:wasAttributedTo ?source }
   OPTIONAL {

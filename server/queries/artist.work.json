@@ -4,7 +4,7 @@
     "@type": "MusicComposition",
     "@id": "?id",
     "name": "$rdfs:label$required$bestlang",
-    "alternateName": "$mus:U16_has_catalogue_statement/rdfs:label",
+    "alternativeHeadline": "$mus:U16_has_catalogue_statement/rdfs:label",
     "dateCreated": "?date",
     "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
     "author": {

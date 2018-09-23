@@ -8,7 +8,7 @@ export class SummaryPipe implements PipeTransform {
   transform(value, eclass: string): any {
     if (!value) return null;
     var date, id;
-    var source = value.sourceOrganization;
+    var source = value.sourceOrganization || value.source;
     switch (eclass) {
       case 'expression':
       case 'MusicComposition':
@@ -28,7 +28,8 @@ export class SummaryPipe implements PipeTransform {
           super: date + extractValue(author),
           small: value.alternativeHeadline,
           image,
-          source
+          source,
+          tag: value.derivation || ''
         }
       case 'event':
       case 'MusicEvent':
