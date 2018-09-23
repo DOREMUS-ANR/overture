@@ -30,11 +30,20 @@
   "Period": "Période",
   "Function": "fonction",
   "whatsnew": "Nouveauté",
-  "home.whatsnew": "Overture est maintenant bilingue! Choisissez votre langue dans le footer",
+  "home.whatsnew": "Overture est maintenant bilingue! Choisissez votre langue dans le pied de page",
   "explain": "Paramétrer la similarité",
   "Year": "An",
   "MusicEvent": "Exécution(s)",
+  "Casting": "Distribution",
+  "princeps publication": "edition princeps",
   "PublicationEvent": "Publication(s)",
   "Performed works" : "Œuvres exécutée",
-  "Performance" : "Exécution"
+  "Performance" : "Exécution",
+  "Premiere" : "Première",
+  "Performance condition": "Conditions d'exécution",
+  "ABOUT":"A PROPOS",
+  "footer.dataviz": "Les données affichées proviennent des bases de :",
+  "footer.doremus" : "OVERTURE est développé dans le cadre du projet DOREMUS (description, publication, inter-connection et contextualisation de données musicales dans le web de données).",
+  "composes the work" : "compose l'œuvre",
+  "compose the work" : "composent l'œuvre"
 }

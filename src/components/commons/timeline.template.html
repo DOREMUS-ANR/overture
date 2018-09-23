@@ -7,13 +7,13 @@
       <!--  TODO replace with ngPlural when bug fixed https://github.com/angular/angular/issues/12363 -->
       <ng-container *ngIf="d.agent.length == 0">The work is created</ng-container>
       <ng-container *ngIf="d.agent.length == 1">{{d.agent[0]}}
-        composes the work</ng-container>
+        {{'composes the work'|translate}}</ng-container>
       <ng-container *ngIf="d.agent.length > 1">{{d.agent.join(', ')}}
-        compose the work</ng-container>
+        {{'compose the work'|translate}}</ng-container>
     </label>
 
     <label *ngIf="d.type=='premiere'">
-      Premiere
+      {{'Premiere'|translate}}
       <small>{{d.description}}</small>
     </label>
 

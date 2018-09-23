@@ -44,7 +44,11 @@ WHERE {
     ?expression mus:U13_has_casting / mus:U23_has_casting_detail ?castingDet.
     ?castingDet mus:U2_foresees_use_of_medium_of_performance ?mop_uri .
     OPTIONAL { ?castingDet mus:U30_foresees_quantity_of_mop ?mop_quantity }
-    OPTIONAL { ?castingDet mus:U36_foresees_responsibility / skos:prefLabel ?mop_responsibility }
+    OPTIONAL { ?castingDet mus:U36_foresees_responsibility ?mop_responsibility_uri
+    { SELECT ?mop_responsibility_uri sql:BEST_LANGMATCH(?mop_responsibility, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop_responsibility
+      WHERE { ?mop_responsibility_uri skos:prefLabel ?mop_responsibility } }
+
+     }
     { SELECT ?mop_uri sql:BEST_LANGMATCH(?mop, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop_label
       WHERE { ?mop_uri skos:prefLabel | ecrm:P1_is_identified_by ?mop } }
   }

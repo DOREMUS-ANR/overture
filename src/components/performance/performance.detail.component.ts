@@ -80,7 +80,6 @@ export class PerformanceDetailComponent {
           this.error = true;
           console.error(err);
         });
-
       }
     });
   }

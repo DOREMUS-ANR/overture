@@ -29,6 +29,10 @@
             <label>{{'Date'|translate}}</label>
             <span>{{performance.startDate}}</span>
           </div>
+          <div *ngIf="performance.audience">
+            <label>{{'Performance condition'|translate}}</label>
+            <span>{{performance.audience | jsonLDval:array}}</span>
+          </div>
           <div *ngIf="performance.location">
             <label>{{'Place'|translate}}</label>
             <a [routerLink]="['/performance']" [queryParams]="{ place: performance.location.name['@value'] || performance.location.name }">{{performance.location.name | jsonLDval}}</a>

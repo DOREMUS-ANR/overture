@@ -59,7 +59,7 @@
             <label>{{'Casting'|translate}}</label>
             <ul style="list-style-type: none; margin: 0; padding: 0">
               <li *ngFor="let mop of getProp('mop', true)" class="instr icon-right-dir">
-                <a [routerLink]="['/expression']" [queryParams]="{ mop: mop.uri}">{{mop.label}}</a>
+                <a [routerLink]="['/expression']" [queryParams]="{ mop: mop.uri}">{{mop.label}}</a>&nbsp;
                 <span *ngIf="mop.quantity">({{mop.quantity}})</span>
                 <strong *ngIf="mop.responsibility">{{mop.responsibility}}</strong>
               </li>

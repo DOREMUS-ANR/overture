@@ -5,6 +5,6 @@
   <h3>
     {{entity.title | jsonLDval}}
     <small class="catalogue">{{entity.small}}</small>
-    <span class="tag" *ngIf="entity.tag">{{entity.tag}}</span>
+    <span class="tag" *ngIf="entity.tag">{{entity.tag|translate}}</span>
   </h3>
 </div>

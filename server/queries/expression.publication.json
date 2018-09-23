@@ -7,6 +7,7 @@
     "description": "$rdfs:comment$bestlang",
     "startDate": "?date",
     "firstPublication": "?isPremiere",
+    "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
     "publishedBy": "$ecrm:P9_consists_of/ecrm:P14_carried_out_by/rdfs:label$sample",
     "location": {
       "@type": "Place",
