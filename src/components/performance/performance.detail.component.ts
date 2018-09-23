@@ -98,7 +98,7 @@ export class PerformanceDetailComponent {
     let s = source
       .replace('http://data.doremus.org/', '')
       .replace('organization/', '');
-    // console.log(s)
+
     let org = null;
     switch (s) {
       case 'bnf':
@@ -110,6 +110,7 @@ export class PerformanceDetailComponent {
         org = `Philharmonie_de_Paris`; break;
       case 'redomi':
       case 'itema3':
+      case 'Radio_France':
         org = `Radio_France`; break;
     }
     return institutions[org];
@@ -124,17 +125,6 @@ export class PerformanceDetailComponent {
 
   getId(uri) {
     return uri.split('/').slice(-1)[0];
-  }
-
-  class2Label(cls: string) {
-    switch (cls) {
-      case 'http://erlangen-crm.org/efrbroo/F31_Performance':
-      case 'http://data.doremus.org/ontology#M42_Performed_performance_Creation':
-        return 'Performance';
-      case 'http://erlangen-crm.org/efrbroo/F30_Publication_Event':
-        return 'Publication'
-      default: return cls;
-    }
   }
 
   startsWithNum(what) {

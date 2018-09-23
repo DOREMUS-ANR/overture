@@ -1,6 +1,7 @@
 <h2>{{'rec.works.heading'|translate}}</h2>
 <loading *ngIf="loading">{{'rec.loading'|translate}}</loading>
-<error-msg class="small" *ngIf="error"></error-msg>
+<!-- <error-msg class="small" *ngIf="error"></error-msg> -->
+<div *ngIf="error">Nothing to show</div>
 
 <div *ngIf="!loading && !error">
   <summary *ngFor="let expr of recommendation" [entity]="expr | summary: 'MusicComposition'"></summary>

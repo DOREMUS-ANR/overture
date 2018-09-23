@@ -8,6 +8,8 @@
     "alternateName": "?pub",
     "description": "$rdfs:comment",
     "startDate": "?date",
+    "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
+    "audience": "$mus:U89_occured_in_performance_conditions/skos:prefLabel$bestlang",
     "location": {
       "@type": "Place",
       "@id": "$ecrm:P7_took_place_at",

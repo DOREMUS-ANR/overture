@@ -18,12 +18,11 @@
         </div>
 
       </div>
-
       <div class="info-cont">
-        <div class="sources" *ngIf="performance.source">
-          <a href='{{ performance.sameAs || getSource(performance.source).uri }}' rel="external" target="blank" class="source">
-            <img src='{{getSource(performance.source).img}}' alt='{{getSource(performance.source).label}}' title="data from {{getSource(performance.source).label}}" />
-          </a>
+        <div class="sources" *ngIf="performance.sourceOrganization">
+          <span class="source">
+            <img src='{{getSource(performance.sourceOrganization).img}}' alt='{{getSource(performance.sourceOrganization).label}}' title="data from {{getSource(performance.sourceOrganization).label}}" />
+          </span>
         </div>
         <div class="info-card">
           <div *ngIf="performance.startDate">
@@ -49,6 +48,7 @@
           <summary [entity]="a | summary: a['@type']" [eclass]="a['@type']"></summary>
         </div>
       </div>
+      <div *ngIf="performance.workPerformed.length<1">Information not available</div>
     </section>
 
     <section>

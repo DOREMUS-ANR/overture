@@ -13,7 +13,6 @@ export class SummaryComponent {
 
   getSourceImage(source: String) {
     if (!source) return null;
-
     let s = source.toLowerCase()
       .replace(/http:\/\/data\.doremus\.org\/(organization\/)?/, '');
 
@@ -27,6 +26,7 @@ export class SummaryComponent {
         return `${LOGOS_FOLDER}/philharmonie.png`;
       case 'redomi':
       case 'itema3':
+      case 'radio_france':
         return `${LOGOS_FOLDER}/radiofrance.png`;
       default:
         if (source.startsWith('http://catalogue.bnf.fr/'))

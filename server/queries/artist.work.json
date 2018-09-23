@@ -6,6 +6,7 @@
     "name": "$rdfs:label$required$bestlang",
     "alternateName": "$mus:U16_has_catalogue_statement/rdfs:label",
     "dateCreated": "?date",
+    "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
     "author": {
       "@id": "?activity$required",
       "@type": "Role",
@@ -17,5 +18,5 @@
     "?id a efrbroo:F22_Self-Contained_Expression",
     "?event ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date; ecrm:P9_consists_of ?activity ; efrbroo:R17_created ?id"
   ],
-  "$orderby" : "?date"
+  "$orderby": "?date"
 }

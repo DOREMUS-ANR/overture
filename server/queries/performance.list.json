@@ -5,6 +5,7 @@
     "@id": "?id",
     "name": "$rdfs:label$required$bestlang",
     "startDate": "?date",
+    "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
     "location": {
       "@type": "Place",
       "@id": "$ecrm:P7_took_place_at",

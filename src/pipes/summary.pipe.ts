@@ -8,6 +8,7 @@ export class SummaryPipe implements PipeTransform {
   transform(value, eclass: string): any {
     if (!value) return null;
     var date, id;
+    var source = value.sourceOrganization;
     switch (eclass) {
       case 'expression':
       case 'MusicComposition':
@@ -27,7 +28,7 @@ export class SummaryPipe implements PipeTransform {
           super: date + extractValue(author),
           small: value.alternativeHeadline,
           image,
-          source: value.sourceOrganization
+          source
         }
       case 'event':
       case 'MusicEvent':
@@ -53,6 +54,7 @@ export class SummaryPipe implements PipeTransform {
         return {
           super: _super.join(', '),
           title,
+          source,
           link: ['/performance', id],
           image: 'static/img/performance_placeholder.png',
           tag: value.firstPerformance ? 'premiere' : null
@@ -61,7 +63,8 @@ export class SummaryPipe implements PipeTransform {
         id = value['@id'].replace('http://data.doremus.org/publication/', '')
 
         return {
-          link: ['/publication', id],
+          // link: ['/publication', id],
+          source,
           super: `${value.date ? moment(value.date).year() : ''}${separator(value)}${(value.location && value.location.name) || ''}`,
           title: value.name || value.description || 'Publication',
           tag: value.firstPublication ? 'princeps publication' : null
