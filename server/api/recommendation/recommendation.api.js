@@ -93,7 +93,7 @@ function getArtistInfo(uri, lang) {
     .then(results => {
       let _r = results.results.bindings;
       if (!_r.length) throw 'Empty response';
-      return ArtistController.toSchemaOrg(_r[0]);
+      return toSchemaOrg(_r[0]);
     });
 }
 
