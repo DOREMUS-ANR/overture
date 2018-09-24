@@ -59,7 +59,7 @@ function getArtistInfo(uri, lang) {
 function getExpressionInfo(uri, lang) {
   'use strict';
 
-  let query = jsonfile.readFileSync('server/commons/queries/expression.recommendation.json');
+  let query = jsonfile.readFileSync('server/queries/expression.recommendation.json');
   query.$values = {
     'expression': uri
   };
