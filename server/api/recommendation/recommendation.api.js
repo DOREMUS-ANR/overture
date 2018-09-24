@@ -17,6 +17,47 @@ const sparql = new Sparql();
 const cache = new NodeCache();
 
 
+const schemaOrgMapping = {
+  uri: '@id',
+  label: 'name',
+  pic: 'image',
+  names: 'additionalName',
+  birth: 'birthDate',
+  death: 'deathDate',
+  birthPlace: 'birthPlace',
+  deathPlace: 'deathPlace',
+  comment: 'description',
+  wikipedia: 'mainEntityOfPage',
+  sameAs: 'sameAs',
+  source: 'sourceOrganization'
+};
+
+function toSchemaOrg(a) {
+  'use strict';
+  let artist = {
+    '@type': 'Person'
+  };
+
+  for (let p in a) {
+    let m = schemaOrgMapping[p];
+    if (m) {
+      let x = a[p];
+      let val = x && x.value;
+      let lang = x['xml:lang'];
+      if (lang)
+        artist[m] = {
+          '@value': val,
+          '@language': lang
+        };
+      else
+        artist[m] = val;
+    } else
+      console.log(`Not mapped prop: ` + p);
+  }
+
+  return artist;
+}
+
 function packResults(res) {
   'use strict';
 
