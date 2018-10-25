@@ -1,0 +1,9 @@
+{
+  "extends":                "airbnb-base",
+  "rules":                  {
+  "indent":                 0,
+    "no-param-reassign":    0,
+    "import/no-unresolved": 0,
+    "operator-linebreak":   0
+  }
+}

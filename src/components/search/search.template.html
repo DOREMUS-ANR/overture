@@ -16,39 +16,32 @@
       <input matInput placeholder="{{'Composer'|translate}}" [(ngModel)]="filter.composer" name="composer" (ngModelChange)="changeFilter($event)" />
     </mat-form-field>
 
-    <mat-form-field class="field select" *ngIf="itemsKey && toBeShown('key')">
-      <mat-select placeholder="{{'Musical key'|translate}}" [(ngModel)]="filter.key" name="filter.key" (ngModelChange)="changeFilter($event)">
-        <mat-option *ngFor="let item of itemsKey | async" [value]="item.uri">
+    <mat-form-field class="field" *ngIf="toBeShown('key')">
+      <input type="text" placeholder="{{'Musical key'|translate}}" aria-label="Number" matInput [formControl]="search.key" [matAutocomplete]="auto" name="filter.key" (ngModelChange)="emptyFilter($event, 'key')">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="changeFilter($event, 'key')">
+        <mat-option *ngFor="let item of result.key" [value]="item">
           {{item.label}}
         </mat-option>
-      </mat-select>
-      <button mat-icon-button class="close-btn" [hidden]="!filter.key" (click)="emptyFilter('key')">
-        <mat-icon class="md-16" aria-label="reset">{{'close'|translate}}</mat-icon>
-      </button>
-
+      </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="field select" *ngIf="itemsGenre && toBeShown('genre')">
-      <mat-select placeholder="{{'Genre'|translate}}" [(ngModel)]="filter.genre" name="filter.genre" (ngModelChange)="changeFilter($event)">
-        <mat-option *ngFor="let item of itemsGenre | async" [value]="item.uri">
+    <mat-form-field class="field" *ngIf="toBeShown('genre')">
+      <input type="text" placeholder="{{'Genre'|translate}}" aria-label="Number" matInput [formControl]="search.genre" [matAutocomplete]="auto" name="filter.genre" (ngModelChange)="emptyFilter($event, 'genre')">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="changeFilter($event, 'genre')">
+        <mat-option *ngFor="let item of result.genre" [value]="item">
           {{item.label}}
         </mat-option>
-      </mat-select>
-      <button mat-icon-button class="close-btn" [hidden]="!filter.genre" (click)="emptyFilter('genre')">
-        <mat-icon class="md-16" aria-label="reset">{{'close'|translate}}</mat-icon>
-      </button>
+      </mat-autocomplete>
     </mat-form-field>
 
-    <mat-form-field class="field select long" *ngIf="itemsMop && toBeShown('mop')">
-      <mat-select placeholder="{{'Instruments'|translate}}" [(ngModel)]="filter.mop" name="filter.mop" (ngModelChange)="changeFilter($event)" multiple="true">
-        <mat-option *ngFor="let item of itemsMop | async" [value]="item.uri">
+
+    <mat-form-field class="field" *ngIf="toBeShown('mop')">
+      <input type="text" placeholder="{{'Instruments'|translate}}" aria-label="Number" matInput [formControl]="search.mop" [matAutocomplete]="auto" name="filter.mop" (ngModelChange)="emptyFilter($event, 'mop')">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="changeFilter($event, 'mop')">
+        <mat-option *ngFor="let item of result.mop" [value]="item">
           {{item.label}}
         </mat-option>
-      </mat-select>
-      <button mat-icon-button class="close-btn" [hidden]="!filter.mop.length" (click)="emptyFilter('mop')">
-        <mat-icon class="md-16" aria-label="reset">{{'close'|translate}}</mat-icon>
-      </button>
-
+      </mat-autocomplete>
     </mat-form-field>
 
   </form>

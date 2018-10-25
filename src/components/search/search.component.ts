@@ -1,21 +1,21 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { VocabularyService } from './vocabulary.service';
-import { Globals } from '../../app.globals';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from "rxjs/Rx";
+import { FormControl } from '@angular/forms';
 
 @Component({
   moduleId: module.id,
   selector: 'search-comp',
   templateUrl: './search.template.html',
   styleUrls: ['./search.styl'],
-  providers: [VocabularyService, Globals]
+  providers: [VocabularyService]
 })
 export class SearchComponent {
   @Input() context: string = 'expression';
   @Output() onFilterChanged = new EventEmitter();
   filter = {
-    mop: [],
+    mop: null,
     genre: null,
     key: null,
     title: null,
@@ -23,14 +23,27 @@ export class SearchComponent {
     year: null
   };
 
-  itemsKey: Observable<Array<any>>;
-  itemsGenre: Observable<Array<any>>;
-  itemsMop: Observable<Array<any>>;
+  search = {
+    key: new FormControl(),
+    genre: new FormControl(),
+    mop: new FormControl()
+  }
 
-  constructor(private _vocabularyService: VocabularyService, private globals: Globals, private route: ActivatedRoute) {
-    this.itemsKey = this._vocabularyService.get('key');
-    this.itemsGenre = this._vocabularyService.get('genre');
-    this.itemsMop = this._vocabularyService.get('mop');
+  result = {
+    key: [],
+    genre: [],
+    mop: []
+  };
+
+  constructor(private _vocabularyService: VocabularyService, private route: ActivatedRoute) {
+    console.log(this)
+    console.log(this.result)
+    for (let x of ['key', 'genre', 'mop'])
+      this.search[x].valueChanges.subscribe(data => {
+        this._vocabularyService.search(x, data).subscribe(response => {
+          this.result[x] = response
+        });
+      })
   }
 
   ngOnInit() {
@@ -50,15 +63,27 @@ export class SearchComponent {
       }
       else this.filter[p] = v
     });
+
+    for (let x of ['key', 'genre', 'mop'])
+      if (this.filter[x])
+        this._vocabularyService.lemma(x, this.filter[x]).subscribe(response => {
+          this.search[x].setValue(response);
+        });
   }
 
-  emptyFilter(f: string) {
-    this.filter[f] = Array.isArray(this.filter[f]) ? [] : null;
-    this.changeFilter(null);
+  emptyFilter(value: any, name: string) {
+    if (value) return
+    this.filter[name] = Array.isArray(this.filter[name]) ? [] : null;
+    this.changeFilter('', '');
   }
 
-  changeFilter(_event: any) {
+  changeFilter(_event: any, name: string) {
+    if (_event === null) return;
     if (this.filter.year && !this.filter.year.match(/\d{4}/)) return;
+
+    if (_event.option) {
+      this.filter[name] = _event.option.value.id;
+    }
     debounce(() => {
       this.onFilterChanged.emit(this.filter);
     }, 500)();
@@ -77,6 +102,10 @@ export class SearchComponent {
         return this.context == 'performance';
       default: return false;
     }
+  }
+
+  displayFn(x: any) {
+    return x ? x.label : null;
   }
 }
 

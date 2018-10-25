@@ -3,10 +3,10 @@ import { isPlatformBrowser } from '@angular/common';
 
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
-import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule } from '@angular/material';
+import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule, MatAutocompleteModule} from '@angular/material';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -70,9 +70,9 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [
     BrowserModule.withServerTransition({ appId: 'overture' }),
     BrowserAnimationsModule,
-    FormsModule, HttpClientModule,
+    FormsModule, ReactiveFormsModule, HttpClientModule,
     routing, JsonLdModule,
-    MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule,
+    MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule, MatAutocompleteModule,
     InfiniteScrollModule,
     DndModule.forRoot(),
     TranslateModule.forRoot({

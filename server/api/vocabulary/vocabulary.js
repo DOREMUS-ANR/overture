@@ -1,46 +1,28 @@
+import sparqlTransformer from 'sparql-transformer';
+import Lemma from './lemma';
 import {
-  Client
-} from 'virtuoso-sparql-client';
-import fs from 'fs-extra';
+  EXT_URI,
+} from '../../../config/constants';
 
-const ENDPOINT = new Client('http://data.doremus.org/sparql');
-ENDPOINT.setOptions('application/json');
+const SKOS = 'http://www.w3.org/2004/02/skos/core#';
 
-const QUERY = {
-  STRUCTURE: fs.readFileSync(`${__dirname}/vocabulary.structure.rq`, 'utf-8'),
-  POPULARITY: fs.readFileSync(`${__dirname}/vocabulary.popularity.rq`, 'utf-8')
+const NAMESPACES = {
+  genre: [
+    'http://data.doremus.org/vocabulary/iaml/genre/',
+    'http://data.doremus.org/vocabulary/redomi/genre/',
+    'http://data.doremus.org/vocabulary/itema3/genre/',
+    'http://data.doremus.org/vocabulary/itema3/genre/musdoc/',
+    'http://data.doremus.org/vocabulary/diabolo/genre/',
+  ],
+  mop: [
+    'http://www.mimo-db.eu/InstrumentsKeywords#',
+    'http://data.doremus.org/vocabulary/iaml/mop/',
+    'http://data.doremus.org/vocabulary/redomi/mop/',
+    'http://data.doremus.org/vocabulary/itema3/mop/',
+    'http://data.doremus.org/vocabulary/diabolo/mop/',
+  ],
 };
 
-function performQuery(q, namespace, lang) {
-  'use strict';
-  let query = q
-    .replace(/%%lang%%/g, lang)
-    .replace(/\?namespace/g, `<${namespace}>`);
-  // console.log(query);
-  return ENDPOINT.query(query)
-    .then(r => r.results.bindings);
-}
-
-class Lemma {
-  constructor(uri, label, lang, alternateUris = []) {
-    this.uri = uri;
-
-    this._labels = {};
-    this._labels[lang] = label;
-
-    this.alternateUris = alternateUris;
-    this.popularity = 0;
-  }
-
-  setLabel(label, lang) {
-    if (lang)
-      this._labels[lang] = label;
-  }
-
-  getLabel(lang) {
-    return this._labels[lang] || this._labels.en;
-  }
-}
 
 export default class Vocabulary {
   static createVocabulary(name, trunkNamespace, namespaces, property, lang) {
@@ -48,76 +30,103 @@ export default class Vocabulary {
   }
 
   static add(name, vocabulary) {
-    if (!Vocabulary._list) Vocabulary._list = [];
-    Vocabulary._list[name] = vocabulary;
-  }
-  static get(name) {
-    return Vocabulary._list[name];
+    if (!Vocabulary.list) Vocabulary.list = {};
+    Vocabulary.list[name] = vocabulary;
   }
 
-  constructor(name, trunkNamespace, namespaces, property, lang) {
-    console.log('Importing vocabulary', name);
-    this.name = name;
-    this.lemmata = {};
+  static async load(name) {
+    const family = NAMESPACES[name];
+    const schemaUri = family || [`http://data.doremus.org/vocabulary/${name}/`];
 
-    this.trunkNamespace = trunkNamespace;
-    this.supportedLang = [lang];
-
-    Promise.all([
-        performQuery(QUERY.STRUCTURE.replace('?prop', property), trunkNamespace, lang),
-        performQuery(QUERY.STRUCTURE.replace('?prop', property), namespaces.join('> <'), lang),
-        performQuery(QUERY.POPULARITY.replace('?prop', property), trunkNamespace, lang)
-      ]).then(results => {
-        let [structureData, otherData, popularityData] = results;
-        for (let d of structureData) {
-          let lemma = new Lemma(d.uri.value, d.label.value, lang, d.matches.value.split(';'));
-          this.lemmata[lemma.uri] = lemma;
-          for (let u of lemma.alternateUris)
-            this.lemmata[u] = lemma;
-        }
-        for (let d of otherData) {
-          let lemma = new Lemma(d.uri.value, d.label.value, lang, d.matches.value.split(';'));
-          if (!this.lemmata[lemma.uri])
-            this.lemmata[lemma.uri] = lemma;
-        }
-
-        for (let d of popularityData)
-          this.lemmata[d.uri.value].popularity = parseInt(d.popularity.value);
+    return sparqlTransformer({
+        '@context': SKOS,
+        '@graph': [{
+          '@type': 'Concept',
+          '@id': '?id',
+          prefLabel: '$skos:prefLabel$required',
+          altLabel: '$skos:altLabel',
+          exactMatch: '$skos:exactMatch',
+          inScheme: '$skos:inScheme|skos:topConceptOf$var:namespace$required',
+        }],
+        $values: {
+          namespace: schemaUri,
+        },
+      }, {
+        endpoint: EXT_URI.SPARQL_ENDPOINT,
+        debug: true,
       })
-      .catch(console.error);
+      .then((result) => {
+        if (family) {
+          result['@graph'] = result['@graph'].sort((a, b) => family.indexOf(a.inScheme) - family.indexOf(b.inScheme));
+
+          result['@graph'].filter(x => x.exactMatch)
+            .forEach((x) => {
+              if (!result['@graph'].includes(x)) return;
+
+              let exm = x.exactMatch;
+              if (!Array.isArray(exm)) exm = [exm];
+              x.exactMatch = exm.map((ex) => {
+                const lemma = result['@graph'].find(l => l['@id'] === ex);
+                if (lemma) {
+                  result['@graph'].splice(result['@graph'].indexOf(lemma), 1);
+                  return lemma;
+                }
+                return ex;
+              });
+            });
+        }
+        Vocabulary.add(name, new Vocabulary(result, family));
+      });
   }
 
-  hasLanguage(lang) {
-    return this.supportedLang.includes(lang);
+  static async get(name) {
+    if (!Vocabulary.list) Vocabulary.list = {};
+    if (!Vocabulary.list[name]) await Vocabulary.load(name);
+    return Vocabulary.list[name];
   }
 
-  getList() {
-    let _array = Object.keys(this.lemmata)
-      .map(k => this.lemmata[k]);
-    return Array.from(new Set(_array));
+  constructor(data, family) {
+    this.family = family;
+    if (Array.isArray(data)) {
+      this.lemmata = data;
+      return;
+    }
+    this.lemmata = data['@graph']
+      .map(l => new Lemma(l));
   }
 
-  getFull(lang) {
+  flatten(lang = 'en') {
+    return this.lemmata.map(l => l.flatten(lang));
+  }
 
-    return new Promise((resolve, reject) => {
-      if (!this.hasLanguage(lang))
-        performQuery(QUERY.STRUCTURE, this.trunkNamespace, lang)
-        .then(results => {
-          for (let d of results)
-            this.lemmata[d.uri.value].setLabel(d.label.value, lang);
-          this.supportedLang.push(lang);
-        })
-        .then(() => this.getFull(lang))
-        .then(resolve)
-        .catch(reject);
+  get data() {
+    return {
+      '@context': SKOS,
+      '@graph': this.lemmata.map(l => l.data),
+    };
+  }
 
-      resolve(this.getList()
-        .sort((a, b) => b.popularity - a.popularity)
-        .map(lemma => ({
-          uri: lemma.uri,
-          label: lemma.getLabel(lang)
-        }))
-      );
-    });
+  get(id) {
+    return new Vocabulary(this.lemmata.filter(l => l.id === id));
+  }
+
+  search(q, lang, autocomplete = false, n = 10) {
+    let matches = this.lemmata
+      .map(l => new Lemma(l.data, l.similarTo(q, lang, autocomplete)))
+      .filter(l => (l.score > (autocomplete ? 0 : 0.1)));
+
+    if (!autocomplete) {
+      const exact = matches.filter(l => l.score === 1);
+      if (exact.length) matches = exact;
+    }
+
+    matches = matches.sort((a, b) => {
+        const d = b.score - a.score;
+        if (d || !this.family) return d;
+        return this.family.indexOf(b) - this.family.indexOf(a);
+      })
+      .slice(0, n);
+
+    return new Vocabulary(matches);
   }
 }
