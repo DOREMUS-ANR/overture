@@ -6,9 +6,8 @@ import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class SearchService {
-  private limit = 12;
 
-  constructor(private http: HttpClient, private globals: Globals) { }
+  constructor(private http: HttpClient) { }
 
   query(input = {}, offset?: number) {
     let params = new HttpParams().set('lang', Globals.lang);

@@ -1,12 +1,13 @@
 {
   "name": "overture",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "Exploring music data in DOREMUS",
   "main": "index.js",
   "scripts": {
     "start": "concurrently --kill-others \"nodemon index\" \"ng serve --progress=false --proxy-config proxy.conf.json\"",
     "prebuild": "./node_modules/.bin/stylus ./src/styles/loading.styl -o ./src/styles/loading.css -u rupture -u nib",
-    "build": "npm run prebuild && ng build --prod --output-hashing=none && ng run --output-hashing=none overture:server",
+    "build": "npm run prebuild && ng build --prod --output-hashing=none && ng run overture:server && npm run postbuild",
+    "postbuild":"cpx \"src/styles/loading.css\" dist/styles/",
     "prod": "BABEL_DISABLE_CACHE=1 NODE_ENV=production node index"
   },
   "dependencies": {
@@ -72,6 +73,7 @@
     "@types/jasmine": "^2.8.11",
     "@types/node": "^10.12.8",
     "concurrently": "^4.0.1",
+    "cpx": "^1.5.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",

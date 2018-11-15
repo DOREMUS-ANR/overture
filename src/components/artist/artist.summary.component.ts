@@ -6,7 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./artist.summary.styl'],
   templateUrl: './artist.summary.template.html'
 })
-
 export class ArtistSummaryComponent {
   @Input() artist: Artist;
 

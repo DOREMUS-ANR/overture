@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
-import { Globals } from '../../app.globals';
 import { ExpressionService } from './expression.service';
 
 @Component({
@@ -9,7 +8,6 @@ import { ExpressionService } from './expression.service';
   styleUrls: ['./expression.styl'],
   providers: [ExpressionService]
 })
-
 export class ExpressionListComponent {
   @Input() expressionURI: string;
 
@@ -23,8 +21,7 @@ export class ExpressionListComponent {
 
   constructor(
     private _expressionService: ExpressionService,
-    private router: Router, private globals: Globals, private route: ActivatedRoute) {
-    this.globals = globals;
+    private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

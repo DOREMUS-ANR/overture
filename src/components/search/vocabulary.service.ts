@@ -7,8 +7,6 @@ let vocabularies = {};
 
 @Injectable()
 export class VocabularyService {
-  private limit = 12;
-
   constructor(private http: HttpClient) { }
 
   get(id): Observable<any> {
@@ -41,6 +39,4 @@ export class VocabularyService {
 
     return this.http.get<any>(`/api/vocabulary/${vocabulary}`, { params });
   }
-
-
 }

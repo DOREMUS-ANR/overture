@@ -1,6 +1,5 @@
 import {Component, Input, Output, EventEmitter, ChangeDetectionStrategy} from '@angular/core';
 import {Router, ActivatedRoute, NavigationStart} from '@angular/router';
-import {Globals } from '../../app.globals';
 import {ArtistService} from './artist.service';
 
 @Component({
@@ -9,7 +8,6 @@ import {ArtistService} from './artist.service';
   // styleUrls: ['./expression.styl'],
   providers: [ArtistService]
 })
-
 export class ArtistListComponent {
   @Input() artistURI: string;
 
@@ -22,8 +20,7 @@ export class ArtistListComponent {
 
   constructor(
     private _artistService: ArtistService,
-    private router: Router, private globals: Globals, private route: ActivatedRoute) {
-    this.globals = globals;
+    private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

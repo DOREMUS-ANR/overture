@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { VocabularyService } from './vocabulary.service';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from "rxjs/Rx";
 import { FormControl } from '@angular/forms';
 
 @Component({

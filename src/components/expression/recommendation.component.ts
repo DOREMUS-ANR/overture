@@ -36,7 +36,5 @@ export class RecommendationComponent {
         this.error = true;
         console.error(err);
       });
-
   }
-
 }

@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
   selector: 'top-nav',
   templateUrl: './top-nav.template.html'
 })
-
 export class TopNavComponent {
   @ViewChild('fullSearchInput') fullSearchInput: ElementRef;
 

@@ -8,7 +8,6 @@ import { isPlatformBrowser } from '@angular/common';
   templateUrl: './eval.template.html',
   providers: [ExpressionService]
 })
-
 export class EvaluationComponent {
   seed: string;
   expression: any;

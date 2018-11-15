@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Router, ActivatedRoute, NavigationStart } from '@angular/router';
-import { Globals } from '../../app.globals';
 import { PerformanceService } from './performance.service';
 
 @Component({
@@ -23,8 +22,7 @@ export class PerformanceListComponent {
 
   constructor(
     private _performanceService: PerformanceService,
-    private router: Router, private globals: Globals, private route: ActivatedRoute) {
-    this.globals = globals;
+    private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit() {

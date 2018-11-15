@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 export class ArtistService {
   private limit = 41;
 
-  constructor(private http: HttpClient, private globals: Globals) { }
+  constructor(private http: HttpClient) { }
 
   query(filter = {}, offset?: number) {
     let filterOptions = "";

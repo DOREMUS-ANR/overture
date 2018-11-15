@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { Globals } from '../../app.globals';
 import { SearchService } from './search.service';
 
 @Component({
@@ -17,8 +16,7 @@ export class SearchResultsComponent {
 
   constructor(
     private _searchService: SearchService,
-    private router: Router, private globals: Globals, private route: ActivatedRoute) {
-    this.globals = globals;
+    private router: Router, private route: ActivatedRoute) {
 
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd && val.url.startsWith('/search')) {

@@ -10,12 +10,12 @@ import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
 import {
   APP_PATH,
-  HOST
+  HOST,
 } from '../../config/constants';
 import ApiRouter from './api.router';
 
-const _root = process.cwd();
-const {AppServerModuleNgFactory, LAZY_MODULE_MAP} = require(path.join(_root, 'dist-server', 'main'));
+const root = process.cwd();
+const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require(path.join(root, 'dist-server', 'main'));
 
 export default class RouteConfig {
   static init(app, express) {
@@ -23,25 +23,25 @@ export default class RouteConfig {
     app.engine('html', ngUniversal.ngExpressEngine({
       bootstrap: AppServerModuleNgFactory,
       providers: [
-        provideModuleMap(LAZY_MODULE_MAP)
-      ]
+        provideModuleMap(LAZY_MODULE_MAP),
+      ],
     }));
     app.set('view engine', 'html');
     app.set('views', 'dist');
 
 
-    app.use('/lib', express.static(_root + '/node_modules'));
-    app.use('/static', express.static(_root + APP_PATH.CLIENT_FILES));
+    app.use('/lib', express.static(`${root}/node_modules`));
+    app.use('/static', express.static(root + APP_PATH.CLIENT_FILES));
 
 
-    app.use('/', express.static(_root + APP_PATH.CLIENT_FILES));
+    app.use('/', express.static(root + APP_PATH.CLIENT_FILES));
 
     // TODO 404 page
     app.use(morgan('dev'));
     app.use('/api', ApiRouter);
 
     app.get('*', (req, res) => {
-      let accept = req.headers.accept;
+      const { accept } = req.headers;
       if (accept && accept.includes('text/html')) {
         // client responsability
         res.render('index', {
@@ -49,8 +49,8 @@ export default class RouteConfig {
           res,
           providers: [{
             provide: 'serverUrl',
-            useValue: `${req.protocol}://${HOST || req.get('host')}`
-          }]
+            useValue: `${req.protocol}://${HOST || req.get('host')}`,
+          }],
         });
       } else {
         res.status(404).send('404 not found');
@@ -60,13 +60,13 @@ export default class RouteConfig {
 
     app.use(bodyParser.json());
     app.use(contentLength.validateMax({
-      max: 999
+      max: 999,
     }));
     app.use(helmet());
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({
-      extended: true
+      extended: true,
     }));
   }
 }

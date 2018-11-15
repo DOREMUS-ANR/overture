@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ArtistService } from './artist.service';
 import { JsonLDvalPipe } from '../../pipes/jsonLDval.pipe';
