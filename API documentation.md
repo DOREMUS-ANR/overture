@@ -2,6 +2,9 @@ API documentation
 ==================
 
 ## Vocabulary
+`api/vocabulary/`
+
+Returns a list of `voc_name`s to be used in the following request.
 
 `api/vocabulary/:voc_name`
 
