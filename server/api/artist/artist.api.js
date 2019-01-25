@@ -1,15 +1,14 @@
 import sparqlTransformer from 'sparql-transformer';
 import Cache from '../../commons/cache';
-import jsonfile from 'jsonfile';
+import fs from 'fs-extra';
 import clone from 'clone';
 
 const cache = new Cache();
 
-const LIST_QUERY = jsonfile.readFileSync('server/queries/artist.list.json');
-const DETAIL_LIGHT_QUERY = jsonfile.readFileSync('server/queries/artist.detail.light.json');
-const DETAIL_QUERY = jsonfile.readFileSync('server/queries/artist.detail.json');
-const WORKS_QUERY = jsonfile.readFileSync('server/queries/artist.work.json');
-const PERFORMANCE_QUERY = jsonfile.readFileSync('server/queries/artist.performance.json');
+const LIST_QUERY = fs.readJsonSync('server/queries/artist.list.json');
+const DETAIL_LIGHT_QUERY = fs.readJsonSync('server/queries/artist.detail.json');
+const WORKS_QUERY = fs.readJsonSync('server/queries/artist.work.json');
+const PERFORMANCE_QUERY = fs.readJsonSync('server/queries/artist.performance.json');
 
 function sendStandardError(res, err) {
   'use strict';

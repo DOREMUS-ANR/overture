@@ -5,12 +5,16 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
-import { MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule, MatAutocompleteModule} from '@angular/material';
+import {
+  MatButtonModule, MatProgressSpinnerModule,
+  MatSelectModule, MatFormFieldModule, MatInputModule,
+  MatIconModule, MatSliderModule, MatAutocompleteModule
+} from '@angular/material';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { DndModule } from 'ng2-dnd';
 
 import { AppComponent } from './components/app.component';
 
@@ -72,9 +76,9 @@ export function createTranslateLoader(http: HttpClient) {
     BrowserAnimationsModule,
     FormsModule, ReactiveFormsModule, HttpClientModule,
     routing, JsonLdModule,
-    MatButtonModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatIconModule, MatSliderModule, MatAutocompleteModule,
-    InfiniteScrollModule,
-    DndModule.forRoot(),
+    MatButtonModule, MatProgressSpinnerModule, MatSelectModule, MatFormFieldModule,
+    MatInputModule, MatIconModule, MatSliderModule, MatAutocompleteModule,
+    InfiniteScrollModule, DragDropModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

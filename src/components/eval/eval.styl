@@ -1,0 +1,121 @@
+@import 'rupture'
+@import '../../styles/dep/vars';
+@import '../../../node_modules/material-shadows/material-shadows';
+
+lighterGray = lighten(grayLight, 20%)
+
+h2
+  text-align center
+  margin: 0
+  text-transform: uppercase
+
+.lefted
+  float: left;
+  font-size: 2em;
+
+.seed
+  width: auto
+
+.hidden
+  visibility hidden
+
+mat-spinner
+  margin auto
+
+  
+#evaluation
+  padding 0 2em 4em
+  width 100%
+  max-width 950px
+  margin: auto;
+
+  .board
+    width: 100%
+    +above('l')
+      display: flex
+      flex-direction: row
+      justify-content: space-between
+      .eval-list
+        flex-basis: 30em
+
+.empty-msg
+    text-align center
+    font-size 1.2em
+    margin-top 2em
+    opacity .4
+    position: absolute;
+    width: 100%;
+    &:before
+        display block
+        font-size 100px
+
+#trashList
+  // border: 4px dashed grayMedium
+  &:before
+    z-depth();
+    position: absolute;
+    top: -1em
+    background: lighterGray
+    border-radius: 50%
+    width: 1.2em;
+    height: 1.2em;
+    padding: .2em;
+    text-align: center;
+    right: 1em
+
+
+
+.eval-list
+  border: solid 1px #ccc;
+  min-height: 20em
+  margin-bottom: 3em
+  border-radius: 4px;
+  display: block;
+  background: lighterGray
+  position: relative;
+
+
+.eval-box
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: white;
+  font-size: 14px;
+  width: 100%
+  .entity-summary
+      width: 100%
+
+
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder
+  opacity: 0;
+
+.cdk-drag-animating
+  transition transform 250ms cubic-bezier(0, 0, 0.2, 1)
+
+.cdk-drop-list-dragging :not(.cdk-drag-placeholder)
+  transition transform 250ms cubic-bezier(0, 0, 0.2, 1)
+
+progress
+  width 100%
+  height 1em
+
+.lastState
+  margin 3em auto
+  text-align: center;
+  button
+    display: block;
+    margin: auto;

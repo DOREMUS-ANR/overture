@@ -4,8 +4,8 @@ import {
   EXT_URI
 } from '../../../config/constants';
 import async from 'async';
-import getJSON from 'get-json22';
-import jsonfile from 'jsonfile';
+import getJSON from 'get-json';
+import fs from 'fs-extra';
 import NodeCache from 'node-cache';
 import sparqlTransformer from 'sparql-transformer';
 import {
@@ -100,7 +100,7 @@ function getArtistInfo(uri, lang) {
 function getExpressionInfo(uri, lang) {
   'use strict';
 
-  let query = jsonfile.readFileSync('server/queries/expression.recommendation.json');
+  let query = fs.readJsonSync('server/queries/expression.recommendation.json');
   query.$values = {
     'expression': uri
   };

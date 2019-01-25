@@ -38,6 +38,7 @@ export default class RouteConfig {
 
     // TODO 404 page
     app.use(morgan('dev'));
+    app.use(express.json());
     app.use('/api', ApiRouter);
 
     app.get('*', (req, res) => {

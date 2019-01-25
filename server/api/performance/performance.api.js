@@ -1,6 +1,6 @@
 import sparqlTransformer from 'sparql-transformer';
 import Cache from '../../commons/cache';
-import jsonfile from 'jsonfile';
+import fs from 'fs-extra';
 import clone from 'clone';
 import {
   sendStandardError
@@ -8,10 +8,10 @@ import {
 
 const cache = new Cache();
 
-const LIST_QUERY = jsonfile.readFileSync('server/queries/performance.list.json');
-const DETAIL_QUERY = jsonfile.readFileSync('server/queries/performance.detail.json');
-const ARTISTS_QUERY = jsonfile.readFileSync('server/queries/performance.artists.json');
-const WORKS_QUERY = jsonfile.readFileSync('server/queries/performance.works.json');
+const LIST_QUERY = fs.readJsonSync('server/queries/performance.list.json');
+const DETAIL_QUERY = fs.readJsonSync('server/queries/performance.detail.json');
+const ARTISTS_QUERY = fs.readJsonSync('server/queries/performance.artists.json');
+const WORKS_QUERY = fs.readJsonSync('server/queries/performance.works.json');
 
 export default class PerfomanceController {
   static get(req, res) {

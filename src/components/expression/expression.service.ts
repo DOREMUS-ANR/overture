@@ -62,11 +62,13 @@ export class ExpressionService {
       });
   }
 
-  recommend(id) {
+  recommend(id, n = 3) {
     if (!id) return Promise.resolve(null);
 
     let params = new HttpParams().set('lang', Globals.lang)
-      .set('explain', 'false');
+      .set('explain', 'false')
+      .set('n', n.toString());
+      
     return this.http.get(`/api/recommendation/${id}`, { params })
       .toPromise();
   }

@@ -318,19 +318,27 @@ error-msg
 .entity-summary
   clearfix()
   padding 1em .5em
+  width 100%
   border-bottom 1px solid grayLight
   outline none
+  display flex
   &[ng-reflect-router-link]
     cursor pointer
     &:hover
       background #F4F4F4
+  .entity-summary-main
+    flex 1 1 300px
   img
     width 3.5em
     height 3.5em
     margin 0 1em
     object-fit cover
     object-position center center
-    float left
+  .show-details
+    font-size: 1.4em
+    align-self center
+    padding .5em
+
   .composer
     opacity .4
     margin 0
@@ -341,7 +349,6 @@ error-msg
   .catalogue
     margin .3em
   .source
-    float right
     object-fit contain
     width 2em
     height 2em
@@ -626,7 +633,6 @@ button.long
   text-transform uppercase
 
 @import "./top-nav"
-@import './dep/dnd';
 
 eval
   .main

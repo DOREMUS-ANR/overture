@@ -1,5 +1,5 @@
 import sparqlTransformer from 'sparql-transformer';
-import jsonfile from 'jsonfile';
+import fs from 'fs-extra';
 import clone from 'clone';
 import Sparql from '../../commons/sparql';
 import {
@@ -8,9 +8,9 @@ import {
 
 var sparql = new Sparql();
 
-const PERFORMANCE_QUERY = jsonfile.readFileSync('server/queries/expression.performance.json');
-const PUBLICATION_QUERY = jsonfile.readFileSync('server/queries/expression.publication.json');
-const LIST_QUERY = jsonfile.readFileSync('server/queries/expression.list.json');
+const PERFORMANCE_QUERY = fs.readJsonSync('server/queries/expression.performance.json');
+const PUBLICATION_QUERY = fs.readJsonSync('server/queries/expression.publication.json');
+const LIST_QUERY = fs.readJsonSync('server/queries/expression.list.json');
 
 function padProp(p) {
   'use strict';

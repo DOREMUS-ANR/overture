@@ -1,5 +1,5 @@
 import sparqlTransformer from 'sparql-transformer';
-import getJSON from 'get-json22';
+import getJSON from 'get-json';
 import {
   EXT_URI
 } from '../../../config/constants';

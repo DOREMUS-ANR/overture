@@ -1,10 +1,13 @@
-<div class="entity-summary" [routerLink]="entity.link">
-  <img class="source" *ngIf="entity.source" [src]="getSourceImage(entity.source)" alt="{{entity.source}}">
+<div class="entity-summary" [ngClass]="{'ext':ext}" [routerLink]="ext? null : entity.link">
   <img mat-card-avatar [src]="entity.image || 'static/img/work.png'">
-  <p class="composer"><span *ngIf="entity.super != 0">{{entity.super}}</span></p>
-  <h3>
-    {{entity.title | jsonLDval}}
-    <small class="catalogue">{{entity.small}}</small>
-    <span class="tag" *ngIf="entity.tag">{{entity.tag|translate}}</span>
-  </h3>
+  <div class="entity-summary-main">
+    <p class="composer"><span *ngIf="entity.super != 0">{{entity.super}}</span></p>
+    <h3>
+      {{entity.title | jsonLDval}}
+      <small class="catalogue">{{entity.small}}</small>
+      <span class="tag" *ngIf="entity.tag">{{entity.tag|translate}}</span>
+    </h3>
+  </div>
+  <a  target="_blank" [routerLink]="entity.link" *ngIf="ext" class="mdi mdi-page-next-outline show-details" title="show details"></a>
+  <img class="source" *ngIf="!ext && entity.source" [src]="getSourceImage(entity.source)" alt="{{entity.source}}">
 </div>

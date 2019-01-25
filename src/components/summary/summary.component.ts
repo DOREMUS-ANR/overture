@@ -10,6 +10,7 @@ const LOGOS_FOLDER = "/static/img/logos";
 export class SummaryComponent {
   @Input() entity: Entity;
   @Input() eclass: string = 'expression'; //entity class, i.e. expression
+  @Input() ext: boolean;
 
   getSourceImage(source: String) {
     if (!source) return null;
