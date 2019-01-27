@@ -1,4 +1,4 @@
-<article vocab="http://schema.org/" typeof="Person" [attr.about]="artist['@id']" [routerLink]="['/artist',artist.link]">
+<article vocab="http://schema.org/" typeof="Person" [attr.about]="artist['@id']" [ngClass]="{'ext':ext}" [routerLink]="ext? null : '/artist/' + artist.link">
   <div class="artist-round">
     <img property="image" mat-card-avatar [src]="artist.image || 'static/img/artist_placeholder.png'">
   </div>
@@ -9,4 +9,6 @@
     <span> - </span>
     <span property="deathDate">{{artist.deathDate || '...' | slice:0:4}}</span>
   </p>
+  <p *ngIf="explain">{{writeExplain(explain)}}</p>
+  <a target="_blank" [routerLink]="'/artist/'+artist.link" *ngIf="ext" class="mdi mdi-page-next-outline show-details" title="show details"></a>
 </article>

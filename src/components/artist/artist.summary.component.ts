@@ -8,10 +8,17 @@ import { Component, Input } from '@angular/core';
 })
 export class ArtistSummaryComponent {
   @Input() artist: Artist;
+  @Input() ext: boolean;
+  @Input() explain: any;
 
   ngOnChanges() {
     if (this.artist)
       this.artist.link = this.artist['@id'].replace('http://data.doremus.org/artist/', '')
+  }
+
+  writeExplain(explain) {
+    let x = explain.map(y => y[0]).filter(y => y != 'period_old').join(', ')
+    return 'similar ' + x;
   }
 }
 

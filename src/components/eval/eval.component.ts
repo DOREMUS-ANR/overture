@@ -1,15 +1,11 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { ExpressionService } from '../expression/expression.service';
+import { ArtistService } from '../artist/artist.service';
 import { isPlatformBrowser } from '@angular/common';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { State } from './state'
-
-var states = [
-  new State('http://data.doremus.org/expression/d72301f0-0aba-3ba6-93e5-c4efbee9c6ea'),
-  new State('http://data.doremus.org/expression/f2828b0c-24b7-3f5c-8b27-d70778e1b449')
-];
-
+import { State } from './state';
+import states from './statesList';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,12 +21,13 @@ var timer;
   selector: 'eval',
   templateUrl: './eval.template.html',
   styleUrls: ['./eval.styl'],
-  providers: [ExpressionService]
+  providers: [ExpressionService, ArtistService]
 })
 export class EvaluationComponent {
   expression: any;
   recommendation: Array<any>;
   trash: Array<any> = [];
+  explain: boolean;
   loading: boolean = true;
   error: boolean = false;
 
@@ -38,9 +35,11 @@ export class EvaluationComponent {
   statesMax = states.length + 1;
   sentState = '';
   comment: String;
+  type: string;
 
   constructor(private http: HttpClient,
     private expressionService: ExpressionService,
+    private artistService: ArtistService,
     @Inject(PLATFORM_ID) private platformId: string) {
 
     let hash = window.location.hash;
@@ -99,10 +98,14 @@ export class EvaluationComponent {
 
     let curstate = states[this.state - 1];
     let seed = curstate.seed;
-    let id = seed.replace('http://data.doremus.org/expression', '');
+    this.explain = curstate.explain;
 
-    this.expressionService.get(id).subscribe(exp => {
-      this.expression = exp;
+    let [, , , type, id] = seed.split('/');
+
+    let service = (type == 'artist') ? this.artistService : this.expressionService;
+    this.type = type;
+    service.get(id, true).subscribe(exp => {
+      this.expression = type == 'artist' ? exp['@graph'][0] : exp;
       this.expression.id = id;
       this.expression.composer = this.getProp('composer', true)[0];
     });
@@ -125,8 +128,9 @@ export class EvaluationComponent {
       this.loading = false;
       return;
     }
+
     // retrieve recommendations
-    this.expressionService.recommend(id, 10)
+    service.recommend(id, 10, curstate.flat ? [1] : null, curstate.explain)
       .then(res => {
         this.loading = false;
         this.recommendation = res;

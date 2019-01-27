@@ -11,6 +11,7 @@ export class SummaryComponent {
   @Input() entity: Entity;
   @Input() eclass: string = 'expression'; //entity class, i.e. expression
   @Input() ext: boolean;
+  @Input() explain: any;
 
   getSourceImage(source: String) {
     if (!source) return null;
@@ -35,6 +36,11 @@ export class SummaryComponent {
         return null;
     }
   }
+  writeExplain(explain) {
+    let x = explain.map(y => y[0]).filter(y => y != 'period_old').join(', ')
+    return 'similar ' + x;
+  }
+
 }
 
 class Entity {

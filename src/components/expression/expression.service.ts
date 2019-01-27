@@ -36,7 +36,7 @@ export class ExpressionService {
     });
   }
 
-  get(id): Observable<any> {
+  get(id, light = false): Observable<any> {
     if (!id) return null;
 
     let params = new HttpParams().set('lang', Globals.lang);
@@ -62,13 +62,15 @@ export class ExpressionService {
       });
   }
 
-  recommend(id, n = 3) {
+  recommend(id, n = 3, weights: number[] = null, explain = false) {
     if (!id) return Promise.resolve(null);
 
     let params = new HttpParams().set('lang', Globals.lang)
-      .set('explain', 'false')
+      .set('explain', explain.toString())
       .set('n', n.toString());
-      
+
+    if (weights) params = params.set('w', weights.join(','));
+
     return this.http.get(`/api/recommendation/${id}`, { params })
       .toPromise();
   }

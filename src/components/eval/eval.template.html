@@ -20,11 +20,12 @@
 
     <div style="display:flex">
       <p class="lefted">SEED</p>
-      <summary class="seed" [ext]=true *ngIf="expression" [entity]="expression | summary: 'expression'" [eclass]="'expression'"></summary>
+      <artist class="seed" [ext]=true *ngIf="expression && type == 'artist'" [artist]="expression"></artist>
+      <summary class="seed" [ext]=true *ngIf="expression && type == 'expression'" [entity]="expression | summary: 'expression'" [eclass]="'expression'"></summary>
     </div>
 
     <p>
-      Given the seed work, please order the following recommended works:
+      Given the seed work/artist, please order the following recommended works/artists:
     </p>
 
     <loading *ngIf="loading">{{'rec.loading'|translate}}</loading>
@@ -32,12 +33,19 @@
 
     <div class="board" *ngIf="!loading && !error">
       <div cdkDropList #goodList="cdkDropList" class="eval-list" (cdkDropListDropped)="drop($event)" [cdkDropListData]="recommendation" [cdkDropListConnectedTo]="[trashList]">
-        <summary [ext]=true cdkDrag class="eval-box" *ngFor="let expr of recommendation; let i = index" [entity]="expr | summary: 'MusicComposition'"></summary>
+        <artist [ext]=true cdkDrag [explain]="explain ? expr.explain : null"
+         *ngFor="let expr of (type == 'artist' ? recommendation : []); let i = index" [artist]="expr"></artist>
+
+        <summary [ext]=true cdkDrag class="eval-box" [explain]="explain ? expr.explain : null"
+         *ngFor="let expr of (type == 'expression' ? recommendation : []); let i = index" [entity]="expr | summary: 'MusicComposition'"></summary>
         <p class="empty-msg" *ngIf="recommendation.length < 1">nothing to show</p>
       </div>
 
       <div cdkDropList id="trashList" #trashList="cdkDropList" class="eval-list mdi mdi-trash-can-outline mdi-36px" (cdkDropListDropped)="drop($event)" [cdkDropListData]="trash" [cdkDropListConnectedTo]="[goodList]">
-        <summary [ext]=true cdkDrag class="eval-box" *ngFor="let expr of trash; let i = index" [entity]="expr | summary: 'MusicComposition'"></summary>
+        <artist [ext]=true cdkDrag [explain]="explain ? expr.explain : null"
+         *ngFor="let expr of (type == 'artist' ? trash : []); let i = index" [artist]="expr"></artist>
+        <summary [ext]=true cdkDrag class="eval-box" [explain]="explain ? expr.explain : null"
+        *ngFor="let expr of (type == 'expression' ? trash: []); let i = index" [entity]="expr | summary: 'MusicComposition'"></summary>
         <p class="empty-msg mdi mdi-gesture-tap mdi-rotate-315" *ngIf="trash.length < 1">Drag&Drop here what is not appropriate</p>
       </div>
 

@@ -7,6 +7,7 @@ const cache = new Cache();
 
 const LIST_QUERY = fs.readJsonSync('server/queries/artist.list.json');
 const DETAIL_LIGHT_QUERY = fs.readJsonSync('server/queries/artist.detail.json');
+const DETAIL_QUERY = fs.readJsonSync('server/queries/artist.detail.json');
 const WORKS_QUERY = fs.readJsonSync('server/queries/artist.work.json');
 const PERFORMANCE_QUERY = fs.readJsonSync('server/queries/artist.performance.json');
 
@@ -33,12 +34,12 @@ export default class ArtistController {
   static get(req, res) {
     let artistUri = `http://data.doremus.org/artist/${req.params.id}`;
     let opt = {
-      lang: req.query.lang || 'en'
+      lang: req.query.lang || 'en',
+      light: req.query.light || false
     };
 
-    ArtistController.getDetail(artistUri, opt.lang)
+    ArtistController.getDetail(artistUri, opt.lang, opt.light)
       .then(results => {
-
         let mainObj = results['@graph'][0];
         // remove dbpedia duplicates
         let dbpedia = mainObj.sameAs && mainObj.sameAs
@@ -200,9 +201,10 @@ export default class ArtistController {
       artistUri,
       lang
     };
-    let cacheId = 'artist.detail' + light ? '.light' : '';
+      const lgt = light ? '.light' : '';
+    let cacheId = 'artist.detail' + artistUri + lgt;
 
-    return cache.get('artist.detail', opt)
+    return cache.get(cacheId, opt)
       .then(data => {
         if (data) return data;
 
