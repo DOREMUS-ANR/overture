@@ -6,7 +6,7 @@ import clone from 'clone';
 const cache = new Cache();
 
 const LIST_QUERY = fs.readJsonSync('server/queries/artist.list.json');
-const DETAIL_LIGHT_QUERY = fs.readJsonSync('server/queries/artist.detail.json');
+const DETAIL_LIGHT_QUERY = fs.readJsonSync('server/queries/artist.detail.light.json');
 const DETAIL_QUERY = fs.readJsonSync('server/queries/artist.detail.json');
 const WORKS_QUERY = fs.readJsonSync('server/queries/artist.work.json');
 const PERFORMANCE_QUERY = fs.readJsonSync('server/queries/artist.performance.json');
@@ -201,7 +201,7 @@ export default class ArtistController {
       artistUri,
       lang
     };
-      const lgt = light ? '.light' : '';
+    const lgt = light ? '.light' : '';
     let cacheId = 'artist.detail' + artistUri + lgt;
 
     return cache.get(cacheId, opt)
