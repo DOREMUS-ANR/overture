@@ -10,3 +10,5 @@ export const EXT_URI = {
   SPARQL_ENDPOINT: 'http://data.doremus.org/sparql',
   RECOMMENDER: prod ? 'http://recommender:5000' : 'http://localhost:5000',
 };
+
+export const OUT_FOLDER = prod? '/config' : '/Users/pasquale/git/overture/config';

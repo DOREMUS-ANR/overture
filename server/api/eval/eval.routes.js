@@ -1,4 +1,7 @@
-const fs = require('fs-extra')
+import fs from 'fs-extra';
+
+import { OUT_FOLDER } from '../../../config/constants';
+
 
 export default class EvalRoutes {
   static init(router) {
@@ -25,7 +28,7 @@ function saveEval(req, res){
     });
 }
 
-const out = "/Users/pasquale/git/overture/config/eval.json";
+const out = `${OUT_FOLDER}/eval.json`;
 function writeOut(content) {
 
   return fs.ensureFile(out)

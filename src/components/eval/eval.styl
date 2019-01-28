@@ -49,30 +49,25 @@ mat-spinner
         display block
         font-size 100px
 
-#trashList
-  // border: 4px dashed grayMedium
-  &:before
-    z-depth();
-    position: absolute;
-    top: -1em
-    background: lighterGray
-    border-radius: 50%
-    width: 1.2em;
-    height: 1.2em;
-    padding: .2em;
-    text-align: center;
-    right: 1em
-
-
-
 .eval-list
   border: solid 1px #ccc;
   min-height: 20em
   margin-bottom: 3em
-  border-radius: 4px;
   display: block;
   background: lighterGray
   position: relative;
+  border-radius 12px 12px 4px 4px
+
+  &:before
+    background darken(lighterGray, 10)
+    color #fff
+    display block
+    border-radius 12px 12px 0 0
+    height: 1.2em
+    padding: .2em;
+    text-align: center;
+    right: 1em
+
 
 
 .eval-box
