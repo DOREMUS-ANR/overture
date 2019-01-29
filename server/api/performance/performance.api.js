@@ -12,6 +12,7 @@ const LIST_QUERY = fs.readJsonSync('server/queries/performance.list.json');
 const DETAIL_QUERY = fs.readJsonSync('server/queries/performance.detail.json');
 const ARTISTS_QUERY = fs.readJsonSync('server/queries/performance.artists.json');
 const WORKS_QUERY = fs.readJsonSync('server/queries/performance.works.json');
+const REC_QUERY = fs.readJsonSync('server/queries/performance.rec.json');
 
 export default class PerfomanceController {
   static get(req, res) {
@@ -23,20 +24,20 @@ export default class PerfomanceController {
     Promise.all([
         PerfomanceController.getDetail(uri, opt.lang),
         PerfomanceController.getArtists(uri, opt.lang),
-        PerfomanceController.getWorks(uri, opt.lang)
+        PerfomanceController.getWorks(uri, opt.lang),
+        PerfomanceController.getRecording(uri, opt.lang),
       ])
       .then(r => {
-        let [results, pfs, works] = r;
-        console.log(results, pfs);
+        let [results, pfs, works, rec] = r;
         pfs = pfs['@graph'][0].performer;
         if (pfs) {
-          console.log(pfs);
           if (!Array.isArray(pfs)) pfs = [pfs];
           pfs.map(p => p.performer)
             .forEach(p => p['@type'] = p['@type'].includes('Person') ? 'Person' : 'PerformingGroup');
           results['@graph'][0].performer = pfs;
         }
         results['@graph'][0].workPerformed = works['@graph'];
+        results['@graph'][0].recordedAs = rec['@graph'];
         results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
         results.generatedAt = (new Date()).toISOString();
         res.json(results);
@@ -106,6 +107,33 @@ export default class PerfomanceController {
         query.$lang = lang;
         query.$values = {
           'id': uri
+        };
+
+        return sparqlTransformer(query, {
+          endpoint: 'http://data.doremus.org/sparql',
+          debug: true
+        }).then(result => {
+          cache.set(cacheId, opt, result);
+          return result;
+        });
+      });
+  }
+  static getRecording(uri, lang = 'en') {
+    let opt = {
+      uri,
+      lang
+    };
+    let cacheId = 'performance.recording';
+
+    return cache.get(cacheId, opt)
+      .then(data => {
+        if (data) return data;
+
+        let query = clone(REC_QUERY);
+
+        query.$lang = lang;
+        query.$values = {
+          'performance': uri
         };
 
         return sparqlTransformer(query, {

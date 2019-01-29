@@ -4,7 +4,6 @@ import { SharedService } from '../../services/sharedService.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 
-
 const defaultOverviewPic = '/static/img/bg/violin_string.jpg';
 const organizBase = 'http://data.doremus.org/organization/';
 const institutions = {
@@ -34,6 +33,7 @@ export class PerformanceDetailComponent {
   performers: any[];
   sharedService: SharedService;
   performance: any;
+  recording: any;
   recommendation: [any];
   querying: boolean;
   error: boolean = false;
@@ -51,7 +51,7 @@ export class PerformanceDetailComponent {
 
       if (id) {
         this.querying = true;
-
+        this.recording = null;
         this.performanceService.get(id).subscribe(exp => {
           this.performance = exp['@graph'][0];
           this.performance.uri = 'http://data.doremus.org/performance/' + id;
@@ -66,6 +66,7 @@ export class PerformanceDetailComponent {
           this.error = false;
 
           this.overviewPic = defaultOverviewPic;
+          this.recording = this.performance.recordedAs && this.performance.recordedAs[0];
 
           this.performers = this.performance.performer;
           if (!Array.isArray(this.performers)) this.performers = [this.performers];

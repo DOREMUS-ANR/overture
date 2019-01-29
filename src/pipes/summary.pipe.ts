@@ -32,7 +32,7 @@ export class SummaryPipe implements PipeTransform {
           small: value.alternativeHeadline,
           image,
           source,
-          tag: value.derivation || ''
+          tag: value.derivation ? [value.derivation] : []
         }
       case 'event':
       case 'MusicEvent':
@@ -55,13 +55,18 @@ export class SummaryPipe implements PipeTransform {
           else if (value.actorName) title += ' by ' + value.actorName
         }
 
+        let tag = [];
+
+        if (value.recordedAs) tag.push('recorded');
+        if (value.firstPerformance) tag.push('premiere');
+
         return {
           super: _super.join(', '),
           title,
           source,
           link: ['/performance', id],
           image: 'static/img/performance_placeholder.png',
-          tag: value.firstPerformance ? 'premiere' : null
+          tag
         }
       case 'PublicationEvent':
         id = value['@id'].replace('http://data.doremus.org/publication/', '')
@@ -71,7 +76,7 @@ export class SummaryPipe implements PipeTransform {
           source,
           super: `${value.date ? moment(value.date).year() : ''}${separator(value)}${(value.location && value.location.name) || ''}`,
           title: value.name || value.description || 'Publication',
-          tag: value.firstPublication ? 'princeps publication' : null
+          tag: value.firstPublication ? ['princeps publication'] : []
         }
       default:
         console.log("I should not arrive here.", eclass, value)

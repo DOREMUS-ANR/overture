@@ -15,11 +15,13 @@
       "@id": "$ecrm:P7_took_place_at",
       "name": "$rdfs:label$required$bestlang$var:place",
       "containedInPlace": "$ecrm:P89_falls_within*/geonames:countryCode"
-    }
+    },
+    "recordedAs" : "?rec"
   }],
   "$where": [
     "?id a efrbroo:F31_Performance",
     "OPTIONAL{?id ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date}",
-    "OPTIONAL{?id ecrm:P9_consists_of/ efrbroo:R17_created ?perfExpr. [] mus:U55_incorporates_performed_expression ?perfExpr; rdfs:label ?pub}"
+    "OPTIONAL{?id ecrm:P9_consists_of/ efrbroo:R17_created ?perfExpr. [] mus:U55_incorporates_performed_expression ?perfExpr; rdfs:label ?pub}",
+    "OPTIONAL{?rec efrbroo:R20_recorded ?id}"
   ]
 }

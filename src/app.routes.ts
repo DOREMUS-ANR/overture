@@ -25,7 +25,7 @@ import { EvaluationComponent } from './components/eval/eval.component';
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'search/:input', component: SearchResultsComponent, data: { title: 'Search' } },
-  { path: 'recording', component: WipComponent, data: { title: 'nav.recording' } },
+  // { path: 'recording', component: WipComponent, data: { title: 'nav.recording' } },
   { path: 'score', component: ScoreTabComponent, data: { title: 'nav.score' } },
   {
     path: 'artist', component: ArtistComponent,

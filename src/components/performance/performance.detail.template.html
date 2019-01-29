@@ -38,6 +38,38 @@
             <a [routerLink]="['/performance']" [queryParams]="{ place: performance.location.name['@value'] || performance.location.name }">{{performance.location.name | jsonLDval}}</a>
             <span *ngIf="performance.location.containedInPlace">, {{performance.location.containedInPlace}}</span>
           </div>
+
+          <h3 *ngIf="recording">{{'recording'|translate}}</h3>
+
+          <div *ngIf="recording && recording.duration">
+            <label>{{'Duration'|translate}}</label>
+            <span>{{recording.duration | duration}}</span>
+          </div>
+
+          <div *ngIf="recording && recording.frequency">
+            <label>{{'Frequency'|translate}}</label>
+            <span>{{recording.frequency}} Hz</span>
+          </div>
+
+          <div *ngIf="recording && recording.author">
+            <label>{{'Recorded by'|translate}}</label>
+            <ul>
+              <li *ngFor="let a of recording.author">
+                {{a.author.name|jsonLDval}} <span class="tag">{{a.description|jsonLDval}}</span>
+              </li>
+            </ul>
+          </div>
+
+          <div *ngIf="recording && recording.editing && recording.editing.author">
+            <label>{{'Edited by'|translate}}</label>
+            <ul>
+              <li *ngFor="let a of recording.editing.author">
+                {{a.author.name|jsonLDval}} <span class="tag">{{a.description|jsonLDval}}</span>
+              </li>
+            </ul>
+          </div>
+
+
         </div>
       </div>
     </div>

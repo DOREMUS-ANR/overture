@@ -27,6 +27,7 @@ import { KeysPipe } from './pipes/keys.pipe';
 import { SummaryPipe } from './pipes/summary.pipe';
 import { JsonLDvalPipe } from './pipes/jsonLDval.pipe';
 import { StripDbpediaPipe } from './pipes/strip_dbpedia.pipe';
+import { DurationPipe } from './pipes/duration.pipe';
 
 
 import { JsonLdModule } from './jsonld/jsonld.module';
@@ -85,9 +86,9 @@ export function createTranslateLoader(http: HttpClient) {
         useFactory: (createTranslateLoader),
         deps: [HttpClient]
       }
-    })
+    }),
   ],
-  declarations: [AppComponent, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe,
+  declarations: [AppComponent, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe, DurationPipe,
     HomeComponent, SearchResultsComponent,
     ErrorComponent, LoadingComponent, TimelineComponent,
     ScoreTabComponent,
@@ -98,7 +99,7 @@ export function createTranslateLoader(http: HttpClient) {
     WipComponent, EvaluationComponent, TopNavComponent, SearchComponent
   ],
   bootstrap: [AppComponent],
-  providers: [SharedService, Globals, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe, Title]
+  providers: [SharedService, Globals, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe, DurationPipe, Title]
 })
 
 export class AppModule {

@@ -1,0 +1,40 @@
+{
+  "@context": "http://schema.org",
+  "@graph": [{
+    "@type": "MusicRecording",
+    "@id": "?id",
+    "duration": "?duration",
+    "frequency": "?frequency",
+    "author": {
+      "@id": "$ecrm:P9_consists_of$required",
+      "@type": "Role",
+      "author": {
+        "@type": "Person",
+        "@id": "$ecrm:P14_carried_out_by$required",
+        "name": "$rdfs:label$required$bestlang",
+        "image": "$foaf:depiction$sample"
+      },
+      "description": "$mus:U31_had_function/skos:prefLabel$bestlang"
+    },
+    "editing": {
+      "@id": "?editing",
+      "author": {
+        "@id": "$ecrm:P9_consists_of$required",
+        "@type": "Role",
+        "author": {
+          "@type": "Person",
+          "@id": "$ecrm:P14_carried_out_by$required",
+          "name": "$rdfs:label$required$bestlang",
+          "image": "$foaf:depiction$sample"
+        },
+        "description": "$mus:U31_had_function/skos:prefLabel$bestlang"
+      }
+    }
+  }],
+  "$where": [
+    "?id efrbroo:R20_recorded ?performance",
+    "?id efrbroo:R21_created ?r",
+    "?editing mus:U29_edited  ?r",
+    "?r mus:U53_has_duration ?duration; dbo:frequency ?frequency"
+  ]
+}

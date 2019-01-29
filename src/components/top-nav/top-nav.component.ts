@@ -13,7 +13,7 @@ export class TopNavComponent {
   showNav: boolean = false;
   searchInput: string;
 
-  routes = ['expression', 'performance', 'recording', 'score', 'artist'];
+  routes = ['expression', 'performance', 'score', 'artist'];
 
   constructor(private router: Router) { }
 
