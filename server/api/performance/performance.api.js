@@ -14,7 +14,7 @@ const ARTISTS_QUERY = fs.readJsonSync('server/queries/performance.artists.json')
 const WORKS_QUERY = fs.readJsonSync('server/queries/performance.works.json');
 const REC_QUERY = fs.readJsonSync('server/queries/performance.rec.json');
 
-export default class PerfomanceController {
+export default class PerformanceController {
   static get(req, res) {
     let uri = `http://data.doremus.org/performance/${req.params.id}`;
     let opt = {
@@ -22,10 +22,10 @@ export default class PerfomanceController {
     };
 
     Promise.all([
-        PerfomanceController.getDetail(uri, opt.lang),
-        PerfomanceController.getArtists(uri, opt.lang),
-        PerfomanceController.getWorks(uri, opt.lang),
-        PerfomanceController.getRecording(uri, opt.lang),
+        PerformanceController.getDetail(uri, opt.lang),
+        PerformanceController.getArtists(uri, opt.lang),
+        PerformanceController.getWorks(uri, opt.lang),
+        PerformanceController.getRecording(uri, opt.lang),
       ])
       .then(r => {
         let [results, pfs, works, rec] = r;
@@ -97,26 +97,23 @@ export default class PerfomanceController {
       lang
     };
     let cacheId = 'performance.detail';
+    let data = cache.get(cacheId, opt)
 
-    return cache.get(cacheId, opt)
-      .then(data => {
-        if (data) return data;
+    if (data) return Promise.resolve(data);
 
-        let query = clone(DETAIL_QUERY);
+    let query = clone(DETAIL_QUERY);
 
-        query.$lang = lang;
-        query.$values = {
-          'id': uri
-        };
-
-        return sparqlTransformer(query, {
-          endpoint: 'http://data.doremus.org/sparql',
-          debug: true
-        }).then(result => {
-          cache.set(cacheId, opt, result);
-          return result;
-        });
-      });
+    query.$lang = lang;
+    query.$values = {
+      'id': uri
+    };
+    return sparqlTransformer(query, {
+      endpoint: 'http://data.doremus.org/sparql',
+      debug: true
+    }).then(result => {
+      cache.set(cacheId, opt, result);
+      return result;
+    });
   }
   static getRecording(uri, lang = 'en') {
     let opt = {
@@ -125,26 +122,25 @@ export default class PerfomanceController {
     };
     let cacheId = 'performance.recording';
 
-    return cache.get(cacheId, opt)
-      .then(data => {
-        if (data) return data;
+    let data =  cache.get(cacheId, opt)
+    if (data) return Promise.resolve(data);
 
-        let query = clone(REC_QUERY);
+    let query = clone(REC_QUERY);
 
-        query.$lang = lang;
-        query.$values = {
-          'performance': uri
-        };
+    query.$lang = lang;
+    query.$values = {
+      'performance': uri
+    };
 
-        return sparqlTransformer(query, {
-          endpoint: 'http://data.doremus.org/sparql',
-          debug: true
-        }).then(result => {
-          cache.set(cacheId, opt, result);
-          return result;
-        });
-      });
+    return sparqlTransformer(query, {
+      endpoint: 'http://data.doremus.org/sparql',
+      debug: true
+    }).then(result => {
+      cache.set(cacheId, opt, result);
+      return result;
+    });
   }
+
   static getWorks(uri, lang = 'en') {
     let opt = {
       uri,
@@ -152,25 +148,23 @@ export default class PerfomanceController {
     };
     let cacheId = 'performance.works';
 
-    return cache.get(cacheId, opt)
-      .then(data => {
-        if (data) return data;
+    let data = cache.get(cacheId, opt)
+    if (data) return Promise.resolve(data);
 
-        let query = clone(WORKS_QUERY);
+    let query = clone(WORKS_QUERY);
 
-        query.$lang = lang;
-        query.$values = {
-          'performance': uri
-        };
+    query.$lang = lang;
+    query.$values = {
+      'performance': uri
+    };
 
-        return sparqlTransformer(query, {
-          endpoint: 'http://data.doremus.org/sparql',
-          debug: true
-        }).then(result => {
-          cache.set(cacheId, opt, result);
-          return result;
-        });
-      });
+    return sparqlTransformer(query, {
+      endpoint: 'http://data.doremus.org/sparql',
+      debug: true
+    }).then(result => {
+      cache.set(cacheId, opt, result);
+      return result;
+    });
   }
 
   static getArtists(uri, lang = 'en') {
@@ -180,24 +174,22 @@ export default class PerfomanceController {
     };
     let cacheId = 'performance.artists';
 
-    return cache.get(cacheId, opt)
-      .then(data => {
-        if (data) return data;
+    let data = cache.get(cacheId, opt);
+    if (data) return Promise.resolve(data);
 
-        let query = clone(ARTISTS_QUERY);
+    let query = clone(ARTISTS_QUERY);
 
-        query.$lang = lang;
-        query.$values = {
-          'id': uri
-        };
+    query.$lang = lang;
+    query.$values = {
+      'id': uri
+    };
 
-        return sparqlTransformer(query, {
-          endpoint: 'http://data.doremus.org/sparql',
-          debug: true
-        }).then(result => {
-          cache.set(cacheId, opt, result);
-          return result;
-        });
-      });
+    return sparqlTransformer(query, {
+      endpoint: 'http://data.doremus.org/sparql',
+      debug: true
+    }).then(result => {
+      cache.set(cacheId, opt, result);
+      return result;
+    });
   }
 }

@@ -89,21 +89,9 @@ export default class ExpressionController {
 
   static get(req, res) {
     let uri = `<http://data.doremus.org/expression/${req.params.id}>`;
-    sparql.loadQuery('expression.detail', {
-        uri,
-        lang: req.query.lang
-      })
-      .then(r => {
-        let data = r.results.bindings;
-        let expression = array2obj(data, 'expression');
 
-        if (expression.alternateName) {
-          if (!Array.isArray(expression.alternateName))
-            expression.alternateName = [expression.alternateName];
-          expression.alternateName = expression.alternateName
-            .filter(a => a['@language'] || a !== expression.name);
-        }
-
+    ExpressionController.getDetail(uri, req.query.lang)
+      .then(expression => {
         if (!expression.derivation)
           return Promise.resolve(expression);
 
@@ -127,6 +115,25 @@ export default class ExpressionController {
         res.json(result);
       })
       .catch(err => sendStandardError(res, err));
+  }
+
+static getDetail(uri, lang){
+  console.log(uri);
+  return sparql.loadQuery('expression.detail', { uri, lang })
+    .then(r => {
+      console.log('aaaa');
+      let data = r.results.bindings;
+      let expression = array2obj(data, 'expression');
+      expression.id = uri;
+      if (expression.alternateName) {
+        if (!Array.isArray(expression.alternateName))
+          expression.alternateName = [expression.alternateName];
+        expression.alternateName = expression.alternateName
+          .filter(a => a['@language'] || a !== expression.name);
+      }
+
+      return Promise.resolve(expression);
+    });
   }
 
   static getRealisations(req, res) {

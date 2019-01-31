@@ -31,7 +31,7 @@ WHERE {
   VALUES ?expression { %%uri%% }
 
   ?expression a efrbroo:F22_Self-Contained_Expression ;
-              rdfs:label ?name .
+              rdfs:label | ecrm:P102_has_title ?name .
   ?work efrbroo:R9_is_realised_in ?expression.
   OPTIONAL {?work mus:U47_has_derivation_type ?derivation_uri ; efrbroo:R2_is_derivative_of ?derivativeOf
     {  SELECT ?derivation_uri sql:BEST_LANGMATCH(?derivation, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?derivation

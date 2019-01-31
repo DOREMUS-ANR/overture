@@ -1,6 +1,6 @@
 {
   "name": "overture",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Exploring music data in DOREMUS",
   "main": "index.js",
   "scripts": {
@@ -51,7 +51,7 @@
     "rxjs-compat": "^6.3.3",
     "similarity": "^1.1.1",
     "sparql-client2": "^0.2.0",
-    "sparql-transformer": "^1.6.1",
+    "sparql-transformer": "^1.6.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

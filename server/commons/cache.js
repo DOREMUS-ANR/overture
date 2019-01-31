@@ -13,19 +13,15 @@ export default class Cache {
   }
 
   get(api, params) {
-    return new Promise(resolve => {
-      let key = api + '?' + JSON.stringify(params);
-      this.cache.get(key, (err, data) => {
-        resolve(data);
-      });
-    });
+    let key = api + '?' + JSON.stringify(params);
+      this.cache.get(key);
   }
 
   set(api, params, value) {
-    if (params.nocache) return Promise.resolve(value);
-    return new Promise((resolve) => {
+    if (value && !params.nocache) {
       let key = api + '?' + JSON.stringify(params);
-      this.cache.set(key, value, () => resolve(value));
-    });
+      this.cache.set(key, value);
+    }
+    return value;
   }
 }

@@ -9,8 +9,6 @@ import { ArtistComponent } from './components/artist/artist.component';
 import { ArtistListComponent } from './components/artist/artist.list.component';
 import { ArtistDetailComponent } from './components/artist/artist.detail.component';
 
-import { ScoreTabComponent } from './components/score-tab/score-tab.component';
-
 import { ExpressionComponent } from './components/expression/expression.component';
 import { ExpressionListComponent } from './components/expression/expression.list.component';
 import { ExpressionDetailComponent } from './components/expression/expression.detail.component';
@@ -19,14 +17,23 @@ import { PerformanceComponent } from './components/performance/performance.compo
 import { PerformanceListComponent } from './components/performance/performance.list.component';
 import { PerformanceDetailComponent } from './components/performance/performance.detail.component';
 
+import { ScoreComponent } from './components/score/score.component';
+import { ScoreListComponent } from './components/score/score.list.component';
+import { ScoreDetailComponent } from './components/score/score.detail.component';
+
 import { WipComponent } from './components/wip/wip.component';
 import { EvaluationComponent } from './components/eval/eval.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'search/:input', component: SearchResultsComponent, data: { title: 'Search' } },
-  // { path: 'recording', component: WipComponent, data: { title: 'nav.recording' } },
-  { path: 'score', component: ScoreTabComponent, data: { title: 'nav.score' } },
+  {
+    path: 'score', component: ScoreComponent,
+    children: [
+      { path: ':id', component: ScoreDetailComponent },
+      { path: '', component: ScoreListComponent, data: { title: 'nav.score' } }
+    ]
+  },
   {
     path: 'artist', component: ArtistComponent,
     children: [
@@ -48,7 +55,7 @@ const appRoutes: Routes = [
       { path: '', component: PerformanceListComponent, data: { title: 'nav.performance' } }
     ]
   },
-  { path: 'evaluation', component: EvaluationComponent},
+  { path: 'evaluation', component: EvaluationComponent },
   { path: 'wip', component: WipComponent },
   { path: '**', component: HomeComponent }
 ]

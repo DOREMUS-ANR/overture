@@ -1,0 +1,62 @@
+<div class="bearing" *ngIf="!score"></div>
+<error-msg *ngIf="error"></error-msg>
+
+<loading *ngIf="querying"></loading>
+
+<article *ngIf="score" class="expression-detail">
+  <section class="overview">
+    <div [style.background-image]="safePic(overviewPic)" class="bg"></div>
+    <div class="overview-cont">
+      <div class="title-cont">
+        <h1 class="title" *ngIf="score.name">{{score.name | jsonLDval}}</h1>
+        <h1 class="title" *ngIf="!score.name">{{'score' | translate}}</h1>
+        <p class="other-title" [innerHTML]="score.additionalType"></p>
+        <p class="other-title" [innerHTML]="score.alternateName| jsonLDval: ['lang','array']"></p>
+
+        <div class="note">
+          <p [innerHTML]="score.description | jsonLDval: ['lang','array']"></p>
+        </div>
+
+      </div>
+      <div class="info-cont">
+        <div class="sources" *ngIf="score.sourceOrganization">
+          <span class="source">
+            <img src='{{getSource(score.sourceOrganization).img}}' alt='{{getSource(score.sourceOrganization).label}}' title="data from {{getSource(score.sourceOrganization).label}}" />
+          </span>
+        </div>
+        <div class="info-card">
+          <div *ngIf="score.location">
+            <label>{{'Location'|translate}}</label>
+            <a [routerLink]="['/score']" [queryParams]="{ place: score.location.name['@value'] || score.location.name }">{{score.location.name | jsonLDval}}</a>
+            <span *ngIf="score.location.containedInPlace">, {{score.location.containedInPlace}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="main info flexy">
+    <section id="works" *ngIf="score.about">
+      <h2>{{'Included works'|translate}}</h2>
+
+      <div class="card-list">
+        <div *ngFor="let a of score.about">
+          <summary [entity]="a | summary: 'MusicComposition'" [eclass]="a['@type']"></summary>
+        </div>
+      </div>
+      <div *ngIf="score.about.length<1">Information not available</div>
+    </section>
+
+    <section id="works" *ngIf="score.subjectOf">
+      <h2>{{'Used in'|translate}}</h2>
+
+      <div class="card-list">
+        <div *ngFor="let a of score.subjectOf">
+          <summary [entity]="a | summary" [eclass]="a['@type']"></summary>
+        </div>
+      </div>
+      <div *ngIf="score.about.length<1">Information not available</div>
+    </section>
+
+  </div>
+</article>

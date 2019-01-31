@@ -47,10 +47,12 @@ export default class Sparql {
 
     opt.offset = opt.offset || 0;
 
-    return this.cache.get(queryId, opt).then(data => {
-      if (data) return data;
+    let data = this.cache.get(queryId, opt);
+    if (data) return data;
       return fs.readFile(_file, 'utf8')
         .then(query => {
+          console.log('bbb');
+
           // find and solve the $if statements
           query = query.replace(IF_REGEX,
             (match, condition, content) => opt[condition] ? content : '');
@@ -71,8 +73,6 @@ export default class Sparql {
           this.cache.set(queryId, opt, res);
           return res;
         });
-
-    });
   }
 
 }

@@ -48,8 +48,6 @@ import { ArtistDetailComponent } from './components/artist/artist.detail.compone
 import { ArtistSummaryComponent } from './components/artist/artist.summary.component';
 import { ArtistRecommendationComponent } from './components/artist/artist.recommendation.component';
 
-import { ScoreTabComponent } from './components/score-tab/score-tab.component';
-
 import { ExpressionComponent } from './components/expression/expression.component';
 import { ExpressionListComponent } from './components/expression/expression.list.component';
 import { ExpressionDetailComponent } from './components/expression/expression.detail.component';
@@ -57,6 +55,10 @@ import { ExpressionDetailComponent } from './components/expression/expression.de
 import { PerformanceComponent } from './components/performance/performance.component';
 import { PerformanceListComponent } from './components/performance/performance.list.component';
 import { PerformanceDetailComponent } from './components/performance/performance.detail.component';
+
+import { ScoreComponent } from './components/score/score.component';
+import { ScoreListComponent } from './components/score/score.list.component';
+import { ScoreDetailComponent } from './components/score/score.detail.component';
 
 import { RecommendationComponent } from './components/expression/recommendation.component';
 import { SummaryComponent } from './components/summary/summary.component';
@@ -91,10 +93,10 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [AppComponent, KeysPipe, SummaryPipe, JsonLDvalPipe, StripDbpediaPipe, DurationPipe,
     HomeComponent, SearchResultsComponent,
     ErrorComponent, LoadingComponent, TimelineComponent,
-    ScoreTabComponent,
     ArtistComponent, ArtistListComponent, ArtistDetailComponent, ArtistSummaryComponent, ArtistRecommendationComponent,
     ExpressionComponent, ExpressionListComponent, ExpressionDetailComponent, RecommendationComponent,
     PerformanceComponent, PerformanceListComponent, PerformanceDetailComponent,
+    ScoreComponent, ScoreListComponent, ScoreDetailComponent,
     SummaryComponent,
     WipComponent, EvaluationComponent, TopNavComponent, SearchComponent
   ],

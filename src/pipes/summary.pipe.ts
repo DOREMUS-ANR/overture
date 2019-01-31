@@ -9,7 +9,7 @@ export class SummaryPipe implements PipeTransform {
     if (!value) return null;
     var date, id;
     var source = value.sourceOrganization || value.source;
-    switch (eclass) {
+    switch (eclass || value['@type']) {
       case 'expression':
       case 'MusicComposition':
         id = value.id || value['@id'].replace('http://data.doremus.org/expression/', '')
@@ -68,6 +68,20 @@ export class SummaryPipe implements PipeTransform {
           image: 'static/img/performance_placeholder.png',
           tag
         }
+
+      case 'Book':
+        console.log('a')
+        id = value['@id'].replace('http://data.doremus.org/manifestation/', '')
+
+        return {
+          link: ['/score', id],
+          source,
+          image: 'static/img/score.png',
+          super: `${value.date ? moment(value.date).year() : ''}${separator(value)}${(value.location && value.location.name) || ''}`,
+          title: value.name,
+          tag: Array.isArray(value.additionalType) ? value.additionalType : [value.additionalType]
+        }
+
       case 'PublicationEvent':
         id = value['@id'].replace('http://data.doremus.org/publication/', '')
 
