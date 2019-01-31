@@ -9,6 +9,7 @@
   "nav.recording": "Enregistrements",
   "nav.score": "Partitions",
   "nav.artist": "Artistes",
+  "recording": "enregistrement",
   "Title": "Titre",
   "Composer": "Compositeur",
   "Musical key": "Tonalité",
@@ -45,5 +46,9 @@
   "footer.dataviz": "Les données affichées proviennent des bases de :",
   "footer.doremus" : "OVERTURE est développé dans le cadre du projet DOREMUS (description, publication, inter-connection et contextualisation de données musicales dans le web de données).",
   "composes the work" : "compose l'œuvre",
-  "compose the work" : "composent l'œuvre"
+  "compose the work" : "composent l'œuvre",
+  "recorded": "Enregistrée",
+  "recorded by": "Enregistrée par",
+  "edited by": "Editing par"
+
 }

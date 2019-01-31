@@ -718,12 +718,14 @@ MIT
 
 @angular/material/button
 
+@angular/material/form-field
+
 @angular/forms
 MIT
 
-@angular/material/slider
+@angular/material/core
 
-@angular/material/icon
+@angular/material/autocomplete
 
 ngx-infinite-scroll
 MIT
@@ -750,11 +752,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-@angular/material/form-field
+@angular/material/slider
 
-@angular/material/core
-
-@angular/material/autocomplete
+@angular/material/icon
 
 @angular/material/progress-spinner
 
