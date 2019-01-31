@@ -51,44 +51,42 @@ export default class PerformanceController {
       lang: 'en'
     }, req.query);
 
-    cache.get('performance.list', opt)
-      .then(data => {
-        if (data) return res.json(data);
+    let data = cache.get('performance.list', opt)
+    if (data) return res.json(data);
 
-        let query = clone(LIST_QUERY);
-        query.$filter = [];
+    let query = clone(LIST_QUERY);
+    query.$filter = [];
 
-        if (opt.year) {
-          let y = parseInt(opt.year);
-          if (!isNaN(y))
-            query.$filter = [
-              `?date >= "${y}"^^xsd:gYear`,
-              `?date < "${y+1}"^^xsd:gYear`
-            ];
-        }
-        if (opt.place) {
-          query['@graph'][0].location['@id'] += '$required';
+    if (opt.year) {
+      let y = parseInt(opt.year);
+      if (!isNaN(y))
+        query.$filter = [
+          `?date >= "${y}"^^xsd:gYear`,
+          `?date < "${y+1}"^^xsd:gYear`
+        ];
+    }
+    if (opt.place) {
+      query['@graph'][0].location['@id'] += '$required';
 
-          query.$where.push('?id ecrm:P7_took_place_at/ecrm:P89_falls_within*/rdfs:label ?plc');
-          query.$filter.push(`(regex(str(?plc),'${opt.place.replace(/[àáèéëíìòóùúçč]/g, '.{1,2}')}', 'i'))`);
+      query.$where.push('?id ecrm:P7_took_place_at/ecrm:P89_falls_within*/rdfs:label ?plc');
+      query.$filter.push(`(regex(str(?plc),'${opt.place.replace(/[àáèéëíìòóùúçč]/g, '.{1,2}')}', 'i'))`);
 
-        }
+    }
 
-        query.$limit = opt.lim;
-        query.$offset = opt.offset;
-        query.$lang = opt.lang;
+    query.$limit = opt.lim;
+    query.$offset = opt.offset;
+    query.$lang = opt.lang;
 
-        sparqlTransformer(query, {
-            endpoint: 'http://data.doremus.org/sparql',
-            debug: true
-          }).then(results => {
-            results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
-            results.generatedAt = (new Date()).toISOString();
-            cache.set('artist.list', opt, results);
-            res.json(results);
-          })
-          .catch(err => sendStandardError(res, err));
-      }).catch(err => sendStandardError(res, err));
+    sparqlTransformer(query, {
+        endpoint: 'http://data.doremus.org/sparql',
+        debug: true
+      }).then(results => {
+        results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+        results.generatedAt = (new Date()).toISOString();
+        cache.set('artist.list', opt, results);
+        res.json(results);
+      })
+      .catch(err => sendStandardError(res, err));
   }
 
   static getDetail(uri, lang = 'en') {
