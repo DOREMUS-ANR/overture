@@ -36,6 +36,7 @@ export class EvaluationComponent {
   sentState = '';
   comment: String;
   type: string;
+  ip: string;
 
   constructor(private http: HttpClient,
     private expressionService: ExpressionService,
@@ -44,6 +45,8 @@ export class EvaluationComponent {
 
     let hash = window.location.hash;
     this.state = (hash && parseInt(hash.substr(1))) || 1;
+    http.get('https://api.ipify.org?format=json')
+          .subscribe((data:any) => this.ip = data.ip);
 
     if (isPlatformBrowser(this.platformId)) this.changeSeed();
 
@@ -188,9 +191,9 @@ export class EvaluationComponent {
     this.sentState = 'pending';
     let obj = {
       states,
-      comment: this.comment
+      comment: this.comment,
+      ip: this.ip
     }
-
     this.http.post('/api/eval/', obj, httpOptions)
       .subscribe(
         () => { this.sentState = 'success'; },

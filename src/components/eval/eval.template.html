@@ -33,7 +33,7 @@
 
     <div class="board" *ngIf="!loading && !error">
       <div cdkDropList id="goodList" #goodList="cdkDropList" class="eval-list mdi mdi-thumb-up mdi-36px" (cdkDropListDropped)="drop($event)" [cdkDropListData]="recommendation" [cdkDropListConnectedTo]="[trashList]">
-        <artist [ext]=true cdkDrag [explain]="explain ? expr.explain : null" *ngFor="let expr of (type == 'artist' ? recommendation : []); let i = index" [artist]="expr"></artist>
+        <artist [ext]=true cdkDrag class="eval-box" [explain]="explain ? expr.explain : null" *ngFor="let expr of (type == 'artist' ? recommendation : []); let i = index" [artist]="expr"></artist>
 
         <summary [ext]=true cdkDrag class="eval-box" [explain]="explain ? expr.explain : null" *ngFor="let expr of (type == 'expression' ? recommendation : []); let i = index" [entity]="expr | summary: 'MusicComposition'"></summary>
         <p class="empty-msg" *ngIf="recommendation.length < 1">nothing to show</p>

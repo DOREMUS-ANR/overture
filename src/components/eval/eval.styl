@@ -69,7 +69,6 @@ mat-spinner
     right: 1em
 
 
-
 .eval-box
   border-bottom: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
@@ -85,6 +84,18 @@ mat-spinner
   .entity-summary
       width: 100%
 
+#goodList
+  counter-reset: goodCounter;
+  .eval-box
+    position: relative;
+    counter-increment: goodCounter;
+    &:before
+      content: counter(goodCounter)
+      background grayLight
+      padding: .3em .5em
+      border-radius: 0 50% 50% 0
+      position: absolute
+      top: 3em
 
 
 .cdk-drag-preview {
