@@ -87,7 +87,7 @@
       <div *ngIf="performance.workPerformed.length<1">Information not available</div>
     </section>
 
-    <section>
+    <section *ngIf="performers">
       <h2>{{'Cast'|translate}}</h2>
       <artist *ngFor="let artist of performers" [artist]="artist"></artist>
     </section>

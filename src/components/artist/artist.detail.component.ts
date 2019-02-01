@@ -70,7 +70,7 @@ export class ArtistDetailComponent {
         this.functions = {};
         this.functionList = new Set<string>(graph.map(x => {
           let d = x.author.description;
-          return d['@value'] || d;
+          return (d && d['@value']) || d;
         }));
         if (!this.functionList.size)
           this.functionList = null;

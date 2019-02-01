@@ -3,25 +3,23 @@ import fs from 'fs-extra';
 import clone from 'clone';
 import Sparql from '../../commons/sparql';
 import {
-  sendStandardError
+  sendStandardError,
 } from '../../commons/utils';
 
-var sparql = new Sparql();
+const sparql = new Sparql();
 
 const PERFORMANCE_QUERY = fs.readJsonSync('server/queries/expression.performance.json');
 const PUBLICATION_QUERY = fs.readJsonSync('server/queries/expression.publication.json');
 const LIST_QUERY = fs.readJsonSync('server/queries/expression.list.json');
 
 function padProp(p) {
-  'use strict';
-  let pre = ((p === 'id') ? '@' : '');
+  const pre = ((p === 'id') ? '@' : '');
   return pre + p;
 }
 
 function smartMerge(candidateValue, oldValue) {
-  'use strict';
-  let cv = candidateValue;
-  let ov = oldValue;
+  const cv = candidateValue;
+  const ov = oldValue;
   if (!ov || ov === cv) return cv;
 
   if (ov.uri && ov.uri === cv.uri) return cv;
@@ -29,11 +27,9 @@ function smartMerge(candidateValue, oldValue) {
 
   if (Array.isArray(ov)) {
     if (cv.uri) {
-      if (ov.every(p => p.uri !== cv.uri))
-        ov.push(cv);
+      if (ov.every(p => p.uri !== cv.uri)) ov.push(cv);
     } else if (cv['@value']) {
-      if (ov.every(p => p['@value'] !== cv['@value']))
-        ov.push(cv);
+      if (ov.every(p => p['@value'] !== cv['@value'])) ov.push(cv);
     } else if (!ov.includes(cv)) ov.push(cv);
     return ov;
   }
@@ -43,40 +39,43 @@ function smartMerge(candidateValue, oldValue) {
 
 
 function array2obj(input, mergeKey, splitOn = '_') {
-  input.forEach(l => { //line
-    Object.keys(l).forEach(k => {
-      let current = l[k];
-      let v = current.value,
-        lang = current['xml:lang'],
-        datatype = current.datatype;
+  input.forEach((l) => { // line
+    Object.keys(l).forEach((k) => {
+      const current = l[k];
+      let v = current.value;
 
-      if (datatype && datatype === 'http://www.w3.org/2001/XMLSchema#int')
-        v = parseInt(v);
-      let considerLang = (k === 'alternateName' && lang);
+
+const lang = current['xml:lang'];
+
+
+const datatype = current.datatype;
+
+      if (datatype && datatype === 'http://www.w3.org/2001/XMLSchema#int') v = parseInt(v);
+      const considerLang = (k === 'alternateName' && lang);
 
       l[k] = considerLang ? {
         '@value': v,
-        '@language': lang
+        '@language': lang,
       } : v;
     });
-    Object.keys(l).forEach(k => {
+    Object.keys(l).forEach((k) => {
       if (!k.includes(splitOn)) return;
-      let [k1, k2] = k.split(splitOn);
+      const [k1, k2] = k.split(splitOn);
       if (!l[k1]) l[k1] = {};
       l[k1][k2] = l[k];
       delete l[k];
     });
   });
 
-  let output = [];
-  let uniques = Array.from(new Set(input.map(item => item[mergeKey])));
+  const output = [];
+  const uniques = Array.from(new Set(input.map(item => item[mergeKey])));
 
-  uniques.forEach(x => {
-    let subset = input.filter(item => item[mergeKey] === x);
-    let obj = {};
+  uniques.forEach((x) => {
+    const subset = input.filter(item => item[mergeKey] === x);
+    const obj = {};
 
-    subset.forEach(item => {
-      Object.keys(item).forEach(k => {
+    subset.forEach((item) => {
+      Object.keys(item).forEach((k) => {
         obj[k] = smartMerge(item[k], obj[k]);
       });
     });
@@ -86,48 +85,44 @@ function array2obj(input, mergeKey, splitOn = '_') {
 }
 
 export default class ExpressionController {
-
   static get(req, res) {
-    let uri = `<http://data.doremus.org/expression/${req.params.id}>`;
+    const uri = `<http://data.doremus.org/expression/${req.params.id}>`;
 
     ExpressionController.getDetail(uri, req.query.lang)
-      .then(expression => {
-        if (!expression.derivation)
-          return Promise.resolve(expression);
+      .then((expression) => {
+        if (!expression.derivation) return Promise.resolve(expression);
 
-        let query = clone(LIST_QUERY);
+        const query = clone(LIST_QUERY);
         query.$lang = req.query.lang || 'en';
         query.$where.push(`?work efrbroo:R9_is_realised_in ${uri}`);
         query.$where.push('?work efrbroo:R2_is_derivative_of / efrbroo:R9_is_realised_in ?id');
 
         return sparqlTransformer(query, {
           endpoint: 'http://data.doremus.org/sparql',
-          debug: true
-        }).then(der => {
+          debug: true,
+        }).then((der) => {
           console.log(der);
           expression.derivativeOf = der['@graph'][0];
           return expression;
         });
       })
-      .then(result => {
-        result['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+      .then((result) => {
+        result['@id'] = `http://overture.doremus.org${req.originalUrl}`;
         result.generatedAt = (new Date()).toISOString();
         res.json(result);
       })
       .catch(err => sendStandardError(res, err));
   }
 
-static getDetail(uri, lang){
+static getDetail(uri, lang) {
   console.log(uri);
   return sparql.loadQuery('expression.detail', { uri, lang })
-    .then(r => {
-      console.log('aaaa');
-      let data = r.results.bindings;
-      let expression = array2obj(data, 'expression');
+    .then((r) => {
+      const data = r.results.bindings;
+      const expression = array2obj(data, 'expression');
       expression.id = uri;
       if (expression.alternateName) {
-        if (!Array.isArray(expression.alternateName))
-          expression.alternateName = [expression.alternateName];
+        if (!Array.isArray(expression.alternateName)) expression.alternateName = [expression.alternateName];
         expression.alternateName = expression.alternateName
           .filter(a => a['@language'] || a !== expression.name);
       }
@@ -137,36 +132,36 @@ static getDetail(uri, lang){
   }
 
   static getRealisations(req, res) {
-    let queryPe = clone(PERFORMANCE_QUERY);
-    let queryPu = clone(PUBLICATION_QUERY);
-    for (let query of [queryPe, queryPu]) {
+    const queryPe = clone(PERFORMANCE_QUERY);
+    const queryPu = clone(PUBLICATION_QUERY);
+    for (const query of [queryPe, queryPu]) {
       query.$lang = req.query.lang || 'en';
       query.$values = {
-        'expression': `<http://data.doremus.org/expression/${req.params.id}>`
+        expression: `<http://data.doremus.org/expression/${req.params.id}>`,
       };
     }
 
-    let promisePe = sparqlTransformer(queryPe, {
+    const promisePe = sparqlTransformer(queryPe, {
       endpoint: 'http://data.doremus.org/sparql',
-      debug: true
+      debug: true,
     });
-    let promisePu = sparqlTransformer(queryPu, {
+    const promisePu = sparqlTransformer(queryPu, {
       endpoint: 'http://data.doremus.org/sparql',
-      debug: true
+      debug: true,
     });
 
     return Promise.all([promisePe, promisePu])
-      .then(promResults => {
-        let [pe, pu] = promResults;
-        let graph = pe['@graph'].concat(pu['@graph']);
-        graph.forEach(x => {
+      .then((promResults) => {
+        const [pe, pu] = promResults;
+        const graph = pe['@graph'].concat(pu['@graph']);
+        graph.forEach((x) => {
           if (!x.name) delete x.name;
         });
-        let results = {
+        const results = {
           '@context': 'http://schema.org',
           '@graph': graph,
-          '@id': 'http://overture.doremus.org' + req.originalUrl,
-          generatedAt: (new Date()).toISOString()
+          '@id': `http://overture.doremus.org${req.originalUrl}`,
+          generatedAt: (new Date()).toISOString(),
         };
 
         res.json(results);
@@ -174,19 +169,19 @@ static getDetail(uri, lang){
   }
 
   static query(req, res) {
-    let opt = Object.assign({
-      lim: 20
+    const opt = Object.assign({
+      lim: 20,
     }, req.query);
 
     sparql.loadQuery('expression.list', opt)
-      .then(r => {
-        let data = r.results.bindings
-          .map(exp => {
-            let mc = {
-              '@type': 'MusicComposition'
+      .then((r) => {
+        const data = r.results.bindings
+          .map((exp) => {
+            const mc = {
+              '@type': 'MusicComposition',
             };
-            Object.keys(exp).forEach(p => {
-              let v = exp[p].value;
+            Object.keys(exp).forEach((p) => {
+              const v = exp[p].value;
               mc[padProp(p)] = v;
             });
             return mc;
@@ -194,11 +189,10 @@ static getDetail(uri, lang){
 
         res.json({
           '@context': 'http://schema.org/',
-          '@id': 'http://overture.doremus.org' + req.originalUrl,
-          'generatedAt': (new Date()).toISOString(),
-          '@graph': data
+          '@id': `http://overture.doremus.org${req.originalUrl}`,
+          generatedAt: (new Date()).toISOString(),
+          '@graph': data,
         });
       }).catch(err => sendStandardError(res, err));
   }
-
 }

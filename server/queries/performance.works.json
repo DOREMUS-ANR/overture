@@ -3,7 +3,7 @@
   "@graph": [{
     "@type": "MusicComposition",
     "@id": "?id",
-    "name": "$rdfs:label$required$bestlang",
+    "name": "$rdfs:label|ecrm:P102_has_title$required$bestlang",
     "alternateName": "$mus:U16_has_catalogue_statement/rdfs:label",
     "dateCreated": "?date",
     "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",

@@ -18,6 +18,6 @@ WHERE {
     prov:wasDerivedFrom / prov:wasAttributedTo ?source.
 
   { SELECT ?expression sql:BEST_LANGMATCH(?title, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?title
-    WHERE { ?expression rdfs:label ?title . }
+    WHERE { ?expression rdfs:label|ecrm:P102_has_title ?title . }
   }
 }

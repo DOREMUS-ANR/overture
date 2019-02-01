@@ -1,7 +1,7 @@
 import sparqlTransformer from 'sparql-transformer';
-import Cache from '../../commons/cache';
 import fs from 'fs-extra';
 import clone from 'clone';
+import Cache from '../../commons/cache';
 
 const cache = new Cache();
 
@@ -12,16 +12,14 @@ const WORKS_QUERY = fs.readJsonSync('server/queries/artist.work.json');
 const PERFORMANCE_QUERY = fs.readJsonSync('server/queries/artist.performance.json');
 
 function sendStandardError(res, err) {
-  'use strict';
   console.error('error ', err.message);
   res.status(500).send({
     code: 500,
-    message: err.message
+    message: err.message,
   });
 }
 
 function sampleDate(dateArray) {
-  'use strict';
   if (!dateArray) return null;
   if (!Array.isArray(dateArray)) return dateArray;
   if (dateArray.length === 0) return null;
@@ -32,81 +30,78 @@ function sampleDate(dateArray) {
 
 export default class ArtistController {
   static get(req, res) {
-    let artistUri = `http://data.doremus.org/artist/${req.params.id}`;
-    let opt = {
+    const artistUri = `http://data.doremus.org/artist/${req.params.id}`;
+    const opt = {
       lang: req.query.lang || 'en',
-      light: req.query.light || false
+      light: req.query.light || false,
     };
 
     ArtistController.getDetail(artistUri, opt.lang, opt.light)
-      .then(results => {
-        let mainObj = results['@graph'][0];
+      .then((results) => {
+        const mainObj = results['@graph'][0];
         // remove dbpedia duplicates
-        let dbpedia = mainObj.sameAs && mainObj.sameAs
+        const dbpedia = mainObj.sameAs && mainObj.sameAs
           .filter(x => x.includes('dbpedia'));
         while (dbpedia && dbpedia.length > 1) {
-          let index = mainObj.sameAs.indexOf(dbpedia[0]);
+          const index = mainObj.sameAs.indexOf(dbpedia[0]);
           mainObj.sameAs.splice(index, 1);
           dbpedia.splice(0, 1);
         }
 
         // remove main name from additionalName
-        let addNames = mainObj.additionalName;
+        const addNames = mainObj.additionalName;
         if (!addNames) {
           // do nothing
-        } else if (!Array.isArray(addNames))
-          mainObj.additionalName = null;
+        } else if (!Array.isArray(addNames)) mainObj.additionalName = null;
         else {
-          let x = addNames.indexOf(mainObj.name);
+          const x = addNames.indexOf(mainObj.name);
           if (x >= 0) mainObj.additionalName.splice(x, 1);
         }
 
-        results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+        results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
         results.generatedAt = (new Date()).toISOString();
         res.json(results);
       }).catch(err => sendStandardError(res, err));
   }
 
   static performances(req, res) {
-    let artistUri = `http://data.doremus.org/artist/${req.params.id}`;
-    let opt = {
+    const artistUri = `http://data.doremus.org/artist/${req.params.id}`;
+    const opt = {
       lang: req.query.lang || 'en',
-      author: artistUri
+      author: artistUri,
     };
-    let data = cache.get('artist.performances', opt)
+    const data = cache.get('artist.performances', opt);
     if (data) return res.json(data);
 
-    let query = clone(PERFORMANCE_QUERY);
+    const query = clone(PERFORMANCE_QUERY);
     query.$lang = opt.lang;
     query.$values = {
-      'author': artistUri
+      author: artistUri,
     };
 
-    let queryPromise = sparqlTransformer(query, {
+    const queryPromise = sparqlTransformer(query, {
       endpoint: 'http://data.doremus.org/sparql',
-      debug: true
+      debug: true,
     });
 
-    Promise.all([queryPromise,
-        ArtistController.getDetail(artistUri, opt.lang, true)
+    return Promise.all([queryPromise,
+        ArtistController.getDetail(artistUri, opt.lang, true),
       ])
-      .then(resultArray => {
-        let result = resultArray[0];
-        let pic = resultArray[1]['@graph'][0].image;
-        let name = resultArray[1]['@graph'][0].name;
+      .then((resultArray) => {
+        const result = resultArray[0];
+        const { image, name } = resultArray[1]['@graph'][0];
 
-
-        result['@graph'].forEach(x => {
+        result['@graph'].forEach((x) => {
           if (!x.name && x.alternateName) {
             x.name = x.alternateName;
             delete x.alternateName;
           }
-          x.image = pic;
+          x.image = image;
           x.performer.performer = name;
           if (!x.description) delete x.description;
         });
 
-        result['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+        result['@id'] = `http://overture.doremus.org${req.originalUrl}`;
         result.generatedAt = (new Date()).toISOString();
 
         cache.set('artist.performances', opt, result);
@@ -115,40 +110,38 @@ export default class ArtistController {
   }
 
   static works(req, res) {
-    let artistUri = `http://data.doremus.org/artist/${req.params.id}`;
-    let opt = {
+    const artistUri = `http://data.doremus.org/artist/${req.params.id}`;
+    const opt = {
       lang: req.query.lang || 'en',
-      author: artistUri
+      author: artistUri,
     };
-    let data = cache.get('artist.works', opt)
+    const data = cache.get('artist.works', opt);
     if (data) return res.json(data);
 
-    let query = clone(WORKS_QUERY);
+    const query = clone(WORKS_QUERY);
     query.$lang = opt.lang;
     query.$values = {
-      'author': artistUri
+      author: artistUri,
     };
 
-    let queryPromise = sparqlTransformer(query, {
+    const queryPromise = sparqlTransformer(query, {
       endpoint: 'http://data.doremus.org/sparql',
-      debug: true
+      debug: true,
     });
 
     Promise.all([queryPromise,
-        ArtistController.getDetail(artistUri, opt.lang, true)
+        ArtistController.getDetail(artistUri, opt.lang, true),
       ])
-      .then(resultArray => {
-        let result = resultArray[0];
-        let pic = resultArray[1]['@graph'][0].image;
-        let name = resultArray[1]['@graph'][0].name;
-        result['@graph'].forEach(x => {
-          x.image = pic;
+      .then((resultArray) => {
+        const result = resultArray[0];
+        const { name, image } = resultArray[1]['@graph'][0];
+        result['@graph'].forEach((x) => {
+          x.image = image;
           x.author.author = name;
-          if (x.author.description['@value'])
-            x.author.description = x.author.description['@value'];
+          if (x.author.description && x.author.description['@value']) x.author.description = x.author.description['@value'];
         });
 
-        result['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+        result['@id'] = `http://overture.doremus.org${req.originalUrl}`;
         result.generatedAt = (new Date()).toISOString();
 
         cache.set('artist.works', opt, result);
@@ -159,29 +152,29 @@ export default class ArtistController {
   static query(req, res) {
     console.log(req.query);
     let results;
-    let opt = Object.assign({
+    const opt = Object.assign({
       lim: 40,
-      lang: 'en'
+      lang: 'en',
     }, req.query);
 
-    let data = cache.get('artist.list', opt);
+    const data = cache.get('artist.list', opt);
     if (data) return res.json(data);
 
-    let query = clone(LIST_QUERY);
+    const query = clone(LIST_QUERY);
     query.$limit = opt.lim;
     query.$offset = opt.offset;
     query.$lang = opt.lang;
 
     sparqlTransformer(query, {
-        endpoint: 'http://data.doremus.org/sparql'
-      }).then(_results => {
+        endpoint: 'http://data.doremus.org/sparql',
+      }).then((_results) => {
         results = _results;
 
-        let promises = results['@graph'].map(x => x['@id'])
+        const promises = results['@graph'].map(x => x['@id'])
           .map(id => ArtistController.getDetail(id, opt.lang, true));
         return Promise.all(promises);
-      }).then(details => {
-        results['@id'] = 'http://overture.doremus.org' + req.originalUrl;
+      }).then((details) => {
+        results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
         results.generatedAt = (new Date()).toISOString();
         results['@graph'] = details.map(x => x['@graph'][0]);
         cache.set('artist.list', opt, results);
@@ -191,31 +184,29 @@ export default class ArtistController {
   }
 
   static getDetail(artistUri, lang = 'en', light = false) {
-    let opt = {
+    const opt = {
       artistUri,
-      lang
+      lang,
     };
     const lgt = light ? '.light' : '';
-    let cacheId = 'artist.detail' + artistUri + lgt;
+    const cacheId = `artist.detail${artistUri}${lgt}`;
 
-    let data = cache.get(cacheId, opt);
+    const data = cache.get(cacheId, opt);
     if (data) return data;
 
-    let query = clone(light ? DETAIL_LIGHT_QUERY : DETAIL_QUERY);
+    const query = clone(light ? DETAIL_LIGHT_QUERY : DETAIL_QUERY);
 
     query.$lang = lang;
     query.$values = {
-      'id': artistUri
+      id: artistUri,
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql'
-    }).then(result => {
-      let mainItem = result['@graph'][0];
-      if (mainItem.birthDate)
-        mainItem.birthDate = sampleDate(mainItem.birthDate);
-      if (mainItem.deathDate)
-        mainItem.deathDate = sampleDate(mainItem.deathDate);
+      endpoint: 'http://data.doremus.org/sparql',
+    }).then((result) => {
+      const mainItem = result['@graph'][0];
+      if (mainItem.birthDate) mainItem.birthDate = sampleDate(mainItem.birthDate);
+      if (mainItem.deathDate) mainItem.deathDate = sampleDate(mainItem.deathDate);
       cache.set(cacheId, opt, result);
       return result;
     });

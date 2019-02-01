@@ -56,7 +56,7 @@ export class PerformanceDetailComponent {
           this.performance = exp['@graph'][0];
           this.performance.uri = 'http://data.doremus.org/performance/' + id;
 
-          let name = this.performance.name || this.performance.alternateName;
+          let name = this.performance.name || this.performance.alternateName || 'Performance';
           name == name['@value'] || name;
           this.performance.name = name;
           this.titleService.setTitle(name);
@@ -69,13 +69,14 @@ export class PerformanceDetailComponent {
           this.recording = this.performance.recordedAs && this.performance.recordedAs[0];
 
           this.performers = this.performance.performer;
-          if (!Array.isArray(this.performers)) this.performers = [this.performers];
-          this.performers = this.performers.map(p => {
-            p.performer.description = p.description;
-            return p.performer;
-          });
-          this.performers = removeDuplicates(this.performers, '@id');
-          console.log(this.performers)
+          if (this.performers) {
+            if (!Array.isArray(this.performers)) this.performers = [this.performers];
+            this.performers = this.performers.map(p => {
+              p.performer.description = p.description;
+              return p.performer;
+            });
+            this.performers = removeDuplicates(this.performers, '@id');
+          }
         }, (err) => {
           this.querying = false;
           this.error = true;

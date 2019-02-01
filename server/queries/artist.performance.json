@@ -4,10 +4,7 @@
     "@type": "MusicEvent",
     "@id": "?id",
     "name": "$rdfs:label$bestlang",
-    "alternateName": "?pub",
-    "description": "$rdfs:comment$bestlang",
     "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
-    "workPerformed": "$efrbroo:R66_included_performed_version_of/rdfs:label$sample",
     "startDate": "?date",
     "performer": {
       "@id": "$ecrm:P9_consists_of*$required",
