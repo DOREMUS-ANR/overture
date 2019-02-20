@@ -1,4 +1,4 @@
-export default function sendStandardError(res, err) {
+export function sendStandardError(res, err) {
   const m = (err && err.message) || err;
 
   console.error('error ', err.message);
