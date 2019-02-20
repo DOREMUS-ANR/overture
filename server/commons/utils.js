@@ -1,11 +1,9 @@
-export function sendStandardError(res, err) {
-  'use strict';
-  let m = err && err.message;
-  m = m || err;
+export default function sendStandardError(res, err) {
+  const m = (err && err.message) || err;
 
   console.error('error ', err.message);
   res.status(500).send({
     code: 500,
-    message: err.message
+    message: m,
   });
 }
