@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './top-nav.template.html'
 })
 export class TopNavComponent {
-  @ViewChild('fullSearchInput') fullSearchInput: ElementRef;
+  @ViewChild('fullSearchInput', { static: false }) fullSearchInput: ElementRef;
 
   showSearch: boolean = false;
   showNav: boolean = false;

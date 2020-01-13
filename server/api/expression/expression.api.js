@@ -1,10 +1,13 @@
-import sparqlTransformer from 'sparql-transformer';
+/* eslint-disable import/no-named-default */
+import spt from 'sparql-transformer';
 import fs from 'fs-extra';
 import clone from 'clone';
 import Sparql from '../../commons/sparql';
 import {
   sendStandardError,
 } from '../../commons/utils';
+
+const sparqlTransformer = spt.default;
 
 const sparql = new Sparql();
 
@@ -27,9 +30,9 @@ function smartMerge(candidateValue, oldValue) {
 
   if (Array.isArray(ov)) {
     if (cv.uri) {
-      if (ov.every(p => p.uri !== cv.uri)) ov.push(cv);
+      if (ov.every((p) => p.uri !== cv.uri)) ov.push(cv);
     } else if (cv['@value']) {
-      if (ov.every(p => p['@value'] !== cv['@value'])) ov.push(cv);
+      if (ov.every((p) => p['@value'] !== cv['@value'])) ov.push(cv);
     } else if (!ov.includes(cv)) ov.push(cv);
     return ov;
   }
@@ -45,10 +48,10 @@ function array2obj(input, mergeKey, splitOn = '_') {
       let v = current.value;
 
 
-const lang = current['xml:lang'];
+      const lang = current['xml:lang'];
 
 
-const datatype = current.datatype;
+      const { datatype } = current;
 
       if (datatype && datatype === 'http://www.w3.org/2001/XMLSchema#int') v = parseInt(v);
       const considerLang = (k === 'alternateName' && lang);
@@ -68,10 +71,10 @@ const datatype = current.datatype;
   });
 
   const output = [];
-  const uniques = Array.from(new Set(input.map(item => item[mergeKey])));
+  const uniques = Array.from(new Set(input.map((item) => item[mergeKey])));
 
   uniques.forEach((x) => {
-    const subset = input.filter(item => item[mergeKey] === x);
+    const subset = input.filter((item) => item[mergeKey] === x);
     const obj = {};
 
     subset.forEach((item) => {
@@ -111,24 +114,24 @@ export default class ExpressionController {
         result.generatedAt = (new Date()).toISOString();
         res.json(result);
       })
-      .catch(err => sendStandardError(res, err));
+      .catch((err) => sendStandardError(res, err));
   }
 
-static getDetail(uri, lang) {
-  console.log(uri);
-  return sparql.loadQuery('expression.detail', { uri, lang })
-    .then((r) => {
-      const data = r.results.bindings;
-      const expression = array2obj(data, 'expression');
-      expression.id = uri;
-      if (expression.alternateName) {
-        if (!Array.isArray(expression.alternateName)) expression.alternateName = [expression.alternateName];
-        expression.alternateName = expression.alternateName
-          .filter(a => a['@language'] || a !== expression.name);
-      }
+  static getDetail(uri, lang) {
+    console.log(uri);
+    return sparql.loadQuery('expression.detail', { uri, lang })
+      .then((r) => {
+        const data = r.results.bindings;
+        const expression = array2obj(data, 'expression');
+        expression.id = uri;
+        if (expression.alternateName) {
+          if (!Array.isArray(expression.alternateName)) expression.alternateName = [expression.alternateName];
+          expression.alternateName = expression.alternateName
+            .filter((a) => a['@language'] || a !== expression.name);
+        }
 
-      return Promise.resolve(expression);
-    });
+        return Promise.resolve(expression);
+      });
   }
 
   static getRealisations(req, res) {
@@ -165,13 +168,11 @@ static getDetail(uri, lang) {
         };
 
         res.json(results);
-      }).catch(err => sendStandardError(res, err));
+      }).catch((err) => sendStandardError(res, err));
   }
 
   static query(req, res) {
-    const opt = Object.assign({
-      lim: 20,
-    }, req.query);
+    const opt = { lim: 20, ...req.query };
 
     sparql.loadQuery('expression.list', opt)
       .then((r) => {
@@ -193,6 +194,6 @@ static getDetail(uri, lang) {
           generatedAt: (new Date()).toISOString(),
           '@graph': data,
         });
-      }).catch(err => sendStandardError(res, err));
+      }).catch((err) => sendStandardError(res, err));
   }
 }

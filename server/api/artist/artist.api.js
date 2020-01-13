@@ -1,7 +1,9 @@
-import sparqlTransformer from 'sparql-transformer';
+import spt from 'sparql-transformer';
 import fs from 'fs-extra';
 import clone from 'clone';
 import Cache from '../../commons/cache';
+
+const sparqlTransformer = spt.default;
 
 const cache = new Cache();
 
@@ -41,7 +43,7 @@ export default class ArtistController {
         const mainObj = results['@graph'][0];
         // remove dbpedia duplicates
         const dbpedia = mainObj.sameAs && mainObj.sameAs
-          .filter(x => x.includes('dbpedia'));
+          .filter((x) => x.includes('dbpedia'));
         while (dbpedia && dbpedia.length > 1) {
           const index = mainObj.sameAs.indexOf(dbpedia[0]);
           mainObj.sameAs.splice(index, 1);
@@ -61,7 +63,7 @@ export default class ArtistController {
         results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
         results.generatedAt = (new Date()).toISOString();
         res.json(results);
-      }).catch(err => sendStandardError(res, err));
+      }).catch((err) => sendStandardError(res, err));
   }
 
   static performances(req, res) {
@@ -85,8 +87,8 @@ export default class ArtistController {
     });
 
     return Promise.all([queryPromise,
-        ArtistController.getDetail(artistUri, opt.lang, true),
-      ])
+      ArtistController.getDetail(artistUri, opt.lang, true),
+    ])
       .then((resultArray) => {
         const result = resultArray[0];
         const { image, name } = resultArray[1]['@graph'][0];
@@ -106,7 +108,7 @@ export default class ArtistController {
 
         cache.set('artist.performances', opt, result);
         res.json(result);
-      }).catch(err => sendStandardError(res, err));
+      }).catch((err) => sendStandardError(res, err));
   }
 
   static works(req, res) {
@@ -130,8 +132,8 @@ export default class ArtistController {
     });
 
     Promise.all([queryPromise,
-        ArtistController.getDetail(artistUri, opt.lang, true),
-      ])
+      ArtistController.getDetail(artistUri, opt.lang, true),
+    ])
       .then((resultArray) => {
         const result = resultArray[0];
         const { name, image } = resultArray[1]['@graph'][0];
@@ -146,16 +148,17 @@ export default class ArtistController {
 
         cache.set('artist.works', opt, result);
         res.json(result);
-      }).catch(err => sendStandardError(res, err));
+      }).catch((err) => sendStandardError(res, err));
   }
 
   static query(req, res) {
     console.log(req.query);
     let results;
-    const opt = Object.assign({
-      lim: 40,
+    const opt = {
+ lim: 40,
       lang: 'en',
-    }, req.query);
+...req.query,
+};
 
     const data = cache.get('artist.list', opt);
     if (data) return res.json(data);
@@ -166,21 +169,21 @@ export default class ArtistController {
     query.$lang = opt.lang;
 
     sparqlTransformer(query, {
-        endpoint: 'http://data.doremus.org/sparql',
-      }).then((_results) => {
-        results = _results;
+      endpoint: 'http://data.doremus.org/sparql',
+    }).then((_results) => {
+      results = _results;
 
-        const promises = results['@graph'].map(x => x['@id'])
-          .map(id => ArtistController.getDetail(id, opt.lang, true));
-        return Promise.all(promises);
-      }).then((details) => {
-        results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
-        results.generatedAt = (new Date()).toISOString();
-        results['@graph'] = details.map(x => x['@graph'][0]);
-        cache.set('artist.list', opt, results);
-        res.json(results);
-      })
-      .catch(err => sendStandardError(res, err));
+      const promises = results['@graph'].map((x) => x['@id'])
+        .map((id) => ArtistController.getDetail(id, opt.lang, true));
+      return Promise.all(promises);
+    }).then((details) => {
+      results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
+      results.generatedAt = (new Date()).toISOString();
+      results['@graph'] = details.map((x) => x['@graph'][0]);
+      cache.set('artist.list', opt, results);
+      res.json(results);
+    })
+      .catch((err) => sendStandardError(res, err));
   }
 
   static getDetail(artistUri, lang = 'en', light = false) {

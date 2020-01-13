@@ -1,10 +1,12 @@
-import sparqlTransformer from 'sparql-transformer';
+import spt from 'sparql-transformer';
 import fs from 'fs-extra';
 import clone from 'clone';
 import Cache from '../../commons/cache';
 import {
   sendStandardError,
 } from '../../commons/utils';
+
+const sparqlTransformer = spt.default;
 
 const cache = new Cache();
 
@@ -22,18 +24,18 @@ export default class PerformanceController {
     };
 
     Promise.all([
-        PerformanceController.getDetail(uri, opt.lang),
-        PerformanceController.getArtists(uri, opt.lang),
-        PerformanceController.getWorks(uri, opt.lang),
-        PerformanceController.getRecording(uri, opt.lang),
-      ])
+      PerformanceController.getDetail(uri, opt.lang),
+      PerformanceController.getArtists(uri, opt.lang),
+      PerformanceController.getWorks(uri, opt.lang),
+      PerformanceController.getRecording(uri, opt.lang),
+    ])
       .then((r) => {
         let [results, pfs, works, rec] = r;
         pfs = pfs['@graph'].length && pfs['@graph'][0].performer;
         if (pfs) {
           if (!Array.isArray(pfs)) pfs = [pfs];
-          pfs.map(p => p.performer)
-            .forEach(p => p['@type'] = p['@type'].includes('Person') ? 'Person' : 'PerformingGroup');
+          pfs.map((p) => p.performer)
+            .forEach((p) => p['@type'] = p['@type'].includes('Person') ? 'Person' : 'PerformingGroup');
           results['@graph'][0].performer = pfs;
         }
         results['@graph'][0].workPerformed = works['@graph'];
@@ -41,15 +43,16 @@ export default class PerformanceController {
         results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
         results.generatedAt = (new Date()).toISOString();
         res.json(results);
-      }).catch(err => sendStandardError(res, err));
+      }).catch((err) => sendStandardError(res, err));
   }
 
   static query(req, res) {
     console.log(req.query);
-    const opt = Object.assign({
-      lim: 40,
+    const opt = {
+lim: 40,
       lang: 'en',
-    }, req.query);
+...req.query,
+};
 
     const data = cache.get('performance.list', opt);
     if (data) return res.json(data);
@@ -60,11 +63,11 @@ export default class PerformanceController {
     if (opt.year) {
       const y = parseInt(opt.year);
       if (!isNaN(y)) {
-query.$filter = [
+        query.$filter = [
           `?date >= "${y}"^^xsd:gYear`,
           `?date < "${y + 1}"^^xsd:gYear`,
         ];
-}
+      }
     }
     if (opt.place) {
       query['@graph'][0].location['@id'] += '$required';
@@ -78,15 +81,15 @@ query.$filter = [
     query.$lang = opt.lang;
 
     sparqlTransformer(query, {
-        endpoint: 'http://data.doremus.org/sparql',
-        debug: true,
-      }).then((results) => {
-        results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
-        results.generatedAt = (new Date()).toISOString();
-        cache.set('artist.list', opt, results);
-        res.json(results);
-      })
-      .catch(err => sendStandardError(res, err));
+      endpoint: 'http://data.doremus.org/sparql',
+      debug: true,
+    }).then((results) => {
+      results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
+      results.generatedAt = (new Date()).toISOString();
+      cache.set('artist.list', opt, results);
+      res.json(results);
+    })
+      .catch((err) => sendStandardError(res, err));
   }
 
   static getDetail(uri, lang = 'en') {
