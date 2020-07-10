@@ -58,7 +58,7 @@ export class ArtistRecommendationComponent {
 
     if (isPlatformBrowser(this.platformId)) {
       // retrieve recommendations
-      this.artistService.recommend(id, this.n, !this.big ? this.getWeightsAsInts() : null, !this.big)
+      this.artistService.recommend(id, this.n, this.big ? this.getWeightsAsInts() : null, !this.big)
         .then((res) => {
           this.loading = false;
           res.forEach(a => a.description = toDescr(a.description))
