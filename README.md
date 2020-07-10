@@ -57,15 +57,15 @@ Build
 
 Run
 
-    docker run -d -p 5050:3333 --restart=unless-stopped  -v /var/nodejs/overture/config:/config --network doremus --name overture doremus/overture
+    docker run -d -p 5050:3333 --restart=unless-stopped  -v /var/nodejs/overture/config:/config --name overture doremus/overture
 
-<!-- docker run -d -p 5050:3333 -v /Users/pasquale/git/overture/config:/config --network doremus --name overture doremus/overture -->
+<!-- docker run -d -p 5050:3333 -v /Users/pasquale/git/overture/config:/config --name overture doremus/overture -->
 
 Stop
 
     docker stop overture
-    docker rm overture ##remove from available containers
-    docker rmi doremus/overture ##remove from images
+    docker rm overture # remove from available containers
+    docker rmi doremus/overture # remove from images
 
 [1]: https://drive.google.com/file/d/0B_nxZpGQv9GKZmpKRGl2dmRENGc/view
 [2]: https://www.w3.org/TR/sparql11-query/
