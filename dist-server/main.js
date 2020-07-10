@@ -1603,7 +1603,7 @@ var ArtistRecommendationComponent = /** @class */ (function () {
         var id = this.seed.replace('http://data.doremus.org/artist/', '');
         if (common_1.isPlatformBrowser(this.platformId)) {
             // retrieve recommendations
-            this.artistService.recommend(id, this.n, this.getWeightsAsInts(), !this.big)
+            this.artistService.recommend(id, this.n, !this.big ? this.getWeightsAsInts() : null, !this.big)
                 .then(function (res) {
                 _this.loading = false;
                 res.forEach(function (a) { return a.description = toDescr(a.description); });
