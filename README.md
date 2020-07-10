@@ -51,10 +51,6 @@ Run production mode (Windows)
 
 ### Docker
 
-Install dependency:
-
-    docker build -t jplu/node github.com/pasqLisena/docker-node
-
 Build
 
     docker build -t doremus/overture .
