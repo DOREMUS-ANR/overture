@@ -16,7 +16,7 @@ function toDescr(input) {
 export class ArtistRecommendationComponent {
   @Input() seed: string;
   @Input() n: number;
-  @Input() big: boolean = false;
+  @Input() big: boolean = true;
   @Output() bigChange = new EventEmitter<boolean>();
   weights = {
     mop: { id: 'mop', label: 'Played MoP', w: 1 },
@@ -26,8 +26,8 @@ export class ArtistRecommendationComponent {
     genre: { id: 'genre', label: 'Genre', w: 1 },
     key: { id: 'key', label: 'Key', w: 1 },
   }
-//   mop birth_date death_date casting function genre key
-// 3 1 1 3 3 3 3
+  //   mop birth_date death_date casting function genre key
+  // 3 1 1 3 3 3 3
 
   recommendation: [any];
   loading: boolean = true;
