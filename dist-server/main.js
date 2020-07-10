@@ -1568,7 +1568,7 @@ var ArtistRecommendationComponent = /** @class */ (function () {
     function ArtistRecommendationComponent(artistService, platformId) {
         this.artistService = artistService;
         this.platformId = platformId;
-        this.big = false;
+        this.big = true;
         this.bigChange = new core_1.EventEmitter();
         this.weights = {
             mop: { id: 'mop', label: 'Played MoP', w: 1 },
