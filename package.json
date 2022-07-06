@@ -43,7 +43,7 @@
     "get-json": "^1.0.1",
     "hammerjs": "^2.0.8",
     "helmet": "^3.21.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "morgan": "^1.9.1",
     "ngx-infinite-scroll": "^8.0.1",
     "node-cache": "^5.1.0",
