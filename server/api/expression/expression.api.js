@@ -101,7 +101,7 @@ export default class ExpressionController {
         query.$where.push('?work efrbroo:R2_is_derivative_of / efrbroo:R9_is_realised_in ?id');
 
         return sparqlTransformer(query, {
-          endpoint: 'http://data.doremus.org/sparql',
+          endpoint: 'https://data.doremus.org/sparql',
           debug: true,
         }).then((der) => {
           console.log(der);
@@ -145,11 +145,11 @@ export default class ExpressionController {
     }
 
     const promisePe = sparqlTransformer(queryPe, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     });
     const promisePu = sparqlTransformer(queryPu, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     });
 

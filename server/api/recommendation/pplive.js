@@ -53,7 +53,7 @@ function packGroup(recs, focus) {
       id: recs.map((r) => `<${r.uri}>`),
     },
   }, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       // debug: true
     }).then((results) => {
       for (const r of results) {
@@ -89,7 +89,7 @@ export default class PPLiveRecommender {
       },
       $limit: 1,
     }, {
-        endpoint: 'http://data.doremus.org/sparql',
+        endpoint: 'https://data.doremus.org/sparql',
         debug: true,
       }).then((rs) => {
         if (!rs[0]) throw Error(`id ${id} for type ${type.toUpperCase()} not found`);

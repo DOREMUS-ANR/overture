@@ -7,7 +7,7 @@ export const APP_PATH = {
   RECOMMENDING_PATH: prod ? '/recommending' : '/Users/pasquale/git/recommender/recommending',
 };
 export const EXT_URI = {
-  SPARQL_ENDPOINT: 'http://data.doremus.org/sparql',
+  SPARQL_ENDPOINT: 'https://data.doremus.org/sparql',
   RECOMMENDER: prod ? 'http://recommender:5000' : 'http://localhost:5000',
 };
 

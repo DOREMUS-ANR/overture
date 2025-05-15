@@ -81,7 +81,7 @@ lim: 40,
     query.$lang = opt.lang;
 
     sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     }).then((results) => {
       results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
@@ -109,7 +109,7 @@ lim: 40,
       id: uri,
     };
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);
@@ -135,7 +135,7 @@ lim: 40,
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);
@@ -161,7 +161,7 @@ lim: 40,
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);
@@ -187,7 +187,7 @@ lim: 40,
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);

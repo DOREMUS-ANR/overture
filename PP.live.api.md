@@ -1,7 +1,7 @@
 Philharmonie Live API
 =====================
 
-Retrieve recommendation on a pool of Video Concert from Philharmonie de Paris, on the base of a seed (concert or work). It works on the `http://data.doremus.org/philharmonie` graph on the [DOREMUS Triplestore](http://data.doremus.org/sparql).
+Retrieve recommendation on a pool of Video Concert from Philharmonie de Paris, on the base of a seed (concert or work). It works on the `http://data.doremus.org/philharmonie` graph on the [DOREMUS Triplestore](https://data.doremus.org/sparql).
 The output are the suggested tracks for the given seed.
 
 **`GET`** http://overture.doremus.org/api/pplive/:seedType/:seedId

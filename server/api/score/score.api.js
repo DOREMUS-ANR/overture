@@ -85,7 +85,7 @@ export default class ScoreController {
     query.$lang = opt.lang;
 
     sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     }).then((results) => {
       results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
@@ -114,7 +114,7 @@ export default class ScoreController {
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);

@@ -82,7 +82,7 @@ export default class ArtistController {
     };
 
     const queryPromise = sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     });
 
@@ -127,7 +127,7 @@ export default class ArtistController {
     };
 
     const queryPromise = sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
       debug: true,
     });
 
@@ -169,7 +169,7 @@ export default class ArtistController {
     query.$lang = opt.lang;
 
     sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
     }).then((_results) => {
       results = _results;
 
@@ -205,7 +205,7 @@ export default class ArtistController {
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: 'https://data.doremus.org/sparql',
     }).then((result) => {
       const mainItem = result['@graph'][0];
       if (mainItem.birthDate) mainItem.birthDate = sampleDate(mainItem.birthDate);
