@@ -1,5 +1,5 @@
-/* eslint-disable import/no-named-default */
-import spt from 'sparql-transformer';
+import sparqlTransformer from '../../commons/sparql-transformer';
+import { EXT_URI } from '../../../config/constants';
 import fs from 'fs-extra';
 import clone from 'clone';
 import Sparql from '../../commons/sparql';
@@ -7,7 +7,6 @@ import {
   sendStandardError,
 } from '../../commons/utils';
 
-const sparqlTransformer = spt.default;
 
 const sparql = new Sparql();
 
@@ -93,6 +92,10 @@ export default class ExpressionController {
 
     ExpressionController.getDetail(uri, req.query.lang)
       .then((expression) => {
+        if (!expression) {
+          res.status(404).json({ error: 'Not Found' });
+          return null;
+        }
         if (!expression.derivation) return Promise.resolve(expression);
 
         const query = clone(LIST_QUERY);
@@ -101,7 +104,7 @@ export default class ExpressionController {
         query.$where.push('?work efrbroo:R2_is_derivative_of / efrbroo:R9_is_realised_in ?id');
 
         return sparqlTransformer(query, {
-          endpoint: 'http://data.doremus.org/sparql',
+          endpoint: EXT_URI.SPARQL_ENDPOINT,
           debug: true,
         }).then((der) => {
           console.log(der);
@@ -110,6 +113,7 @@ export default class ExpressionController {
         });
       })
       .then((result) => {
+        if (!result) return;
         result['@id'] = `http://overture.doremus.org${req.originalUrl}`;
         result.generatedAt = (new Date()).toISOString();
         res.json(result);
@@ -122,6 +126,7 @@ export default class ExpressionController {
     return sparql.loadQuery('expression.detail', { uri, lang })
       .then((r) => {
         const data = r.results.bindings;
+        if (!data.length) return Promise.resolve(null);
         const expression = array2obj(data, 'expression');
         expression.id = uri;
         if (expression.alternateName) {
@@ -145,11 +150,11 @@ export default class ExpressionController {
     }
 
     const promisePe = sparqlTransformer(queryPe, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     });
     const promisePu = sparqlTransformer(queryPu, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     });
 

@@ -3,14 +3,14 @@
   "@graph": [{
     "@type": "Book",
     "@id": "?id",
-    "name": "$rdfs:label$required$bestlang",
+    "name": "$rdfs:label$required",
     "additionalType": "$ecrm:P2_has_type$required",
     "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
     "about": "$ecrm:P128_carries$required",
     "location": {
       "@type": "Organization",
       "@id": "$ecrm:P49_has_former_or_current_keeper",
-      "name": "$rdfs:label$required$bestlang$var:place"
+      "name": "$rdfs:label$required$var:place"
     },
     "recordedAs": "?rec"
   }],

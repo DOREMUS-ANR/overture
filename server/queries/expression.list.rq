@@ -2,20 +2,24 @@ PREFIX ecrm: <http://erlangen-crm.org/current/>
 PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX mus: <http://data.doremus.org/ontology#>
 PREFIX function: <http://data.doremus.org/vocabulary/function/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 
 SELECT DISTINCT
-  ?expression AS ?id
-  sql:BEST_LANGMATCH(?title, '%%lang%%', 'en') AS ?name
-  sql:BEST_LANGMATCH(?composer, '%%lang%%', 'en') AS ?composer
+  (?expression AS ?id)
+  (?title AS ?name)
+  ?composer
   (SAMPLE(?catalogue) AS ?alternativeHeadline)
   (SAMPLE(?pic) as ?image)
-  ?source as ?sourceOrganization
+  (?source AS ?sourceOrganization)
   ?derivation
 WHERE {
   ?expression rdfs:label | ecrm:P102_has_title ?title .
   ?work efrbroo:R9_is_realised_in ?expression.
   OPTIONAL {?work mus:U47_has_derivation_type ?derivation_uri ; efrbroo:R2_is_derivative_of ?derivativeOf
-    {  SELECT ?derivation_uri sql:BEST_LANGMATCH(?derivation, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?derivation
+    {  SELECT ?derivation_uri ?derivation
         WHERE { ?derivation_uri skos:prefLabel ?derivation }}
   }
 
@@ -30,7 +34,7 @@ WHERE {
   }
   OPTIONAL { ?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
     {
-    SELECT DISTINCT ?expression
+    SELECT ?expression (MIN(?title) AS ?sortTitle)
     WHERE {
       VALUES ?titleProp { mus:U70_has_original_title ecrm:P102_has_title mus:U71_has_uniform_title mus:U68_has_variant_title }
 
@@ -48,16 +52,17 @@ WHERE {
 
       OPTIONAL {
           ?expCreation efrbroo:R17_created ?expression ;
-            ecrm:P9_consists_of [
-              mus:U31_had_function function:composer;
-              ecrm:P14_carried_out_by / foaf:name ?composer
-            ]
+            ecrm:P9_consists_of ?castRef .
+            ?castRef mus:U31_had_function function:composer ;
+              ecrm:P14_carried_out_by / foaf:name ?composer .
       }
       $if{title} FILTER (regex(str(?title),'%%title%%', 'i')) $end
       $if{composer} FILTER (regex(str(?composer),'%%composer%%', 'i')) $end
     }
-    # ORDER BY ?title
+    GROUP BY ?expression
+    ORDER BY ?sortTitle
     LIMIT %%lim%%
     OFFSET %%offset%%
   }
 }
+GROUP BY ?expression ?title ?composer ?source ?derivation

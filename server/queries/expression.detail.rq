@@ -3,38 +3,43 @@ PREFIX ecrm: <http://erlangen-crm.org/current/>
 PREFIX efrbroo: <http://erlangen-crm.org/efrbroo/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dc: <http://purl.org/dc/elements/1.1/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX time: <http://www.w3.org/2006/time#>
 
 SELECT DISTINCT
-  # ?expression,
-  ?source,
-  sql:BEST_LANGMATCH(?name, '%%lang%%', 'en') AS ?name,
-  ?alternateName,
-  ?sameAs,
-  ?description,
-  ?mop_uri,
-  ?mop_label,
-  ?mop_quantity,
-  ?mop_responsibility,
-  ?genre_uri,
-  ?genre_label,
-  ?opus,
-  ?order,
-  ?key_uri,
-  ?key_label,
-  ?catalogue,
-  ?composer_uri,
-  ?composer_pic,
-  ?composer_label,
-  ?dateCreated,
+  ?source
+  ?name
+  ?alternateName
+  ?sameAs
+  ?description
+  ?mop_uri
+  ?mop_label
+  ?mop_quantity
+  ?mop_responsibility
+  ?genre_uri
+  ?genre_label
+  ?opus
+  ?order
+  ?key_uri
+  ?key_label
+  ?catalogue
+  ?composer_uri
+  ?composer_pic
+  ?composer_label
+  ?dateCreated
   ?derivation
 WHERE {
   VALUES ?expression { %%uri%% }
 
-  ?expression a efrbroo:F22_Self-Contained_Expression ;
-              rdfs:label | ecrm:P102_has_title ?name .
+  VALUES ?etype { efrbroo:F22_Self-Contained_Expression mus:M43_Performed_Expression }
+  ?expression a ?etype ;
+              rdfs:label | ecrm:P102_has_title | mus:U70_has_title | mus:U71_has_uniform_title | mus:U68_has_variant_title ?name .
   ?work efrbroo:R9_is_realised_in ?expression.
   OPTIONAL {?work mus:U47_has_derivation_type ?derivation_uri ; efrbroo:R2_is_derivative_of ?derivativeOf
-    {  SELECT ?derivation_uri sql:BEST_LANGMATCH(?derivation, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?derivation
+    {  SELECT ?derivation_uri ?derivation
         WHERE { ?derivation_uri skos:prefLabel ?derivation }}
   }
   OPTIONAL {
@@ -50,22 +55,22 @@ WHERE {
     ?castingDet mus:U2_foresees_use_of_medium_of_performance ?mop_uri .
     OPTIONAL { ?castingDet mus:U30_foresees_quantity_of_mop ?mop_quantity }
     OPTIONAL { ?castingDet mus:U36_foresees_responsibility ?mop_responsibility_uri
-    { SELECT ?mop_responsibility_uri sql:BEST_LANGMATCH(?mop_responsibility, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop_responsibility
+    { SELECT ?mop_responsibility_uri ?mop_responsibility
       WHERE { ?mop_responsibility_uri skos:prefLabel ?mop_responsibility } }
 
      }
-    { SELECT ?mop_uri sql:BEST_LANGMATCH(?mop, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?mop_label
+    { SELECT ?mop_uri (?mop AS ?mop_label)
       WHERE { ?mop_uri skos:prefLabel | ecrm:P1_is_identified_by ?mop } }
   }
   OPTIONAL{
     ?expression mus:U12_has_genre ?genre_uri .
-    { SELECT ?genre_uri sql:BEST_LANGMATCH(?genre, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?genre_label
+    { SELECT ?genre_uri (?genre AS ?genre_label)
       WHERE { ?genre_uri skos:prefLabel | ecrm:P1_is_identified_by ?genre } }
   }
   OPTIONAL{?expression mus:U17_has_opus_statement / ecrm:P3_has_note ?opus}
   OPTIONAL{?expression mus:U10_has_order_number ?order }
   OPTIONAL{?expression mus:U11_has_key ?key_uri .
-    { SELECT ?key_uri sql:BEST_LANGMATCH(?key, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?key_label
+    { SELECT ?key_uri (?key AS ?key_label)
       WHERE { ?key_uri skos:prefLabel | ecrm:P1_is_identified_by ?key }  }
   }
   OPTIONAL{?expression mus:U16_has_catalogue_statement / rdfs:label ?catalogue }
@@ -76,7 +81,7 @@ WHERE {
       ?activity ecrm:P14_carried_out_by ?composer_uri ;
         mus:U31_had_function <http://data.doremus.org/vocabulary/function/composer>.
       OPTIONAL { ?composer_uri foaf:depiction ?composer_pic }
-      { SELECT ?composer_uri sql:BEST_LANGMATCH(?composer, '%%lang%%, en;q=0.9, *;q=0.1', 'en') as ?composer_label
+      { SELECT ?composer_uri (?composer AS ?composer_label)
         WHERE { ?composer_uri rdfs:label | foaf:name ?composer } }
     }
     OPTIONAL { ?expCreation ecrm:P4_has_time-span / time:hasBeginning / time:inXSDDate ?dateCreated }

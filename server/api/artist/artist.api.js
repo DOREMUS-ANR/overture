@@ -1,9 +1,9 @@
-import spt from 'sparql-transformer';
+import sparqlTransformer from '../../commons/sparql-transformer';
+import { EXT_URI } from '../../../config/constants';
 import fs from 'fs-extra';
 import clone from 'clone';
 import Cache from '../../commons/cache';
 
-const sparqlTransformer = spt.default;
 
 const cache = new Cache();
 
@@ -82,7 +82,7 @@ export default class ArtistController {
     };
 
     const queryPromise = sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     });
 
@@ -127,7 +127,7 @@ export default class ArtistController {
     };
 
     const queryPromise = sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     });
 
@@ -169,7 +169,7 @@ export default class ArtistController {
     query.$lang = opt.lang;
 
     sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
     }).then((_results) => {
       results = _results;
 
@@ -195,7 +195,7 @@ export default class ArtistController {
     const cacheId = `artist.detail${artistUri}${lgt}`;
 
     const data = cache.get(cacheId, opt);
-    if (data) return data;
+    if (data) return Promise.resolve(data);
 
     const query = clone(light ? DETAIL_LIGHT_QUERY : DETAIL_QUERY);
 
@@ -205,7 +205,7 @@ export default class ArtistController {
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
     }).then((result) => {
       const mainItem = result['@graph'][0];
       if (mainItem.birthDate) mainItem.birthDate = sampleDate(mainItem.birthDate);

@@ -7,8 +7,8 @@ export const APP_PATH = {
   RECOMMENDING_PATH: prod ? '/recommending' : '/Users/pasquale/git/recommender/recommending',
 };
 export const EXT_URI = {
-  SPARQL_ENDPOINT: 'http://data.doremus.org/sparql',
-  RECOMMENDER: prod ? 'http://recommender:5000' : 'http://localhost:5000',
+  SPARQL_ENDPOINT: process.env.SPARQL_ENDPOINT || 'https://data.doremus.org/sparql',
+  RECOMMENDER: process.env.RECOMMENDER || (prod ? 'http://recommender:5000' : 'http://localhost:5000'),
 };
 
 export const OUT_FOLDER = prod? '/config' : '/Users/pasquale/git/overture/config';

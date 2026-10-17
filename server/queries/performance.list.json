@@ -3,13 +3,13 @@
   "@graph": [{
     "@type": "MusicEvent",
     "@id": "?id",
-    "name": "$rdfs:label$required$bestlang",
+    "name": "$rdfs:label$required",
     "startDate": "?date",
     "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
     "location": {
       "@type": "Place",
       "@id": "$ecrm:P7_took_place_at",
-      "name": "$rdfs:label$required$bestlang$var:place"
+      "name": "$rdfs:label$required$var:place"
     },
     "recordedAs" : "?rec"
   }],
@@ -17,5 +17,6 @@
     "?id a efrbroo:F31_Performance",
     "OPTIONAL{?id ecrm:P4_has_time-span/time:hasBeginning/time:inXSDDate ?date}",
     "OPTIONAL{?rec efrbroo:R20_recorded ?id}"
-  ]
+  ],
+  "$orderby": ["DESC(?date)", "?id"]
 }

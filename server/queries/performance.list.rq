@@ -11,5 +11,6 @@ WHERE {
     }
   }
 }
+ORDER BY ?startDate ?id
 LIMIT %%lim%%
 OFFSET %%offset%%

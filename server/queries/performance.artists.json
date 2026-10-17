@@ -4,15 +4,15 @@
     "@type": "MusicEvent",
     "@id": "?id",
     "performer": {
-      "@id": "$ecrm:P9_consists_of*",
+      "@id": "$ecrm:P9_consists_of$required",
       "@type": "Role",
       "performer": {
         "@id": "$ecrm:P14_carried_out_by$required",
         "@type": "$rdf:type$required$var:agentClass",
-        "name": "$rdfs:label$required$bestlang",
-        "image": "$foaf:depiction$sample"
+        "name": "$rdfs:label$required",
+        "image": "$foaf:depiction"
       },
-      "description": "$(mus:U31_had_function|mus:U1_used_medium_of_performance)/skos:prefLabel$bestlang"
+      "description": "$(mus:U31_had_function|mus:U1_used_medium_of_performance)/skos:prefLabel"
     }
   }],
   "$where": [

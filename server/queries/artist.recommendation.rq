@@ -1,8 +1,12 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+
 SELECT DISTINCT
-  sql:BEST_LANGMATCH(?label, '%%lang%%', 'en') AS ?label
-  SAMPLE(?birth) as ?birth
-  SAMPLE(?death) as ?death
-  SAMPLE(?pic) as ?pic
+  ?label
+  ?birth
+  ?death
+  ?pic
 WHERE {
   %%uri%% rdfs:label ?label .
   OPTIONAL { %%uri%% foaf:depiction ?pic }

@@ -44,14 +44,12 @@ export default class Sparql {
     opt.offset = opt.offset || 0;
 
     const data = this.cache.get(queryId, opt);
-    if (data) return data;
+    if (data) return Promise.resolve(data);
     return fs.readFile(_file, 'utf8')
       .then((query) => {
-        // find and solve the $if statements
         query = query.replace(IF_REGEX,
           (match, condition, content) => (opt[condition] ? content : ''));
 
-        // replace params in query
         for (const param in opt) {
           const regex = new RegExp(`%%${param}%%`, 'g');
           let value = opt[param];

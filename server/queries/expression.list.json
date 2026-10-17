@@ -3,15 +3,15 @@
   "@graph": [{
     "@type": "MusicComposition",
     "@id": "?id",
-    "name": "$rdfs:label$required$bestlang",
+    "name": "$rdfs:label$required",
     "alternativeHeadline": "$mus:U16_has_catalogue_statement/rdfs:label",
     "dateCreated": "?date",
     "sourceOrganization": "$prov:wasDerivedFrom/prov:wasAttributedTo",
     "composer": {
       "@id": "?composer$required",
       "@type": "Person",
-      "name": "$rdfs:label$required$bestlang",
-      "image": "$foaf:depiction$sample"
+      "name": "$rdfs:label$required",
+      "image": "$foaf:depiction"
     }
   }],
   "$where": [

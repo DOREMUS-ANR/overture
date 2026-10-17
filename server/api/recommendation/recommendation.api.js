@@ -1,8 +1,8 @@
+import sparqlTransformer from '../../commons/sparql-transformer';
 import async from 'async';
 import getJSON from 'get-json';
 import fs from 'fs-extra';
 import NodeCache from 'node-cache';
-import spt from 'sparql-transformer';
 import {
   EXT_URI,
 } from '../../../config/constants';
@@ -11,7 +11,6 @@ import {
   sendStandardError,
 } from '../../commons/utils';
 
-const sparqlTransformer = spt.default;
 
 const { RECOMMENDER } = EXT_URI;
 const sparql = new Sparql();
@@ -97,7 +96,7 @@ function getExpressionInfo(uri, lang) {
     expression: uri,
   };
   return sparqlTransformer(query, {
-    endpoint: 'http://data.doremus.org/sparql',
+    endpoint: EXT_URI.SPARQL_ENDPOINT,
     debug: true,
   });
 }

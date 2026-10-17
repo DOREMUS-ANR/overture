@@ -1,10 +1,9 @@
-import spt from 'sparql-transformer';
+import sparqlTransformer from '../../commons/sparql-transformer';
 import Lemma from './lemma';
 import {
   EXT_URI,
 } from '../../../config/constants';
 
-const sparqlTransformer = spt.default;
 
 const SKOS = 'http://www.w3.org/2004/02/skos/core#';
 

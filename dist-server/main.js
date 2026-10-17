@@ -5364,7 +5364,7 @@ var SummaryPipe = /** @class */ (function () {
                     id: id,
                     link: ['/expression', id],
                     title: extractValue(value.title || value.name),
-                    super: date + extractValue(author),
+                    super: date + (extractValue(author) || ''),
                     small: value.alternativeHeadline,
                     image: image,
                     source: source,
@@ -5382,6 +5382,10 @@ var SummaryPipe = /** @class */ (function () {
                 if (date)
                     _super.push(date);
                 var _loc = value.location && value.location.name;
+                if (Array.isArray(_loc)) {
+                    _loc = _loc.find(function (x) { return typeof x === 'string'; }) ||
+                        (_loc[0] && (_loc[0]['@value'] || _loc[0].name));
+                }
                 if (_loc)
                     _super.push(_loc['@value'] || _loc);
                 var title = value.name || value.alternateName;
@@ -5487,7 +5491,7 @@ exports.SharedService = SharedService;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/pasquale/git/overture/src/main-server.ts */"./src/main-server.ts");
+module.exports = __webpack_require__(/*! /Users/thibaultehrhart/Projects/DOREMUS-ANR/overture/src/main-server.ts */"./src/main-server.ts");
 
 
 /***/ }),

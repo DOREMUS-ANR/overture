@@ -11,10 +11,10 @@
       "author": {
         "@type": "Person",
         "@id": "$ecrm:P14_carried_out_by$required",
-        "name": "$rdfs:label$required$bestlang",
-        "image": "$foaf:depiction$sample"
+        "name": "$rdfs:label$required",
+        "image": "$foaf:depiction"
       },
-      "description": "$mus:U31_had_function/skos:prefLabel$bestlang"
+      "description": "$mus:U31_had_function/skos:prefLabel"
     },
     "editing": {
       "@id": "?editing",
@@ -24,10 +24,10 @@
         "author": {
           "@type": "Person",
           "@id": "$ecrm:P14_carried_out_by$required",
-          "name": "$rdfs:label$required$bestlang",
-          "image": "$foaf:depiction$sample"
+          "name": "$rdfs:label$required",
+          "image": "$foaf:depiction"
         },
-        "description": "$mus:U31_had_function/skos:prefLabel$bestlang"
+        "description": "$mus:U31_had_function/skos:prefLabel"
       }
     }
   }],

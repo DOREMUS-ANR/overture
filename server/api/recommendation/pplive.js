@@ -1,10 +1,9 @@
-import spt from 'sparql-transformer';
+import sparqlTransformer from '../../commons/sparql-transformer';
 import getJSON from 'get-json';
 import {
   EXT_URI,
 } from '../../../config/constants';
 
-const sparqlTransformer = spt.default;
 
 const { RECOMMENDER } = EXT_URI;
 const TYPE_MAP = {
@@ -53,8 +52,7 @@ function packGroup(recs, focus) {
       id: recs.map((r) => `<${r.uri}>`),
     },
   }, {
-      endpoint: 'http://data.doremus.org/sparql',
-      // debug: true
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
     }).then((results) => {
       for (const r of results) {
         const w = Array.isArray(r.work) ? r.work[0] : r.work;
@@ -89,7 +87,7 @@ export default class PPLiveRecommender {
       },
       $limit: 1,
     }, {
-        endpoint: 'http://data.doremus.org/sparql',
+        endpoint: EXT_URI.SPARQL_ENDPOINT,
         debug: true,
       }).then((rs) => {
         if (!rs[0]) throw Error(`id ${id} for type ${type.toUpperCase()} not found`);

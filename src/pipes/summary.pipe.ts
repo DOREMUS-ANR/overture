@@ -28,7 +28,7 @@ export class SummaryPipe implements PipeTransform {
           id,
           link: ['/expression', id],
           title: extractValue(value.title || value.name),
-          super: date + extractValue(author),
+          super: date + (extractValue(author) || ''),
           small: value.alternativeHeadline,
           image,
           source,
@@ -46,6 +46,10 @@ export class SummaryPipe implements PipeTransform {
         let _super = [];
         if (date) _super.push(date)
         let _loc = value.location && value.location.name;
+        if (Array.isArray(_loc)) {
+          _loc = _loc.find((x) => typeof x === 'string') ||
+            (_loc[0] && (_loc[0]['@value'] || _loc[0].name));
+        }
         if (_loc) _super.push(_loc['@value'] || _loc)
 
         let title = value.name || value.alternateName;

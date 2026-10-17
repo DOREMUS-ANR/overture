@@ -1,4 +1,5 @@
-import spt from 'sparql-transformer';
+import sparqlTransformer from '../../commons/sparql-transformer';
+import { EXT_URI } from '../../../config/constants';
 import fs from 'fs-extra';
 import clone from 'clone';
 import Cache from '../../commons/cache';
@@ -6,7 +7,6 @@ import {
   sendStandardError,
 } from '../../commons/utils';
 
-const sparqlTransformer = spt.default;
 
 const cache = new Cache();
 
@@ -31,6 +31,10 @@ export default class PerformanceController {
     ])
       .then((r) => {
         let [results, pfs, works, rec] = r;
+        if (!results['@graph'] || !results['@graph'].length) {
+          res.status(404).json({ error: 'Not Found' });
+          return;
+        }
         pfs = pfs['@graph'].length && pfs['@graph'][0].performer;
         if (pfs) {
           if (!Array.isArray(pfs)) pfs = [pfs];
@@ -81,12 +85,12 @@ lim: 40,
     query.$lang = opt.lang;
 
     sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     }).then((results) => {
       results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
       results.generatedAt = (new Date()).toISOString();
-      cache.set('artist.list', opt, results);
+      cache.set('performance.list', opt, results);
       res.json(results);
     })
       .catch((err) => sendStandardError(res, err));
@@ -109,7 +113,7 @@ lim: 40,
       id: uri,
     };
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);
@@ -135,7 +139,7 @@ lim: 40,
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);
@@ -161,7 +165,7 @@ lim: 40,
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);
@@ -187,7 +191,7 @@ lim: 40,
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);

@@ -3,7 +3,7 @@
   "@graph": [{
     "@type": "Person",
     "@id": "?id",
-    "name": "$rdfs:label$required$bestlang",
+    "name": "$rdfs:label$required",
     "birthDate": "$schema:birthDate",
     "deathDate": "$schema:deathDate",
     "image": "$foaf:depiction"

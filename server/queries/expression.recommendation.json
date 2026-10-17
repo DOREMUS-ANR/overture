@@ -3,12 +3,12 @@
   "@graph": [{
     "@type": "MusicComposition",
     "@id": "?expression",
-    "name": "$rdfs:label$required$sample",
+    "name": "$rdfs:label$required",
     "alternateName": "$mus:U16_has_catalogue_statement/rdfs:label",
     "composer": {
       "@type": "Person",
-      "@id": "?composer$sample",
-      "name": "$rdfs:label$required$sample",
+      "@id": "?composer",
+      "name": "$rdfs:label$required",
       "image": "$foaf:depiction"
     }
   }],

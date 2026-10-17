@@ -1,4 +1,5 @@
-import spt from 'sparql-transformer';
+import sparqlTransformer from '../../commons/sparql-transformer';
+import { EXT_URI } from '../../../config/constants';
 import fs from 'fs-extra';
 import clone from 'clone';
 import Cache from '../../commons/cache';
@@ -8,7 +9,6 @@ import {
   sendStandardError,
 } from '../../commons/utils';
 
-const sparqlTransformer = spt.default;
 
 const cache = new Cache();
 
@@ -85,12 +85,12 @@ export default class ScoreController {
     query.$lang = opt.lang;
 
     sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     }).then((results) => {
       results['@id'] = `http://overture.doremus.org${req.originalUrl}`;
       results.generatedAt = (new Date()).toISOString();
-      cache.set('artist.list', opt, results);
+      cache.set('score.list', opt, results);
       res.json(results);
     })
       .catch((err) => sendStandardError(res, err));
@@ -114,7 +114,7 @@ export default class ScoreController {
     };
 
     return sparqlTransformer(query, {
-      endpoint: 'http://data.doremus.org/sparql',
+      endpoint: EXT_URI.SPARQL_ENDPOINT,
       debug: true,
     }).then((result) => {
       cache.set(cacheId, opt, result);

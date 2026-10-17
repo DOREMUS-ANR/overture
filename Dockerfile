@@ -1,14 +1,14 @@
-FROM node:current-alpine
+FROM node:24-alpine
 
-MAINTAINER Pasquale Lisena <pasquale.lisena@eurecom.fr>
+LABEL maintainer "Pasquale Lisena <pasquale.lisena@eurecom.fr>"
 
 ENV NODE_ENV=production
 
 WORKDIR /usr/src/app
 COPY . /usr/src/app
 
-# Install app dependencies
-RUN npm install --production
+RUN npm install --omit=dev --no-audit --no-fund
+
 
 EXPOSE 3333
 
